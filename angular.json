@@ -112,6 +112,23 @@
                   "maximumError": "15mb"
                 }
               ]
+            },
+            "github": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputPath": "dist/banker-dashboard-surrogate",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "baseHref": "/opl-theme-hsbc/"
             }
           },
           "defaultConfiguration": ""
