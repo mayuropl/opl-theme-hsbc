@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/kms-website/browser
+          path: dist/opl-theme-hsbc
           retention-days: 7
 
   deploy-github-pages:
@@ -97,22 +97,22 @@ jobs:
       - name: Verify build output
         run: |
           echo "Checking build output structure..."
-          if [ -d "dist/kms-website/browser" ]; then
-            echo "✓ dist/kms-website/browser directory exists"
-            ls -la dist/kms-website/browser/ | head -20
+          if [ -d "dist/opl-theme-hsbc" ]; then
+            echo "✓ dist/opl-theme-hsbc directory exists"
+            ls -la dist/opl-theme-hsbc/ | head -20
           else
-            echo "✗ dist/kms-website/browser directory not found"
+            echo "✗ dist/opl-theme-hsbc directory not found"
             echo "Checking dist directory:"
             ls -la dist/ || echo "dist directory not found"
             echo "Checking for any build output:"
-            find . -type d -name "browser" 2>/dev/null | head -10
+            find dist -type f -name "index.html" 2>/dev/null
             exit 1
           fi
 
       - name: Create 404.html for GitHub Pages routing
         run: |
-          # Find index.html and copy to 404.html at the root of dist/kms-website/browser
-          INDEX_FILE=$(find dist/kms-website/browser -name "index.html" -type f | head -1)
+          # Find index.html and copy to 404.html at the root of dist/opl-theme-hsbc
+          INDEX_FILE=$(find dist/opl-theme-hsbc -name "index.html" -type f | head -1)
           if [ -n "$INDEX_FILE" ]; then
             echo "Found index.html at: $INDEX_FILE"
             INDEX_DIR=$(dirname "$INDEX_FILE")
@@ -121,7 +121,7 @@ jobs:
             echo "✓ 404.html created successfully at: $INDEX_DIR/404.html"
             ls -lh "$INDEX_DIR/404.html"
           else
-            echo "✗ Error: index.html not found in dist/kms-website/browser/"
+            echo "✗ Error: index.html not found in dist/opl-theme-hsbc/"
             echo "Searching for HTML files:"
             find dist -name "*.html" -type f
             exit 1
@@ -135,7 +135,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/kms-website/browser
+          path: dist/opl-theme-hsbc
 
       - name: Deploy to GitHub Pages
         id: deployment

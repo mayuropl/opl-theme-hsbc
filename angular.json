@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "banker-dashboard-surrogate": {
+    "opl-theme-hsbc": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -51,7 +51,7 @@
               "node-forge",
               "moment"
             ],
-            "outputPath": "dist/banker-dashboard-surrogate",
+            "outputPath": "dist/opl-theme-hsbc",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["src/polyfills.ts", "src/window-global-fix.ts"],
@@ -135,18 +135,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "banker-dashboard-surrogate:build"
+            "buildTarget": "opl-theme-hsbc:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "banker-dashboard-surrogate:build:production"
+              "buildTarget": "opl-theme-hsbc:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "banker-dashboard-surrogate:build"
+            "buildTarget": "opl-theme-hsbc:build"
           }
         },
         "test": {
@@ -170,11 +170,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "banker-dashboard-surrogate:serve"
+            "devServerTarget": "opl-theme-hsbc:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "banker-dashboard-surrogate:serve:production"
+              "devServerTarget": "opl-theme-hsbc:serve:production"
             }
           }
         }
