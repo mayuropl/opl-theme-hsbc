@@ -29,7 +29,7 @@ jobs:
         run: npm cache clean --force
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Create assets symlink for build
         run: |
@@ -79,8 +79,7 @@ jobs:
         run: npm cache clean --force
 
       - name: Install dependencies
-        run: npm ci
-
+        run: npm ci --legacy-peer-deps
       - name: Create assets symlink for build
         run: |
           # Create symlink from src/assets to public/assets so SCSS can resolve asset paths
