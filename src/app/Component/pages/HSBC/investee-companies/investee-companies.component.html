@@ -1,0 +1,152 @@
+<div class="container-fluid HSBC_Common_Pages">
+  <div class="__main_Container">
+    <form class="NP_Form">
+      <div class="page_Title_sec">
+        <div class="page_Title_left">
+          <h4 class="cursor_pointer" *ngIf="this.data?.isFrom == 1">
+            <em class="fmdi fmdi-arrow-left mr-2" (click)="navigateToViewComponent()"></em>
+              Investee Companies
+          </h4>
+          <h4 class="cursor_pointer" *ngIf="this.data?.isFrom == 2">
+            <em class="fmdi fmdi-arrow-left mr-2" (click)="navigateToViewComponent()"></em>
+             List of Companies Advised
+          </h4>
+        </div>
+        <div class="page_Title_Right">
+          <div class="searchBox_design" style="display: flex;">
+            <fieldset class="NP_HSBC_ComInput mr-2">
+              <mat-form-field appearance="outline">
+                <mat-select [(value)]="selectSearchType" (selectionChange)="onSearchTypeChange($event)">
+                  <mat-option value="NAME">Search By Name <i class="fas fa-info-circle ml-1" matTooltip="Search details of startups invested by any other investor"></i></mat-option>
+                  <mat-option value="DOMAIN">Search By Domain <i class="fas fa-info-circle ml-1" matTooltip="Search domain if unable to find the investor name"></i></mat-option>
+                </mat-select>
+              </mat-form-field>
+            </fieldset>
+
+            <div class="searchBox_input">
+              <div class="input_field serch_refresh">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{selectSearchType == 'NAME' ? 'Enter Name' : 'Enter Domain'}}</mat-label>
+                  <input [disabled]="isFetchingDetails" class="pad" type="text" matInput [(ngModel)]="searchQuery" (keydown)="debounceEventForFilter($event)"
+                    (paste)="debounceEventForFilter($event)" [ngModelOptions]="{standalone: true}"
+                    [matAutocomplete]="auto" name="searchInput">
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+                    @for (option of searchSuggestions; track option) {
+                    <mat-option [value]="option">{{option}}</mat-option>
+                    }
+                  </mat-autocomplete>
+                  <span matSuffix *ngIf="searchQuery.trim().length > 0 && searchDataFound" class="fas fa-sync-alt fa-spin"></span>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="searchBox_btn ml-2">
+              <button class="button-pad" type="submit" mat-flat-button color="primary" (click)="OnClickSearch()"
+                [disabled]="isDisable">Search</button>
+            </div>
+          </div>
+          <p class="fetch_text" *ngIf="searchErrMsg.length > 0 && isDisable && searchQuery?.trim().length > 0" class="red_text"> {{ searchErrMsg }} </p>
+          <p class="fetch_text" *ngIf="isFetchingDetails">We are fetching the details... <span class="red_text">please wait</span></p>
+        </div>
+      </div>
+      <div class="page_Details">
+        <div class="box_design">
+          <div class="box_design_ttl_bar">
+            <div class="box_design_ttl_bar_left">
+              <h4>Investee Companies</h4>
+            </div>
+            <!-- <div class="box_design_ttl_bar_right">
+                  <button class="btn_design" mat-stroked-button color="primary">Filter<i
+                      class="fa fa-sort-amount-down ml-2"></i></button>
+                </div> -->
+          </div>
+          <div class="box_design_details p-0">
+            <div class="tableResponsive" appTableScroll>
+              <table class="CommonTable_NP NP_BGBHSBC Mobile_table_View_NP no_stripe_borderX_table">
+                <thead>
+                  <tr class="tr_lightred_bg">
+                    <th width="5%">Sr. No.</th>
+                    <th width="40%">Company Name</th>
+                    <th>Domain</th>
+                    <th>City</th>
+                    <th *ngIf="this.data?.isFrom == 1">Type</th>
+                    <th>Associated Legal Entities</th>
+                  </tr>
+                </thead>
+                <ng-container *ngIf="tracxnInvestorCompanyList.length > 0; else noCompanyDomain">                       
+                <tbody [ngClass]="{'subloaderShowing': isLoading}" >
+                  <app-sub-loader></app-sub-loader>
+                  <tr *ngFor="let companyDetails of tracxnInvestorCompanyList; let i = index">
+                    <td data-label="Sr. No.">{{ startIndex + i + 1 }}</td>
+                    <td data-label="Company Name">{{companyDetails?.nameOfBrand || 'NA'}}</td>
+                    <td data-label="Details" class="darkgreen_text">
+                      <u (click)="investeeCompaniesDialog(companyDetails)"
+                        class="ml-2 cursor_pointer">{{companyDetails?.domain || 'NA'}}</u>
+                      <i class="fa fa-hourglass ml-1 investor-hourglass"
+                        matTooltip="We are fetching the data. Please wait"
+                        *ngIf="(investorCompanyProgressMap[companyDetails?.id] || companyDetails?.investorCompanyStatus === 'Pending')"></i>
+                      <i class="fa fa-check-circle ml-1"
+                        matTooltip=" We have fetched the data successfully. Click on link to view the details"
+                        *ngIf="(!investorCompanyProgressMap[companyDetails?.id] && (companyDetails?.investorCompanyStatus === 'Success' || investorCompanySuccessMap[companyDetails?.id]))"></i>
+                    </td>
+                    <td data-label="City">{{companyDetails?.city || 'NA'}}</td>
+                    <td data-label="Type" *ngIf="this.data?.isFrom == 1">{{companyDetails?.type || 'NA'}}</td>
+                    <td data-label="Associated Legal Entities" class="darkgreen_text">
+                      <u class="cursor_pointer" (click)="associated_Entities_popup(companyDetails)" *ngIf="(associatedEntitiesProgressMap[companyDetails?.id] || companyDetails?.associatedEntitiesStatus === 'Pending')" >click here</u>
+                      <u (click)="associated_Entities_popup(companyDetails)" class="ml-2 cursor_pointer" *ngIf="!(associatedEntitiesProgressMap[companyDetails?.id] || companyDetails?.associatedEntitiesStatus === 'Pending')">click here</u>
+                      <i class="fa fa-hourglass ml-1 investor-hourglass"  matTooltip="We are fetching the data. Please wait" *ngIf="(associatedEntitiesProgressMap[companyDetails?.id] || companyDetails?.associatedEntitiesStatus === 'Pending')"></i>
+                      <i class="fa fa-check-circle ml-1" matTooltip=" We have fetched the data successfully. Click on link to view the details" *ngIf="(!associatedEntitiesProgressMap[companyDetails?.id] && (companyDetails?.associatedEntitiesStatus === 'Success' || associatedEntitieSuccessMap[companyDetails?.id]))"></i>
+                  </td>
+                  </tr>
+                </tbody>
+              </ng-container>
+              </table>
+              <ng-template #noCompanyDomain>
+                <tr>
+                  <td colspan="5" class="text-center text-danger">
+                    <app-no-data-found message="No Investee Companies details found." />
+                  </td>
+                </tr>
+              </ng-template>
+              
+            <div class="pagination-table NP_LeftPagintion">
+              <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{(startIndex+1)}} to
+                  {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                  {{totalSize}}
+                  row
+  
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select name="pagination" [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                                    (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-sm-12 col-md-5">
+                <div class="text-md-right float-md-right pagination-rounded">
+  
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                    [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

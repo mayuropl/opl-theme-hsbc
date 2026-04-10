@@ -1,0 +1,169 @@
+<div class="wallet_chart_main mt-4">
+    <div class="card_box w-100">
+        <div class="title_chart">
+            <div class="lef_desc">
+                <h2><i class="fi fi-rr-money-bill-transfer red_text mr-2"></i> Self Transfer</h2>
+            </div>
+            <div class="right_desc">
+                <div class="slide_both_label">
+                    <label class="mr-1">Bank</label>
+                    <mat-slide-toggle class="sliderToggle_design2">Customer</mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+        <div class="table_wrp_box">
+            <div class="chart_box">
+                <div class="pr_bank_tabs_list">
+                    <div class="bank-list">
+                        <div class="header">
+                          <span>Bank Name <i class="fi fi-br-sort-amount-up red_text ml-1"></i></span>
+                          <span>Loss To <br> Competition (CY)</span>
+                        </div>
+                      
+                        <div 
+                          *ngFor="let bank of banks" 
+                          class="bank-row"
+                          [class.active_bank_row]="selectedBank === bank.name"
+                          (click)="selectedBank = bank.name">
+                      
+                          <div class="bank-info">
+                            <img [src]="bank.logo" alt="{{ bank.name }} logo" class="bank-logo" />
+                            <span class="bank-name">{{ bank.name }}</span>
+                          </div>
+                      
+                          <div class="bank-loss">{{ bank.loss }}</div>
+                          <i class="fas fa-caret-right"></i>
+                        </div>
+                      </div>
+                      
+                </div>
+            </div>
+            <div class="pad_box">
+                <div class="tableResponsive card_box w-100">
+                    <table id="myTable"
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table design_Main_listTable table_wrap no_sticky_table">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th>Month</th>
+                                <th class="text-center">Move-In Count</th>
+                                <th class="text-center">Move-In Amount (₹M)</th>
+                                <th class="text-center">Move-Out Count</th>
+                                <th class="text-center">Move-Out Amount (₹M)</th>
+                                <th class="text-center">Loss To Competition (CY)</th>
+                                <th class="text-center">Loss To Competition (PY)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="darkgreen_text">January</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">Feb</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">March</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">April</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            <tr>
+                                <td class="darkgreen_text">May</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">June</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">July</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">August</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            <tr>
+                                <td class="darkgreen_text">September</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">October</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">November</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                            <tr>
+                                <td class="darkgreen_text">Dec</td>
+                                <td class="text-center">18000</td>
+                                <td class="text-center">20000</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                                <td class="text-center">11.11</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

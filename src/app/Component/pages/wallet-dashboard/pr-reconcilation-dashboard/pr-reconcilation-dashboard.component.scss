@@ -1,0 +1,351 @@
+.box_design_ttl_bar {
+  border-bottom: 1px solid #E0E0E0;
+}
+.page_Title_Right{
+  display: flex;
+  align-items: center; 
+}
+
+.pipeline-flow-title {
+  color: #000000;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+   margin: 0;
+  background: #F1F7F9;
+  padding: 15px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.pipeline-flow-cards {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 20px 15px;
+}
+.grey_card{
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #dedede 160%) 0% 0% no-repeat padding-box;
+  border: 1px solid #DCDFE0;
+  .pipeline-card__value, .pipeline-card__icon{
+    color: #7E8F9B;
+  }
+}
+.green_card{
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #B8EFED 160%) 0% 0% no-repeat padding-box;
+  border: 1px solid #8ADCD9;
+  .pipeline-card__value, .pipeline-card__icon{
+    color: #00847F;
+  }
+}
+.blue_card{
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #D8E9FF 160%) 0% 0% no-repeat padding-box;
+  border: 1px solid #BCD7FA;
+  .pipeline-card__value, .pipeline-card__icon{
+    color: #3F7AC8;
+  }
+}
+.yellow_card{
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #e68c2b47 160%) 0% 0% no-repeat padding-box;
+  border: 1px solid #FFC500;
+  .pipeline-card__value, .pipeline-card__icon{
+    color: #AF8E1E;
+  }
+}
+.red_card{
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #FFE3E5 160%) 0% 0% no-repeat padding-box;
+  border: 1px solid #FFB5BB;
+  .pipeline-card__value, .pipeline-card__icon{
+    color: #32327F;
+  }
+}
+.pipeline-card {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem; 
+  border-radius: 8px;
+   position: relative;
+
+  &:last-child .pipeline-card__connector {
+    display: none;
+  }
+}
+
+.pipeline-card__icon {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  background: #F6F6F6;
+  border-radius: 100%;
+
+  i {
+    font-size: 18px;
+    line-height: 100%;
+  }
+}
+
+.pipeline-card__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.pipeline-card__label {
+  font-size: 14px;
+  color: #020817;
+  font-weight: 500;
+}
+
+.pipeline-card__value {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 100%;
+  margin: 5px 0 0;
+  justify-content: space-between;
+  span {
+    font-size: 0.75rem;
+    margin-left: 1rem;
+    font-weight: 500;
+  }
+}
+
+// Reconciliation status cards (slide_box uses wallet-design.scss)
+.slide_box{
+  padding: 15px;
+}
+.slide_box .wallet_tabing_main ul li {
+  min-width: 250px;
+}
+
+.align_side {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .short_desc {
+    font-size: 14px;
+    white-space: normal;
+    color: #000;
+  }
+}
+
+.btm_desc {
+  display: flex;
+  margin-top: 10px;
+  margin: auto;
+  margin-left: 0;
+
+  .left_side {
+    .number_title {
+      font-size: 15px;
+    }
+
+    &+.left_side {
+      margin-left: 20px;
+      padding-left: 20px;
+      border-left: 1px solid rgba(112, 112, 112, 0.24);
+    }
+  }
+}
+
+.recon_card {
+  .box_icon {
+    position: relative;
+
+    .small_overlay {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      font-size: 12px;
+    }
+  }
+
+  .recon_desc {
+    font-size: 12px;
+    color: #757575;
+    margin: 8px 0 0 0;
+    white-space: normal;
+    font-weight: 400;
+  }
+}
+
+.recon_card_teal {
+  border-color: #8ADCD9;
+  &.active{ 
+    &:before{
+      background: #8ADCD9;
+      transform: translate(5px, 5px) !important;
+    }
+  }
+  .btm_desc {
+    border-top: 1px solid #8ADCD9;
+  }
+}
+
+.recon_card_blue {
+  border-color: #BCD7FA;
+  &.active{ 
+    &:before{
+      background: #BCD7FA;
+      transform: translate(5px, 5px) !important;
+    }
+  }
+  .btm_desc {
+    border-top: 1px solid #BCD7FA;
+  }
+}
+
+.recon_card_yellow {
+  border-color: #FFC500;
+  &.active{ 
+    &:before{
+      background: #FFC500;
+      transform: translate(5px, 5px) !important;
+    }
+  }
+  .btm_desc {
+    border-top: 1px solid #FFC500;
+  }
+}
+
+.recon_card_red {
+  border-color: #FFB5BB;
+  &.active{ 
+    &:before{
+      background: #FFB5BB;
+      transform: translate(5px, 5px) !important;
+    }
+  }
+  .btm_desc {
+    border-top: 1px solid #FFB5BB;
+  }
+}
+
+.recon_card_teal .align_side {
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #B8EFED 160%) 0% 0% no-repeat padding-box;
+}
+
+.recon_card_blue .align_side {
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #D8E9FF 160%) 0% 0% no-repeat padding-box;
+}
+
+.recon_card_yellow .align_side {
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #e68c2b47 160%) 0% 0% no-repeat padding-box;
+}
+
+.recon_card_red .align_side {
+  background: transparent linear-gradient(80deg, #FFFFFF 60%, #FFE3E5 160%) 0% 0% no-repeat padding-box;
+}
+
+.teal_text {
+  color: #00847F !important;
+}
+
+.lightblue_text {
+  color: #3F7AC8 !important;
+}
+
+
+.yellow_text {
+  color: #AF8E1E !important;
+}
+
+.red_text {
+  color: #32327F !important;
+}
+
+
+.wallet_tabing_main ul { 
+  gap: 15px;
+  padding: 10px 0;
+  li {
+    padding: 0;
+    box-shadow: none;
+    &.active{
+      position: relative;
+      z-index: 1;
+      &:before{
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%; 
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        transform: translate(0, 0);
+      }
+    }
+    .tab_wrp {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      background: #FFFFFF;
+      .align_side {
+        padding: 10px;
+        margin: 0;
+      }
+
+      .btm_desc {
+        padding: 10px;
+        margin: 0;
+      }
+
+      .recon_desc {
+        padding: 10px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.wallet_tabing_main ul li .box_icon i {
+  color: inherit;
+}
+.inner_box_design{
+  padding: 15px;
+}
+.bottom_table_design{
+  border: 1px solid #DCDFE0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+
+::ng-deep {
+  .filter_option_menu_new {
+    .filter_inp_box{
+      padding: 15px 10px;
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid #DCDFE0;
+      border-top: 1px solid #DCDFE0;
+    }
+  }
+  .mat-mdc-menu-panel{
+    max-width: 100% !important;
+  }
+  .filter_menuBarNew .filter_actions{
+    padding: 15px 10px;
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+ 
+ 
+.with_sle{
+  align-items: center !important;
+  flex-direction: inherit !important;
+}

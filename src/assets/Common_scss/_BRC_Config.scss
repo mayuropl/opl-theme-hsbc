@@ -1,0 +1,839 @@
+// Bureau & Offline Configuration scss @Nikul Start
+// Offline Page Css
+.Common-switch-text {
+    display: $d-flex;
+    @include Com-fw;
+    .text-heading-cards{
+      span{
+        &.text-muted{
+          margin-left: 23px;
+        }
+      }
+    }
+  }
+  
+  .NP_Ofline_Config_Cont{
+    @include Com-fw;
+    padding-top: 1.5rem;  
+    &.NP_Config_SubBSJC{
+      padding: 1.5rem;
+      border-bottom: 1px solid $opl-bc;
+      &:last-of-type{
+        border-bottom: 0;
+      }
+      .Common-switch-text{
+        justify-content: space-between;
+        align-items: center;
+        .text-heading-cards{
+          width: auto;
+        }
+      }
+  
+    }
+    .common-link-btn {
+      font: normal normal 600 14px/19px 'Nunito Sans';
+      color: $opl-blue;
+    }
+  }
+  .NP_Config_BSFC_Radio{
+        margin-right: 20px;
+        &.MB_15px{
+          margin-bottom: 20px;
+        }
+        &:last-of-type{
+          margin-right: 0;
+        }
+        .tab-product-name{
+          width: auto;
+          &.active{
+            @include activet-border;
+          }
+        }
+  }
+  
+  // burea Config scss @Nikul
+  .Common_flag_group,
+  .Common_flag_group_NP {
+    @include Com-sp;
+    flex-wrap: wrap;
+    padding-top: 20px;  
+    &.cal_normal {
+      align-items: normal;
+    }
+  }
+  
+  .Common_flag_group_sub {
+    @include Cai-center;
+    width: calc(100% / 3 - 20px);
+    float: left;
+    flex-wrap: wrap;
+    background: #FFFFFF;
+    box-shadow: 2px 2px 22px #1027721A;
+    // border: 1px solid #F2F2F2;
+    padding: 1.5rem;
+    border-radius: 8px;
+    gap: 15px;
+
+    .common_flag_heding {
+      @include Com-fw;
+  
+      .common_txt_switch {
+        @include Cjc-sp-ai;
+  
+        .h4_Heading {
+          color: #343A40;
+          @include fsw-65;
+          font-family: $ff-cs;
+        }
+      }
+    }
+  
+    .Common_cont_flag_group {
+      @include Com-fw;
+  
+      &.cirf_highmark {
+        min-height: 8rem;
+        border-top: 1px solid $opl-bc;
+        @include Cjc-center-ai;
+  
+        span {
+          color: #98A6AD;
+        }
+      }
+  
+      .common_flag_link_grp {
+        @include Com-sp;
+        padding: 1rem 0;
+        border-top: 1px solid $opl-bc;
+      }
+  
+      .icon_txt_common {
+        font-weight: 700;
+        width: calc(100% - 40%);
+        @include Cai-center;
+        float: left;
+  
+        i,
+        em {
+          margin-right: .5rem;
+          font-size: 18px;
+        }
+
+        &.dangerColor {
+          color: $opl-danger;
+        }
+        
+        &.successColor {
+          color: $opl-success;
+        }
+        
+        &.txDangerColor {
+          color: $opl-ExLdanger;
+        }
+        
+        &.warningColor {
+          color: $opl-warning;
+        }
+        
+        &.infoColor {
+          color: $opl-info;
+        }
+         &.greyColor {
+          color: #ccc;
+        }
+      }
+  
+      .common_flag_link {
+        float: left;
+        width: calc(40% - 100%);
+        @include Cjc-fe-ai;
+  
+        a {
+          font-weight: 600;
+          color: #2737AF;
+          text-decoration: underline;
+          padding: .5rem .8rem;
+        }
+      }
+    }
+  }
+  
+  .Common_Check_group {
+    @include Cai-normal;
+    width: calc(100% / 3 - 20px);
+    float: left;
+    flex-wrap: wrap;
+    background: #FFFFFF;
+    box-shadow: 2px 2px 22px #1027721A;
+    // border: 1px solid #F2F2F2;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    // margin-right: 2%;
+    &.Cai_Center{
+      align-items: center;
+    }
+  
+    .common_flag_heding {
+      @include Com-fw;
+      padding-bottom: 1rem;
+  
+      .common_text_switch {
+        @include Cjc-sp-ai;
+  
+        .main-text-heading {
+          color: #343A40;
+          @include fsw-65;
+          font-family: $ff-cs;
+        }
+      }
+      &.CFH_bb_1px{
+        border-bottom: 1px solid $opl-bc;
+      }
+    }
+  
+    .Common_content_Checkbox_group {
+      @include Com-fw;
+      .common_Checkbox_group {
+        @include Com-sp;
+        padding: 1rem 0;
+        flex-wrap: wrap;
+        border-top: 1px solid $opl-bc;
+        row-gap: 5px;
+        .checkbox{
+          &.checkbox-psbpurple{
+            display: inline-flex;
+            align-items: center;
+            padding-left: 0;
+            margin-right: 0;
+            width: 100%
+          }
+        }
+       
+      }
+    }
+  }
+  
+  
+  .Common-content-group {
+    @include Com-fw;
+  
+    .Common-text-group {
+      @include Com-sp;
+      padding: 1rem 0;
+      border-top: 1px solid $opl-bc;
+  
+      span {
+        @include fsw-66;
+        font-family: $ff-ns;
+        color: #343A40;
+  
+        &:nth-child(1) {
+          opacity: .3;
+        }
+      }
+    }
+  }
+  
+  .Common_flag_from_grp {
+    width: calc(100% / 3 - 20px);
+    float: left;
+    flex-wrap: wrap;
+    box-shadow: 2px 2px 22px #1027721A;
+    border: 1px solid #F2F2F2;
+    border-radius: 8px;
+    padding: 1rem 2rem 1rem;
+    border-radius: 8px;
+    gap:15px ;
+
+    .common_flag_heding {
+      @include Com-fw;
+      padding-bottom: 1rem;
+      min-height: 47px;
+      max-height: 97px;
+  
+      .common_txt_switch {
+        @include Cjc-sp-ai;
+  
+        .main-text-heading {
+          color: #343A40;
+          @include fsw-65;
+          font-family: $ff-cs;
+        }
+      }
+    }
+  
+    .Common_cont_flag_group {
+      @include Com-fw;
+  
+      &.cirf_highmark {
+        min-height: 8rem;
+        border-top: 1px solid $opl-bc;
+        @include Cjc-center-ai;
+  
+        span {
+          color: #98A6AD;
+        }
+      }
+  
+      .common_flag_link_grp {
+        @include Com-sp;
+        padding: 1rem 0;
+  
+        &.Bureau_Radio {
+          flex-direction: column;
+          align-items: flex-start;
+  
+          p {
+            @include fsw-65;
+            font-family: $ff-cs;
+            color: #343A40;
+            margin-bottom: .5rem;
+          }
+        }
+  
+        .select_number {
+          padding: .5rem .8rem;
+          padding-left: 0;
+        }
+  
+        &.NO_SE {
+          .ng-select {
+            width: 90%;
+          }
+        }
+  
+        .ng-select {
+          width: 100%;
+        }
+      }
+  
+      .icon_txt_common {
+        font-weight: 700;
+        width: 60%;
+        float: left;
+        @include Cai-center;
+  
+        i,
+        em {
+          margin-right: .5rem;
+          font-size: 18px;
+        }
+
+        &.dangerColor {
+          color: $opl-danger;
+        }
+        
+        &.successColor {
+          color: $opl-success;
+        }
+        
+        &.txDangerColor {
+          color: $opl-ExLdanger;
+        }
+        
+        &.warningColor {
+          color: $opl-warning;
+        }
+        
+        &.infoColor {
+          color: $opl-info;
+        }
+      }
+  
+      .common_flag_link {
+        float: left;
+        width: 40%;
+        @include Cjc-fe-ai;
+  
+        a {
+          font-weight: 600;
+          color: #2737AF;
+          text-decoration: underline;
+          padding: .5rem .8rem;
+        }
+      }
+    }
+  }
+  
+  // Bureau Configuration scss @Nikul End
+  
+  /** Journey Config Page Redesign Started**/
+  .NP_Config_Group{
+    @include Com-sp;
+    align-items: normal;
+      .NP_Config_LeftSide{
+        flex: 0 1 25%;
+        padding-left: 1.25rem;;
+        .timeline{
+          &::before{
+            left: 100%;
+            top: 0;
+          }
+          .NP_Timeline_Icon_Grp{
+            @include Cjc-fe-ai;
+            .NP_Timeline_txt{
+              margin-right: 15px;
+              h4{
+                @include fsw-85;
+                margin-bottom: 5px;
+              }
+            }
+            .NP_Timeline_Icon{
+              width: 48px;
+              background: #EDF3F6;
+              height: 48px;
+              border-radius: 50px;
+              @include Cjc-center-ai;
+              >{
+                svg{
+                 path {
+                  fill: #98A6AD;
+                 }
+                }
+              }
+            }
+          }
+          .timeline-item{
+            &.Timeline_Active{
+              .NP_Timeline_Icon_Grp{
+                .NP_Timeline_txt{
+                  h4{
+                    color: $opl-blue;
+                  }
+                }
+                .NP_Timeline_Icon{
+                  background: $opl-blue;
+                  >{
+                    svg{
+                     path {
+                      fill: #ffffff;
+                     }
+                    }
+                  }
+                }           
+              }
+              .timeline-icon{
+                background: $opl-blue;
+                i{
+                  color: #FFFFFF;
+                }
+              }
+            }
+            &.Timeline_Complete{
+              .NP_Timeline_Icon_Grp{
+                .NP_Timeline_txt{
+                  h4{
+                    color: #0FAC37;
+                  }
+                }
+                .NP_Timeline_Icon{
+                  background: #0FAC37;
+                  >{
+                    svg{
+                     path {
+                      fill: #ffffff;
+                     }
+                    }
+                  }
+                }           
+              }
+              .timeline-icon{
+                background: #0FAC37;
+                i{
+                  color: #FFFFFF;
+                }
+              }
+            }
+          }
+        }
+      }
+     .radio-style{
+      display: flex;
+     }
+  
+      .NP_Config_RightSide{
+        flex: 0 1 72%;
+        padding: 25px;
+        padding-right: 1.25rem;
+  
+        .Main-heading-dual-Cont{
+          .text-heading-cards{
+            h4{
+              font-weight: 700;
+              margin-bottom: 5px;
+              margin-top: 5px;
+              font-size: 20px;
+            }
+            span{
+              &.NP_MB{
+                margin-bottom: 10px;
+                font-size: 16px;
+              }
+            }
+          }
+        }
+        .NP_Config_Right_Sub_GRP{
+          .card_Config_NP{        
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 3px 10px #00000014;
+            border: 1px solid #D3D6EF;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            @include Com-fw;
+            &.NP_flexWrap{
+              flex-wrap: wrap;
+            }
+            &:last-of-type{
+              margin-bottom: 0;
+            }
+           
+            .card_Config_NP_GRP{
+              @include Com-sp;
+              .NP_Config_Left{
+                @include Cai-center;
+                .NP_Timeline_Icon{
+                  width: 42px;
+                  background: #F5F6F8;
+                  height: 42px;
+                  border-radius: 50px;
+                  @include Cjc-center-ai;
+                  margin-right: 10px;
+                }
+                h4{
+                  font-weight: 500;
+                  margin: 0;
+                }
+                .NP_Config_Left_txt{
+                  span{
+                    @include fsw-65;
+                    color: $opl-blue;
+                  }
+                }
+              }
+              .NP_Config_Right{
+                @include Cai-center;
+                .NP_Config_LinkView{
+                  margin-left: 15px;
+                }
+              }
+            } 
+            .Card_Config_NP_View{
+              @include Com-fw;
+              padding-top: 15px;
+              .NP_Config_radio,
+              .NP_Config_Tab_GRP{
+                @include Com-fw;
+              }
+              .NP_Config_radio{
+                margin-bottom: 20px;
+                &:last-of-type{
+                  margin-bottom: 0px;
+                }
+                .NP_Config_radio_Grp{
+                  @include Com-fs;                             
+                }
+                h5{
+                  font-size: 16px;
+                  margin-bottom: 15px;
+                }
+              }
+              .NP_Config_Tab_GRP{
+                padding-top: 30px;
+              }
+                 
+            }
+            .Card_Config_NP_Check_GRP{
+             @include Com-fw;
+             background: #FAFAFC;
+              padding: 25px;
+              margin-top: 25px;
+              .Card_Config_NP_Check{
+                @include Com-sp;
+                border-bottom: 1px solid #DCE0E3;
+                padding: 18px 0;
+                &:first-of-type{
+                  padding-top: 0;
+                }
+                &.NP_flexWrap{
+                  flex-wrap: wrap;
+                }
+                &.NP_FlexStart{
+                  justify-content: flex-start
+                }
+                // .checkbox{
+                //   &.checkbox-circle{
+                //     label{
+                //       &::before{
+                //         top: -12px;
+                //       }
+                //     }
+                //   }
+                //   input[type=checkbox]{
+                //     &:checked{
+                //       +{
+                //         label{
+                //           &::after{
+                //             top: -10px;
+                //           }
+                //         }
+                //       }
+                //     }
+                //   }
+                // }
+                .form-check-inline{
+                  label{
+                    margin: 0;
+                  }
+                }
+                &.NP_SUB_Check{
+                  .Card_Config_NP_Check{
+                    padding-top: 15px;
+                  }
+                }
+                &:last-of-type{
+                  padding-bottom: 0;
+                  border-bottom: 0;
+                }
+                .Txt_Cont_Check{
+                  @include fsw-65;
+                  font-family: $ff-cs;
+                  color: #343A40;
+                }
+              }
+              .Card_Sub_Check_Config{
+                @include Com-sp;           
+              }
+            }
+            /* Common Link Hover Icon Change Color*/
+            .NP_Config_LinkView{
+              .link_btn{
+                display: flex;
+                align-items: center;
+                transform: scale(1.1);
+                cursor: pointer;
+                &:hover{
+                  svg{
+                    path{
+                      fill: $opl-blue;
+                    }
+                    g{
+                      path{
+                        &#Icon_Histroy_refresh{
+                          fill: #FFFFFF;
+                        }                            
+                      }
+                    }
+                  }
+                }
+              }
+              .NP_Coust_Config{
+                .tooltip-inner{
+                  background: #323A46;
+                  box-shadow: 0px 0px 8px #00000029;
+                  border-radius: 7px;
+                  font-family: $ff-ns;
+                }
+                &.tooltip {              
+                  .arrow {
+                    &::before {
+                      border-top-color: #323A46;
+                    }
+                  }
+                }
+              
+              }
+              
+            }
+          } 
+          .NP_Config_tab_Cont{
+            @include Com-fw;
+            margin-bottom: 15px;
+            .nav-bordered {
+              .nav-tabs {
+                .nav-item{
+                  margin-bottom: 0;
+                  margin-right: 15px;
+                  &:last-of-type{
+                    margin-right: 0;
+                  }
+                }
+                .nav-link{
+                  margin-right: 0;
+                  padding: 15px;
+                  .NP_TB_No_txt{
+                    @include Cjc-sp-ai;
+                    color: #343A40;
+                    label{
+                      height: 20px;
+                      margin: 0;
+                      border: 1px solid #343A40;
+                      color: #343A40;
+                      border-radius: 50px;
+                      display: flex;
+                      padding: 6px;
+                      align-items: center;
+                      width: 20px;
+                      justify-content: center;
+                      margin-right: 10px;
+                      opacity: .5;
+                      font-weight: 400;
+                      &.Check_Completed{
+                        background: #5CC176;
+                        color: #ffffff;
+                        opacity: 1;
+                        border: 1px solid #5CC176;
+                        em{
+                          margin: 0;
+                          font-size: 16px;
+                        }
+                      }
+                    }
+                  }
+                  &.active{
+                    border-bottom: 0 !important;
+                    box-shadow: inset 0px -2px 0px $opl-blue;
+                    .NP_TB_No_txt{
+                      border-color:$opl-blue;
+                      color: $opl-blue;
+                      label{
+                        background: $opl-blue;
+                        border: 1px solid $opl-blue;
+                        opacity: 1;
+                        color: #FFFFFF;       
+                        &.Check_Completed{
+                          background: #5CC176;
+                          color: #ffffff;
+                          opacity: 1;
+                          border: 1px solid #5CC176;
+                          em{
+                            margin: 0;
+                            font-size: 16px;
+                          }
+                        }             
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }    
+          
+          &.Config_Table_Scroll{
+            @include Com-fw;
+            .creditDetails_table {
+              overflow-x: scroll;
+              float: left;
+              overflow-y: hidden;
+              @media (max-width:1700px) {
+                max-width: 820px;
+              }
+              @media (max-width:1200px) {
+                max-width: 650px;
+              }
+              &::-webkit-scrollbar{
+                height: 5px;
+              }
+              .Table_Scroll_Config{
+               thead,tbody{
+                th,td{              
+                  &:nth-child(n){
+                    min-width: 150px;
+                  }
+                  &:nth-child(1){
+                    min-width: 200px;
+                  }
+                }
+               } 
+              }
+            }
+          }
+        }
+        .Btn_Config_NP{
+          padding-top: 25px;
+          @include Com-fw;
+          button{
+            margin-right: 15px;
+            &:last-of-type{
+              margin-right: 0;
+            }
+          }
+        }
+  
+        &.NP_Config_ComingSoon{
+          text-align: center;
+          max-height: 500px;
+          min-height: 500px;
+          align-items: center;
+          justify-content: flex-start;
+          display: flex;
+          flex-direction: column;
+          flex: 0 1 100%;
+          position: relative;
+          .__Jan_lotties_Not{
+            height: 350px;
+            width: 350px;
+          }
+          .NP_Config_Txt_GRp{
+            position: absolute;
+            bottom: 40px;
+            h4{
+              font-size: 28px;
+            }
+            h5{
+              font-size: 18px;
+              max-width: 550px;
+              font-weight: 500;
+              font-family: $ff-ns;
+              line-height: 1.5;
+              .btn_link{
+                color: $psbblue;
+              }
+            }
+          }
+        }
+      }
+    }
+    
+  
+    @media (min-width: 768px) {
+      .NP_Config_LeftSide{
+        .timeline{
+          @include Com-fw;
+          height: 100%;
+          .timeline-icon{
+            i{
+              left: 3px;
+            }
+          }
+          .timeline-item,
+          .timeline-desk{
+            @include Com-fw;
+          }
+          
+        }
+      }
+     
+      
+    }
+  /** Journey Config Page Redesign End**/
+  
+  // Notification Configure changes Start
+  .Common_flag_group{
+    &.jc-Fend{
+      justify-content: flex-end;
+    }
+    &.NotifiConfig_changes{
+      align-items: normal;
+      .Common_flag_group_sub{
+        box-shadow: none;
+        border: 1px solid $opl-bc;
+        margin-right: 0;
+        width: 49%;
+        align-items: flex-start;
+      }
+    }
+  }
+  
+  // Notification Configure changes Start

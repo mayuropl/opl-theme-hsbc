@@ -1,0 +1,174 @@
+<div class="container-fluid HSBC_Common_Pages mt-2">
+    <div class="__main_Container">
+        <div class="page_Details">
+            <div class="topside_btn" *ngIf="!showComparison">
+                <!-- Search By Button with Menu -->
+                <button mat-flat-button [matMenuTriggerFor]="searchByopt" class="search_label_btn">
+                     Search by <mat-icon class="ml-2 mr-0">unfold_more</mat-icon>
+                </button>
+                <!-- Search By Menu -->
+                <mat-menu #searchByopt="matMenu" class="filter_option_menu filter_option_menu_new">
+                    <h3 class="title_menu">
+                        Search Options
+                        <button mat-icon-button  color="primary" class="ml-1 mr-1"  (click)="resetAllFilters()">
+                            <i class="fi fi-sr-refresh red_text"></i>
+                          </button>
+                        <button mat-icon-button type="button">
+                            <i class="fi fi-br-cross-small"></i>
+                        </button>
+                    </h3>
+
+                    <ng-container *ngFor="let opt of searchByOptionsTopBar; let i = index">
+                        <button mat-menu-item 
+                            [matMenuTriggerFor]="childMenus.toArray()[i]"
+                            (click)="onParentMenuItemClick($event, i, opt.dataset_id, opt.dataset_name)"
+                            class="mr-0 pr-1 no_wrap">
+                            <span class="menu_text">
+                                <i [ngClass]="getSearchByIcon(opt.key)"></i> {{ opt.key }}
+                            </span>
+                            <span class="filter_num">{{ getSelectedCount(opt.filter_name) }}</span>
+                        </button>
+                    </ng-container>
+
+                </mat-menu>
+
+                <ng-container *ngFor="let opt of searchByOptionsTopBar; let i = index">
+                    <mat-menu #childMenu="matMenu">
+                        <div class="filter_menuBar filter_menuBarNew">
+                            <h3 class="filter_menuBar_ttl">{{ opt.key }}</h3>
+                            <div class="pos_rel subloaderShowingmenu" [ngClass]="{'subloaderShowingmenu': isLoadingSearchBy}">
+                                <div class="table_sep_loader" *ngIf="isLoadingSearchBy">
+                                    <div class="loaderoverlay loader_screen">
+                                        <div class="loader_screen_center">
+                                            <div class="loader_screen_lottie">
+                                                <span class="logo_loader">
+                                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                                </span>
+                                            </div>
+                                         </div>
+                                    </div>
+                                </div>
+                                <div class="filter_searchbox" (click)="$event.stopPropagation()"
+                                    (keydown)="$event.stopPropagation()">
+                                    <div class="filter_searchbox_wrapper">
+                                        <i class="fas fa-search searchbox_Icn"></i>
+                                        <input type="text" placeholder="Search" class="searchbox_input"
+                                            [(ngModel)]="searchByDataHistory[opt.dataset_id].searchValue" 
+                                            (ngModelChange)="onSearchChange($event, opt.dataset_id, opt.dataset_name)"/>
+                                    </div>
+                                </div>
+    
+                                <div class="filter_details checkbox_lists" (click)="$event.stopPropagation()"
+                                    (keydown)="$event.stopPropagation()" (scroll)="onScroll($event,opt.dataset_id,opt.dataset_name, opt.filter_name)">
+                                    <mat-checkbox *ngFor="let item of dependantFilters"
+                                        [checked]="selectedItemsMap[opt.filter_name]?.includes(item.value)"
+                                        (change)="onSelectField($event,opt.filter_name,item.value,opt.dataset_id)">
+                                        {{ item.key }}
+                                    </mat-checkbox>
+                                </div>
+                                <div class="filter_action">
+                                    <button mat-flat-button color="primary" class="no_wrap" (click)="applyFilters()">Apply</button>
+                                    <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                                        (click)="resetFilters(opt.dataset_id, opt.dataset_name,opt.filter_name)">
+                                        <i class="fi fi-sr-refresh mr-1"></i> Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-menu>
+                </ng-container>
+
+                <!-- Submenu for Item 1 -->
+                <!-- <mat-menu #menu1="matMenu" class="filter_menuMain">
+                    <div class="filter_menuBar filter_menuBarNew">
+                        <h3 class="filter_menuBar_ttl">Campaign</h3>
+
+                        <div class="filter_searchbox" (click)="$event.stopPropagation()"
+                            (keydown)="$event.stopPropagation()">
+                            <div class="filter_searchbox_wrapper">
+                                <i class="fas fa-search searchbox_Icn"></i>
+                                <input type="text" placeholder="Search" class="searchbox_input" />
+                            </div>
+                        </div>
+
+                        <div class="filter_details checkbox_lists" (click)="$event.stopPropagation()"
+                            (keydown)="$event.stopPropagation()">
+                            <mat-checkbox>FEX Revenue</mat-checkbox>
+                            <mat-checkbox>US Corridor</mat-checkbox>
+                            <mat-checkbox>Corporate Card</mat-checkbox>
+                            <mat-checkbox>Utility Card</mat-checkbox>
+                            <mat-checkbox>Receivable Finance</mat-checkbox>
+                        </div>
+
+                        <div class="filter_action">
+                            <button mat-flat-button color="primary">Apply</button>
+                            <button mat-stroked-button class="btn_design white_bg" color="primary">
+                                <i class="fi fi-sr-refresh mr-1"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </mat-menu> -->
+
+            </div>
+            <mat-tab-group mat-align-tabs="start" class="tabs-design tabs-design2">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        Lending Wallet
+                    </ng-template>
+                    <mat-card-content>
+                        <app-pr-top-filter-structured [filters]="filters" [filtersC]="filtersC" [datasetsC]="datasetsC" (filtersApplied)="handleAppliedFilters($event)"
+                            (filtersAppliedC)="handleAppliedFiltersC($event)" (resetAppliedC)="handleAppliedResetC($event)" #prTopFilter (showSummaryChange)="onSummaryChange($event)" 
+                            (viewByChanged)="onViewByChanged($event)" (filtersStateChanged)="onFiltersStateChanged($event)"></app-pr-top-filter-structured>
+                        <ng-container *ngIf="!showComparison">
+                            <app-pr-lending-analytics-structured [lendingAnalysis]="lendingAnalysis" [previousLendingAnalysis]="previousLendingAnalysis" 
+                            [isLoadingFromParent]="isLoadingLendingAnalysis"
+                            (unitChanged)="onUnitChanged($event)" [selectedUnit]="selectedUnit"></app-pr-lending-analytics-structured>
+                    
+                        <div class="wallet_chart_main mt-4">
+                            <div class="card_box">
+                                <app-trends-lending-chart-structured [trendsLendingChartsData]="trendsLendingChartsData" [dateOfReportMap]="dateOfReportMap"
+                                    [selectedUnit]="selectedUnit" [isLoadingFromParent]="isLoadingTrendsLending"></app-trends-lending-chart-structured>
+                            </div>
+                            <div class="card_box">
+                                <app-segment-level-chart-structured [trendsLendingChartsData]="trendsLendingChartsData" [latestDateOfReportShow]="latestDateOfReportShow" [dateOfReportMap]="dateOfReportMap"
+                                    [segmentLevelOppData]="segmentLevelOppData" [selectedUnit]="selectedUnit" [isLoadingFromParent]="isLoadingSegmentLevel" [hasFiltersApplied]="hasFiltersApplied">
+                                </app-segment-level-chart-structured>
+                            </div>
+                        </div>
+                        <app-product-level-chart-structured [productLevelOppData]="productLevelOppData" [productLevelChartData]="productLevelChartData" [customerLevelOppData]="customerLevelOppData"
+                            [customerLevelChartData]="customerLevelChartData" [selectedUnit]="selectedUnit" [isLoadingFromParent]="isLoadingProductLevel" [isLoadingProductLevelChart]="isLoadingProductLevelChart"
+                            (customerNameChange)="onCustomerSelected($event)" [customerWiseProductsData]="customerWiseProductsData"
+                             (pageChangeCustomerLevel)="onPageChangeCustomerLevel($event)" [totalRecordsCustomer]="totalRecordsCustomer"
+                             (pageChangeProductLevel)="onFetchProductLevelCustomers($event)" (searchSortEvent)="onProductOrCusomerLvlSortSearch($event)"
+                             [totalRecordsProduct]="totalRecordsProduct" [productWiseCustomerData]="productWiseCustomerData" 
+                             [totalRecordsProductParent]="totalRecordsProductLevel" [totalRecordsCustomerProducts]="totalRecordsCustomerWiseProducts" 
+                             (pageChangeProductParent)="getProductLevelOppCharts($event)" (pageChangeCustomerProducts)="getCustomerLevelWiseProduct($event)"
+                             (emitExcelDownloadProductLevel)="emitExcelDownloadProductLevel($event)" [latestDateOfReportShow]="latestDateOfReportShow"
+                             [filtersApplied]="appliedFilters" [hasFiltersApplied]="hasFiltersApplied"> 
+                        </app-product-level-chart-structured>
+                        </ng-container>
+                        <ng-container *ngIf="showComparison && clickOnApply">
+                            <app-pr-insights-analysis-structured [lendingAnalysisC]="lendingAnalysisC" (unitChangedC)="onUnitChangedC($event)" [selectedUnitC]="selectedUnitC"
+                            [dateOfReportMap]="dateOfReportMap" [latestDateOfReport]="latestDateOfReport" [selectedDateOfReport]="selectedDateOfReport"
+                            [isLoadingFromParentC]="isLoadingLendingAnalysisC" ></app-pr-insights-analysis-structured>
+                            <app-comparison-analysis-structured [firstLevelDataC]="firstLevelDataC" [totalRecordsFirstLevel]="totalRecordsFirstLevel"
+                            [selectedViewBy]="selectedViewByShow" (pageChangeFirstLevel)="onFetchFirstLevelView($event)"
+                            [secendLevelViewData]="secendLevelViewData" (pageChangeSecondLevel)="onFetchSecendLevelView($event)" [totalRecordsSecondLevel]="totalRecordsSecondLevel"
+                            [filtersffC]="filtersffC" [calculationOn]="calculationOn" [selectedUnitC]="selectedUnitC" [isLoadingFromParent]="isLoadingComparisionFL"
+                            [isFilterApplied]="isFilterApplied" [dataSetIdCRQ]="dataSetIdCRQ" [dataSetIdCTRQ]="dataSetIdCTRQ" (emitComaprisonExcelDownload)="emitComaprisonExcelDownload($event)"
+                            [latestDateOfReportShowCom]="latestDateOfReportShowCom" [selectedDateOfReportShowCom]="selectedDateOfReportShowCom" [hasFiltersApplied]="hasFiltersApplied"></app-comparison-analysis-structured>
+                        </ng-container>
+                        </mat-card-content>
+                </mat-tab>
+                    <!-- <mat-tab>
+                    <ng-template mat-tab-label>
+                        Liability Wallet
+                    </ng-template>
+                    <mat-card-content>
+                        <app-banker-analysis-tabs></app-banker-analysis-tabs>
+                    </mat-card-content>
+                </mat-tab> -->
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

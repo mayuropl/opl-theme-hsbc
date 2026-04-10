@@ -1,0 +1,1133 @@
+/** GST Details & ITR Details & BankStatement Page Css Start 05_May_2021 **/
+._gst_Slider_Grp {
+  @include Com-sp;
+  column-gap: 15px;
+  align-items: normal;
+
+  &.fsStart {
+    justify-content: flex-start;
+  }
+
+  ._View_gst_Slider {
+    width: calc(100% - 35%);
+    float: left;
+
+    .slick-slider {
+
+      .slick-track,
+      .slick-list {
+        margin: 0;
+      }
+
+      // .slick-track{
+      //    width: 100% !important;
+      // }
+      &.slick-initialized {
+        .slick-slide {
+          margin-right: 20px;
+
+          &:last-of-type {
+            margin-right: 0;
+          }
+        }
+
+        // @media screen and (max-width: $below-ipad) {
+        //   .slick-list {
+        //     margin: 0;
+        //     width: 515px;
+        //   }
+        //   .slick-slide{
+        //     margin-right: 15px;
+        //     &:last-of-type{
+        //       margin-right: 0;
+        //     }
+        //   }
+
+        // }
+        @media screen and (max-width: 515px) {
+          .slick-slide {
+            margin: 0 auto;
+
+            &:last-of-type {
+              margin-right: 0;
+            }
+          }
+
+        }
+
+        //   @media screen and (max-width: 385px) {
+        //     .slick-list {
+        //       width: 295px;
+        //     }
+
+        //   }
+
+      }
+    }
+
+    .owl-carousel {
+      position: relative;
+
+      .owl-item {
+        &:last-of-type {
+          margin-right: 0 !important;
+        }
+      }
+
+      .owl-nav {
+        position: absolute;
+        top: 18px;
+        width: 100%;
+        margin: 0;
+
+        .owl-prev {
+          left: -10px;
+          position: absolute;
+        }
+
+        .owl-next {
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
+
+    &._fullSlider {
+      width: 100%
+    }
+
+    &._autoSlider {
+      min-width: 265px;
+      width: auto;
+    }
+  }
+
+  .GstCards {
+    @include Cai-center;
+    border: 1px solid #cbcbcb;
+    padding: 16px 20px;
+    flex-direction: row;
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: none;
+    max-width: 260px;
+    display: inline-flex;
+    width: 100%;
+    border-radius: 5px;
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.acitve {
+      border-color: #32327F;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0px 10px 20px #DDEBFF91;
+    }
+
+    &.Completed {
+      border-color: #32327F;
+      color: #00847F;
+
+      .overlay_viewCount {
+        border: 0;
+      }
+    }
+
+    .NP_Remove_bs {
+      position: absolute;
+      right: 2px;
+      width: 1.5em;
+      top: 4px;
+      cursor: pointer;
+
+      svg {
+        fill: green;
+      }
+    }
+
+    .gst_txt_grp {
+      display: grid;
+      float: left;
+      width: calc(100% - 15%);
+      font-size: 14px;
+      font-weight: 500;
+
+      .Gst_State {
+        // color: #c8c8c8;
+        color: #000000;
+      }
+
+      .Gst_Number {
+        color: #32327F;
+      }
+    }
+
+    .overlay_viewCount {
+      width: calc(100% - 85%);
+      border: 1px solid $HsbcColor;
+      border-radius: 19px;
+      transition: 0.5s ease;
+      text-align: center;
+      @include Cjc-center-ai;
+
+      .mat-icon {
+        margin-right: 0;
+      }
+
+      .txt_count {
+        color: $HsbcColor;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+
+        .linkView {
+          color: $HsbcColor;
+          text-decoration: none;
+        }
+      }
+
+    }
+  }
+}
+
+._add_New_BtnGrp,
+._add_New_gst {
+  // width: calc(100% - 80%);
+  width: auto;
+  float: right;
+
+  .Common_add_btn,
+  .gst_add_btn {
+    @include Com-jc;
+    border: 2px dashed $HsbcColor;
+    box-shadow: none;
+    background-color: #fefeff;
+    color: $HsbcColor;
+    font-weight: 500;
+    font-size: 15px;
+    min-width: 245px;
+
+    &.bsBtn {
+      height: 100%;
+    }
+  }
+
+}
+
+.GST_Input_NP {
+  @include Com-aic-fw;
+}
+
+.NP_GST_txt {
+  @include Com-aic-fw;
+
+  .NP_GST_First {
+    flex: 0 0 20%;
+  }
+
+  .NP_GST_second {
+    flex: 0 0 60%;
+  }
+
+  .NP_GST_third {
+    flex: 0 0 20%;
+  }
+}
+
+.NP_GST_OTP {
+  padding-bottom: 1.25em;
+
+  @media screen and (max-width: $ipad) {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.NP_GST_TXT_View {
+  @include Com-sp;
+  padding: 0.5rem 0;
+}
+
+.Profile-get-Not-found {
+  @include Com-fw;
+  margin: 15px 0;
+  text-align: center;
+  color: #707070;
+  font-size: 16px;
+}
+
+.Mobile-gst-manually {
+  //@include Com-aic-fw;
+  @include Com-sp;
+  padding: 0px;
+  border-bottom: 1px solid $opl-bc;
+
+  &.NP_bb-0 {
+    border-bottom: 0;
+  }
+
+  &.gst-pad {
+    padding: 1.5rem 0;
+    border-top: 1px solid $opl-bc;
+  }
+
+  .NP_MGST_heading {
+    @include Com-aic-fw;
+    flex: 0 0 30%;
+    max-width: 30%;
+
+    .MGST_txt {
+      flex: 0 0 10%;
+      max-width: 10%;
+    }
+
+    .MGST_txt_month {
+      flex: 0 0 90%;
+      max-width: 90%;
+    }
+  }
+
+  .NP_MGST_heading_Input {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+// GST Details
+// ITR Details
+.m-t-show {
+  display: none;
+}
+
+.one-t-data {
+  float: left;
+  @include Cai-center;
+  margin: 0.2rem 0;
+}
+
+.__FileUpload {
+  &._itr {
+    @include Com-sp;
+    column-gap: 20px;
+    flex-wrap: wrap;
+  }
+}
+
+._ITR_uploadGrp {
+  @include Com-fw;
+  width: calc(100% / 3 - 20px);
+  display: grid;
+  row-gap: 9px;
+
+  &.MT-1_5 {
+    margin-top: 1.5rem;
+  }
+
+  ._itr_label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+    @include Com-fw;
+  }
+
+  #file_label,
+  .itr_file_label {
+    @include Com-sp;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 20px;
+
+    .file_upload_View {
+      @include Com-aic-fw;
+
+      .__fileUpload_grp {
+        min-width: 100%;
+        @include Cai-center;
+        column-gap: 10px;
+
+        .mat-icon {
+          height: 24px;
+          width: 24px;
+        }
+
+        .txt_over {
+          width: 85%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 16px;
+          font-weight: 400;
+          color: #32327F;
+        }
+      }
+
+      .custom-file-input {
+        position: absolute;
+        max-width: 100%;
+        width: auto;
+        // width: calc(100% - 150px);
+        cursor: pointer;
+      }
+    }
+
+    .FileRemove {
+      height: 26px;
+      width: 26px;
+      @include Cjc-center-ai;
+
+      .mat-icon {
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+        overflow: inherit;
+      }
+    }
+  }
+}
+
+// ITR Details
+// Bank Statement
+.bankStatement-link {
+  color: $HsbcColor;
+  text-decoration: underline;
+}
+
+.BS_Date_month_NP {
+  @include Cjc-fe-ai;
+  float: $left;
+
+  &.jc-FStart {
+    justify-content: flex-start;
+  }
+}
+
+._BankStatement_details_Grp {
+  @include Com-sp;
+
+  ._Form_Cont_Grp,
+  ._add_New_BtnGrp {
+    width: calc(100% / 2 - 20px);
+
+    &.WNewForm {
+      width: calc(35% / 1 - 0px);
+    }
+
+    &.bsNewForm {
+      width: calc(100% / 1 - 0px);
+
+      .Form_BS {
+        @include Cai-center;
+        flex-wrap: wrap;
+        float: left;
+        column-gap: 15px;
+        width: 100%;
+
+        .NP_HSBC_ComInput {
+          width: calc(100% / 4 - 10px);
+        }
+      }
+    }
+
+    &.WNewOne {
+      width: calc(20% / 1 - 0px);
+    }
+  }
+}
+
+.__FileUpload_Form_Grp {
+  &.Common_List_drag {
+    display: flex;
+    align-items: normal;
+    column-gap: 20px;
+    float: left;
+    width: 100%;
+    flex-direction: column;
+    .Common_Drge_Drop,
+    .files_list_Grp {
+      width: 100%;
+    }
+
+    .Common_Drge_Drop {
+      .Input_txt_File {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+.Common_Drge_Drop {
+  padding: 1.5rem;
+  border-radius: 0;
+  text-align: center;
+  border: dashed 2px rgba($color: #000000, $alpha: 0.2);
+  background: #ffffff;
+  margin: 0 auto;
+  @include Com-fw;
+  min-height: 135px;
+  display: grid;
+  position: relative;
+
+  .File_input_Common {
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+
+  .fileUpload_Icon {
+    border: 1px solid $HsbcColor;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 20px;
+    color: $HsbcColor;
+    @include Cai-center;
+    column-gap: 10px;
+
+    em {
+      margin-right: 10px;
+      line-height: 1px;
+    }
+  }
+
+  .Drop_txt {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba($color: #000000, $alpha: 0.3);
+
+    span {
+      font-weight: 600;
+      color: #23699e;
+    }
+  }
+
+  .Input_txtFill_Cutome {
+    @include Com-jc;
+    flex-direction: column;
+
+    .Input_txt_File {
+      display: flex;
+      align-items: center;
+      column-gap: 15px;
+    }
+  }
+}
+
+.files_list_Grp {
+  @include Com-fw;
+  display: grid;
+  row-gap: 10px;
+  align-items: flex-start;
+
+  .singlefile_View {
+    padding: 10px 20px;
+    @include Com-aic-fw;
+    flex-direction: column;
+    text-align: left;
+    border-top: 1px solid #d7d8d6;
+
+    .fileProgress {
+      @include Com-sp;
+      column-gap: 10px;
+    }
+
+    .Progreebar {
+      @include Com-fw;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    .FileName_Icon_grp {
+      @include Cai-center;
+      column-gap: 10px;
+      width: 100%;
+
+      .file_Icon {
+        img {
+          height: 26px;
+          width: 26px;
+        }
+      }
+
+      .fileName {
+        font-size: 14px;
+        font-weight: 500;
+        color: #000000;
+        margin: 0;
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .filesize {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #a4a4a4;
+        margin: 0;
+        margin-bottom: 0.25rem;
+      }
+    }
+
+    .FileName_IconUpload {
+      @include Cai-center;
+      column-gap: 10px;
+      width: 100%;
+
+      .file_Icon {
+        font-size: 30px;
+        img {
+          height: 26px;
+          width: 26px;
+        }
+      }
+
+      .fileName {
+        font-size: 14px;
+        font-weight: 500;
+        color: #000000;
+        margin: 0;
+        width: calc(100% - 70px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .filesize {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #a4a4a4;
+        margin: 0;
+        margin-bottom: 0.25rem;
+      }
+    }
+
+    .delete_Icon {
+      display: flex;
+      margin-left: 0.5rem;
+      cursor: pointer;
+      align-self: center;
+      align-items: center;
+      font-weight: 700;
+      // color: $opl-danger;
+      z-index: 9;
+
+      .mat-icon {
+        font-size: 20px;
+      }
+
+      em {
+        margin-right: 5px;
+      }
+
+      .primary {
+        color: #00847F;
+      }
+
+      .grey {
+        color: #878787;
+      }
+    }
+
+    .password_View {
+      float: left;
+      display: flex;
+      align-items: center;
+      width: 25%;
+      opacity: 1;
+      min-height: 1.5rem;
+      margin-right: 0.2rem;
+      position: relative;
+
+      .mat-mdc-form-field {
+        --mat-form-field-container-height: 36px;
+        --mat-form-field-container-vertical-padding: 7px;
+        font-size: 13px;
+
+        &.mat-focused {
+          .mat-mdc-form-field-focus-overlay {
+            opacity: 0;
+          }
+        }
+
+        .mat-mdc-text-field-wrapper {
+          &:hover {
+            .mat-mdc-form-field-focus-overlay {
+              opacity: 0;
+            }
+          }
+
+          .mat-mdc-form-field-flex {
+            .mat-mdc-floating-label {
+              top: auto;
+            }
+          }
+
+          &.mdc-text-field--filled {
+            &:not(.mdc-text-field--disabled) {
+              background-color: transparent;
+              padding: 0 10px;
+            }
+          }
+        }
+
+        .mat-mdc-form-field-subscript-wrapper {
+          display: none;
+        }
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: -8px;
+        margin: auto;
+        width: 1px;
+        height: 65%;
+        background-color: #D6DCEA;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -8px;
+        margin: auto;
+        width: 1px;
+        height: 65%;
+        background-color: #D6DCEA;
+      }
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      margin-right: 40px;
+    }
+    .file_status{
+      color: #6C757D;
+      font-weight: 400;
+      width: 25%;
+    }
+  }
+
+  &.viewBS_New {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #D7D8D6;
+    padding: 30px;
+  }
+}
+
+.CommonFiled_detailView {
+  @include Com-sp;
+  column-gap: 10px;
+  padding: 16px 0;
+  flex-wrap: wrap;
+
+  .CommonFiledview_detail {
+    float: left;
+    width: calc(100% / 4 - 10px);
+    display: grid;
+    row-gap: 10px;
+    padding: 0 30px;
+    text-align: center;
+    align-items: center;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      width: 1px;
+      height: 100%;
+      background-color: #D6DCEA;
+    }
+
+    &:last-of-type {
+      &::after {
+        display: none;
+      }
+    }
+
+    img {
+      height: 30px;
+      width: 30px;
+      margin: 0 auto;
+    }
+
+    .txt_grp {
+      p {
+        color: #333333;
+        font-size: 14px;
+        font-weight: 500;
+
+        &:first-child {
+          color: #32327F;
+        }
+      }
+    }
+
+  }
+}
+
+/** GST Details & ITR Details & BankStatement Page Css End 05_May_2021 **/
+
+
+.left_side_Cont,
+.Right_side_Cont {
+  width: calc(100% / 2 - 20px);
+
+}
+
+.Right_side_Cont {
+  .nfdl_ag_cont {
+    background: #F7F7F7;
+    padding: 30px 25px;
+    row-gap: 15px;
+    display: grid;
+    height: 100%;
+  }
+
+  .__HSBC_ag_nsdlWhite {
+    background: #FFFFFF;
+    padding: 30px 25px;
+
+    .Img_tx_grp_nsdl {
+      @include Cai-center;
+      column-gap: 15px;
+
+      img {}
+
+      span {
+        font-size: 20px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .__Top_Heading_GRP {
+    .Heading__H4 {
+      margin: 0;
+      font-size: 21px;
+      font-weight: 500;
+      color: #333333;
+    }
+  }
+}
+.Common_Info_grp{
+  @media screen and (max-width: 1024px) {
+    flex-wrap: wrap;
+    .Common_Info_view{
+      width: 100% !important;
+      margin-bottom: 10px;
+    }
+  }
+}
+.Common_Card_info {
+  float: left;
+  width: 100%;
+
+  .Common_Info_view {
+    display: flex;
+    align-items: center; 
+    width: 50%;
+    .mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 24px;
+    }
+  }
+  ._Info_btn_grp {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width:768px) {
+
+  .Common_Cards {
+    .Common_Cards_Grp {
+      .Common_Card_Cgrp {
+        .Heading_grp {
+          .Heading__H5 {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  /* ITR Details Pages */
+  .__FileUpload {
+    &._itr {
+      row-gap: 10px;
+    }
+  }
+
+  ._ITR_uploadGrp {
+    width: calc(100% / 1 - 0px);
+
+    ._itr_label {
+      font-size: 14px;
+    }
+
+    #file_label,
+    .itr_file_label {
+      padding: 15px;
+
+      .file_upload_View {
+        .__fileUpload_grp {
+          .mat-icon {
+            height: 18px;
+            width: 18px;
+          }
+
+          .txt_over {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+  }
+
+  /* Bank Statment */
+  ._BankStatement_details_Grp {
+    flex-wrap: wrap;
+
+    ._add_New_BtnGrp,
+    ._Form_Cont_Grp {
+
+      &.WNewOne,
+      &.WNewForm {
+        width: calc(100% - 0px);
+      }
+    }
+
+    /* Bank Statement Upload View */
+    ._Form_Cont_Grp {
+      &.bsNewForm {
+        .Form_BS {
+          .NP_HSBC_ComInput {
+            width: calc(100% / 1 - 0px);
+          }
+        }
+      }
+    }
+  }
+
+  .__FileUpload_Form_Grp {
+    &.Common_List_drag {
+      flex-wrap: wrap;
+
+      .Common_Drge_Drop,
+      .files_list_Grp {
+        width: calc(100% - 0px);
+      }
+
+    }
+  }
+
+  .Common_Drge_Drop {
+    .Input_txtFill_Cutome {
+      .Input_txt_File {
+        flex-direction: column;
+      }
+    }
+  }
+
+  .files_list_Grp {
+    .singlefile_View {
+      .fileProgress {
+        flex-wrap: wrap;
+      }
+
+      .password_View {
+        width: 80%;
+
+        &::before {
+          display: none;
+        }
+      }
+
+      .delete_Icon {
+        .mat-icon {
+          font-size: 18px;
+          @include Cjc-center-ai;
+        }
+      }
+    }
+  }
+
+  .CommonFiled_detailView {
+    row-gap: 45px;
+    // border: 1px solid #D6DCEA;
+
+    .CommonFiledview_detail {
+      width: calc(50% - 10px);
+
+      img {
+        height: 27px;
+        width: 27px;
+      }
+
+      .txt_grp {
+        p {
+          font-size: 14px;
+        }
+      }
+
+      &:nth-child(2) {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .Common_Cards {
+    .Common_Cards_Grp {
+      .Common_Card_Cgrp {
+        .Common_Card_info {
+          float: left;
+          width: 100%;
+
+          .Common_Info_grp {
+            .Common_Info_view {
+              .mat-icon {
+                height: 20px;
+                width: 20px;
+              }
+            }
+
+            .Btn__Common {
+              &.__Primary {
+                min-width: 220px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width:767px) {
+  .acc_detail_desp {
+    padding: 0;
+  }
+
+  .CommonFiled_detailView {
+    row-gap: 0;
+    padding: 0;
+
+    .CommonFiledview_detail {
+      width: 100%;
+      border-bottom: 1px solid #D6DCEA;
+      padding: 20px 0;
+
+      &::after {
+        display: none;
+      }
+
+      img {
+        height: 27px;
+        width: 27px;
+      }
+
+      .txt_grp {
+        p {
+          font-size: 14px;
+        }
+      }
+
+    }
+  }
+
+  .files_list_Grp {
+    .singlefile_View {
+      .FileName_IconUpload {
+        flex-wrap: wrap;
+
+        .info {
+          width: 80%;
+        }
+
+        .password_View {
+          width: 70%;
+        }
+      }
+    }
+  }
+}
+
+.upload_bank_mange{
+  display: flex;
+  fieldset{
+    width: 25%;
+    &+fieldset{
+      margin-left: 15px;
+    }
+    .mat-mdc-form-field{
+      width: 100%;
+    }
+    .btn_design{
+      width: 100%;
+      line-height: 48px;
+      border-radius: 4px;
+    }
+    .input_field{
+      .mat-mdc-form-field-infix{
+        min-height: 50px;
+        padding: 15px 0 10px 0;
+      }
+      .mat-mdc-select-arrow{
+        margin-top: -7px;
+      }
+    }
+  }
+  .custom_month_picker .form_box{
+    max-width: 100%;
+    border: 1px solid #C4CEDD;
+    // background: #F3F3F3;
+    height: 50px;
+    position: relative;
+    i{
+      position: absolute;
+      right: 10px;
+      z-index: 0;
+      color: #000;
+    }
+    .form-control{
+      color: #000;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      z-index: 1;
+    }
+  } 
+}
+
+.small_select_box{
+  .input_field{
+    .mat-mdc-form-field-infix{
+      min-height: 50px;
+      padding: 15px 0 10px 0;
+    } 
+  }
+}

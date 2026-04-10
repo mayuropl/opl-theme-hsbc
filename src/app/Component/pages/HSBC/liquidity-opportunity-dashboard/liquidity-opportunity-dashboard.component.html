@@ -1,0 +1,462 @@
+<div class="container-fluid HSBC_Common_Pages ">
+    <div class="__main_Container">
+        <div class="page_Details">
+            <div class="page_Title_sec">
+                <div class="page_Title_left with_sle">
+                    <h4 class="cursor_pointer">
+                        <!-- <em class="fmdi fmdi-arrow-left mr-2"></em> -->
+                        Liquidity Opportunity Dashboard
+                    </h4>
+                </div>
+                <div class="page_Title_Right">
+                    <div class="custom_month_picker">
+                        <div class="form_box">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date"
+                                bsDatepicker [maxDate]="maxDate"
+                                [bsConfig]="{ dateInputFormat: 'MMM YYYY', adaptivePosition: true, maxDate: maxDate }"
+                                (ngModelChange)="getAlertsSubTabData(0)" (onShown)="onOpenCalendar($event)"
+                                onkeydown="return false">
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pipeline-flow-container">
+                <!-- -->
+                <div class="pipeline-flow-cards">
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon">
+                            <i class="fi fi-rr-users"></i>
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">Total Clients</span>
+                            <h4 class="pipeline-card__value">₹500 Cr</h4>
+                        </div>
+                    </div>
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon">
+                            <i class="fi fi-rr-loan"></i>
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">Total Balance</span>
+                            <h4 class="pipeline-card__value">₹500 Cr</h4>
+                        </div>
+                    </div>
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon">
+                            <img src="assets/images/hsbc-title.svg" alt="">
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">HSBC Balance</span>
+                            <h4 class="pipeline-card__value">120</h4>
+                        </div>
+                    </div>
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon">
+                            <i class="fi fi-rr-lightbulb-on"></i>
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">Total Opportunity</span>
+                            <h4 class="pipeline-card__value">120</h4>
+                        </div>
+                    </div>
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon">
+                            <i class="fi fi-rr-lightbulb-head"></i>
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">Avg Opportunity %</span>
+                            <h4 class="pipeline-card__value">60%</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar white_bg">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Segment Level</h4>
+                    </div>
+                </div>
+
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th>Sr. No.</th>
+                                <th width="20%">Segment
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>Clients
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>Total Balance
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>HSBC Balance
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>Opportunity
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>Opportunity %
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody class="pos_rel">
+                            <!-- <div class="table_sep_loader">
+                          <div class="loaderoverlay loader_screen">
+                            <div class="loader_screen_center">
+                                <div class="loader_screen_lottie">
+                                        <span class="logo_loader">
+                                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                        </span>
+                                </div>
+                                <h3>Please wait data is loading</h3>
+                            </div>
+                        </div>
+                      </div> -->
+                            <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                <td></td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select" panelClass="small_radio">
+                                                <mat-option>
+                                                    <mat-radio-button>Corporate</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option>
+                                                    <mat-radio-button>SME</mat-radio-button>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button mat-icon-button class="matIcon red_icn mr-2"
+                                        (click)="isCollapsed = !isCollapsed" [ngClass]="{'rotate_icon': !isCollapsed}">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button> 1.
+                                </td>
+                                <td>Corporate</td>
+                                <td>50</td>
+                                <td>₹300 Cr</td>
+                                <td>₹120 Cr</td>
+                                <td>₹180 Cr</td>
+                                <td>60%</td>
+                            </tr>
+                            <tr class="collapsing_tr" [ngbCollapse]="isCollapsed">
+                                <td colspan="15" class="intable_td">
+                                    <div class="box_design mb-2">
+                                        <div class="tableResponsive inside_table">
+                                            <table class="bordered_table w-100 after_cont_none">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th width="40%">RM Name</th>
+                                                        <th class="text-center">Clients</th>
+                                                        <th class="text-center">Total Balance</th>
+                                                        <th class="text-center">HSBC Balance</th>
+                                                        <th class="text-center">Opportunity</th>
+                                                        <th class="text-center">Opportunity %</th>
+                                                        <th class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td>Ritesh Patel</td>
+                                                        <td class="text-center">750</td>
+                                                        <td class="text-center">₹120 Cr</td>
+                                                        <td class="text-center">₹72 Cr</td>
+                                                        <td class="text-center">₹70 Cr</td>
+                                                        <td class="text-center">58%</td>
+                                                        <td class="text-center">
+                                                            <a href="javascript:void(0)"
+                                                                (click)="openCrilicOpportunityPopup()"
+                                                                class="link">View</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2.</td>
+                                                        <td>Ritesh Patel</td>
+                                                        <td class="text-center">750</td>
+                                                        <td class="text-center">₹120 Cr</td>
+                                                        <td class="text-center">₹72 Cr</td>
+                                                        <td class="text-center">₹70 Cr</td>
+                                                        <td class="text-center">58%</td>
+                                                        <td class="text-center">
+                                                            <a href="javascript:void(0)"
+                                                                (click)="openCrilicOpportunityPopup()"
+                                                                class="link">View</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3.</td>
+                                                        <td>Ritesh Patel</td>
+                                                        <td class="text-center">750</td>
+                                                        <td class="text-center">₹120 Cr</td>
+                                                        <td class="text-center">₹72 Cr</td>
+                                                        <td class="text-center">₹70 Cr</td>
+                                                        <td class="text-center">58%</td>
+                                                        <td class="text-center">
+                                                            <a href="javascript:void(0)"
+                                                                (click)="openCrilicOpportunityPopup()"
+                                                                class="link">View</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="pagination-table NP_LeftPagintion py-2">
+                                            <div class="dataTables_info" id="tickets-table_info" role="status"
+                                                aria-live="polite">
+                                                Showing
+                                                1 to 1 of 20 rows
+                                                <div class="dataTables_length" id="tickets-table_length">
+                                                    <div class="NP_HSBC_ComInput select-field">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-select [panelClass]="'pagination_select'">
+                                                                <mat-option>
+                                                                    1
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <span>row per page</span>
+                                            </div>
+                                            <div class="text-md-right float-md-right pagination-rounded">
+                                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                    <ngb-pagination [maxSize]="3" [rotate]="true"
+                                                        [boundaryLinks]="true">
+                                                    </ngb-pagination>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                    <button mat-icon-button class="matIcon red_icn mr-2"
+                                        (click)="isCollapsed = !isCollapsed" [ngClass]="{'rotate_icon': !isCollapsed}">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button> 2.
+                                </td>
+                                <td>Corporate</td>
+                                <td>50</td>
+                                <td>₹300 Cr</td>
+                                <td>₹120 Cr</td>
+                                <td>₹180 Cr</td>
+                                <td>60%</td>
+                            </tr>
+                            <tr class="collapsing_tr" [ngbCollapse]="isCollapsed">
+                                <td colspan="15" class="intable_td">
+                                    <div class="box_design mb-2">
+                                        <div class="tableResponsive inside_table">
+                                            <table class="bordered_table w-100 after_cont_none">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th width="40%">RM Name</th>
+                                                        <th class="text-center">Clients</th>
+                                                        <th class="text-center">Total Balance</th>
+                                                        <th class="text-center">HSBC Balance</th>
+                                                        <th class="text-center">Opportunity</th>
+                                                        <th class="text-center">Opportunity %</th>
+                                                        <th class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td>Ritesh Patel</td>
+                                                        <td class="text-center">750</td>
+                                                        <td class="text-center">₹120 Cr</td>
+                                                        <td class="text-center">₹72 Cr</td>
+                                                        <td class="text-center">₹70 Cr</td>
+                                                        <td class="text-center">58%</td>
+                                                        <td class="text-center">
+                                                            <a href="javascript:void(0)"
+                                                                (click)="openCrilicOpportunityPopup()"
+                                                                class="link">View</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2.</td>
+                                                        <td>Ritesh Patel</td>
+                                                        <td class="text-center">750</td>
+                                                        <td class="text-center">₹120 Cr</td>
+                                                        <td class="text-center">₹72 Cr</td>
+                                                        <td class="text-center">₹70 Cr</td>
+                                                        <td class="text-center">58%</td>
+                                                        <td class="text-center">
+                                                            <a href="javascript:void(0)"
+                                                                (click)="openCrilicOpportunityPopup()"
+                                                                class="link">View</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3.</td>
+                                                        <td>Ritesh Patel</td>
+                                                        <td class="text-center">750</td>
+                                                        <td class="text-center">₹120 Cr</td>
+                                                        <td class="text-center">₹72 Cr</td>
+                                                        <td class="text-center">₹70 Cr</td>
+                                                        <td class="text-center">58%</td>
+                                                        <td class="text-center">
+                                                            <a href="javascript:void(0)"
+                                                                (click)="openCrilicOpportunityPopup()"
+                                                                class="link">View</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="pagination-table NP_LeftPagintion py-2">
+                                            <div class="dataTables_info" id="tickets-table_info" role="status"
+                                                aria-live="polite">
+                                                Showing
+                                                1 to 1 of 20 rows
+                                                <div class="dataTables_length" id="tickets-table_length">
+                                                    <div class="NP_HSBC_ComInput select-field">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-select [panelClass]="'pagination_select'">
+                                                                <mat-option>
+                                                                    1
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <span>row per page</span>
+                                            </div>
+                                            <div class="text-md-right float-md-right pagination-rounded">
+                                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                    <ngb-pagination [maxSize]="3" [rotate]="true"
+                                                        [boundaryLinks]="true">
+                                                    </ngb-pagination>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-table NP_LeftPagintion py-2">
+                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        1 to 1 of 20 rows
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select [panelClass]="'pagination_select'">
+                                        <mat-option>
+                                            1
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <span>row per page</span>
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [maxSize]="3" [rotate]="true" [boundaryLinks]="true">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

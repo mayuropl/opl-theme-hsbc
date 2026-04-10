@@ -1,0 +1,378 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page">
+    <div class="__main_Container">
+        <!-- <ng-container *ngIf="isHistoryDataFetched"> -->
+        <div class="searchBox_section withpageTitle_Sec"
+            style="background-image: url(assets/images/Dashabord/searchBox_bg.jpg);">
+            <h2>GST Analysis</h2>
+            <div class="searchBox_design">
+                <form class="searchBox_Form" autocomplete="off" [formGroup]="panForm">
+                    <div class="searchBox_input">
+                        <div class="input_field">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Enter PAN</mat-label>
+                                <input matInput oninput="this.value=this.value.toUpperCase();this.isHistoryDataFetched = false" required formControlName="pan"
+                                   >
+                                <mat-error *ngIf="panForm.controls['pan'].hasError('pattern')">
+                                    Invalid PAN
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="searchBox_btn">
+                        <button type="submit" mat-flat-button color="primary" *ngIf="!panVerified || isExistingPanFound"
+                            [disabled]="!panForm.valid" (click)="getGstHistoryDataAPI();">Verify PAN</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- </ng-container> -->
+
+        <div class="page_Details ">
+            <!-- First Time Show Search Box Start-->
+            <!-- <ng-container *ngIf="!isHistoryDataFetched">
+                <div class="searchBox_section mt-4"
+                    style="background-image: url(assets/images/Dashabord/searchBox_bg.jpg);">
+                    <h2>Find GST Analysis</h2>
+                    <div class="searchBox_design">
+                        <form class="searchBox_Form" autocomplete="off" [formGroup]="panForm">
+                            <div class="searchBox_input">
+                                <div class="input_field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Enter PAN</mat-label>
+                                        <input matInput (input)="onInputChange($event)" required formControlName="pan"
+                                            [readonly]="panVerified">
+                                        <mat-error *ngIf="panForm.controls['pan'].hasError('pattern')">
+                                            Invalid PAN
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="searchBox_btn">
+                                <button type="submit" mat-flat-button color="primary" *ngIf="!panVerified"
+                                    [disabled]="!panForm.valid" (click)="getGstHistoryDataAPI();">Verify PAN</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </ng-container> -->
+            <!-- First Time Show Search Box END-->
+            <div class="Common_Card_info mb-3">
+                <div class="Common_Info_grp oneInfo">
+                    <div class="Common_Info_view">
+                        <mat-icon>info</mat-icon>
+                        <span>Instructions the customer can follow if you are getting an error of GST API consent not enabled</span>
+                    </div>
+                    <div class="_Info_btn_grp">
+                        <button mat-stroked-button color="secondary" class="btn_design"
+                            (click)="openReadInstructions()">Read Instructions</button>
+                        <span class="OR_Common ORFS16">OR</span>
+                        <a href="https://www.youtube.com/watch?v=vcxK5Ppd4R4" target="_blank" mat-stroked-button color="primary" class="btn_design">Watch
+                            Video</a>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="this.panVerified==true">
+                <div class="page_Title_sec">
+                    <div class="page_Title_left">
+                        <h4 class="cursor_pointer" (click)="backToHistory()">
+                            <em class="fa fa-arrow-left mr-2"></em>
+                            GST Analysis History
+                        </h4>
+                    </div>
+                </div>
+                <mat-card class="box_design mb-3">
+                    <div class="tableResponsive">
+                        <table class="CommonTable_NP GSTListTable Mobile_table_View_NP design_Main_listTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Sr.No</th>
+                                    <th>Company Name</th>
+                                    <th>GSTIN</th>
+                                    <th>Constitution</th>
+                                    <th>GST Username</th>
+                                    <th>State</th>
+                                    <th>Get OTP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="gstinListSearchForm">
+                                    <td></td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput placeholder="Enter Company Name"
+                                                    formControlName="nameOfCompany" name="nameOfCompany">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                <input matInput placeholder="Enter GSTIN" formControlName="gstin"
+                                                    name="gstin">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                <input matInput placeholder="Enter Constitution"
+                                                    formControlName="constitution" name="constitution">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td>
+                                        <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" floatLabel="never">
+                                            <input matInput placeholder="Enter GST Username" formControlName="gstUsername" name="gstUsername">
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                    </td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                <mat-select placeholder="Select Any one" formControlName="state">
+                                                    <mat-option *ngFor="let state of stateList" [value]="state">
+                                                        {{state}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td>
+                                        <button mat-icon-button class="matIcon red_icn" (click)="clearGstinFilters()" ngbTooltip="Clear Filters">
+                                            <em class="fas fa-eraser"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                                @for (gst of gsinList; track $index) {
+                                <tr>
+                                    <td data-label="Sr.No" class="text-center">
+                                        {{(gstinPagination.page-1)*gstinPagination.pageSize+($index+1)}}
+                                    </td>
+                                    <td data-label="Company Name">{{gst?.nameOfCompany }}</td>
+                                    <td data-label="GSTIN">{{gst.gstin}}</td>
+                                    <td data-label="Constitution">{{gst.constitution}}</td>
+
+                                    <td data-label="GST Username">
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                <input matInput placeholder="Enter Username" name="username"
+                                                    [(ngModel)]="gst.username"
+                                                    [disabled]="gst.otpVerificationStatus != null && (gst.otpVerificationStatus == 'Success' || gst.otpVerificationStatus == 'Pending')">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td data-label="State">{{gst.state}}</td>
+                                    <td data-label="Get OTP">
+                                        <a *ngIf="gst.otpVerificationStatus == null || gst.otpVerificationStatus == 'Fail'"
+                                            class="view_link_btn" (click)="generateOtp(gst);">Get OTP</a>
+                                        <span *ngIf="gst.otpVerificationStatus == 'Success'"
+                                            class="skyblue_badge">{{gst.otpVerificationStatus}}</span>
+                                        <span *ngIf="gst.otpVerificationStatus == 'Pending'"
+                                            class="orange_badge">{{gst.otpVerificationStatus}}</span>
+                                        <!-- <span *ngIf="gst.otpVerificationStatus != null &&  gst.otpVerificationStatus == 'Fail'" class="lightred_badge">{{gst.otpVerificationStatus}}</span> -->
+                                        <!-- <mat-icon class="activeColor" svgIcon="check_circle_Fill" *ngIf="gst?.isOtpVerified"></mat-icon> -->
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion">
+                        <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{(gstinPagination.startIndex+1)}} to
+                            {{(gstinPagination.pageSize*gstinPagination.page) > (gstinPagination.totalSize) ?
+                            (gstinPagination.totalSize) : (gstinPagination.pageSize*gstinPagination.page)}} of
+                            {{gstinPagination.totalSize}} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="gstinPagination.pageSize"
+                                            [panelClass]="'pagination_select'"
+                                            (ngModelChange)="onGstinPageChange(gstinPagination.page)">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span>row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="gstinPagination.totalSize" [maxSize]="3"
+                                    [(page)]="gstinPagination.page" [rotate]="true" [boundaryLinks]="true"
+                                    [pageSize]="gstinPagination.pageSize" (pageChange)="onGstinPageChange($event)">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="page_Actions text-center  px-2 pb-4">
+                        <button type="button" mat-flat-button color="primary" class=""
+                             [disabled]="!isAnyVerified"
+                               (click)="submitPage()">Submit</button>
+
+                            <!-- <p class="msg_text">You will be prompted to enter projected annual turnover on next screen</p> -->
+                    </div>
+                </mat-card>
+            </ng-container>
+
+            <ng-container *ngIf="isHistoryDataFetched">
+                <div class="page_Title_sec">
+                    <div class="page_Title_left">
+                        @if (!isExistingPanFound) {
+                        <h4>
+                            GST Analysis History
+                        </h4>
+                        }@else if(isExistingPanFound) {
+                        <h4 class="cursor_pointer" (click)="navigateToViewComponent(pan)">
+                            <em class="fa fa-arrow-left mr-2"></em>
+                            GST Analysis History
+                        </h4>
+                        }
+                    </div>
+                    <div class="page_Title_Right pagewrap_right">
+                        <button mat-flat-button color="primary" class="btn_design" (click)="verifyPan()"
+                            [disabled]="!panForm.valid">
+                            Verify PAN</button>
+                            <p class="msg_text">Please click here to fetch all associate state GST numbers. For each GST, pls enter user name and click on <span class="red_text">Get OTP</span></p>
+                    </div>
+                </div>
+                <mat-card class="box_design">
+                    <div class="box_design_details p-0">
+                        <div class="table-responsive">
+                            <!-- NP_BGR0 -->
+                            <table class="CommonTable_NP Mobile_table_View_NP design_Main_listTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Sr.No</th>
+                                        <th>Name Of Company</th>
+                                        <th>Reference Id</th>
+                                        <th>RM Name</th>
+                                        <th>Date Of Report</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="gstHistorySearchForm">
+                                        <td></td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter Name Of Company"
+                                                        formControlName="nameOfCompany" (input)="onNameOfCompanyInput($event)">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter Reference Id" formControlName="gstId"
+                                                        (input)="onReferenceIdInput($event)">
+                                                    <mat-error *ngIf="gstHistorySearchForm.get('gstId').hasError('pattern')">
+                                                        Only numeric digits allowed
+                                                    </mat-error>
+                                                    <mat-error *ngIf="gstHistorySearchForm.get('gstId').hasError('maxlength')">
+                                                        Maximum 15 digits allowed
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter RM Name" formControlName="rmName" (input)="onRmNameInput($event)">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Select Date" [matDatepicker]="picker1"
+                                                        formControlName="dateOfReport" readonly [matDatepickerFilter]="dateFilter" [max]="maxDate">
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="picker1"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker1></mat-datepicker>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <button mat-icon-button class="matIcon red_icn" (click)="clearFilters()" ngbTooltip="Clear Filters">
+                                                <em class="fas fa-eraser"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <ng-container *ngIf="gstHistoryDataList?.length>0; else elseTemplate">
+                                        <tr *ngFor="let gstHstry of gstHistoryDataList;let i = index">
+                                            <td data-label="Sr.No" class="text-center">{{(page-1)*pageSize+(i+1)}}</td>
+                                            <td data-label="Name Of Company">
+                                                {{gstHstry.nameOfCompany?gstHstry.nameOfCompany:'-'
+                                                }}</td>
+                                            <td data-label="Reference Id">{{gstHstry.gstId?gstHstry.gstId:'-' }}</td>
+                                            <td data-label="RM Name">{{gstHstry.rmName?gstHstry.rmName:'-' }}</td>
+                                            <td data-label="Date Of Report">
+                                                {{gstHstry.dateOfReport?gstHstry.dateOfReport:'-' }}
+                                            </td>
+                                            <td data-label="Action">
+                                                <button ngbTooltip="Please click here for detailed GST analytics" mat-icon-button class="matIcon skyblue_icn"
+                                                    (click)="viewGstAnalysisPage(gstHstry)" *ngIf="isActionAvail(constants.PageActions.VIEW)">
+                                                    <em class="fa fa-eye"></em>
+                                                    <!-- <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon> -->
+                                                </button>
+                                                <button ngbTooltip="Audit" mat-icon-button class="matIcon grey_icn"
+                                                    (click)="viewAuditPage(gstHstry.gstId)"  *ngIf="isActionAvail(constants.PageActions.AUDIT)">
+                                                    <mat-icon [svgIcon]="'fileSearch_Icon'"></mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                                        <tr>
+                                            <td colspan="10">
+                                                <app-no-data-found message="No previous history found" />
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-table NP_LeftPagintion">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(startIndex+1)}} to
+                                {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                {{totalSize}} row
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(ngModel)]="pageSize" [panelClass]="'pagination_select'"
+                                                (ngModelChange)="onPageChange(page)">
+                                                <mat-option *ngFor="let pages of PageSelectNumber"
+                                                    [value]="pages.value">
+                                                    {{pages.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <span>row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                        [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                        (pageChange)="onPageChange($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </ng-container>
+        </div>
+
+    </div>
+</div>

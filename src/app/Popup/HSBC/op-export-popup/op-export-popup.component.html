@@ -1,0 +1,300 @@
+ <section class="popup_design max-900 HSBC_Common_Pages op_exp">
+    <div class="popup_header" mat-dialog-title>
+        <h3>Export</h3>
+        <a class="modal_closeicn_btn" href="javascript:void(0)">
+            <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+         </a>
+    </div>
+    <div class="pop_up_container">
+        <mat-tab-group mat-align-tabs="start" class="tabs-design tabs-design2" animationDuration="0ms" #tabGroup [(selectedIndex)]="selectedIndex" (selectedTabChange)="onTabChange($event)">
+            <mat-tab label="Reports">
+                <mat-card-content>
+                    <div class="pop_up_container">
+                        <mat-dialog-content class="px-0">
+                            <div class="popup_body exp_accordian">
+                                <div class="title_box">
+                                    <h3>Select from the following list to download the report in excel format</h3>
+                                </div>
+                                <mat-radio-group [(ngModel)]="selectedReportType" class="flex-column">
+                                <div class="box_wrap">
+                                    <div class="left_side small_radio">
+                                        <mat-radio-button value="CAMPAIGN_REPORT" >Campaign Report</mat-radio-button>
+                                    </div>
+                                    <div class="right_side">
+                                        <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput [matAutocomplete]="autoCampaign" [(ngModel)]="campaignSelections['CAMPAIGN_REPORT'].selectedName" placeholder="Select campaign..." 
+                                                    readonly #autoTriggerCampaign="matAutocompleteTrigger" (focus)="autoTriggerCampaign.openPanel()"
+                                                    (click)="autoTriggerCampaign.openPanel()">
+                                                <mat-autocomplete #autoCampaign="matAutocomplete" [displayWith]="displayCampaign"
+                                                    (optionSelected)="onCampaignSelected('CAMPAIGN_REPORT', $event)">
+                                                    <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                                        <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                                            <input type="text" [(ngModel)]="campaignSelections['CAMPAIGN_REPORT'].searchText" (input)="filterCampaignOptions('CAMPAIGN_REPORT')"
+                                                                (keydown)="$event.stopPropagation()" placeholder="Search" class="searchbox_input">
+                                                            <em class="fas fa-search searchbox_Icn"></em>
+                                                        </div>
+                                                    </mat-option>
+                                                    <mat-option *ngFor="let campaign of campaignSelections['CAMPAIGN_REPORT'].filteredList" [value]="campaign">
+                                                        {{ campaign.campaignName }}
+                                                    </mat-option>
+                                                    <mat-option *ngIf="campaignSelections['CAMPAIGN_REPORT'].filteredList.length === 0" disabled class="no-records-option">
+                                                        <span class="no-records-text">No records found</span>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box_wrap">
+                                    <div class="left_side small_radio">
+                                        <mat-radio-button value="INACTIVE_WITHIN_90DAYS">Inactive Campaigns within last 90 days</mat-radio-button>
+                                    </div>
+                                    <div class="right_side">
+                                        <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput [matAutocomplete]="autoInactive" [(ngModel)]="campaignSelections['INACTIVE_WITHIN_90DAYS'].selectedName" placeholder="Select campaign..." 
+                                                    readonly #autoTriggerInactive="matAutocompleteTrigger" (focus)="autoTriggerInactive.openPanel()"
+                                                    (click)="autoTriggerInactive.openPanel()">
+                                                <mat-autocomplete #autoInactive="matAutocomplete" [displayWith]="displayCampaign"
+                                                    (optionSelected)="onCampaignSelected('INACTIVE_WITHIN_90DAYS', $event)">
+                                                    <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                                        <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                                            <input type="text" [(ngModel)]="campaignSelections['INACTIVE_WITHIN_90DAYS'].searchText" (input)="filterCampaignOptions('INACTIVE_WITHIN_90DAYS')"
+                                                                (keydown)="$event.stopPropagation()" placeholder="Search" class="searchbox_input">
+                                                            <em class="fas fa-search searchbox_Icn"></em>
+                                                        </div>
+                                                    </mat-option>
+                                                    <mat-option *ngFor="let campaign of campaignSelections['INACTIVE_WITHIN_90DAYS'].filteredList" [value]="campaign">
+                                                        {{ campaign.campaignName }}
+                                                    </mat-option>
+                                                    <mat-option *ngIf="campaignSelections['INACTIVE_WITHIN_90DAYS'].filteredList.length === 0" disabled class="no-records-option">
+                                                        <span class="no-records-text">No records found</span>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box_wrap">
+                                    <div class="left_side small_radio">
+                                        <mat-radio-button value="INACTIVE_OLDER_THAN_90DAYS">Inactive Campaigns older than 90 days</mat-radio-button>
+                                    </div>
+                                    <div class="right_side">
+                                        <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput [matAutocomplete]="autoExpired" [(ngModel)]="campaignSelections['INACTIVE_OLDER_THAN_90DAYS'].selectedName" placeholder="Select campaign..." 
+                                                    readonly #autoTriggerExpired="matAutocompleteTrigger" (focus)="autoTriggerExpired.openPanel()"
+                                                    (click)="autoTriggerExpired.openPanel()">
+                                                <mat-autocomplete #autoExpired="matAutocomplete" [displayWith]="displayCampaign"
+                                                    (optionSelected)="onCampaignSelected('INACTIVE_OLDER_THAN_90DAYS', $event)">
+                                                    <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                                        <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                                            <input type="text" [(ngModel)]="campaignSelections['INACTIVE_OLDER_THAN_90DAYS'].searchText" (input)="filterCampaignOptions('INACTIVE_OLDER_THAN_90DAYS')"
+                                                                (keydown)="$event.stopPropagation()" placeholder="Search" class="searchbox_input">
+                                                            <em class="fas fa-search searchbox_Icn"></em>
+                                                        </div>
+                                                    </mat-option>
+                                                    <mat-option *ngFor="let campaign of campaignSelections['INACTIVE_OLDER_THAN_90DAYS'].filteredList" [value]="campaign">
+                                                        {{ campaign.campaignName }}
+                                                    </mat-option>
+                                                    <mat-option *ngIf="campaignSelections['INACTIVE_OLDER_THAN_90DAYS'].filteredList.length === 0" disabled class="no-records-option">
+                                                        <span class="no-records-text">No records found</span>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box_wrap">
+                                    <div class="left_side small_radio">
+                                        <mat-radio-button value="PREAPPROVED_STATUS">Preapproved- Status Report</mat-radio-button>
+                                    </div>
+                                    <div class="right_side">
+                                        <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput [matAutocomplete]="autoPreapproved" [(ngModel)]="campaignSelections['PREAPPROVED_STATUS'].selectedName" placeholder="Select campaign..." 
+                                                    readonly #autoTriggerPreapproved="matAutocompleteTrigger" (focus)="autoTriggerPreapproved.openPanel()"
+                                                    (click)="autoTriggerPreapproved.openPanel()">
+                                                <mat-autocomplete #autoPreapproved="matAutocomplete" [displayWith]="displayCampaign"
+                                                    (optionSelected)="onCampaignSelected('PREAPPROVED_STATUS', $event)">
+                                                    <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                                        <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                                            <input type="text" [(ngModel)]="campaignSelections['PREAPPROVED_STATUS'].searchText" (input)="filterCampaignOptions('PREAPPROVED_STATUS')"
+                                                                (keydown)="$event.stopPropagation()" placeholder="Search" class="searchbox_input">
+                                                            <em class="fas fa-search searchbox_Icn"></em>
+                                                        </div>
+                                                    </mat-option>
+                                                    <mat-option *ngFor="let campaign of campaignSelections['PREAPPROVED_STATUS'].filteredList" [value]="campaign">
+                                                        {{ campaign.campaignName }}
+                                                    </mat-option>
+                                                    <mat-option *ngIf="campaignSelections['PREAPPROVED_STATUS'].filteredList.length === 0" disabled class="no-records-option">
+                                                        <span class="no-records-text">No records found</span>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box_wrap">
+                                    <div class="left_side small_radio">
+                                        <mat-radio-button value="REJECTION_REPORT">
+                                            Rejection Report</mat-radio-button>
+                                    </div>
+                                    <div class="right_side">
+                                        <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput [matAutocomplete]="autoReject" [(ngModel)]="campaignSelections['REJECTION_REPORT'].selectedName" placeholder="Select campaign..." 
+                                                    readonly #autoTriggerReject="matAutocompleteTrigger" (focus)="autoTriggerReject.openPanel()"
+                                                    (click)="autoTriggerReject.openPanel()">
+                                                <mat-autocomplete #autoReject="matAutocomplete" [displayWith]="displayCampaign"
+                                                    (optionSelected)="onCampaignSelected('REJECTION_REPORT', $event)">
+                                                    <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                                        <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                                            <input type="text" [(ngModel)]="campaignSelections['REJECTION_REPORT'].searchText" (input)="filterCampaignOptions('REJECTION_REPORT')"
+                                                                (keydown)="$event.stopPropagation()" placeholder="Search" class="searchbox_input">
+                                                            <em class="fas fa-search searchbox_Icn"></em>
+                                                        </div>
+                                                    </mat-option>
+                                                    <mat-option *ngFor="let campaign of campaignSelections['REJECTION_REPORT'].filteredList" [value]="campaign">
+                                                        {{ campaign.campaignName }}
+                                                    </mat-option>
+                                                    <mat-option *ngIf="campaignSelections['REJECTION_REPORT'].filteredList.length === 0" disabled class="no-records-option">
+                                                        <span class="no-records-text">No records found</span>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                </mat-radio-group>
+                            </div>
+                        </mat-dialog-content>
+                        <mat-dialog-actions class="d-flex justify-content-end popup_actions_btns pt-0">
+                            <button button mat-flat-button color="primary" [disabled]="!isFormValid()" (click)="submit()">Submit</button>
+                        </mat-dialog-actions>
+                    </div>
+                </mat-card-content>
+            </mat-tab>
+            <mat-tab label="Status">
+                <mat-card-content>
+                    <mat-dialog-content class="px-0 pt-0">
+                        <div class="popup_body ">
+                            <div class="tableResponsive">
+                                <table class="table_design_new CommonTable_NP design_Main_listTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Sr. No.</th>
+                                            <th>Report Name</th>
+                                            <th class="no_wrap">Download Status</th>
+                                            <th class="text-center no_wrap">Download</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let report of paginatedReportStatuses; let i = index">
+                                            <td class="text-center">{{ (currentPage - 1) * selectedRowsPerPage + i + 1 }}</td>
+                                            <td>{{report.reportName}}</td>
+                                            <td class="no_wrap" [ngClass]="{
+                                                'red_text': report.status === 'FAILED',
+                                                'darkyellow_text': report.status === 'IN_PROGRESS',
+                                                'green_text': report.status === 'COMPLETED'
+                                            }">{{report.status}}</td>
+            
+                                            <!-- <td>
+                                                <span [ngClass]="{
+                                                'yellow_badge': report.status === 'Pending',
+                                                'red_badge': report.status === 'Failed',
+                                                'green_badge': report.status === 'Completed'
+                                            }">
+                                                    {{ report.status }}
+                                                    <i *ngIf="report.status === 'Failed'" class="fa fa-info-circle mr-1 red_text"
+                                                        [ngbTooltip]="report.failureReason"></i>
+                                                </span>
+                                                <a (click)="downloadExportReport(report.docReferenceId,report.reportName)"
+                    class="green_text dwn_link cursor_pointer">
+                    <mat-icon class="ml-2 mr-0">arrow_downward_alt</mat-icon>
+                </a>
+                                            </td>
+             -->
+                                            <td class="text-center no_wrap"><button mat-icon-button class="darkgreen_text" [disabled]="report.status!=='COMPLETED'"
+                                                    (click)="downloadExportReport(report.docReferenceId,report.reportName)"><i
+                                                        class="fas fa-arrow-down"></i></button></td>
+                                        </tr>
+                                         <tr *ngIf="paginatedReportStatuses == null || paginatedReportStatuses == undefined || paginatedReportStatuses?.length == 0">
+                                                <td colspan="5">
+                                                    <app-no-data-found message="No data found"/>
+                                                </td>
+                                         </tr>
+                                        <!-- <tr>
+                                                        <td class="text-center">2.</td>
+                                                        <td>Reliance Brands</td>
+                                                        <td class="darkgreen_text">Complete</td>
+                                                        <td class="text-center"><button mat-icon-button class="darkgreen_text"><i class="fas fa-arrow-down"></i></button></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td class="text-center">3.</td>
+                                                        <td>Reliance Brands</td>
+                                                        <td class="darkgreen_text">Complete</td>
+                                                        <td class="text-center"><button mat-icon-button class="darkgreen_text"><i class="fas fa-arrow-down"></i></button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">4.</td>
+                                                        <td>Reliance Brands</td>
+                                                        <td class="darkgreen_text">Complete</td>
+                                                        <td class="text-center"><button mat-icon-button class="darkgreen_text"><i class="fas fa-arrow-down"></i></button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">5.</td>
+                                                        <td>Reliance Brands</td>
+                                                        <td class="darkgreen_text">Complete</td>
+                                                        <td class="text-center"><button mat-icon-button class="darkgreen_text"><i class="fas fa-arrow-down"></i></button></td>
+                                                    </tr> -->
+                                        <!-- <tr>
+                                                        <td colspan="5">
+                                                            <app-no-data-found message="No data found"/>
+                                                        </td>
+                                                    </tr> -->
+                                    </tbody>
+            
+                                </table>
+                            </div>
+                           
+                             <div class="pagination-table NP_LeftPagintion"
+                                *ngIf="paginatedReportStatuses != null || paginatedReportStatuses != undefined || paginatedReportStatuses?.length != 0">
+                                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                    <div class="dataTables_info" role="status" aria-live="polite">
+                                        Showing {{ paginatedReportStatuses?.length }} rows from {{ responseStatusList.length }}
+                                        <div class="dataTables_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(value)]="selectedRowsPerPage"
+                                                        (selectionChange)="changePageSize($event.value)"
+                                                        [panelClass]="'pagination_select'">
+                                                        <mat-option *ngFor="let option of pageSizeOptions" [value]="option">
+                                                            {{ option }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text">row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagination pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="responseStatusList.length" [maxSize]="3"
+                                                [(page)]="currentPage" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="selectedRowsPerPage"></ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </mat-dialog-content>
+                    <mat-dialog-actions class="d-flex justify-content-end popup_actions_btns pt-0">
+                        <button mat-flat-button color="primary" (click)="closeDialog()">Ok</button>
+                    </mat-dialog-actions>
+                </mat-card-content>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</section>

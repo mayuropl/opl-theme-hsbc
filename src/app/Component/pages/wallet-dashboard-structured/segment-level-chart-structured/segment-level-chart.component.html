@@ -1,0 +1,165 @@
+<div *ngIf="cardsVisibility.segmentLevel">
+<div class="title_chart">
+    <div class="lef_desc">
+        <h2><i class="fi fi-rr-chart-pie-alt red_text mr-1"></i> Segment Level
+            Opportunity <span class="ml-2"><i class="fas fa-circle mr-1"></i>as of  {{latestDateOfReportShow}}</span></h2>
+    </div>
+    <div class="right_desc">
+        <div class="slide_both_label">
+            <label class="mr-1">Table</label>
+            <mat-slide-toggle class="sliderToggle_design2"
+                [(ngModel)]="showChart">Chart</mat-slide-toggle>
+
+        </div>
+        <div class="close_icon ml-1">
+            <button mat-icon-button type="button" matTooltip="Click on cross button to view Trends of Wallet" (click)="closeCard('segmentLevel')"><i
+                    class="fi fi-rr-cross-small"></i></button>
+        </div>
+    </div>
+</div>
+<div class="chart_box pos_rel chart_zoom_container" *ngIf="showChart" [ngClass]="{'subloaderShowing': isLoading}">
+        <div class="table_sep_loader" *ngIf="isLoading">
+            <div class="loaderoverlay loader_screen">
+                <div class="loader_screen_center">
+                    <div class="loader_screen_lottie">
+                        <span class="logo_loader">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                alt="">
+                        </span>
+                    </div>
+                    <h3>Please wait data is loading</h3>
+                </div>
+            </div>
+        </div>
+        <div class="no-data-wrapper" *ngIf="noDataFoundSeg && !isLoading">
+            <app-no-data-found [message]="hasFiltersApplied ? 'No results found, please broaden your search criteria and try again' : 'No data found'"></app-no-data-found>
+        </div>
+        <ng-container *ngIf="dataPrepare && !noDataFoundSeg">
+            <app-common-chart [chartOptions]="segmentLevelChart"></app-common-chart>
+        </ng-container>
+</div>
+<div class="tableResponsive max-h-100 mt-4 pos_rel" *ngIf="!showChart" [ngClass]="{'subloaderShowing': isLoading}">
+        <div class="table_sep_loader" *ngIf="isLoading">
+            <div class="loaderoverlay loader_screen">
+                <div class="loader_screen_center">
+                    <div class="loader_screen_lottie">
+                        <span class="logo_loader">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                        </span>
+                    </div>
+                    <h3>Please wait data is loading</h3>
+                </div>
+            </div>
+        </div>
+    <table class="CommonTable_NP Mobile_table_View_NP table_BG">
+        <thead>
+            <tr class="tr_lightred_bg">
+                <th>Segment</th>
+                <th>Unique Customers</th>
+                <th>Competition Utilization {{moneyFormatTableHeader}}</th>
+                <th>Bank Utilization {{moneyFormatTableHeader}}</th>
+                <th>Bank Wallet%</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of segmentLevelOppData">
+                <td><b>{{item?.segment_name}}</b></td>
+                <td>{{item?.unique_cust_count}}</td>
+                <td>{{item?.competition_utilization | number:numberFormat:'en-US'}}</td>
+                <td>{{item?.hsbc_utilization | number:numberFormat:'en-US'}}</td>
+                <td>{{item?.hsbc_wallet_utilization_pct | number:numberFormatForPer}}</td>
+            </tr>
+            <tr *ngIf="segmentLevelOppData.length === 0">
+                <td colspan="5">
+                    <app-no-data-found [message]="hasFiltersApplied ? 'No results found, please broaden your search criteria and try again' : 'No data found'"></app-no-data-found>
+                </td>
+            </tr>
+        </tbody>
+        <!-- <tfoot>
+            <tr class="tr_lightblue_bg">
+                <td><b>Total</b></td>
+                <td><b>2,282</b></td>
+                <td><b>996</b></td>
+                <td><b>2,282</b></td>
+                <td><b>8.2%</b></td>
+            </tr>
+        </tfoot> -->
+    </table>
+</div>
+</div>
+ <!-- Trends of wallet -->
+<div *ngIf="cardsVisibility.trendWallet">
+<div class="title_chart">
+    <div class="lef_desc">
+        <h2><i class="fi fi-rr-chart-pie-alt red_text mr-1"></i>Trends Of Wallet
+             <span class="ml-2"><i class="fas fa-circle mr-1"></i>as of  {{latestDateOfReportShow}}</span></h2>
+    </div>
+    <div class="right_desc">
+        <div class="slide_both_label">
+            <label class="mr-1">Table</label>
+            <mat-slide-toggle class="sliderToggle_design2"
+                [(ngModel)]="showChart">Chart</mat-slide-toggle>
+
+        </div>
+        <div class="close_icon ml-1">
+            <button mat-icon-button type="button" matTooltip="Click on cross button to view Segment level bifurcation" (click)="closeCard('trendWallet')"><i
+                    class="fi fi-rr-cross-small"></i></button>
+        </div>
+    </div>
+</div>
+<div class="chart_box pos_rel" *ngIf="showChart" [ngClass]="{'subloaderShowing': isLoading}">
+        <div class="table_sep_loader" *ngIf="isLoading">
+            <div class="loaderoverlay loader_screen">
+                <div class="loader_screen_center">
+                    <div class="loader_screen_lottie">
+                        <span class="logo_loader">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                        </span>
+                    </div>
+                    <h3>Please wait data is loading</h3>
+                </div>
+            </div>
+        </div>
+        <app-no-data-found  *ngIf="noDataFoundLen" message="No data found"></app-no-data-found>
+        <ng-container *ngIf="dataPrepare && !noDataFoundLen">
+            <app-common-chart [chartOptions]="trendWalletChart"></app-common-chart>
+        </ng-container>
+</div>
+<div class="tableResponsive max-h-340 pos_rel" appTableScroll *ngIf="!showChart" [ngClass]="{'subloaderShowing': isLoading}">
+        <div class="table_sep_loader" *ngIf="isLoading">
+            <div class="loaderoverlay loader_screen">
+                <div class="loader_screen_center">
+                    <div class="loader_screen_lottie">
+                        <span class="logo_loader">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                        </span>
+                    </div>
+                    <h3>Please wait data is loading</h3>
+                </div>
+            </div>
+        </div>
+    <table class="CommonTable_NP Mobile_table_View_NP table_BG">
+        <thead>
+            <tr class="tr_lightred_bg">
+                <th>Month</th>
+                <th>Unique Customers</th>
+                <th class="text-right">Bank Sanction Amount (Wallet %)</th>
+                <th class="text-right">Bank Utilization Amount (Wallet %)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of trendsLendingChartsData">
+                <td><b>{{getReportMonthLabel(item?.report_month)}}</b></td>
+                <td>{{item?.unique_cust_count}}</td>
+                <td class="text-right">{{(item?.hsbc_sanction?? 0)   | number:numberFormat:'en-US'}} ({{(item?.hsbc_wallet_sanction_pct?? 0) | number:numberFormatForPer}}%)</td>
+                <td class="text-right">{{(item?.hsbc_utilization?? 0)   | number:numberFormat:'en-US' }} ({{(item?.hsbc_wallet_utilization_pct?? 0) | number:numberFormatForPer}}%)</td>
+            </tr>
+            <tr *ngIf="trendsLendingChartsData.length === 0">
+                <td colspan="4">
+                    <app-no-data-found [message]="hasFiltersApplied ? 'No results found, please broaden your search criteria and try again' : 'No data found'"></app-no-data-found>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

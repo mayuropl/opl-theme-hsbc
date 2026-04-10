@@ -1,0 +1,556 @@
+<div class="container-fluid HSBC_Common_Pages">
+  <div class="__main_Container">
+    <div class="page_Details">
+      <div class="page_Title_sec">
+        <div class="page_Title_left">
+          <h4 class="cursor_pointer">
+            Average Bank Balance and Deposit Analyisis
+          </h4>
+        </div>
+      </div>
+      <div class="box_design mb-4">
+        <div class="box_design_ttl_bar">
+          <div class="box_design_ttl_bar_left avg_analysis_box">
+            <h4>Filter by Current Account and Deposit</h4>
+            <fieldset class="NP_HSBC_ComInput">
+              <mat-form-field appearance="outline" floatLabel="never">
+                <mat-select [value]="selectedAccountType"
+                            placeholder="Account Type" required
+                            (selectionChange)="onAccountTypeSelected($event)">
+                  <mat-option *ngFor="let item of accountType" [value]="item.id">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </fieldset>
+            <fieldset class="NP_HSBC_ComInput ml-1">
+              <mat-form-field appearance="outline" floatLabel="never">
+                <mat-select required
+                            placeholder="Currency"
+                            [(value)]="selectedCurrency"
+                            (selectionChange)="onCurrencySelection($event)">
+                  <mat-option [value]="currency.id"
+                              *ngFor="let currency of filteredCurrencyList">
+                    {{ currency.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </fieldset>
+          </div>
+        </div>
+        <div class="avg_select_box">
+          <div class="top_head1 d-flex align-items-center flex-wrap top_head">
+
+            <!-- Year Selection -->
+            <div class="radio-group-wrapper pe-4">
+              <mat-label class="me-2">Select Year:</mat-label>
+              <mat-radio-group
+                required
+                aria-label="Select Year"
+                [ngModel]="selectedYearOption"
+                (change)="onYearOptionSelected($event)">
+                <mat-radio-button value="1">Calendar Year</mat-radio-button>
+                <mat-radio-button value="2">Financial Year</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <!-- View Selection with vertical line on the left -->
+            <div class="radio-group-wrapper ps-4 border-start" style="border-color: #ccc;">
+              <mat-label class="me-2">Select View:</mat-label>
+              <mat-radio-group
+                required
+                aria-label="Select View"
+                [ngModel]="selectedViewOption"
+                (change)="onViewOptionSelected($event)">
+                <mat-radio-button value="1">Quarter</mat-radio-button>
+                <mat-radio-button value="2">Month</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+          </div>
+
+          <div class="clearfix"></div>
+          <div class="select_wrap top_head">
+            <div class="select_label_grp">
+              <mat-label>Criteria 1:</mat-label>
+              <div class="select_group">
+                <fieldset class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select required
+                                placeholder="Year"
+                                (selectionChange)="onCriteria1Selection($event)">
+                      <mat-option *ngFor="let year of yearOption" [value]="year"
+                      >{{ getYearPrefix() }} {{ year.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+
+                <fieldset *ngIf="selectedViewOption === '1'" class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select required
+                                placeholder="Quarter"
+                                [(value)]="selectedQuarter"
+                                multiple
+                                (selectionChange)="onQuarterSelectionChange($event.value)">
+                      <mat-option *ngFor="let quarter of quarterOptions" [value]="quarter">
+                        {{ quarter }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+                <fieldset *ngIf="selectedViewOption === '2'" class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select required
+                                placeholder="Month"
+                                multiple
+                                [(value)]="selectedMonths"
+                                (selectionChange)="onMonthSelectionChange($event.value,'1')">
+                      <mat-option *ngFor="let month of months" [value]="month.value">
+                        {{ month.name }}
+                      </mat-option>
+
+
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+              </div>
+            </div>
+            <div class="select_label_grp">
+              <mat-label>Criteria 2:</mat-label>
+              <div class="select_group">
+                <fieldset  class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select required
+                                placeholder="Year"
+                                (selectionChange)="onCriteria2Selection($event)">
+                      <mat-option *ngFor="let year of yearOption" [value]="year"
+                      >{{ getYearPrefix() }} {{ year.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+                <fieldset *ngIf="selectedViewOption === '1'" class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select required
+                                placeholder="Quarter"
+                                [(value)]="selected2Quarter"
+                                multiple
+                                (selectionChange)="onQuarterSelection2Change($event.value)">
+                      <mat-option *ngFor="let quarter of quarterOptions" [value]="quarter">
+                        {{ quarter }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+                <fieldset *ngIf="selectedViewOption === '2'" class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select required
+                                placeholder="Month"
+                                [(value)]="selected2Months"
+                                multiple
+                                (selectionChange)="onMonthSelectionChange($event.value,'2')">
+                      <mat-option *ngFor="let month of months" [value]="month.value">
+                        {{ month.name }}
+                      </mat-option>
+
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+          <div class="select_wrap">
+            <div class="select_label_grp">
+              <mat-label>Search View By</mat-label>
+              <div class="select_group">
+                <fieldset class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select required
+                                placeholder="Select"
+                                aria-label="Select Filter"
+                                (selectionChange)="fetchMasterList($event.value)">
+                      <mat-option [value]="1">Segment</mat-option>
+                      <mat-option [value]="2">City</mat-option>
+                      <mat-option [value]="3">RM</mat-option>
+                      <mat-option [value]="4">Customer Wise</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+
+                <fieldset  class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select [placeholder]="getSelectedQuarterNames()"  [(value)]="selectedQuarters"
+                                multiple required panelClass="select_with_search"  [matMenuTriggerFor]="menu">
+
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-menu class="filter_menuMain largeMenu_select"  #menu="matMenu" >
+                    <div class="filter_menuBar">
+                      <ng-container  *ngIf="selectedMasterType">
+                        <div class="filter_searchbox" (click)="$event.stopPropagation()"
+                             (keydown)="$event.stopPropagation()">
+                          <div class="filter_searchbox_wrapper"   >
+                            <input type="text" placeholder="Search"
+                                   [(ngModel)]="searchText"
+                                   (keydown.space)="$event.stopPropagation()"
+                                   (ngModelChange)="onNewSearchInput($event)" class="searchbox_input">
+                            <em class="fas fa-search searchbox_Icn"></em>
+                          </div>
+                        </div>
+                        <div class="filter_details checkbox_lists" (click)="$event.stopPropagation()"
+                             (keydown)="$event.stopPropagation()"
+                             (scroll)="onScroll($event)" style="max-height: 300px; overflow-y: auto;">
+                          <mat-checkbox *ngIf="selectedMasterType && filteredAbbMasterList.length > 0" [value]="'All'" (click)="toggleOption(allOption)">
+                            All
+                          </mat-checkbox>
+
+                          @for(checkBox of filteredAbbMasterList ;track checkBox; let i = $index) {
+                            <mat-checkbox [value]="checkBox.value"
+                                          [checked]="selectedQuarters.includes(checkBox.value)"
+                                          (click)="toggleOption(checkBox)" >{{checkBox.name}}</mat-checkbox>
+                          }
+
+                        </div>
+                      </ng-container>
+                    </div>
+                  </mat-menu>
+                </fieldset>
+
+              </div>
+            </div>
+            <div class="select_label_grp ">
+              <mat-label>% of Change</mat-label>
+              <div class="select_group">
+                <fieldset class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline">
+                    <input [(ngModel)]="minChangePct" (change)="onMinMaxImpactChange()" matInput placeholder="Min.Range">
+                  </mat-form-field>
+                </fieldset>
+                <fieldset class="NP_HSBC_ComInput ml-1">
+                  <mat-form-field appearance="outline">
+                    <input [(ngModel)]="maxChangePct" (change)="onMinMaxImpactChange()" matInput placeholder="Max.Range">
+                  </mat-form-field>
+                </fieldset>
+              </div>
+            </div>
+            <!--            <div class="debug-info">-->
+            <!--              <p>selectedCurrency: {{ selectedCurrency || 'null' }}</p>-->
+            <!--              <p>selectedAccountType: {{ selectedAccountType || 'null' }}</p>-->
+            <!--              <p>selectedCriteria1Year: {{ selectedCriteria1Year || 'null' }}</p>-->
+            <!--              <p>selectedCriteria2Year: {{ selectedCriteria2Year || 'null' }}</p>-->
+            <!--              <p>trendChange: {{ trendChange || 'null' }}</p>-->
+            <!--              <p>newSelectedQuarters: {{ newSelectedQuarters?.length || 0 }}</p>-->
+
+            <!--              <p>selectedMonths: {{ selectedMonths?.length || 0 }}</p>-->
+            <!--              <p>selectedQuarter: {{ selectedQuarter?.length || 0 }}</p>-->
+            <!--              <p>selected2Months: {{ selected2Months?.length || 0 }}</p>-->
+            <!--              <p>selected2Quarter: {{ selected2Quarter?.length || 0 }}</p>-->
+
+            <!--              <p style="color: red; font-weight: bold;">-->
+            <!--                Disabled: {{-->
+            <!--                  (!selectedCurrency || !selectedAccountType || !selectedCriteria1Year || !selectedCriteria2Year || !trendChange || newSelectedQuarters.length === 0 || (selectedMonths.length === 0 && selectedQuarter.length === 0) || (selected2Months.length === 0 && selected2Quarter.length === 0)) ? 'Yes' : 'No'-->
+            <!--                }}-->
+            <!--              </p>-->
+            <!--            </div>-->
+            <div class="box_design_ttl_bar_right apply-btn ml-3">
+              <button [disabled]="  !selectedCurrency || !selectedAccountType || !selectedCriteria1Year || !selectedCriteria2Year|| !trendChange || newSelectedQuarters.length === 0
+                ||  (selectedMonths.length === 0 && selectedQuarter.length === 0)  ||  (selected2Months.length ===0  && selected2Quarter.length === 0)" (click)="submit()" type="submit" class="" mat-flat-button color="primary">Apply Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="note-spacing">
+        <p><span><b>Note</b></span> : Positive Change in %  indicates Increase of Balances compare to criteria 2 and Negative Change in % indicates decrease of Balances compare to criteria 2 . Current account balance includes only positive balance.
+        </p>
+      </div>
+      <div class="box_design mb-4" *ngIf="isPresent">
+        <div class="box_design_ttl_bar">
+          <div class="box_design_ttl_bar_left">
+            <h4>Balance and Deposit Trends at Portfolio Level</h4>
+          </div>
+        </div>
+        <div class="teaserView_Details p-2">
+          <div
+            class="export_details_cols cols_3 wihout_boxDesign without_lottie_cols"
+          >
+            <div class="exp_col">
+              <div class="exp_col_dtl">
+                <p>{{ getYearPrefix() }} {{ selectedCriteria1Year }}
+                  <span *ngIf="selectedQuarter?.length"> {{ selectedQuarter}}</span>
+                  <span *ngIf="!selectedQuarter?.length && selectedMonths?.length">{{ getMonthShortNames(selectedMonths) }}</span>
+                </p>
+                <h3>
+                  <ng-container *ngIf="selectedCurrency != null && selectedCurrency === 1 ">
+                    {{ getCurrencySymbol(selectedCurrency) }}
+                  </ng-container> {{ criteria1Total | number:'1.0-0'}}
+                </h3>
+              </div>
+            </div>
+            <div class="exp_col">
+              <div class="exp_col_dtl">
+                <p>{{ getYearPrefix() }} {{ selectedCriteria2Year }}
+                  <span *ngIf="selected2Quarter?.length"> {{ selected2Quarter}}</span>
+                  <span *ngIf="!selected2Quarter?.length && selected2Months?.length">{{ getMonthShortNames(selected2Months) }}</span>
+                </p>
+                <h3>
+                  <ng-container *ngIf="selectedCurrency != null && selectedCurrency === 1 ">
+                    {{ getCurrencySymbol(selectedCurrency) }}
+                  </ng-container> {{ criteria2Total | number:'1.0-0'}}
+                </h3>
+              </div>
+            </div>
+            <div class="exp_col">
+              <div class="exp_col_dtl">
+                <p>% of Change</p>
+                <h3>{{ changePctTotal }}%</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box_design mb-4"  *ngIf="isPresent">
+        <div class="box_design_ttl_bar">
+          <div class="box_design_ttl_bar_left">
+            <h4>Balance and Deposit Trends {{trendBy[trendChange-1]?.name}}</h4>
+          </div>
+        </div>
+        <div class="tableResponsive">
+          <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap no_sticky_table">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th *ngIf="trendChange === 4"  >Sr. No.</th>
+              <th *ngIf="trendChange != 4"   >{{""}}</th>
+              <th width="40%">
+                <div class="d-flex align-items-center">
+                  {{trendBy[trendChange-1]?.columnName}}
+                  <div class="sort-icons ml-2" *ngIf="trendChange !== 4">
+                    <mat-icon class="sort-icon-up" [ngClass]="{'active': sortStates.column === (trendChange === 1 ? '6' : trendChange === 2 ? '10' : trendChange === 3 ? '11' : '') && sortStates.order === '1'}" (click)="handleSort(trendChange === 1 ? '6' : trendChange === 2 ? '10' : trendChange === 3 ? '11' : '', '1', false)">arrow_drop_up</mat-icon>
+                    <mat-icon class="sort-icon-down" [ngClass]="{'active': sortStates.column === (trendChange === 1 ? '6' : trendChange === 2 ? '10' : trendChange === 3 ? '11' : '') && sortStates.order === '2'}" (click)="handleSort(trendChange === 1 ? '6' : trendChange === 2 ? '10' : trendChange === 3 ? '11' : '', '2', false)">arrow_drop_down</mat-icon>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="d-flex align-items-center">
+                  {{ getYearPrefix() }} {{ selectedCriteria1Year }}
+                  <span *ngIf="selectedQuarter?.length"> {{ selectedQuarter}}</span>
+                  <span *ngIf="!selectedQuarter?.length && selectedMonths?.length">{{ getMonthShortNames(selectedMonths) }}</span>
+                  <div class="sort-icons ml-2">
+                    <mat-icon class="sort-icon-up" [ngClass]="{'active': sortStates.column === '7' && sortStates.order === '1'}" (click)="handleSort('7', '1', false)">arrow_drop_up</mat-icon>
+                    <mat-icon class="sort-icon-down" [ngClass]="{'active': sortStates.column === '7' && sortStates.order === '2'}" (click)="handleSort('7', '2', false)">arrow_drop_down</mat-icon>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="d-flex align-items-center">
+                  {{ getYearPrefix() }} {{ selectedCriteria2Year }}
+                  <span *ngIf="selected2Quarter?.length"> {{ selected2Quarter}}</span>
+                  <span *ngIf="!selected2Quarter?.length && selected2Months?.length">{{ getMonthShortNames(selected2Months) }}</span>
+                  <div class="sort-icons ml-2">
+                    <mat-icon class="sort-icon-up" [ngClass]="{'active': sortStates.column === '8' && sortStates.order === '1'}" (click)="handleSort('8', '1', false)">arrow_drop_up</mat-icon>
+                    <mat-icon class="sort-icon-down" [ngClass]="{'active': sortStates.column === '8' && sortStates.order === '2'}" (click)="handleSort('8', '2', false)">arrow_drop_down</mat-icon>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="d-flex align-items-center">
+                  % of Change
+                  <div class="sort-icons ml-2">
+                    <mat-icon class="sort-icon-up" [ngClass]="{'active': sortStates.column === '9' && sortStates.order === '1'}" (click)="handleSort('9', '1', false)">arrow_drop_up</mat-icon>
+                    <mat-icon class="sort-icon-down" [ngClass]="{'active': sortStates.column === '9' && sortStates.order === '2'}" (click)="handleSort('9', '2', false)">arrow_drop_down</mat-icon>
+                  </div>
+                </div>
+              </th>
+            </tr>
+            </thead>
+            <tbody class="table-container"  [ngClass]="{'subloaderShowingg': isTableSubLoading}">
+              @if(categoryDataFinalList?.length>0){
+                <ng-container *ngFor="let data of categoryDataFinalList; let i = index">
+                  <tr>
+                    <td *ngIf="trendChange != 4">
+                      <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapsedList[i] = !collapsedList[i]"
+                              [ngClass]="{'rotate_icon': !collapsedList[i]}">
+                        <i class="fas fa-chevron-down"></i>
+                      </button>
+                    </td>
+                    <td *ngIf="trendChange === 4">
+                      <b >{{ i + 1 + (pagination.pageIndex-1) * pagination.pageSize }}</b>
+                    </td>
+                    <td>{{ data?.[fieldVar[trendChange-1]?.listVarName] || '-'}}</td>
+                    <td>
+                      <b>  <ng-container *ngIf="selectedCurrency != null && selectedCurrency === 1 ">
+                        {{ getCurrencySymbol(selectedCurrency) }}
+                      </ng-container> {{ data?.criteria1Total | number:'1.0-0' }}</b>
+                    </td>
+                    <td>
+                      <b> <ng-container *ngIf="selectedCurrency != null && selectedCurrency === 1 ">
+                        {{ getCurrencySymbol(selectedCurrency) }}
+                      </ng-container> {{ data?.criteria2Total | number:'1.0-0' }}</b>
+                    </td>
+                    <td>{{ data?.changePct?.toFixed(2) }}%</td>
+                  </tr>
+
+                  <tr class="collapsing_tr"  [ngbCollapse]="collapsedList[i]">
+                    <td colspan="15">
+                      <div class="box_design">
+                        <div class="tableResponsive inside_table">
+                          <table class="bordered_table w-100">
+                            <thead>
+                            <tr>
+                               <th width="40%">
+                                <div class="d-flex align-items-center">
+                                  {{trendBy[trendChange-1]?.innerColumnName}}
+                                  <div class="sort-icons ml-2" *ngIf="trendChange !== 3">
+                                    <mat-icon class="sort-icon-up" [ngClass]="{'active': data.custPagination.sortCol === (trendChange === 1 ? '10' : trendChange === 2 ? '11' : '') && data.custPagination.sortOrder === '1'}" (click)="handleSort(trendChange === 1 ? '10' : trendChange === 2 ? '11' : '', '1', true, data?.[fieldVar[trendChange-1]?.parentId])">arrow_drop_up</mat-icon>
+                                    <mat-icon class="sort-icon-down" [ngClass]="{'active': data.custPagination.sortCol === (trendChange === 1 ? '10' : trendChange === 2 ? '11' : '') && data.custPagination.sortOrder === '2'}" (click)="handleSort(trendChange === 1 ? '10' : trendChange === 2 ? '11' : '', '2', true, data?.[fieldVar[trendChange-1]?.parentId])">arrow_drop_down</mat-icon>
+                                  </div>
+                                </div>
+                              </th>
+                              <th>
+                                <div class="d-flex align-items-center">
+                                  {{ getYearPrefix() }} {{ selectedCriteria1Year }}
+                                  <span *ngIf="selectedQuarter?.length"> {{ selectedQuarter}}</span>
+                                  <span *ngIf="!selectedQuarter?.length && selectedMonths?.length">{{ getMonthShortNames(selectedMonths) }}</span>
+                                  <div class="sort-icons ml-2">
+                                    <mat-icon class="sort-icon-up" [ngClass]="{'active': data.custPagination.sortCol === '7' && data.custPagination.sortOrder === '1'}" (click)="handleSort('7', '1', true, data?.[fieldVar[trendChange-1]?.parentId])">arrow_drop_up</mat-icon>
+                                    <mat-icon class="sort-icon-down" [ngClass]="{'active': data.custPagination.sortCol === '7' && data.custPagination.sortOrder === '2'}" (click)="handleSort('7', '2', true, data?.[fieldVar[trendChange-1]?.parentId])">arrow_drop_down</mat-icon>
+                                  </div>
+                                </div>
+                              </th>
+                              <th>
+                                <div class="d-flex align-items-center">
+                                  {{ getYearPrefix() }} {{ selectedCriteria2Year }}
+                                  <span *ngIf="selected2Quarter?.length"> {{ selected2Quarter}}</span>
+                                  <span *ngIf="!selected2Quarter?.length && selected2Months?.length">{{ getMonthShortNames(selected2Months) }}</span>
+                                  <div class="sort-icons ml-2">
+                                    <mat-icon class="sort-icon-up" [ngClass]="{'active': data.custPagination.sortCol === '8' && data.custPagination.sortOrder === '1'}" (click)="handleSort('8', '1', true, data?.[fieldVar[trendChange-1]?.parentId])">arrow_drop_up</mat-icon>
+                                    <mat-icon class="sort-icon-down" [ngClass]="{'active': data.custPagination.sortCol === '8' && data.custPagination.sortOrder === '2'}" (click)="handleSort('8', '2', true, data?.[fieldVar[trendChange-1]?.parentId])">arrow_drop_down</mat-icon>
+                                  </div>
+                                </div>
+                              </th>
+                              <th>
+                                <div class="d-flex align-items-center">
+                                  % of Change
+                                  <div class="sort-icons ml-2">
+                                    <mat-icon class="sort-icon-up" [ngClass]="{'active': data.custPagination.sortCol === '9' && data.custPagination.sortOrder === '1'}" (click)="handleSort('9', '1', true, data?.[fieldVar[trendChange-1]?.parentId])">arrow_drop_up</mat-icon>
+                                    <mat-icon class="sort-icon-down" [ngClass]="{'active': data.custPagination.sortCol === '9' && data.custPagination.sortOrder === '2'}" (click)="handleSort('9', '2', true, data?.[fieldVar[trendChange-1]?.parentId])">arrow_drop_down</mat-icon>
+                                  </div>
+                                </div>
+                              </th>
+                              <th *ngIf="trendChange === 1 || trendChange === 2">Action</th>
+                            </tr>
+                            </thead>
+
+                            <tbody class="subtable-container"  [ngClass]="{'subloaderShowingg': isSubTableSubLoading}">
+                            <app-sub-loader ></app-sub-loader>
+                              @if(data.custPagination.displayedCustList?.length>0){
+                                <tr *ngFor="let cust of data.custPagination.displayedCustList; let j = index">
+                                  <td>{{ cust?.[fieldVar[trendChange-1]?.innerListVarName] || '-'}}</td>
+                                  <td>
+                                    <b> <ng-container *ngIf="selectedCurrency != null && selectedCurrency === 1 ">
+                                      {{ getCurrencySymbol(selectedCurrency) }}
+                                    </ng-container> {{ cust?.criteria1Total | number:'1.0-0' }}</b>
+                                  </td>
+                                  <td>
+                                    <b> <ng-container *ngIf="selectedCurrency != null && selectedCurrency === 1 ">
+                                      {{ getCurrencySymbol(selectedCurrency) }}
+                                    </ng-container> {{ cust?.criteria2Total | number:'1.0-0' }}</b>
+                                  </td>
+                                  <td>{{ cust?.changePct | number:'1.2-2' }}%</td>
+                                  <td *ngIf="trendChange === 1 || trendChange === 2"><a (click)="balancedepositDialog(cust?.[fieldVar[trendChange-1]?.childId],data?.[fieldVar[trendChange-1]?.parentId],cust?.[fieldVar[trendChange-1]?.innerListVarName])" class="link" ><u>View</u></a></td>
+                                </tr>
+                              }  @else {
+                                <tr>
+                                  <td colspan="10">
+                                    <app-no-data-found message="No Data found" />
+                                  </td>
+                                </tr>
+                              }
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <!-- Child Pagination -->
+                        <div class="pagination-table NP_LeftPagintion" *ngIf="data.custPagination.displayedCustList?.length>0">
+                          <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                              Showing
+                              {{((data?.custPagination?.page - 1) * data?.custPagination?.pageSize+1)}} to
+                              {{(data.custPagination.pageSize*data.custPagination.page) > (data.custPagination.totalItems) ? (data.custPagination.totalItems) : (data.custPagination?.pageSize*data.custPagination?.page)}} of
+                              {{data.custPagination.totalItems}} rows
+                              <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                  <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="data.custPagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                                (ngModelChange)="childPagination(data.custPagination.page,data.custPagination.pageSize,data?.[fieldVar[trendChange-1]?.parentId], data.custPagination.sortCol, data.custPagination.sortOrder)">
+                                      <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                        {{pages.value}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                              <span class="grey_text">row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                              <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination
+                                  [maxSize]="3"
+                                  [rotate]="true"
+                                  [(page)]="data.custPagination.page"
+                                  [pageSize]="data.custPagination.pageSize"
+                                  [collectionSize]="data.custPagination.totalItems"
+                                  (pageChange)="childPagination(data.custPagination.page,data.custPagination.pageSize,data?.[fieldVar[trendChange-1]?.parentId], data.custPagination.sortCol, data.custPagination.sortOrder);">
+                                </ngb-pagination>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              }  @else {
+                <tr>
+                  <td colspan="10">
+                    <app-no-data-found message="No Data found" />
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-table NP_LeftPagintion mt_mb_20px" *ngIf="categoryDataFinalList?.length>0">
+          <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+            Showing
+            {{((pagination.pageIndex - 1) * pagination.pageSize+1)}} to
+            {{(pagination.pageSize*pagination.pageIndex) > (categoryDataList?.totalRows) ? (categoryDataList?.totalRows) : (pagination.pageSize*pagination.pageIndex)}} of
+            {{categoryDataList?.totalRows}} rows
+            <div class="dataTables_length" id="tickets-table_length">
+              <div class="NP_HSBC_ComInput select-field">
+                <mat-form-field appearance="outline">
+                  <mat-select [(ngModel)]="pagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                              (ngModelChange)="parentPagination()">
+                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                      {{pages.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <span class="grey_text">row per page</span>
+          </div>
+          <div class="text-md-right float-md-right pagination-rounded">
+            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+              <ngb-pagination [collectionSize]="Number(pagination.totalSize)" [maxSize]="3" [(page)]="pagination.pageIndex" [rotate]="true"
+                              [boundaryLinks]="true" [pageSize]="pagination.pageSize" (pageChange)="parentPagination()">
+              </ngb-pagination>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

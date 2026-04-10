@@ -1,0 +1,525 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4>
+                    Pre-Approved Products
+                </h4>
+            </div>
+            <div class="page_Title_Right">
+                <button type="button" mat-flat-button class="btn_design with_right_icn"
+                    color="secondary">Download<mat-icon class="ml-2 mr-0">arrow_downward_alt</mat-icon></button>
+                <button type="button" mat-flat-button color="primary" class="HSBC_Dropbtn btn_design ml-2"
+                    [matMenuTriggerFor]="menu">Add New Customer<mat-icon>expand_more</mat-icon></button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <!-- <button mat-menu-item color="primary" (click)="AddBusinessPANPopup()">Add single User</button> -->
+                    <button mat-menu-item color="primary" [routerLink]="'/hsbc/Bulk-Upload'">Bulk Upload</button>
+                    <button mat-menu-item color="primary" (click)="redirectToBorrowerModule()">Individual
+                        Entry</button>
+                </mat-menu>
+            </div>
+        </div>
+        <div class="page_Details withFilter_InTab_header">
+            <button type="button" mat-flat-button color="primary" class="filter_menu_btn btn_design "
+                [matMenuTriggerFor]="Filtermenu">Filter<i class="fa fa-sort-amount-down ml-2"></i></button>
+            <mat-menu #Filtermenu="matMenu" xPosition="before" class="filtermenu">
+                <form [formGroup]="filterForm" novalidate>
+                    <div class="filtermenu_content">
+                        <div class="filtermenu_details">
+                            <div class="form-group input_field">
+                                <fieldset class="" (click)="$event.stopPropagation()">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>From</mat-label>
+                                        <input matInput placeholder="From - dd-mm-yyyy" [matDatepicker]="picker1"
+                                            readonly formControlName="fromDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                </fieldset>
+                            </div>
+                            <div class="form-group input_field">
+                                <fieldset class="" (click)="$event.stopPropagation()">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>From</mat-label>
+                                        <input matInput placeholder="To - dd-mm-yyyy" [matDatepicker]="picker2" readonly
+                                            formControlName="toDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="filtermenu_actions" (click)="$event.stopPropagation()">
+                            <button type="button" mat-stroked-button class="btn_design" color="grey"
+                                (click)="removeValueFromControl()">Clear
+                                All Filters</button>
+                            <button type="button" mat-flat-button class="" color="primary"
+                                (click)="callFilterOnTab();PageResetcont()">Apply Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-menu>
+
+            <mat-tab-group mat-align-tabs="start" class="tabs-design" animationDuration="0ms"
+                [selectedIndex]="selectedTabIndex"
+                (selectedIndexChange)="selectedTabIndex=$event;resetStartIndex();changeTab(selectedTabIndex)">
+                <mat-tab label="In-process Applications">
+                    <mat-card-content>
+                        <div class="box_design">
+                            <div class="tableResponsive">
+                                <table class="CommonTable_NP NP_BGBHSBC Mobile_table_View_NP design_Main_listTable  ">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Application Code</th>
+                                            <th>Name Of Borrower</th>
+                                            <th>Date Of Application</th>
+                                            <th>PAN</th>
+                                            <!-- <th>Product</th> -->
+                                            <th>Stage</th>
+                                            <th *ngIf="roleId == 7">Complete Application</th>
+                                            <th class="NP_Action">Audit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- <ng-container> -->
+                                        <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                            <td></td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never ">
+                                                        <input matInput placeholder="Enter Application Code"
+                                                            [(ngModel)]="applicationCode" name="applicationCode"
+                                                            (keyup)="onNameInput($event)">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <input matInput placeholder="Enter name" [(ngModel)]="name"
+                                                            name="name" (keyup)="onNameInput($event)">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <input matInput placeholder="Select date"
+                                                            [matDatepicker]="picker" readonly [(ngModel)]="selectedDate"
+                                                            name="selectedDate"
+                                                            (dateChange)="onNameInput($event,3,$event)">
+                                                        <mat-datepicker-toggle matSuffix
+                                                            [for]="picker"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <input matInput placeholder="Enter PAN" [(ngModel)]="pan"
+                                                            name="pan" (keyup)="onNameInput($event)">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <!-- <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <mat-select placeholder="Corporate Cards" [disabled]="true">
+                                                            <mat-option *ngFor="let item of proposalStatus" [value]="item.value">
+                                                                Corporate Cards
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td> -->
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <mat-select placeholder="Select stage"
+                                                            [(ngModel)]="selectedOption" name="selectedOption"
+                                                            (selectionChange)="onNameInput($event)">
+                                                            <ng-container *ngFor="let item of proposalStatus">
+                                                                <mat-option [value]="item.value"
+                                                                    *ngIf="item.tab === '1'">
+                                                                    {{item.viewValue}}
+                                                                </mat-option>
+                                                            </ng-container>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <!-- <td class="NP_Action">
+                                                <div ngbDropdown container="body" class="dropdown d-inline">
+                                                    <a href="javascript:void(0);" class="action-icon" ngbDropdownToggle> <em class="mdi mdi-dots-horizontal"
+                                                        placement="top" ngbTooltip="Audit" tooltipClass="Menutooltip tooltip-KP"></em></a>
+                                                <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
+                                                            <button ngbDropdownItem  (click)="viewTeaser(customer.applicationId,1)"  *ngIf="isShowAuditAPI === 'true'">
+                                                                 API Audit
+                                                            </button>
+                                                            <button ngbDropdownItem  (click)="getMCAStageAuditData(customer.applicationId,5)" *ngIf="customer.displayName==='Eligible' && customer.isMca">
+                                                                 MCA Audit
+                                                            </button>
+                                                    </div>
+                                                </div>
+                                            </td> -->
+                                            <td *ngIf="roleId == 7"></td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr *ngFor="let customer of customerList;let i = index">
+                                            <td data-label="Sr. No."> {{(page-1)*pageSize+(i+1)}}</td>
+                                            <td data-label="Application Code"><span class="skyblue_badge">
+                                                    {{customer.applicationCode?customer.applicationCode:'-'
+                                                    }}</span></td>
+                                            <td data-label="Name Of Borrower">
+                                                {{customer.borrowerName?customer.borrowerName:'-' }}</td>
+                                            <td data-label="Date Of Application">{{ customer.createdDate | date:
+                                                'dd-MM-yyyy H:mm:ss'}}</td>
+                                            <td data-label="PAN"><span
+                                                    class="grey_badge">{{customer.pan?customer.pan:'-' }}</span>
+                                            </td>
+                                            <!-- <td data-label="Product">Corporate Cards</td> -->
+                                            <td data-label="Status">
+                                                <span
+                                                    class="statusColor">{{customer.displayName?customer.displayName:'-'
+                                                    }}</span>
+                                                <!-- <div ngbDropdown container="body" class="dropdown d-inline">
+                                                <a href="javascript:void(0);" class="action-icon" ngbDropdownToggle> <em class="mdi mdi-dots-horizontal"
+                                                    placement="top" ngbTooltip="Audit" tooltipClass="Menutooltip tooltip-KP"></em></a>
+                                            <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
+                                                        <button ngbDropdownItem  (click)="redirectToBorrowerModule(customer.applicationId, customer.pan)">
+                                                             Procced Application
+                                                        </button>
+                                                </div>
+                                            </div> -->
+                                            </td>
+                                            <td data-label="Complete Application" class="NP_Action" *ngIf="roleId == 7">
+                                                <a href="javascript:void(0);"
+                                                    (click)="redirectToBorrowerModule(customer.applicationId, customer.pan)"
+                                                    class="action-icon"> <em class="fmdi fmdi-mail-send"
+                                                        [placement]="['left', 'right','auto']"
+                                                        ngbTooltip="Complete Application"></em></a>
+                                            </td>
+                                            <td data-label="Action" class="NP_Action">
+                                                <div ngbDropdown container="body" class="dropdown d-inline">
+                                                    <a href="javascript:void(0);" class="action-icon" ngbDropdownToggle>
+                                                        <em class="mdi mdi-dots-horizontal"
+                                                            [placement]="['left', 'right','auto']"
+                                                            ngbTooltip="Audit"></em></a>
+                                                    <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
+                                                        <button ngbDropdownItem
+                                                            (click)="viewTeaser(customer.applicationId,1)"
+                                                            ngbTooltip="Audit API">
+                                                            API Audit
+                                                        </button>
+                                                        <button ngbDropdownItem
+                                                            (click)="viewTeaser(customer.applicationId,3)"
+                                                            ngbTooltip="Cibil API"
+                                                            *ngIf="customer.displayName==='Eligible' || customer.displayName==='InProgress'">
+                                                            Cibil Audit
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- </ng-container> -->
+                                        <tr *ngIf="customerList == null || customerList == undefined">
+                                            <td colspan="10">
+                                                <app-no-data-found />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-tab>
+
+                <mat-tab label="Completed Applications">
+                    <mat-card-content>
+                        <div class="box_design">
+                            <div class="tableResponsive">
+                                <table
+                                    class="CommonTable_NP NP_BGBHSBC NP_BGBHSBC_Lastcols Mobile_table_View_NP design_Main_listTable ">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Application Code</th>
+                                            <th>Name Of Borrower</th>
+                                            <th>Date Of Application</th>
+                                            <th>PAN</th>
+                                            <th>Product</th>
+                                            <th>Status</th>
+                                            <th>Limit Approved</th>
+                                            <th>Risk Flag</th>
+                                            <!-- <th>Remark</th> -->
+                                            <!-- <th class="NP_Action">API</th> -->
+                                            <th class="NP_Action">Action</th>
+                                            <th class="NP_Action">Audit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- <ng-container> -->
+                                        <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                            <td></td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never ">
+                                                        <input matInput placeholder="Enter Application Code"
+                                                            [(ngModel)]="applicationCode" name="applicationCode"
+                                                            (keyup)="onNameInput($event)">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <input matInput placeholder="Enter name" [(ngModel)]="name"
+                                                            name="name" (keyup)="onNameInput($event)">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <input matInput placeholder="Select date"
+                                                            [matDatepicker]="picker3" readonly
+                                                            [(ngModel)]="selectedDate" name="selectedDate"
+                                                            (dateChange)="onNameInput($event,3,$event)">
+                                                        <mat-datepicker-toggle matSuffix
+                                                            [for]="picker3"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker3></mat-datepicker>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <input matInput placeholder="Enter PAN" [(ngModel)]="pan"
+                                                            name="pan" (keyup)="onNameInput($event)">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td disabled>
+                                                <!-- <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline" floatLabel="never">
+                                                    <mat-select placeholder="Corporate Card" [disabled]="true">
+                                                        <mat-option *ngFor="let item of proposalStatus" [value]="item.value">
+                                                            Corporate Card
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset> -->
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" floatLabel="never">
+                                                        <mat-select placeholder="Select" [(ngModel)]="selectedOption"
+                                                            name="selectedOption"
+                                                            (selectionChange)="onNameInput($event)">
+                                                            <ng-container *ngFor="let item of proposalStatus">
+                                                                <mat-option [value]="item.value"
+                                                                    *ngIf="item.tab === '2'">
+                                                                    {{item.viewValue}}
+                                                                </mat-option>
+                                                            </ng-container>
+
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <!-- <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline" floatLabel="never">
+                                                    <input matInput placeholder="Enter Amount"  [(ngModel)]="finalEligibleAmount" name="finalEligibleAmount" (keyup)="onNameInput($event)">
+                                                </mat-form-field>
+                                            </fieldset>
+                                            &nbsp; -->
+                                            </td>
+                                            <td>
+                                                <!-- <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline" floatLabel="never">
+                                                    <mat-select placeholder="Risk Flag" [(ngModel)]="isRiskFlag" name="isRiskFlag" (selectionChange)="onNameInput($event)">
+                                                        <mat-option *ngFor="let item of Flag" [value]="item.value">
+                                                            {{item.viewValue}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset> -->
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                &nbsp;
+                                            </td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                        <tr *ngFor="let customer of customerList;let i = index">
+                                            <td data-label="Sr. No."> {{(page-1)*pageSize+(i+1)}}</td>
+                                            <td data-label="Application Code"><span class="skyblue_badge">
+                                                    {{customer.applicationCode?customer.applicationCode:'-'
+                                                    }}</span></td>
+                                            <td data-label="Name Of Borrower">
+                                                {{customer.borrowerName?customer.borrowerName:'-' }}</td>
+                                            <td data-label="Date Of Application">{{ customer.createdDate | date:
+                                                'dd-MM-yyyy H:mm:ss'}}</td>
+                                            <td data-label="PAN"><span
+                                                    class="grey_badge">{{customer.pan?customer.pan:'-' }}</span>
+                                            </td>
+                                            <td data-label="Product">
+                                                <ng-container *ngIf="customer.breDashboardResList; else elseTemplate">
+                                                    <ng-container *ngFor="let item of customer.breDashboardResList">
+                                                        <ng-container *ngIf="item.isReject == 0">
+                                                            {{item.fpProductName||'-'}}<br />
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-template #elseTemplate>
+                                                    -
+                                                </ng-template>
+                                            </td>
+                                            <td *ngIf="customer.displayName==='Eligible'" data-label="Status"><span
+                                                    class="statusColor">{{customer.displayName?customer.displayName:'-'
+                                                    }}</span></td>
+                                            <td *ngIf="customer.displayName==='Reject'" data-label="Status"><span
+                                                    class="statusRejectColor">{{customer.displayName?customer.displayName:'-'
+                                                    }}
+                                                    <em class="fmdi fmdi-info ml-1"
+                                                        [ngbTooltip]="ngbTooltipContent"></em></span></td>
+                                            <ng-template #ngbTooltipContent>
+                                                {{customer.terminateReason}}
+                                            </ng-template>
+                                            <td data-label="Limit Approved">
+                                                <ng-container *ngIf="customer.breDashboardResList; else elseLimit">
+                                                    <ng-container *ngFor="let item of customer.breDashboardResList">
+                                                        <ng-container
+                                                            *ngIf="item.isMatched && item.finalEligibleAmount !=null && item.isReject == 0">
+                                                            ₹{{commonMethod.currencyMaskForObject(item.finalEligibleAmount.toFixed(0)+"")}}<br />
+                                                        </ng-container>
+                                                        <ng-container
+                                                            *ngIf="item.finalEligibleAmount ==null">-<br /></ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-template #elseLimit>
+                                                    {{customer.finalEligibleAmount||'-'}}
+                                                </ng-template>
+                                            </td>
+                                            <td data-label="Risk Flag">
+                                                <ng-container *ngIf="customer.breDashboardResList; else elseRisk">
+                                                    <ng-container
+                                                        *ngFor="let item of customer.breDashboardResList;let i=index;">
+                                                        <ng-container *ngIf="i==0 && item.isMatched">
+                                                            {{item.isRiskFlag ? 'Yes' : 'No'}}<br />
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-template #elseRisk>
+                                                    {{ customer.isRiskFlag ? 'Yes' : 'No' }}
+                                                </ng-template>
+
+                                            </td>
+                                            <!-- <td data-label="API" class="NP_Action">
+                                            <mat-icon mat-icon-button>visibility</mat-icon>
+                                        </td> -->
+                                            <!-- <td data-label="Action" class="NP_Action">
+                                            <mat-icon mat-icon-button (click)="downloadExcelFile(customer.applicationId)" ngbTooltip="Download CAM">download</mat-icon>
+                                            <mat-icon mat-icon-button (click)="getAllDocuments(customer.applicationId)" ngbTooltip="Download Cibil">cibil download</mat-icon>
+                                        </td> -->
+                                            <td data-label="Action" class="NP_Action">
+                                                <div ngbDropdown container="body" class="dropdown d-inline">
+                                                    <a href="javascript:void(0);" class="action-icon" ngbDropdownToggle>
+                                                        <em class="mdi mdi-dots-horizontal"
+                                                            [placement]="['left', 'right','auto']"
+                                                            ngbTooltip="Download"></em></a>
+                                                    <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
+                                                        <button ngbDropdownItem
+                                                            (click)="downloadExcelFile(customer.applicationId)">
+                                                            <img src="assets/images/Dashabord/file-tsv.svg"
+                                                                class="mr-1">CAM
+                                                            Report
+                                                        </button>
+                                                        <button ngbDropdownItem
+                                                            (click)="getAllDocuments(customer.applicationId)">
+                                                            <img src="assets/images/Dashabord/file-tsv.svg"
+                                                                class="mr-1">Cibil
+                                                            Report
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td data-label="Action" class="NP_Action">
+                                                <div ngbDropdown container="body" class="dropdown d-inline">
+                                                    <a href="javascript:void(0);" class="action-icon" ngbDropdownToggle>
+                                                        <em class="mdi mdi-dots-horizontal"
+                                                            [placement]="['left', 'right','auto']"
+                                                            ngbTooltip="Audit"></em></a>
+                                                    <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
+                                                        <button ngbDropdownItem
+                                                            (click)="viewTeaser(customer.applicationId,1)">
+                                                            API Audit
+                                                        </button>
+                                                        <button ngbDropdownItem
+                                                            (click)="getMCAStageAuditData(customer.applicationId,5)"
+                                                            *ngIf="customer.displayName==='Eligible' && customer.isMca">
+                                                            MCA Audit
+                                                        </button>
+                                                        <button ngbDropdownItem
+                                                            (click)="viewTeaser(customer.applicationId,3)"
+                                                            *ngIf="customer.displayName==='Eligible' || customer.displayName==='InProgress'"
+                                                            ngbTooltip="Cibil API">
+                                                            Cibil Audit
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- </ng-container> -->
+                                        <tr *ngIf="customerList == null || customerList == undefined">
+                                            <td colspan="10">
+                                                <app-no-data-found />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-tab>
+            </mat-tab-group>
+
+            <div class="pagination-table NP_LeftPagintion">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(startIndex+1)}} to
+                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                        {{totalSize}}
+                        row
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <label class="d-inline-flex align-items-center"> <ng-select [clearable]="false"
+                                    name="tickets-table_length" class="hide-clear" aria-controls="tickets-table"
+                                    name="pageSize" [(ngModel)]="pageSize" bindLabel="name" bindValue="value"
+                                    [items]="PageSelectNumber" (ngModelChange)="onPageChange(page)"></ng-select>
+                                row per page</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-5">
+                    <div class="text-md-right float-md-right pagination-rounded">
+
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

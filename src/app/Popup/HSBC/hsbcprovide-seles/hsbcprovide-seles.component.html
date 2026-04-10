@@ -1,0 +1,85 @@
+<!-- <main class="HSBC_Common_popup __Pad0PX">
+    <div class="__HSBC_Popup__header _Icon_TopRight">
+        <p class="HSBC__title">
+            <img src="assets/images/Dashboard/hsbc_Logo.png" alt="HSBC Bank Logo">
+        </p>
+        <button mat-icon-button (click)="closePopup()" class="HSBC__Btn_Icon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="HSBC__Popup_Body">
+        <div class="__HSBC_Common_Cont_Popup Flex_Wrap ConfirmationTxt">
+            <div class="__Common_texts _Img_Text_Pop _pd0px">
+                <p class="__ptext">Provide Sales Details</p>
+            </div>
+            <div class="NP_Com_Group Form_Cont_Grp NP_M_16_15px">
+                <legend class="col-md-12">
+                    <fieldset class="NP_HSBC_ComInput">
+                        <mat-label class="mb-2 cl_KP">Projected Annual Turnover</mat-label>
+                        <mat-form-field appearance="outline" floatLabel="never">
+                            <span matPrefix class="pd_1rem">{{" ₹"}}</span>
+                            <input matInput placeholder="Enter Projected Annual Turnover" [(ngModel)]="turnover"
+                                (input)="changeTurnover(turnover)" pattern="[0-9]">
+                            <mat-error *ngIf="orignalValue && !isNumeric(orignalValue)">
+                                Please enter a valid numeric value.
+                            </mat-error>
+                        </mat-form-field>
+                    </fieldset>
+                </legend>
+                <legend class="col-md-12">
+                    <fieldset class="NP_HSBC_ComInput">
+                        <div class="NP_HSBC_Amount">
+                            <mat-label>Projected Quarterly Turnover</mat-label>
+                            <span class="totalAmount">₹ {{qtrTurnover}}</span>
+                        </div>
+                    </fieldset>
+                </legend>
+            </div>
+        </div>
+    </div>
+    <div class="HSBC_Popup_btn_Grp JC_Center">
+        <button mat-raised-button color="primary" class="Btn__Common __Primary __btn_Icon"
+            (click)="submit()">Submit</button>
+    </div>
+</main> -->
+
+<div class="popup_design max-500 otp_verify_popup">
+    <a class="modal_closeicn_btn" href="javascript:void(0)"><mat-icon class="material-symbols-outlined"
+            (click)="closePopup()" cdkFocusInitial>close</mat-icon></a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <!-- <h3> <img src="assets/images/Dashboard/hsbc_Logo.png" class="popup_hsbc_logo" alt="HSBC Bank Logo"></h3> -->
+            <h3>Provide Sales Details</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body form_design">
+                <legend class="col-md-12">
+                    <fieldset class="NP_HSBC_ComInput mt-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Projected Annual Turnover</mat-label>
+                            <span matPrefix class="pd_1rem">{{" ₹"}}</span>
+                            <!-- <input matInput placeholder="Enter Projected Annual Turnover"  [(ngModel)]="turnover" (input)="changeTurnover(turnover)"> -->
+                            <input matInput placeholder="Enter Projected Annual Turnover" [(ngModel)]="turnover"
+                                (input)="changeTurnover(turnover)" pattern="[0-9]">
+                            <mat-error *ngIf="orignalValue && !isNumeric(orignalValue)">
+                                Please enter a valid numeric value.
+                            </mat-error>
+                        </mat-form-field>
+                    </fieldset>
+                </legend>
+                <legend class="col-md-12">
+                    <fieldset class="NP_HSBC_ComInput">
+                        <div class="NP_HSBC_Amount">
+
+                            <mat-label>Projected Quarterly Turnover</mat-label>
+                            <span class="totalAmount">₹ {{qtrTurnover}}</span>
+                        </div>
+                    </fieldset>
+                </legend>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+            <button mat-flat-button color="primary" (click)="submit();">Submit</button>
+        </mat-dialog-actions>
+    </div>
+</div>

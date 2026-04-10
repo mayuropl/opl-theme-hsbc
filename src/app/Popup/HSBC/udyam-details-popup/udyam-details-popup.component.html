@@ -1,0 +1,52 @@
+<section class="popup_design max-500">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Your Udyam Details</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">
+                <div class="list_table_design">
+                    <div class="list_row">
+                        <span>MSME Status</span>
+                        <span>{{udyamData?.udyamMsmeStatus || "NA"}}</span>
+                    </div>
+                    <div class="list_row">
+                        <span>Category</span>
+                        <span>{{udyamData?.udyamCategory || "NA"}}</span>
+                    </div>
+                    <div class="list_row">
+                        <span>Expiry Date</span>
+                        <span>NA</span>
+                    </div>
+                    <div class="list_row">
+                        <span>Udyam Certificate</span>
+                        <span>
+                            <div *ngIf="!isDownloadDisabled()" class="certificate-section">
+                                <a class="view_link_btn"
+                                   (click)="downloadUdyamCertificate(udyamData.udhyamCertificateRefId)">
+                                   Download
+                                </a>
+                                <div class="fetch-date-info">
+                                    <small class="text-muted">Last fetched on: {{getFormattedFetchDate()}}</small>
+                                </div>
+                            </div>
+                            <a *ngIf="isDownloadDisabled()"
+                               class="view_link_btn disabled-link"
+                               [style.pointer-events]="'none'"
+                               [style.opacity]="'0.5'"
+                               [style.cursor]="'not-allowed'">
+                               Download
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

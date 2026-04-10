@@ -1,0 +1,28 @@
+.NP_Com_Group{
+    margin-bottom: 15px;
+}
+.page_Actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.note_text{
+    float: left;
+    p{
+    font-size: 14px;
+    background: #fff;
+    border: 1px solid #32327F;
+    padding: 10px;
+    border-radius: 8px;
+    }
+}
+
+::ng-deep {
+    .ng-invalid{
+        .mat-mdc-form-field-subscript-wrapper{
+            display: block;
+            height: 30px;
+        }
+    }
+}

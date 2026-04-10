@@ -1,0 +1,232 @@
+//
+// dropdown.scss
+//
+
+.dropdown-menu {
+  animation-fill-mode: both;
+  padding: 0;
+  min-width: 120px !important;
+  margin-top: 5px !important;
+  background: #FFFFFF;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1607843137) !important;
+  border: 1px solid #C4CEDD;
+  border-radius: 8px;
+  z-index: 1000;
+
+  .dropdown-item {
+    &:hover {
+      background-color: #FFF6F7;
+    }
+
+    &.logOut {
+      color: #E02020;
+      display: flex;
+      align-items: center;
+      padding-bottom: 12px;
+      border-top: 1px solid #cccccc;
+      font-size: 14px;
+      border-radius: 0 0 8px 8px;
+
+      em {
+        line-height: 10px;
+        font-size: 18px;
+      }
+    }
+  }
+
+  &.NPArrowBefore {
+    top: 5px !important;
+
+    @media screen and (max-width:640px) {
+      transform: translate(0, 50px) !important
+    }
+
+    &:before {
+      content: "";
+      border: 12px solid;
+      border-color: transparent transparent #C4CEDD transparent;
+      content: " ";
+      height: 0;
+      position: absolute;
+      width: 0;
+      right: 5%;
+      top: -24px;
+      transform: translateX(-20%);
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      opacity: 1;
+      width: 12px;
+      height: 12px;
+      top: -12px;
+      right: 16px;
+      border-bottom: 11px solid #ffffff;
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+    }
+  }
+
+  // &:before {
+  //   content: "";
+  //   position: absolute;
+  //   //font-family: "Material Design Icons";
+  //   font-size: 9px;
+  //   line-height: 0;
+  //   background: #FFFFFF 0% 0% no-repeat padding-box;
+  //   opacity: 1;
+  //   width: 14px;
+  //   height: 14px;
+  //   transform: rotate(45deg);
+  //   left: 2px;
+  // }
+  &.btn-drop {
+    padding: 0;
+    width: 100%;
+  }
+
+  &.NP-drop_down {
+    padding: 0;
+    border-radius: 22px;
+    width: 100%;
+
+    .notify-item {
+      border-radius: 22px;
+      border: 0;
+
+      &.dropdown-item {
+        cursor: pointer;
+      }
+    }
+  }
+
+  /* dropdown View on icon start */
+  &.NP_Drop_Hover {
+    .dropdown-item {
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 400;
+      border-left: 2px solid transparent;
+      text-align: left;
+      border-bottom: 1px solid #cccccc;
+
+      img {
+        width: 13px;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      em {
+        margin-right: .5rem;
+      }
+
+      &:hover {
+        background-color: #F1F5FF;
+        color: #32327F;
+        border-left: 2px solid #32327F;
+      }
+
+    }
+  }
+
+  /* dropdown View on icon End */
+
+}
+
+.dropdown-item-NP {
+  display: block;
+  width: 100%;
+  clear: both;
+  font-weight: 400;
+  // color: #6c757d;
+  text-align: inherit;
+  white-space: nowrap;
+  // background-color: transparent;
+  // background-color: transparent;
+  border: 0;
+
+  &:first-of-type {
+    border-top-right-radius: .25rem;
+    border-top-left-radius: .25rem;
+  }
+
+  &:last-of-type {
+    border-bottom-right-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+  }
+}
+
+.dropdown-divider {
+  border-top: 1px solid #dee2e6 !important;
+}
+
+// Dropdown Large (Custom)
+.dropdown-lg {
+  width: $dropdown-lg-width;
+}
+
+.dropdown-xl {
+  width: 450px;
+}
+
+@include media-breakpoint-down(sm) {
+  .dropdown-lg {
+    width: 200px !important;
+  }
+
+  .dropdown-xl {
+    width: $dropdown-lg-width;
+  }
+}
+
+// Dropdown Mega Menu
+
+.dropdown-mega {
+  position: static !important;
+}
+
+.dropdown-megamenu {
+  padding: 20px;
+  left: 20px !important;
+  right: 20px !important;
+  background-image: url("/assets/images/megamenu-bg.png");
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
+
+.megamenu-list {
+  li {
+    padding: 5px 20px;
+    position: relative;
+
+    a {
+      color: $gray-700;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+
+    &:before {
+      content: "\F130";
+      position: absolute;
+      left: 0;
+      font-family: "Material Design Icons";
+      font-size: 9px;
+      line-height: 24px;
+    }
+  }
+
+  .download_template{
+    min-width: 200px !important;
+  }
+}
+
+
+.download_template{
+  min-width: 200px !important;
+}
+

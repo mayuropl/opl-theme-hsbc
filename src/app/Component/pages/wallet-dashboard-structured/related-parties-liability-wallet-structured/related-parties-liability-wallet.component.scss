@@ -1,0 +1,19 @@
+.title_chart{
+    border-bottom: 1px solid rgba(112, 112, 112, .25);
+}
+.table_wrp_box {
+    display: flex;
+    justify-content: space-between;
+    .chart_box{
+        width: 25%;
+    }
+    .pad_box {
+        padding: 20px;
+        width: 75%;
+    }
+}
+
+
+
+
+  

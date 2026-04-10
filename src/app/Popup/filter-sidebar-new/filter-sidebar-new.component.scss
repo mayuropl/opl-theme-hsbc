@@ -1,0 +1,31 @@
+
+.validation-error{
+    padding: 10px;
+}
+
+// Highlight animation for edited filter category
+@keyframes highlightPulse {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(0, 128, 0, 0.1);
+  }
+}
+
+.filter_category_list li.highlight-edit {
+  animation: highlightPulse 1.5s ease-in-out 2;
+}
+
+
+.sub_expansion{
+  padding: 0 10px;
+}
+
+.c_type_btn{
+  margin: 10px 0;
+  padding: 0 5px !important;
+  .c_type_text{
+    font-size: 12px;
+  }
+}

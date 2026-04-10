@@ -1,0 +1,50 @@
+.certificate-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.fetch-date-info {
+  small {
+    font-size: 0.75rem;
+    color: #6c757d;
+    font-style: italic;
+    line-height: 1.2;
+    display: block;
+    text-align: right;
+  }
+}
+
+.view_link_btn {
+  display: inline-block;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 500;
+  
+  &:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }
+}
+
+.disabled-link {
+  color: #6c757d !important;
+  text-decoration: none !important;
+  
+  &:hover {
+    text-decoration: none !important;
+    color: #6c757d !important;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .certificate-section {
+    gap: 2px;
+  }
+  
+  .fetch-date-info small {
+    font-size: 0.7rem;
+  }
+}

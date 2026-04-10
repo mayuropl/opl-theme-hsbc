@@ -1,0 +1,25 @@
+.customdate_header-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5em;
+  }
+  .cusom_date_head{
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .customdate_header_label {
+    flex: 1;
+    height: 1em;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .customdate_header-double-arrow .mat-icon {
+    margin: -22%;
+
+  }
+  

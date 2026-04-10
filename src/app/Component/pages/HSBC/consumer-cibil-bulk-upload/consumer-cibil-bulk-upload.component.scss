@@ -1,0 +1,78 @@
+.radio_top{
+    display: flex;
+    margin: -10px 0 10px 0;
+}
+
+.files-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .file_list{
+        margin: 0;
+    }
+}
+.number_list{
+    font-size: 14px;
+    color: #000;
+}
+
+.suess_text{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.singlefile_View{
+    border: 1px solid #d7d8d6;
+    border-radius: 8px;
+}
+
+.submit-container {
+  margin-top: 16px; /* adjust as needed */
+}
+.radio_top{
+    display: flex;
+    margin: -10px 0 10px 0;
+}
+
+.files-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .file_list{
+        margin: 0;
+    }
+}
+.number_list{
+    font-size: 14px;
+    color: #000;
+}
+
+.suess_text{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.singlefile_View{
+    border: 1px solid #d7d8d6;
+    border-radius: 8px;
+}
+
+
+.__Btn_Group{
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    .upload_note{
+        font-style: italic;
+    }
+}
+
+.with_sle{
+  align-items: center !important;
+  flex-direction: inherit !important;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}

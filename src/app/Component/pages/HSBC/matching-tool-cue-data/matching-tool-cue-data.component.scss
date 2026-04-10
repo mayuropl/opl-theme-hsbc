@@ -1,0 +1,52 @@
+.radio_top{
+    display: flex;
+    margin: -10px 0 10px 0;
+}
+
+.files-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .file_list{
+        margin: 0;
+    }
+}
+.number_list{
+    font-size: 14px;
+    color: #000;
+}
+
+.suess_text{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.singlefile_View{
+    border: 1px solid #d7d8d6;
+    border-radius: 8px;
+}
+
+
+.note_file_upload{
+    color: #6C757D;
+    font-style: italic;
+}
+
+.__Btn_Group{
+    justify-content: space-between !important;
+}
+
+
+.upload_title{
+    margin-top: 0;
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+}
+
+a.disabled {
+  color: gray;
+  text-decoration: none;
+}
+

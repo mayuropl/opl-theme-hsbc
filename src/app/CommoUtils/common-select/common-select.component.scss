@@ -1,0 +1,38 @@
+.radio-label-bold {
+  font-weight: 600;
+  color: #333;
+}
+
+// Style placeholder when showing radio label
+:host ::ng-deep .mat-mdc-select-placeholder {
+  color: #333;
+ }
+
+.common-select-wrapper {
+  position: relative;
+  
+  .minmax-overlay {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 40px);
+  }
+}
+
+// Hide placeholder when overlay is showing
+:host ::ng-deep .common-select-wrapper:has(.minmax-overlay) .mat-mdc-select-placeholder {
+  opacity: 0;
+}
+
+.no_sticky{
+  position: inherit;
+}

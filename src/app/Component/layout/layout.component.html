@@ -1,0 +1,21 @@
+<div id="wrapper">
+
+    <app-topbar (settingsButtonClicked)="onSettingsButtonClicked()" (mobileMenuButtonClicked)="onToggleMobileMenu()">
+    </app-topbar>
+    <app-sidemenubar></app-sidemenubar>
+    <app-sidebar [isCondensed]="isCondensed"></app-sidebar>
+    <!-- {{(isConfigRouterUrl)? 'd-block' : 'd-none'}} -->
+    <!-- class="{{(isConfigRouterUrl)? 'd-block' : 'd-none'}}"  class="md-hide" -->
+    <!-- {{(isConfigRouterUrl)? '' : ''}} -->
+    <div class="content-page contentleft-Dash {{(isDashRouterUrl)? 'thankyouPage' : ''}}" (click)="onContentPageClick()">
+        <div class="content">
+            <!-- content -->
+            <router-outlet></router-outlet>
+        </div>
+
+        <!-- footer -->
+        <app-footer></app-footer>
+    </div>
+</div>
+
+<!-- <app-rightsidebar></app-rightsidebar> -->

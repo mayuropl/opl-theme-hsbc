@@ -1,0 +1,14 @@
+<section class="popup_design min_w400">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="modal-title text-center"><strong>Are You Sure You Want To <br> Delete <span class="red_text">{{deleteCount}}</span> Customer{{ deleteCount > 1 ? 's' : '' }}?</strong></h4>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center b0 pt-0 pb-3">
+        <button type="button" class="btn btn-psb btn-secondary waves-effect" cdkFocusInitial data-dismiss="modal" (click)="onCancel()">No</button>
+        <button type="button" class="btn btn-psb btn-psbpurple" (click)="confirmDelete()">Yes</button>
+      </div>
+</section>
+  

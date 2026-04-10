@@ -1,0 +1,27 @@
+.align_side{
+    display: flex;
+    align-items: center;
+    .short_desc{
+        font-size: 14px;
+        color: #000;
+        font-weight: 600;
+    }
+}
+.tab_wrp{
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    padding-bottom: 8px;
+}
+.btm_desc{
+    display: flex;
+    padding: 5px 15px;
+    .left_side{
+        width: 100%;
+        &+.left_side{
+            margin-left: 10px;
+            padding-left: 10px;
+            border-left: 1px solid rgba(112, 112, 112, .24);
+        }
+    }
+}

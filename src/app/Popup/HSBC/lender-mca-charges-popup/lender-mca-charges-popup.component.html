@@ -1,0 +1,129 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Existing Lenders & MCA Charges Details</h3>
+        </div>
+        <mat-dialog-content class="px-0">
+            <div class="popup_body">
+                <div class="table_sec">
+                    <div class="tableResponsive ">
+                        <table
+                            class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table ">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th>CIN</th>
+                                    <th>Charge Holder</th>
+                                    <th>Charge amount (Rs. in lacs) </th>
+                                    <th>Date of creation</th>
+                                    <th>Date of modification
+                                        <!-- <span class="shorting" (click)="toggleSort('dateOfModification')">
+                                            <mat-icon
+                                                *ngIf="currentSortField !== 'dateOfModification'">unfold_more</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'dateOfModification' && sortDirection === 'ASC'">north</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'dateOfModification' && sortDirection === 'DESC'">south</mat-icon>
+                                        </span> -->
+                                        <span class="sort-container">
+                                            <mat-icon 
+                                                class="sort-icon sort-icon-up"
+                                                [class.active]="currentSortField === 'dateOfModification' && sortDirection === 'ASC'"
+                                                (click)="toggleSort('dateOfModification', 'ASC')"
+                                                role="button"
+                                                tabindex="0"
+                                                (keydown.enter)="toggleSort('dateOfModification', 'ASC')"
+                                                (keydown.space)="toggleSort('dateOfModification', 'ASC')"
+                                                attr.aria-label="Sort by date of modification ascending">
+                                                arrow_drop_up
+                                            </mat-icon>
+                                            <mat-icon 
+                                                class="sort-icon sort-icon-down"
+                                                [class.active]="currentSortField === 'dateOfModification' && sortDirection === 'DESC'"
+                                                (click)="toggleSort('dateOfModification', 'DESC')"
+                                                role="button"
+                                                tabindex="0"
+                                                (keydown.enter)="toggleSort('dateOfModification', 'DESC')"
+                                                (keydown.space)="toggleSort('dateOfModification', 'DESC')"
+                                                attr.aria-label="Sort by date of modification descending">
+                                                arrow_drop_down
+                                            </mat-icon>
+                                        </span>
+                                    </th>
+                                    <th>Date of satisfaction</th>
+                                    <th>Status</th>
+                                    <th>Asset under charge</th>
+                                    <th>Charge ID</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (mcaIndexOfCharge of mcaIndexOfCharges; track $index) {
+
+                                <tr>
+                                    <td data-label="CIN">{{(mcaIndexOfCharge.cin) || '-'}} </td>
+                                    <td data-label="Charge Holder">{{(mcaIndexOfCharge.chargeHolder) || '-'}} </td>
+                                    <td data-label="Charge amount (Rs. in lacs)	">{{(mcaIndexOfCharge.chargeAmount) ||
+                                        '-'}} </td>
+                                    <td data-label="Date of creation">{{(mcaIndexOfCharge.dateOfCreation) || '-'}} </td>
+                                    <td data-label="Date of modification">{{(mcaIndexOfCharge.dateOfModification) ||
+                                        '-'}} </td>
+                                    <td data-label="Date of satisfaction">{{(mcaIndexOfCharge.dateOfSatisfaction) ||
+                                        '-'}} </td>
+                                    <td data-label="Status">{{(mcaIndexOfCharge.status) || '-'}} </td>
+                                    <td data-label="Asset under charge">{{(mcaIndexOfCharge.assetsUnderCharge) || '-'}}
+                                    </td>
+                                    <td data-label="Charge ID">{{(mcaIndexOfCharge.chargeId) || '-'}} </td>
+                                    <td data-label="Address">{{(mcaIndexOfCharge.address) || '-'}} </td>
+                                </tr>
+                                } @empty {
+                                <tr>
+                                    <td colspan="10">
+                                        <app-no-data-found message="No record found" />
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{(lenderMcaChargesProxyPag.startIndex()+1)}} to
+                            {{(lenderMcaChargesProxyPag.pageSize()*lenderMcaChargesProxyPag.page()) >
+                            (lenderMcaChargesProxyPag.totalSize) ? (lenderMcaChargesProxyPag.totalSize) :
+                            (lenderMcaChargesProxyPag.pageSize()*lenderMcaChargesProxyPag.page())}} of
+                            {{lenderMcaChargesProxyPag.totalSize}} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="lenderMcaChargesProxyPag.pageSize"
+                                            (selectionChange)="getMcaCharges()" [panelClass]="'pagination_select'">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span class="grey_text"> row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="lenderMcaChargesProxyPag.totalSize" [maxSize]="3"
+                                    [(page)]="lenderMcaChargesProxyPag.page" [rotate]="true" [boundaryLinks]="true"
+                                    [pageSize]="lenderMcaChargesProxyPag.pageSize()" (pageChange)="getMcaCharges()">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

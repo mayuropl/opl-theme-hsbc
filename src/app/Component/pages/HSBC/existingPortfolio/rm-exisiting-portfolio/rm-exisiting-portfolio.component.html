@@ -1,0 +1,714 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+
+        <!-- Start Copmany Search  Feature-->
+        <div class="searchBox_section withpageTitle_Sec"
+        style="background-image: url(assets/images/Dashabord/searchBox_bg.jpg);">
+        <h2>Search Company</h2>
+        <div class="searchBox_design max-w-100"  >
+            <!-- *ngIf="isActionAvail(constants.PageActions.SEARCH)" -->
+          <mat-radio-group class="radio_pros_search mr-2"  aria-label="Select an option"  [(ngModel)]="entityType" (ngModelChange)="onEntityTypeChange($event)">
+            <mat-radio-button value="MCA">MCA Registered Entity</mat-radio-button>
+            <mat-radio-button value="NON-MCA">Non-MCA Registered Entity</mat-radio-button>
+        </mat-radio-group>
+          <fieldset class="NP_HSBC_ComInput mr-2">
+            <mat-form-field appearance="outline">
+              <mat-select placeholder="Search By Name" [(ngModel)]="selectSearchType"
+                (ngModelChange)="onSearchTypeChange($event)">
+                <mat-option *ngIf="entityType === 'MCA'" value="COMPANY">Search By Name</mat-option>
+                <mat-option value="PAN">Search By PAN</mat-option>
+                <mat-option *ngIf="entityType === 'MCA'" value ="CIN">Search By CIN</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </fieldset>
+          <div class="searchBox_input w-auto">
+            <div class="input_field serch_refresh">
+              <mat-form-field appearance="outline">
+                <mat-label>{{selectSearchType == 'COMPANY' ? 'Enter Name of Company' : selectSearchType == 'PAN' ? 'Enter PAN of Company' : 'Enter CIN of Company'}}</mat-label>
+                <input type="text" matInput [(ngModel)]="companySearch" (keydown)="debounceEventForFilter($event)" (paste)="debounceEventForFilter($event)"
+                  [ngModelOptions]="{standalone: true}" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  @for (option of companyNameList; track option) {
+                  <mat-option [value]="option.companyName">{{option.companyName}}</mat-option>
+                  }
+                </mat-autocomplete>
+                <span matSuffix *ngIf="searchCompanyFound" class="fas fa-sync-alt fa-spin"></span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="searchBox_btn">
+            <button type="submit" mat-flat-button color="primary" (click)="saveIndividualGstUdhyamSaveRiskApi()"
+              [disabled]="selectSearchType == 'COMPANY' ? (companyNameList == null || companySearch?.length <= 3) : selectSearchType == 'PAN' ? companySearch?.length < 10 : companySearch?.length < 4 ">Search</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- End Copmany Search  Feature-->
+
+
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4>
+                    Existing Portfolio
+                </h4>
+            </div>
+          <div class="page_Title_Right with_filtertop">
+            <div class="filter_top_bar d-flex">
+            <div class="topside_btn" *ngIf="isActionAvail(constants.PageActions.TOPBAR_FILTER)">
+              <button mat-stroked-button class="btn_design white_bg" color="primary" *ngIf="isActionAvail(constants.PageActions.CREATE_CAMPAIGN)" (click)="CreateCampaignPopup()">
+                <i class="fas fa-plus mr-1"></i> Create Campaign
+              </button>
+              <button mat-stroked-button class="btn_design white_bg" color="primary" (click)="openTeamStructurePopup()">
+                My Team
+              </button>
+              <!-- Search By Button with Menu -->
+              <button mat-stroked-button [matMenuTriggerFor]="searchByopt" #searchByTrigger="matMenuTrigger" color="grey" class="btn_design flex-row-reverse greay_text" (click)="activeFilterMenu = null">
+                 Search by <mat-icon class="ml-2 mr-0">unfold_more</mat-icon>
+              </button>
+
+              <!-- Search By Menu -->
+              <mat-menu #searchByopt="matMenu" class="filter_option_menu filter_option_menu_new">
+
+                <!-- Main Menu View -->
+                <ng-container *ngIf="!activeFilterMenu">
+                  <h3 class="title_menu" (click)="$event.stopPropagation()">
+                    <span class="left_side">
+                    Search Options
+                    <button *ngIf="isActionAvail(constants.PageActions.TOPBAR_FILTER_RESET)" type="button" mat-icon-button class="ref_icon" (click)="$event.stopPropagation(); removeTopBarFilter()" color="primary"><i class="fi fi-br-refresh red_text"></i></button>
+                  </span>
+                    <button mat-icon-button type="button" (click)="searchByTrigger.closeMenu()">
+                      <i class="fi fi-br-cross-small"></i>
+                    </button>
+                  </h3>
+
+                  <!-- TopBar Filters -->
+                  <ng-container *ngFor="let opt of searchByOptionsTopBar; let i = index">
+                    <button mat-menu-item class="mr-0 pr-1 no_wrap"
+                      (click)="openFilterView(opt, i, $event, 'topbar')">
+                      <span class="menu_text">
+                        <i [ngClass]="getSearchByIcon(opt.key)"></i> {{ opt.key }}
+                      </span>
+                      <span class="right_value">
+                        <span class="filter_num">{{ getSelectedCount(opt.filter_name) }}</span>
+                        <i class="fas fa-chevron-right ml-2"></i>
+                      </span>
+                    </button>
+                  </ng-container>
+
+                  <!-- RM Filter -->
+                  <button mat-menu-item class="mr-0 pr-1 no_wrap" style="display: none;" *ngIf="isActionAvail(constants.PageActions.TOPBAR_FILTER_RM)"
+                    (click)="openFilterView({key: 'RM', filter_name: 'rm'}, -1, $event, 'rm')">
+                    <span class="menu_text">
+                      <i class="fas fa-user"></i> RM
+                    </span>
+                    <span class="right_value">
+                      <span class="filter_num">{{ selectedRmUsers?.length || 0 }}</span>
+                      <i class="fas fa-chevron-right ml-2"></i>
+                    </span>
+                  </button>
+                </ng-container>
+
+                <!-- Filter Detail View -->
+                <ng-container *ngIf="activeFilterMenu && selectedFilterOption">
+                  <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+                    <h3 class="title_menu">
+                      <button mat-icon-button (click)="goBackToMenu($event)" class="back_btn mr-1">
+                        <i class="fi fi-rr-arrow-small-left"></i>
+                      </button>
+                      {{ activeFilterMenu }}
+                      <button mat-icon-button class="close_btn ml-auto" (click)="searchByTrigger.closeMenu()">
+                        <i class="fi fi-br-cross-small"></i>
+                      </button>
+                    </h3>
+
+                    <div class="pos_rel" [ngClass]="{'subloaderShowingmenu': isLoadingSearchBy}">
+                      <div class="table_sep_loader" *ngIf="isLoadingSearchBy">
+                        <div class="loaderoverlay loader_screen">
+                          <div class="loader_screen_center">
+                            <div class="loader_screen_lottie">
+                              <span class="logo_loader">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- TopBar Filter Detail -->
+                      <ng-container *ngIf="selectedFilterType === 'topbar'">
+                        <div class="filter_searchbox">
+                          <div class="filter_searchbox_wrapper">
+                            <i class="fas fa-search searchbox_Icn"></i>
+                            <input type="text" placeholder="Search" class="searchbox_input"
+                              [(ngModel)]="searchByDataHistory[selectedFilterOption.dataset_id].searchValue"
+                              (ngModelChange)="onSearchChange($event, selectedFilterOption.dataset_id, selectedFilterOption.dataset_name)"/>
+                          </div>
+                        </div>
+
+                        <div class="filter_details checkbox_lists"
+                          (scroll)="onScroll($event, selectedFilterOption?.dataset_id, selectedFilterOption?.dataset_name, selectedFilterOption?.filter_name)">
+                          <!-- All Option: show only when search box is empty -->
+                          <mat-checkbox class="all_checkbox" *ngIf="shouldShowAllOptionInFilter()"
+                            [checked]="isAllSelected(selectedFilterOption?.filter_name)"
+                            [indeterminate]="isIndeterminate(selectedFilterOption?.filter_name)"
+                            (change)="onSelectAll($event, selectedFilterOption?.filter_name, selectedFilterOption?.dataset_id)">
+                            All
+                          </mat-checkbox>
+                          <mat-checkbox *ngFor="let item of dependantFilters"
+                            [checked]="selectedItemsMap[selectedFilterOption?.filter_name]?.includes(item.value)"
+                            (change)="onSelectField($event, selectedFilterOption?.filter_name, item.value, selectedFilterOption?.dataset_id)">
+                            {{ item.key }}
+                          </mat-checkbox>
+                        </div>
+                      </ng-container>
+
+                      <!-- RM Filter Detail -->
+                      <ng-container *ngIf="selectedFilterType === 'rm'">
+                        <div class="filter_searchbox">
+                          <div class="filter_searchbox_wrapper">
+                            <i class="fas fa-search searchbox_Icn"></i>
+                            <input type="text" placeholder="Search" class="searchbox_input"
+                              [(ngModel)]="rmUserFilter.searchValue"
+                              (ngModelChange)="filterCheckBoxTopBar(rmUserFilter, 'rm')"/>
+                          </div>
+                        </div>
+
+                        <div class="filter_details checkbox_lists">
+                          <!-- All Option -->
+                          <mat-checkbox class="all_checkbox"
+                            [checked]="isAllSelectedRm()"
+                            [indeterminate]="isIndeterminateRm()"
+                            (change)="onCheckboxChangeRmUsers($event, 'All', rmUserFilter)">
+                            All
+                          </mat-checkbox>
+                          @for(checkBox of rmUserFilter?.optionFilter; track checkBox; let i = $index) {
+                            <mat-checkbox *ngIf="checkBox.empCode !== 'All'"
+                              [value]="checkBox.empCode"
+                              [checked]="selectedRmUsers?.includes(checkBox.empCode)"
+                              (change)="onCheckboxChangeRmUsers($event, checkBox.empCode, rmUserFilter)">
+                              {{ checkBox.firstName }}
+                            </mat-checkbox>
+                          }
+                        </div>
+                      </ng-container>
+
+                      <div class="filter_action">
+                        <button mat-flat-button color="primary" class="no_wrap" (click)="$event.stopPropagation(); applySearchByFilter()">Apply</button>
+                        <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                          (click)="$event.stopPropagation(); resetCurrentFilter(selectedFilterOption?.dataset_id, selectedFilterOption?.dataset_name, selectedFilterOption?.filter_name); applySearchByFilter()">
+                          <i class="fi fi-br-refresh mr-1"></i> Reset
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                </mat-menu>
+                <!-- <button mat-button class="ml-0 pl-0" [matMenuTriggerFor]="companyName_menu">/ Company Name</button>
+                <mat-menu #companyName_menu="matMenu" class="filter_menuMain">
+                    <div class="filter_menuBar">
+                        <h3 class="filter_menuBar_ttl">Company Name</h3>
+                        <div class="filter_searchbox" (click)="$event.stopPropagation()"
+                            (keydown)="$event.stopPropagation()">
+                            <div class="filter_searchbox_wrapper">
+                                <input type="text" placeholder="Search" class="searchbox_input">
+                                <em class="fas fa-search searchbox_Icn"></em>
+                            </div>
+                        </div>
+                        <div class="filter_details checkbox_lists" (click)="$event.stopPropagation()"
+                            (keydown)="$event.stopPropagation()">
+                            <mat-checkbox>Reliance Industries Limited</mat-checkbox>
+                            <mat-checkbox>Tata Consultancy Services</mat-checkbox>
+                            <mat-checkbox>Infosys Technologies Ltd</mat-checkbox>
+                            <mat-checkbox>Wipro Limited</mat-checkbox>
+                        </div>
+                        <div class="filter_action">
+                            <button mat-button (click)="$event.stopPropagation()"
+                                (keydown)="$event.stopPropagation()">130 MORE</button>
+                            <button mat-flat-button color="primary">Apply</button>
+                        </div>
+                    </div>
+                </mat-menu> -->
+                <!-- <button mat-button><i class="fas fa-save mr-1"></i>Save Search</button>
+                <button mat-button><i class="fas fa-sort mr-1"></i>Sort by Relevance</button> -->
+                <!-- <button  *ngIf="isActionAvail(constants.PageActions.TOPBAR_FILTER_RESET)" type="button" mat-flat-button class="btn_design reset_btn_design" (click)="removeTopBarFilter()" color="primary">Reset</button> -->
+              </div>
+              <!-- <button type="button" mat-flat-button class="btn_design with_icn" color="secondary">Download<em
+                      class="fa fa-arrow-down ml-2"></em></button> -->
+              <!-- Customer Type Toggle -->
+              <!-- <button type="button" mat-stroked-button="" color="grey" class="btn_design greay_text" *ngIf="isNewFilter">
+                Customer Type
+                <span class="ml-1"  [ngClass]="isCustomerTypeActive ? 'darkgreen_text' : 'red_text'">
+                  {{ !isCustomerTypeInActive ? 'ACTIVE' : 'INACTIVE' }}
+                </span>
+                <mat-slide-toggle
+                  class="sliderToggle_design2 sliderToggle_enable_grey ml-2"
+                  [(ngModel)]="isCustomerTypeActive"
+                  (change)="onCustomerTypeToggle($event)"
+                  (click)="$event.stopPropagation()">
+                </mat-slide-toggle>
+              </button> -->
+              <button type="button" mat-stroked-button="" color="grey" *ngIf="isNewFilter" class="btn_design greay_text" (click)="CustomizeColumn_popup()">
+                <i class="fi fi-sr-gears mr-1"></i>Customize Columns
+              </button>
+              <button *ngIf="isNewFilter" type="button" mat-stroked-button="" color="grey" class="btn_design greay_text" (click)="saveFilterPopup()">
+                <i class="fas fa-save mr-1 grey_text"></i> Save Filter
+              </button>
+              <!-- Add this method in save filter button (click)="saveFilterPopup()" -->
+              <button mat-stroked-button class="btn_design white_bg" color="primary" [disabled]="totalSize == 0" (click)="onExportExcelPopup()" *ngIf="isActionAvail(constants.PageActions.EXPORT)">
+                <i class="fi fi-sr-file-export mr-1 red_text vr_2"></i>Export</button>
+              <button mat-flat-button color="primary" class="white_text" *ngIf="isNewFilter" (click)="openAdvancedFilter()">
+                <i class="fi fi-rr-settings-sliders mr-1"></i> Filter
+              </button>
+            </div>
+          </div>
+
+          <!-- Applied Filters Row -->
+          <div class="applied_filters_row" *ngIf="isNewFilter && appliedFilterDataList && appliedFilterDataList.length > 0">
+            <div class="filter_chips_wrapper">
+              <!-- Show first filter chip -->
+              <ng-container *ngIf="groupedAppliedFilters.length > 0">
+                <ng-container *ngFor="let group of groupedAppliedFilters; let i = index">
+                  <ng-container *ngIf="i < 4 || showAllFilters">
+                    <div class="filter_chip_wrapper" (mouseenter)="showChipDropdown(i)" (mouseleave)="hideChipDropdown()">
+                      <div class="filter_chip">
+                        <span class="chip_label">{{group.subFilterName}}</span>
+                        <span class="chip_value">
+                          <ng-container *ngIf="group.values.length === 1">
+                            ({{group.values[0]}})
+                          </ng-container>
+                          <ng-container *ngIf="group.values.length > 1">({{group.values[0]}}
+                            <span *ngIf="group.values[0] != 'All'" class="more_count darkgreen_text">, +{{group.values.length - 1}} More</span>)
+                          </ng-container>
+                        </span>
+                        <button class="chip_close red_hovertext" (click)="removeFilterGroup(group.filterName, group.subFilterName); $event.stopPropagation()">
+                          <i class="fi fi-rr-cross-small red_hovertext"></i>
+                        </button>
+                      </div>
+
+                      <!-- Chip Dropdown -->
+                      <div class="chip_dropdown" *ngIf="activeChipDropdown === i">
+                        <div class="chip_dropdown_header">
+                          <span class="dropdown_title">{{group.subFilterName}}</span>
+                          <div class="dropdown_actions">
+                            <button class="action_btn green_hovertext" (click)="openAdvancedFilter(null,null,group.filterName)" matTooltip="Edit">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action_btn red_hovertext" (click)="removeFilterGroup(group.filterName, group.subFilterName)" matTooltip="Delete">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="chip_dropdown_body">
+                          <div class="dropdown_item" *ngFor="let value of group.values">
+                            <span class="item_label">{{value}}</span>
+                            <button class="item_close"
+                                    (click)="removeAppliedFilter({filterName: group.filterName, subFilterName: group.subFilterName, subFilterValue: value, type: group.type})"
+                                    matTooltip="Remove">
+                              <i class="fi fi-rr-cross-small"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                </ng-container>
+              </ng-container>
+
+              <!-- Show More Link -->
+              <a href="javascript:void(0)"
+                 class="darkgreen_text more_link"
+                 *ngIf="getAdditionalFiltersCount() > 0 && !showAllFilters"
+                 (click)="toggleShowAllFilters()">
+                +{{getAdditionalFiltersCount()}} More
+              </a>
+
+              <!-- Show Less Link -->
+              <a href="javascript:void(0)"
+                 class="darkgreen_text more_link"
+                 *ngIf="showAllFilters"
+                 (click)="toggleShowAllFilters()">
+                Show Less
+              </a>
+
+              <!-- Clear All Button -->
+              <a href="javascript:void(0)"
+                 class="clear_all_btn ml-1"
+                 (click)="clearAllFilters()">
+                <i class="fi fi-rr-refresh"></i> Clear All
+              </a>
+            </div>
+
+            <!-- Applied Filters Count -->
+            <div class="right_side_btn">
+              <button type="button" mat-flat-button color="secondary"
+                  [matMenuTriggerFor]="saveFilterList" class="btn_design with_right_icn br_8 sv_filter_btn" *ngIf="!hidden">
+                  <span>
+                    <i class="fas fa-save mr-1"></i>
+                    ABC
+                  </span>
+                  <i class="fas fa-chevron-down ml-2"></i>
+              </button>
+              <mat-menu #saveFilterList="matMenu"
+                  class="filter_option_menu_new save_filter_menu">
+                  <h3 class="title_menu">
+                      <span class="left_side">
+                        Switch your saved
+                      </span>
+                      <button mat-icon-button type="button">
+                          <i class="fi fi-br-cross-small"></i>
+                      </button>
+                  </h3>
+                  <div class="filter_list">
+                  <button mat-menu-item class="mr-0 pr-1 no_wrap">
+                      <span class="menu_text">Constitution > All</span>
+                      <span class="defult_text darkgreen_text">Default</span> 
+                  </button>
+                  </div>
+                  <div class="filter_list">
+                  <button mat-menu-item class="mr-0 pr-1 no_wrap">
+                    <span class="menu_text">ABC Filter</span>
+                </button>
+                </div>
+                   
+              </mat-menu> 
+              <div class="applied_count">Applied Filters ({{getTotalAppliedFiltersCount()}})</div>
+          </div>
+          </div>
+
+          <!-- Table Section -->
+        </div>
+        <div class="page_Details with_filter_page">
+            <div *ngIf="!isNewFilter" class="leftSide_filter_sec">
+              <app-filter-sidebar  [filterListMaster]="filterListMaster" [customerType]="constants.CustomerType.ETB" [isProcessing]="isLoading" [customerTypeInActive]="isCustomerTypeInActive" (apply)="handleApply($event)" (reset)="handleReset()" (toggleChanged)="onToggleChange($event)"></app-filter-sidebar>
+            </div>
+            <div class="rightSide_sec" >
+                <div class="box_design">
+                     <div class="tableResponsive" appTableScroll>
+                        <table
+                            class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                            <thead>
+                                <tr>
+                                    <th class="text-left table_check_box"><mat-checkbox *ngIf="isActionAvail(constants.PageActions.CREATE_CAMPAIGN) && customerList && customerList.length>0" [checked]="isAssignedAllCustomer" (change)="selectAllProspect($event)"></mat-checkbox> Sr.No</th>
+                                    <th *ngFor="let column of selectedColumns">
+                                        {{column}}
+                                            <span class="sort-container" *ngIf="column === 'Name Of Customer'">
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-up"
+                                                  [class.active]="currentSortField === 'name' && sortDirection === 'ASC'"
+                                                  (click)="toggleSort('name', 'ASC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('name', 'ASC')"
+                                                  (keydown.space)="toggleSort('name', 'ASC')"
+                                                  attr.aria-label="Sort by name ascending">
+                                                  arrow_drop_up
+                                              </mat-icon>
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-down"
+                                                  [class.active]="currentSortField === 'name' && sortDirection === 'DESC'"
+                                                  (click)="toggleSort('name', 'DESC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('name', 'DESC')"
+                                                  (keydown.space)="toggleSort('name', 'DESC')"
+                                                  attr.aria-label="Sort by name descending">
+                                                  arrow_drop_down
+                                              </mat-icon>
+                                            </span>
+                                            <span class="sort-container" *ngIf="column === 'HSBC Wallet'">
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-up"
+                                                  [class.active]="currentSortField === 'hsbcwallet' && sortDirection === 'ASC'"
+                                                  (click)="toggleSort('hsbcwallet', 'ASC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('hsbcwallet', 'ASC')"
+                                                  (keydown.space)="toggleSort('hsbcwallet', 'ASC')"
+                                                  attr.aria-label="Sort by hsbc wallet ascending">
+                                                  arrow_drop_up
+                                              </mat-icon>
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-down"
+                                                  [class.active]="currentSortField === 'hsbcwallet' && sortDirection === 'DESC'"
+                                                  (click)="toggleSort('hsbcwallet', 'DESC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('hsbcwallet', 'DESC')"
+                                                  (keydown.space)="toggleSort('hsbcwallet', 'DESC')"
+                                                  attr.aria-label="Sort by hsbc wallet descending">
+                                                  arrow_drop_down
+                                              </mat-icon>
+                                            </span>
+                                            <span class="sort-container" *ngIf="column === 'Total Opportunity'">
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-up"
+                                                  [class.active]="currentSortField === 'totalOpportunity' && sortDirection === 'ASC'"
+                                                  (click)="toggleSort('totalOpportunity', 'ASC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('totalOpportunity', 'ASC')"
+                                                  (keydown.space)="toggleSort('totalOpportunity', 'ASC')"
+                                                  attr.aria-label="Sort by Total Opportunity ascending">
+                                                  arrow_drop_up
+                                              </mat-icon>
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-down"
+                                                  [class.active]="currentSortField === 'totalOpportunity' && sortDirection === 'DESC'"
+                                                  (click)="toggleSort('totalOpportunity', 'DESC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('totalOpportunity', 'DESC')"
+                                                  (keydown.space)="toggleSort('totalOpportunity', 'DESC')"
+                                                  attr.aria-label="Sort by Total Opportunity descending">
+                                                  arrow_drop_down
+                                              </mat-icon>
+                                            </span>
+                                            <span class="sort-container" *ngIf="column === 'Share (%)'">
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-up"
+                                                  [class.active]="currentSortField === 'share' && sortDirection === 'ASC'"
+                                                  (click)="toggleSort('share', 'ASC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('share', 'ASC')"
+                                                  (keydown.space)="toggleSort('share', 'ASC')"
+                                                  attr.aria-label="Sort by share ascending">
+                                                  arrow_drop_up
+                                              </mat-icon>
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-down"
+                                                  [class.active]="currentSortField === 'share' && sortDirection === 'DESC'"
+                                                  (click)="toggleSort('share', 'DESC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('share', 'DESC')"
+                                                  (keydown.space)="toggleSort('share', 'DESC')"
+                                                  attr.aria-label="Sort by share descending">
+                                                  arrow_drop_down
+                                              </mat-icon>
+                                            </span>
+                                            <span class="sort-container" *ngIf="column === 'Pre-Qualified'">
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-up"
+                                                  [class.active]="currentSortField === 'preApproved' && sortDirection === 'ASC'"
+                                                  (click)="toggleSort('preApproved', 'ASC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('preApproved', 'ASC')"
+                                                  (keydown.space)="toggleSort('preApproved', 'ASC')"
+                                                  attr.aria-label="Sort by Pre-Qualified ascending">
+                                                  arrow_drop_up
+                                              </mat-icon>
+                                              <mat-icon
+                                                  class="sort-icon sort-icon-down"
+                                                  [class.active]="currentSortField === 'preApproved' && sortDirection === 'DESC'"
+                                                  (click)="toggleSort('preApproved', 'DESC')"
+                                                  role="button"
+                                                  tabindex="0"
+                                                  (keydown.enter)="toggleSort('preApproved', 'DESC')"
+                                                  (keydown.space)="toggleSort('preApproved', 'DESC')"
+                                                  attr.aria-label="Sort by Pre-Qualified descending">
+                                                  arrow_drop_down
+                                              </mat-icon>
+                                            </span>
+                                    </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoading}">
+                                <app-sub-loader></app-sub-loader>
+                                <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="searchForm">
+                                    <td></td>
+                                    <ng-container *ngFor="let column of selectedColumns">
+                                      <td [ngSwitch]="column">
+                                        
+                                        <fieldset *ngSwitchCase="'Customer ID'" class="NP_HSBC_ComInput">
+                                          <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter Customer ID" formControlName="applicationCode">
+                                          </mat-form-field>
+                                        </fieldset>
+
+                                        <fieldset *ngSwitchCase="'Name Of Customer'" class="NP_HSBC_ComInput">
+                                          <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter name" formControlName="name">
+                                          </mat-form-field>
+                                        </fieldset>
+
+                                        <fieldset *ngSwitchCase="'Persona'" class="NP_HSBC_ComInput">
+                                          <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select" [panelClass]="'design_multiselect'" formControlName="personaUpper">
+                                              <mat-option *ngFor="let option of personaAllOptions" [value]="option.value"
+                                                [ngClass]="(option.value == 'FOREIGN_MNC' || option.value == 'DOMESTIC') ? 'option_heading' : ''">
+                                                {{ option.label }}
+                                              </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                        </fieldset>
+
+                                        <fieldset *ngSwitchCase="'HSBC Wallet'" class="NP_HSBC_ComInput select-field">
+                                          <mat-form-field appearance="outline" (click)="$event.stopPropagation()" *ngIf="isHsbcWalletAndShareShow()">
+                                            <mat-select disableRipple panelClass="filter_input design_multiselect" formGroupName="hsbcwallet" placeholder="Please Select range">
+                                              <mat-option (click)="$event.stopPropagation()">
+                                                <div class="input_field">
+                                                  <label>Min. Range</label>
+                                                  <mat-form-field appearance="outline" floatLabel="never">
+                                                    <input type="text" matInput formControlName="min" (input)="onNumberInput('hsbcwallet', 'min')">
+                                                  </mat-form-field>
+                                                </div>
+                                              </mat-option>
+                                              <mat-option (click)="$event.stopPropagation()">
+                                                <div class="input_field">
+                                                  <label>Max. Range</label>
+                                                  <mat-form-field appearance="outline" floatLabel="never">
+                                                    <input type="text" matInput formControlName="max" (input)="onNumberInput('hsbcwallet', 'max')">
+                                                  </mat-form-field>
+                                                </div>
+                                              </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                        </fieldset>
+
+                                        <fieldset *ngSwitchCase="'Total Opportunity'" class="NP_HSBC_ComInput">
+                                          <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select" [panelClass]="'design_select'" formControlName="opportunity">
+                                              <mat-option *ngFor="let data of totalOpportunities" [value]="data.value">
+                                                {{data.label}}
+                                              </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                        </fieldset>
+
+                                        <fieldset *ngSwitchCase="'Share (%)'" class="NP_HSBC_ComInput select-field">
+                                          <mat-form-field appearance="outline" (click)="$event.stopPropagation()" *ngIf="isHsbcWalletAndShareShow()">
+                                            <mat-select disableRipple panelClass="filter_input design_multiselect" formGroupName="share" placeholder="Please Select range">
+                                              <mat-option (click)="$event.stopPropagation()">
+                                                <div class="input_field">
+                                                  <label>Min. Range</label>
+                                                  <mat-form-field appearance="outline" floatLabel="never">
+                                                    <input type="text" matInput formControlName="min" (input)="onNumberInput('share', 'min')">
+                                                  </mat-form-field>
+                                                </div>
+                                              </mat-option>
+                                              <mat-option (click)="$event.stopPropagation()">
+                                                <div class="input_field">
+                                                  <label>Max. Range</label>
+                                                  <mat-form-field appearance="outline" floatLabel="never">
+                                                    <input type="text" matInput formControlName="max" (input)="onNumberInput('share', 'max')">
+                                                  </mat-form-field>
+                                                </div>
+                                              </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                        </fieldset>
+
+                                        <fieldset *ngSwitchCase="'Pre-Qualified'" class="NP_HSBC_ComInput">
+                                          <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select" [panelClass]="'design_select'" formControlName="preApproved">
+                                              <mat-option *ngFor="let data of preApprovedDatas" [value]="data.value">
+                                                {{data.label}}
+                                              </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                        </fieldset>
+
+                                        <ng-container *ngSwitchDefault>
+                                          </ng-container>
+
+                                      </td>
+                                    </ng-container>
+
+                                    <td  *ngIf="isActionAvail(constants.PageActions.CLEAR_FILTERS)">
+                                        <button type="button" mat-icon-button matTooltip="Clear Filter" matTooltipPosition="below"
+                                        matTooltipClass="mat-tooltip-below-arrow"
+                                            class="matIcon red_icn" color="primary"
+                                            (click)="removeValueFromControl()"><em class="fas fa-eraser"></em></button>
+                                    </td>
+                                 </tr>
+                                @if(customerList?.length>0){
+                                @for(customer of customerList; track $index){
+                                <tr>
+                                    <td data-label="Sr.No" class="text-left table_check_box">
+                                        <mat-checkbox *ngIf="isActionAvail(constants.PageActions.CREATE_CAMPAIGN)" [checked]="selectedCustomers.has(customer.id)" (change)="toggleSelection(customer.id)"></mat-checkbox>
+                                        {{(page-1)*pageSize+($index+1)}}
+                                    </td>
+
+                                    <td *ngFor="let column of selectedColumns" [attr.data-label]="column" [ngClass]="getColumnClass(column)">
+                                        <span *ngIf="hasSpecialRendering(column)" class="skyblue_badge">{{getColumnValue(customer, column)}}</span>
+                                        <ng-container *ngIf="!hasSpecialRendering(column)">{{getColumnValue(customer, column)}}</ng-container>
+                                    </td>
+                                    <td class="nowrap_td" data-label="Action">
+                                        <!-- <button mat-icon-button class="matIcon"  (click)="navigateToView(customer.panNo)" >
+                                            <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                        </button> -->
+                                      <!-- View Button -->
+                                      <a mat-icon-button class="matIcon skyblue_icn" matTooltipPosition="left" matTooltipClass="mat-tooltip-left-arrow" matTooltip="View"
+                                         (click)="navigateToView(customer.panNo,customer.customerId,customer.cin)"
+                                         *ngIf="isActionAvail(constants.PageActions.VIEW) && (customer.scope?.toLowerCase() !== 'csem')">
+                                        <i class="fa fa-eye"></i>
+                                      </a>
+
+                                      <!-- Audit Button -->
+                                      <a mat-icon-button class="matIcon grey_icn" matTooltipPosition="left" matTooltipClass="mat-tooltip-left-arrow" matTooltip="Audit"
+                                         (click)="viewAuditPage(customer, 1)"
+                                         *ngIf="isActionAvail(constants.PageActions.AUDIT) && (customer.scope?.toLowerCase() !== 'csem')">
+                                        <mat-icon [svgIcon]="'fileSearch_Icon'"></mat-icon>
+                                      </a>
+
+                                      <!-- <button mat-icon-button class="matIcon" (click)="viewAuditPage(customer)">
+                                          <mat-icon [svgIcon]="'fileSearch_Icon'"></mat-icon>
+                                      </button> -->
+                                    </td>
+                                </tr>
+                                }
+                                }
+                                @else {
+                                <tr>
+                                    <td colspan="10">
+                                        <app-no-data-found message="No previous history found" />
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px" *ngIf="!isLoading">
+                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(startIndex+1)}} to
+                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                        {{totalSize}} rows
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                        (ngModelChange)="pageSizeChange(pagesizee.value,page)">
+                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                            {{pages.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="note_tabledata">
+                    <i class="fi fi-rr-bulb"></i> If you are unable to find your company, try searching again after clicking the 'Clear Filters' button
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

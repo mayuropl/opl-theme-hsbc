@@ -1,0 +1,50 @@
+<div class="modal-header d-block">
+  <h4 class="modal-title">Layer7 Configuration</h4>
+  <!-- <span class="text-muted">Please provide the details provided by {{ (popUpId == 4) || popUpId == 3 ? 'Experian' : 'Crif Highmark'}} here</span> --> -->
+  <span class="text-muted" *ngIf="popUpId == 1 || popUpId == 2">Please provide the details provided by Cibil layer7</span>
+  <span class="text-muted" *ngIf="popUpId == 3 || popUpId == 4">Please provide the details provided by Experian here</span>
+  <span class="text-muted" *ngIf="popUpId == 5 || popUpId == 6">Please provide the details provided by Crif Highmark here</span>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Username*</label>
+        <input type="text" placeholder="Enter UserName" [(ngModel)]="bureauUserName" maxlength="20"class="form-control" required/>
+      </div>
+
+      <div class="form-group">
+        <label >Password*</label>
+        <div class="input-group Common-form-icon">
+          <input [type]="hide1 ? 'password' : 'text'" class="form-control br-0" autocomplete="off"
+          [(ngModel)]="bureauNewPwd" placeholder="Enter Password" >
+            <div class="input-group-append" (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+            <span class="input-group-text" ><em class="fmdi fmdi-eye" style="font-size:20px"></em></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="popUpId == 2 && false">
+        <label>Member Id*</label>
+        <input type="text" placeholder="Enter Member ID" [(ngModel)]="bureauMemberId" maxlength="20" class="form-control" required/>
+      </div>
+      <div class="form-group"  *ngIf="popUpId == 2 && false">
+        <label >Member Password*</label>
+        <div class="input-group Common-form-icon">
+          <input [type]="hide5 ? 'password' : 'text'" class="form-control br-0" autocomplete="off" 
+          [(ngModel)]="bureauMemberPasswrd" placeholder="Enter Password" >
+            <div class="input-group-append" (click)="hide5 = !hide5" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide5">
+            <span class="input-group-text" ><em class="fmdi fmdi-eye" style="font-size:20px"></em></span>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+  <div class="modal-footer">
+    <a href="javascript: void(0)" class="btn btn-psb btn-secondary waves-effect" (click) = "redirect()" >Cancel</a>
+    <a href="javascript: void(0)" class="btn btn-psb btn-psbpurple waves-effect" (click) = "saveAndUpdateLayer7Password()"> <i class="fmdi fmdi-floppy mr-1"></i>Save </a>
+  </div>
+  

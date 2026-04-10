@@ -1,0 +1,128 @@
+<div class="page_Title_sec">
+    <div class="page_Title_left">
+        <h4>
+            Lending Analysis & Insights
+        </h4>
+    </div>
+    <div class="page_Title_Right">
+       <div class="white_menu">
+        <button mat-button [matMenuTriggerFor]="unitMenu" class="ln_40">
+            {{ selectedUnit }}
+            <i class="fas fa-sort-down ml-2"></i>
+          </button>
+          <mat-menu #unitMenu="matMenu" class="common_menu">
+            <button mat-menu-item (click)="setUnit('Million')" [class.active]="selectedUnit === 'Million'">
+              Million
+            </button>
+            <button mat-menu-item (click)="setUnit('Billion')" [class.active]="selectedUnit === 'Billion'">
+              Billion
+            </button>
+            <button mat-menu-item (click)="setUnit('Absolute')" [class.active]="selectedUnit === 'Absolute'">
+              Absolute
+            </button>
+          </mat-menu>
+       </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="slide_box">
+    <div class="scroll-controls">
+        <button #leftBtn class="control_btn left_btn" (click)="scroll.scrollLeft()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button #rightBtn class="control_btn right_btn" (click)="scroll.scrollRight()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+<div class="wallet_tabing_main" appScrollButtons #scroll="appScrollButtons" [leftButton]="leftBtn" [rightButton]="rightBtn">
+    <ul>
+        <li>
+            <div class="left_side">
+                <div class="box_icon">
+                    <i class="fi fi-rr-users blue_text"></i>
+                </div>
+                <h5 class="short_desc">Unique Customers</h5>
+                <h2 class="number_title" [ngClass]="{'skeleton': isLoading}"> 
+                    {{lendingAnalysis?.unique_cust_count}}
+                </h2>
+            </div>
+        </li>
+        <li>
+            <div class="left_side">
+                <div class="box_icon">
+                    <i class="fi fi-rr-gym-bag green_text"></i>
+                </div>
+                <h5 class="short_desc">Competition Sanction</h5>
+                <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">
+                    ₹ {{(lendingAnalysis?.competition_sanction?? 0) | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}
+                </h2>
+            </div>
+        </li>  
+        <li>
+            <div class="left_side">
+                <div class="box_icon">
+                    <img src="assets/images/hsbc-title.svg" alt="">
+                </div>
+                <h5 class="short_desc">Bank Sanction</h5>
+                <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">
+                    ₹ {{(lendingAnalysis?.hsbc_sanction?? 0) | number: numberFormat :'en-US'}}{{moneyFormatTableHeader}}
+                </h2>
+            </div>
+        </li>
+        <li>
+            <div class="left_side">
+                <div class="box_icon">
+                    <i class="fi fi-rr-gym-bag green_text"></i>
+                </div>
+                <h5 class="short_desc">Competition Utilisation</h5>
+                <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">
+                    ₹ {{(lendingAnalysis?.competition_utilization?? 0) | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}} 
+                    <!-- <span  [ngClass]="{
+                        'red_text': lendingAnalysis?.competition_utilization_pct < 0,
+                        'green_text': lendingAnalysis?.competition_utilization_pct >= 0
+                      }"> {{lendingAnalysis?.competition_utilization_pct | number:'1.2-2'}}%</span> -->
+                      <span class="red_text">{{lendingAnalysis?.competition_utilization_pct | number:numberFormatForPer}}%</span>
+                </h2>
+            </div>
+        </li>
+        <li>
+            <div class="left_side">
+                <div class="box_icon">
+                    <img src="assets/images/hsbc-title.svg" alt="">
+                </div>
+                <h5 class="short_desc">Bank Utilisation</h5>
+                <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">
+                    ₹ {{(lendingAnalysis?.hsbc_utilization?? 0) | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}
+                    <span [ngClass]="{
+                        'red_text': lendingAnalysis?.hsbc_utilization_pct < 0,
+                        'green_text': lendingAnalysis?.hsbc_utilization_pct >= 0
+                      }"> {{(lendingAnalysis?.hsbc_utilization_pct?? 0) | number:numberFormatForPer}}%</span>
+                </h2>
+            </div>
+        </li>
+        <li>
+            <div class="left_side">
+                <div class="box_icon">
+                    <img src="assets/images/hsbc-title.svg" alt="">
+                </div>
+                <h5 class="short_desc">Bank Utilization Wallet</h5>
+                <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">
+                   {{(lendingAnalysis?.hsbc_wallet_utilization_pct?? 0) | number:numberFormatForPer }}%
+                   <span *ngIf="previousLendingAnalysis">
+                        <div class="icon-holder">
+                            <i class="fi fi-rr-arrow-trend-up green_text" *ngIf="walletTrend.isIncrease"></i>
+                        </div>
+                        <div class="icon-holder">
+                            <i class="fi fi-rr-arrow-trend-down red_text" *ngIf="!walletTrend.isIncrease"></i>
+                        </div>
+                     <span [ngClass]="{
+                       'green_text': walletTrend.isIncrease,
+                       'red_text': !walletTrend.isIncrease
+                     }">{{walletTrend.changePercent | number:numberFormatForPer}}%</span>
+                   </span>
+                </h2>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>

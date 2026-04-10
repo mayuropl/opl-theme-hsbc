@@ -1,0 +1,68 @@
+<div class="popup_design max-500 exim_search_popup">
+    <a class="modal_closeicn_btn" href="javascript:void(0)"><mat-icon class="material-symbols-outlined" matDialogClose=""
+            cdkFocusInitial>close</mat-icon></a>
+    <div class="pop_up_container">
+        <!-- <div class="popup_header" mat-dialog-title>
+            <h3> <img src="assets/images/Dashboard/hsbc_Logo.png" class="popup_hsbc_logo" alt="HSBC Bank Logo"></h3>
+            <h3>Provide Sales Details</h3>
+        </div> -->
+        <mat-dialog-content class="pb-0">
+            <div class="popup_body form_design">
+                @if(!this.data?.isSearchHidden) {
+                  <div class="exim_search_dtls text-center">
+                    <div class="lottie_icn">
+                      <lottie-player style="width: 80px; height: 80px;" class="__HSBC_lotties_Not"
+                        src="../assets/images/Json/warning_lottie.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                    </div>
+                    <h4>The IEC Is Not Available For This PAN.<br /> You Can Search Data Using Company Name</h4>
+                  </div>
+                }
+                <form class="searchBox_Form" autocomplete="off" [formGroup]="companyForm">
+                    <legend class="col-md-12 mb-0">
+                        <fieldset class="NP_HSBC_ComInput mt-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Company Name</mat-label>
+                                <input matInput placeholder="Enter Company Name" required formControlName="companyName"
+                                    companyName="companyName">
+                            </mat-form-field>
+                        </fieldset>
+                    </legend>
+                    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+                        <button *ngIf="!isSearchHidden" mat-flat-button color="primary" [disabled]="!companyForm.valid"
+                            (click)='searchCompany()'> Search
+                        </button>
+                    </mat-dialog-actions>
+                </form>
+                @if(companyNameList?.length>0){
+                <form [formGroup]="selectedCompanyForm">
+                    <legend class="col-md-12 mb-0">
+                        <fieldset class="NP_HSBC_ComInput text-center m-0">
+                            <h6 class="red_text">We Have Found Multiple Companies With Same Name. <br /> Select Any One
+                                For
+                                Further
+                                Analysis</h6>
+                        </fieldset>
+                    </legend>
+                    <legend class="col-md-12 mb-0">
+                        <fieldset class="NP_HSBC_ComInput mt-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Select Any One Company</mat-label>
+                                <mat-select placeholder="Select product" name="selectednameOfCompany"
+                                formControlName="selectednameOfCompany">
+                                <mat-option *ngFor="let item of companyNameList" [value]="{id: item.id, name: item.name, ccnId: item.ccnId}">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                        </fieldset>
+                    </legend>
+                    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+                        <button mat-flat-button color="primary" matDialogClose="" (click)="proceed()">Procced</button>
+                        <!-- <button mat-flat-button color="primary" >Proceed</button> -->
+                    </mat-dialog-actions>
+                </form>
+                }
+            </div>
+        </mat-dialog-content>
+    </div>
+</div>

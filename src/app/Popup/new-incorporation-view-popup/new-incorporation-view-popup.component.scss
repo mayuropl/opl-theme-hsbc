@@ -1,0 +1,22 @@
+.popup_body{
+    ul{
+        list-style: none;
+        padding: 30px;
+        li{
+            display: flex;
+             justify-content: space-between;
+            color: #6F6F6F;
+            font-size: 14px;
+            padding: 8px 0;
+            &+li{
+                border-top: 1px solid #D7D8D6;
+            }
+            span{
+                color: #2A2A2A;
+                max-width: 300px;
+                font-weight: 500;
+                text-align: right;
+            }
+        }
+    }
+}

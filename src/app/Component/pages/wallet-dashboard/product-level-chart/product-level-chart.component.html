@@ -1,0 +1,643 @@
+<div class="wallet_chart_main mt-4" *ngIf="showChart">
+    <div class="card_box large_box">
+        <div class="title_chart">
+            <div class="lef_desc">
+                <h2><i class="fi fi-rr-box-open red_text mr-1"></i> Product Level Opportunity
+                    <span class="ml-2"><i class="fas fa-circle mr-1"></i>as of  {{latestDateOfReportShow}}</span>
+                </h2>
+            </div>
+            <div class="right_desc">
+                <button mat-icon-button class="reset_chartBtn mr-2" matTooltip="Reset Chart" color="grey" (click)="resetChartSelection()" *ngIf="selectedProductIndex !== null"><i class="fi fi-rr-refresh red_text"></i></button>
+                <div class="slide_both_label">
+                    <label class="mr-1">Table</label>
+                    <mat-slide-toggle class="sliderToggle_design2"
+                [(ngModel)]="showChart">Chart</mat-slide-toggle>
+                 </div>
+            </div>
+        </div>
+        <div class="chart_box pos_rel" [ngClass]="{'subloaderShowing': isLoadingProdChart}">
+            <div class="table_sep_loader" *ngIf="isLoadingFromParent">
+                <div class="loaderoverlay loader_screen">
+                    <div class="loader_screen_center">
+                        <div class="loader_screen_lottie">
+                            <span class="logo_loader">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                    alt="">
+                            </span>
+                        </div>
+                        <h3>Please wait data is loading</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="no-data-wrapper" *ngIf="noDataFoundProdChart && !isLoadingProdChart">
+                <app-no-data-found [message]="hasFiltersApplied ? 'No results found, please broaden your search criteria and try again' : 'No data found'"></app-no-data-found>
+            </div>
+             <app-common-chart *ngIf="!noDataFoundProdChart" [chartOptions]="productlevelChartOptions"></app-common-chart>
+        </div>
+    </div>
+    <div class="card_box pie_chart_box">
+        <div class="title_chart">
+            <div class="lef_desc">
+                <h2><i class="fi fi-rr-cube red_text mr-1"></i> Customer Level Opportunity <span
+                        class="ml-2"><i class="fas fa-circle mr-1"></i>as of  {{latestDateOfReportShow}}</span></h2>
+            </div>
+            <div class="right_desc">
+                <button *ngIf="selectedLegendItem !== null" mat-icon-button class="reset_chartBtn" matTooltip="Reset Chart" color="grey" (click)="resetPieChartSelection()"><i class="fi fi-rr-refresh red_text"></i></button>
+            </div>
+        </div>
+        <div class="chart_box pos_rel" [ngClass]="{'subloaderShowing': isLoadingFromParent}">
+            <div class="table_sep_loader" *ngIf="isLoadingFromParent">
+                <div class="loaderoverlay loader_screen">
+                    <div class="loader_screen_center">
+                        <div class="loader_screen_lottie">
+                            <span class="logo_loader">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                            </span>
+                        </div>
+                        <h3>Please wait data is loading</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="no-data-wrapper" *ngIf="noDataFoundCusChart && !isLoadingFromParent">
+                <app-no-data-found message="No data found"></app-no-data-found>
+            </div>
+            <app-common-chart *ngIf="!noDataFoundCusChart" [chartOptions]="customerlevelChartOptions"></app-common-chart>
+            <ul class="chart_lagend_box" *ngIf="!noDataFoundCusChart" [class.legend-disabled]="legendClicksDisabled">
+                <li *ngFor="let item of customerLevelChartData"
+                    [ngClass]="{'active': isLegendItemActive(item)}"
+                    [style.--dot-color]="getLegendItemColor(item)"
+                    (click)="!legendClicksDisabled && onLegendItemClick(item)"
+                    [style.cursor]="legendClicksDisabled ? 'not-allowed' : 'pointer'">
+
+                    <div class="legend_text">
+                        {{item.chart_display_name }}
+                        <span>{{item.chart_display_label}}</span>
+                    </div>
+
+                    <div class="legend_text">
+                        {{ item.total_utilization | number:numberFormat:'en-US' }}{{moneyFormatTableHeader}}
+                        <span>{{ item.unique_cust_count }} Customers</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="wallet_chart_main mt-4 w-100" *ngIf="!showChart">
+    <div class="card_box w-100">
+        <div class="title_chart">
+            <div class="lef_desc">
+                <h2><i class="fi fi-rr-box-open red_text mr-1"></i> {{mySelectedValue}} Opportunity
+                    <span class="ml-2"><i class="fas fa-circle mr-1"></i> as of  {{latestDateOfReportShow}}</span>
+                </h2>
+            </div> 
+            <div class="right_desc">
+                <button *ngIf="mySelectedValue == 'Customer Level'" mat-stroked-button class="btn_design white_bg" color="primary" (click)="CreateCampaignPopup()">
+                    <i class="fas fa-plus mr-1"></i> Create Campaign 
+                  </button>
+                <button type="button" mat-stroked-button class="btn_design greay_text ln_40 ml-1" color="grey"
+                (click)="CustomizeColumn_popup()">
+                    <i class="fi fi-sr-gears mr-1"></i>Customize Columns</button>
+                <button *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.PR_DASHBOARD,consValue.PageActions.SUMMARY_EXCEL_DOWNLOAD)" mat-stroked-button class="btn_design greay_text ln_40 ml-1" color="grey"
+                (click)="excelDownloadProductLevel()">
+                    <i class="fi fi-sr-file-export mr-1 vr_2"></i> Export
+                  </button>
+                  <div class="input_fieldNew ml-1">
+                    <app-common-select
+                        [options]="optionList"
+                        [isMultiple]="false"
+                        [searchEnabled]="false"
+                        [showRadioGroup]="false"
+                        [(selectedValue)]="mySelectedValue"
+                        (selectedValueChange)="onLevelChange()"
+                        controlClass="common_select_view"
+                        >
+                    </app-common-select>
+                </div>
+                <div class="slide_both_label ml-2">
+                    <label class="mr-1">Table</label>
+                    <mat-slide-toggle class="sliderToggle_design2"
+                    [(ngModel)]="showChart">Chart</mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+        <div class="tableResponsive">
+            <table id="myTable"
+                class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table design_Main_listTable table_wrap no_sticky_table"
+                *ngIf="mySelectedValue == 'Product Level'">
+                <thead *ngIf="!((isLoading && !productLevelOppData) || isLoadingFromParent)">
+                    <tr class="tr_lightred_bg">
+                        <!-- <th class="text-left table_check_box"><mat-checkbox></mat-checkbox></th> -->
+                        <th *ngFor="let item of filteredColumns2; let i = index"[ngClass]="{
+                            'text-right': numericFields.includes(columnMap[item]),
+                            'text-left': !numericFields.includes(columnMap[item]) || i === 1
+                        }">{{item}}
+                        <span class="sort-container">
+                            <mat-icon class="sort-icon sort-icon-up"
+                                [class.active]="parentTableSortOrderObj.order_by_column === columnMap[item] && parentTableSortOrderObj.order_by_type === 'ASC'"
+                                (click)="toggleSort(columnMap[item], 'ASC', 'productLevelOppData')" 
+                                role="button" tabindex="0"
+                                (keydown.enter)="toggleSort(columnMap[item], 'ASC', 'productLevelOppData')" 
+                                (keydown.space)="toggleSort(columnMap[item], 'ASC', 'productLevelOppData')"
+                                [attr.aria-label]="'Sort by ' + item + ' ascending'">
+                                arrow_drop_up
+                            </mat-icon>
+                            <mat-icon class="sort-icon sort-icon-down"
+                                [class.active]="parentTableSortOrderObj.order_by_column === columnMap[item] && parentTableSortOrderObj.order_by_type === 'DESC'"
+                                (click)="toggleSort(columnMap[item], 'DESC', 'productLevelOppData')" 
+                                role="button" tabindex="0"
+                                (keydown.enter)="toggleSort(columnMap[item], 'DESC', 'productLevelOppData')" 
+                                (keydown.space)="toggleSort(columnMap[item], 'DESC', 'productLevelOppData')"
+                                [attr.aria-label]="'Sort by ' + item + ' descending'">
+                                arrow_drop_down
+                            </mat-icon>
+                        </span></th>
+                    </tr>
+                    <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                        <!-- <td></td> -->
+                         <td *ngFor="let column of filteredColumns2">
+                            <fieldset class="NP_HSBC_ComInput">
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="Search {{column}}" [value]="getParentSearchValue(column)" (input)="onParentSearch(column, $event)">
+                                </mat-form-field>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody class="pos_rel" [ngClass]="{'parent_table_loader': (isLoading && !productLevelOppData) || isLoadingFromParent}">
+                    <div class="table_sep_loader" *ngIf="(isLoading && !productLevelOppData) || isLoadingFromParent">
+                            <div class="loaderoverlay loader_screen">
+                            <div class="loader_screen_center">
+                                <div class="loader_screen_lottie">
+                                        <span class="logo_loader">
+                                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                        </span>
+                                </div>
+                                <h3>Please wait data is loading</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <tr *ngIf="productLevelOppData?.length === 0">
+                        <td colspan="08">
+                            <app-no-data-found [message]="hasFiltersApplied ? 'No results found, please broaden your search criteria and try again' : 'No data found'"></app-no-data-found>
+                        </td>
+                    </tr>
+                    <ng-container *ngFor="let row of productLevelOppData">
+                    <tr>
+                        <!-- <td><mat-checkbox></mat-checkbox></td> -->
+                        <td *ngFor="let column of filteredColumns2; let i = index"
+    [ngClass]="{
+        'text-left': i === 1 || (!numericFields.includes(columnMap[column]) && i !== 0),
+        'text-right': numericFields.includes(columnMap[column]) && i !== 0 && i !== 1
+    }">
+                        <ng-container *ngIf="i === 0; else normalCell">
+                            <span class="btn_text_td">
+                                <button mat-icon-button class="matIcon red_icn mr-2"
+                                    (click)="onCollapseToggle(row)"
+                                    [ngClass]="{'rotate_icon': !collapseStates[row.product_id]}">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <b>{{ row[columnMap[column]] }}</b>
+                            </span>
+                                </ng-container>
+
+                                <ng-template #normalCell>
+                                    <ng-container *ngIf="numericFields.includes(columnMap[column]); else textCell">
+                                        {{ row[columnMap[column]] | number:getColumnFormat(column):'en-US' }}
+                                    </ng-container>
+
+                                    <ng-template #textCell>
+                                        {{ row[columnMap[column]] }}
+                                    </ng-template>
+                                </ng-template>
+                        </td>
+                    </tr>
+                    <tr class="collapsing_tr"
+                    [ngbCollapse]="collapseStates[row.product_id]">
+                        <td colspan="15" class="intable_td">
+                            <div class="box_design mb-2">
+                                <div class="tableResponsive inside_table">
+                                    <table class="bordered_table w-100 after_cont_none">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%">#</th>
+                                                <th class="text-left">Customer Name
+                                                    <span class="sort-container">
+                                                        <mat-icon class="sort-icon sort-icon-up"
+                                                            [class.active]="childTableSortOrderObj.order_by_column === 'cust_name' && childTableSortOrderObj.order_by_type === 'ASC'"
+                                                            (click)="toggleSort('cust_name', 'ASC', 'productWiseCustomerData')" 
+                                                            role="button" tabindex="0"
+                                                            (keydown.enter)="toggleSort('cust_name', 'ASC', 'productWiseCustomerData')" 
+                                                            (keydown.space)="toggleSort('cust_name', 'ASC', 'productWiseCustomerData')"
+                                                            [attr.aria-label]="'Sort by Customer Name ascending'">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon class="sort-icon sort-icon-down"
+                                                            [class.active]="childTableSortOrderObj.order_by_column === 'cust_name' && childTableSortOrderObj.order_by_type === 'DESC'"
+                                                            (click)="toggleSort('cust_name', 'DESC', 'productWiseCustomerData')" 
+                                                            role="button" tabindex="0"
+                                                            (keydown.enter)="toggleSort('cust_name', 'DESC', 'productWiseCustomerData')" 
+                                                            (keydown.space)="toggleSort('cust_name', 'DESC', 'productWiseCustomerData')"
+                                                            [attr.aria-label]="'Sort by Customer Name descending'">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                                <th *ngFor="let item of dynamicCustomerColumns" [ngClass]="{'text-right': numericFields.includes(columnMap[item]), 'text-left': !numericFields.includes(columnMap[item])}">{{item}}
+                                                    <span class="sort-container">
+                                                        <mat-icon class="sort-icon sort-icon-up"
+                                                            [class.active]="childTableSortOrderObj.order_by_column === columnMap[item] && childTableSortOrderObj.order_by_type === 'ASC'"
+                                                            (click)="toggleSort(columnMap[item], 'ASC', 'productWiseCustomerData')" 
+                                                            role="button" tabindex="0"
+                                                            (keydown.enter)="toggleSort(columnMap[item], 'ASC', 'productWiseCustomerData')" 
+                                                            (keydown.space)="toggleSort(columnMap[item], 'ASC', 'productWiseCustomerData')"
+                                                            [attr.aria-label]="'Sort by ' + item + ' ascending'">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon class="sort-icon sort-icon-down"
+                                                            [class.active]="childTableSortOrderObj.order_by_column === columnMap[item] && childTableSortOrderObj.order_by_type === 'DESC'"
+                                                            (click)="toggleSort(columnMap[item], 'DESC', 'productWiseCustomerData')" 
+                                                            role="button" tabindex="0"
+                                                            (keydown.enter)="toggleSort(columnMap[item], 'DESC', 'productWiseCustomerData')" 
+                                                            (keydown.space)="toggleSort(columnMap[item], 'DESC', 'productWiseCustomerData')"
+                                                            [attr.aria-label]="'Sort by ' + item + ' descending'">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="productWiseCustomerData || isLoading" [ngClass]="{'subloaderShowing': isLoading && !productWiseCustomerData}">
+                                            <div class="table_sep_loader" *ngIf="isLoading && !productWiseCustomerData">
+                                                <div class="loaderoverlay loader_screen">
+                                                    <div class="loader_screen_center">
+                                                        <div class="loader_screen_lottie">
+                                                            <span class="logo_loader">
+                                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                                    alt="">
+                                                            </span>
+                                                        </div>
+                                                        <h3>Please wait data is loading</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                                    <td></td>
+                                                    <td>
+                                                        <fieldset class="NP_HSBC_ComInput">
+                                                            <mat-form-field appearance="outline">
+                                                                <input matInput placeholder="Search Customer Name" [value]="getChildSearchValue('Customer Name')" (input)="onChildSearch('Customer Name', $event)">
+                                                            </mat-form-field>
+                                                        </fieldset>
+                                                    </td>
+                                                    <td *ngFor="let item of dynamicCustomerColumns">
+                                                        <fieldset class="NP_HSBC_ComInput">
+                                                            <mat-form-field appearance="outline">
+                                                                <input matInput placeholder="Search {{item}}" [value]="getChildSearchValue(item)" (input)="onChildSearch(item, $event)">
+                                                            </mat-form-field>
+                                                        </fieldset>
+                                                    </td>
+                                                </tr>
+                                            <tr *ngFor="let customer of productWiseCustomerData; index as i">
+                                                <td>{{ (i+1) + ((ppage - 1) * ppageSize) }}</td>
+                                                <td class="text-left clickable-customer" (click)="onCustomerBureauClick(customer)"><b>{{ customer.cust_name }}</b></td>
+                                                <td *ngFor="let column of dynamicCustomerColumns; let j = index"
+                                                    [ngClass]="{
+                                                        'text-left': !numericFields.includes(columnMap[column]),
+                                                        'text-right': numericFields.includes(columnMap[column]),
+                                                        'text-center': column === 'Classification'
+                                                    }">
+                                                    <ng-container *ngIf="numericFields.includes(columnMap[column]); else customerTextCell">
+                                                        {{ customer[columnMap[column]] | number:getColumnFormat(column):'en-US' }}
+                                                    </ng-container>
+                                                    <ng-template #customerTextCell>
+                                                        {{ customer[columnMap[column]] }}
+                                                    </ng-template>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                  <div class="pagination-table NP_LeftPagintion">
+                        <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing {{ pstartRow }} to {{ pendRow }} of {{ totalRecordsProduct }} rows
+
+                                <div class="dataTables_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(value)]="ppageSize" (selectionChange)="onProductPageSizeChange($event.value)">
+                                                <mat-option *ngFor="let psize of [5,10,20,50]" [value]="psize">{{ psize }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <span class="grey_text">row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="totalRecordsProduct" [(page)]="ppage"
+                                        [pageSize]="ppageSize" [boundaryLinks]="true" (pageChange)="onProductPageChange($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+            <div *ngIf="mySelectedValue == 'Product Level' && !((isLoading && !productLevelOppData) || isLoadingFromParent)" class="pagination-table NP_LeftPagintion" >
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing {{ productStartRow }} to {{ productEndRow }} of {{ totalRecordsProductParent }} rows
+
+                        <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select [(value)]="productPageSize" (selectionChange)="onProductParentPageSizeChange($event.value)">
+                                        <mat-option *ngFor="let size of [5,10,20,50]" [value]="size">{{ size }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="totalRecordsProductParent" [(page)]="productPage"
+                                [pageSize]="productPageSize" [boundaryLinks]="true" (pageChange)="onProductParentPageChange($event)">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <table id="myTable"
+                class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table design_Main_listTable table_wrap no_sticky_table"
+                *ngIf="mySelectedValue == 'Customer Level'">
+                <thead *ngIf="!((isLoading && !customerLevelOppData) || isLoadingFromParent)">
+                    <tr class="tr_lightred_bg">
+                        <th class="text-left table_check_box">
+                            <mat-checkbox 
+                                [checked]="isAllCustomersSelected()" 
+                                [indeterminate]="isSomeCustomersSelected()"
+                                (change)="toggleAllCustomers()">
+                            </mat-checkbox>
+                        </th>
+                        <th *ngFor="let item of selectedColumnsForCustomerLevel" [ngClass]="{'text-right': numericFields.includes(columnMap[item]), 'text-left': !numericFields.includes(columnMap[item])}">{{item}}
+                        <span class="sort-container">
+                            <mat-icon class="sort-icon sort-icon-up"
+                                [class.active]="parentTableSortOrderObj.order_by_column === columnMap[item] && parentTableSortOrderObj.order_by_type === 'ASC'"
+                                (click)="toggleSort(columnMap[item], 'ASC', 'customerLevelOppData')" 
+                                role="button" tabindex="0"
+                                (keydown.enter)="toggleSort(columnMap[item], 'ASC', 'customerLevelOppData')" 
+                                (keydown.space)="toggleSort(columnMap[item], 'ASC', 'customerLevelOppData')"
+                                [attr.aria-label]="'Sort by ' + item + ' ascending'">
+                                arrow_drop_up
+                            </mat-icon>
+                            <mat-icon class="sort-icon sort-icon-down"
+                                [class.active]="parentTableSortOrderObj.order_by_column === columnMap[item] && parentTableSortOrderObj.order_by_type === 'DESC'"
+                                (click)="toggleSort(columnMap[item], 'DESC', 'customerLevelOppData')" 
+                                role="button" tabindex="0"
+                                (keydown.enter)="toggleSort(columnMap[item], 'DESC', 'customerLevelOppData')" 
+                                (keydown.space)="toggleSort(columnMap[item], 'DESC', 'customerLevelOppData')"
+                                [attr.aria-label]="'Sort by ' + item + ' descending'">
+                                arrow_drop_down
+                            </mat-icon>
+                        </span>
+                        </th>
+                    </tr>
+                    <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                        <td></td>
+                         <td *ngFor="let column of selectedColumnsForCustomerLevel">
+                            <fieldset class="NP_HSBC_ComInput">
+                                <mat-form-field appearance="outline">
+                                    <input matInput placeholder="Search {{column}}" [value]="getParentSearchValue(column)" (input)="onParentSearch(column, $event)">
+                                </mat-form-field>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody class="pos_rel" [ngClass]="{'parent_table_loader': (isLoading && !customerLevelOppData) || isLoadingFromParent}">
+                    <div class="table_sep_loader" *ngIf="(isLoading && !customerLevelOppData) || isLoadingFromParent">
+                            <div class="loaderoverlay loader_screen">
+                            <div class="loader_screen_center">
+                                <div class="loader_screen_lottie">
+                                        <span class="logo_loader">
+                                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                        </span>
+                                </div>
+                                <h3>Please wait data is loading</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <tr *ngIf="customerLevelOppData?.length === 0">
+                        <td colspan="08">
+                            <app-no-data-found [message]="hasFiltersApplied ? 'No results found, please broaden your search criteria and try again' : 'No data found'"></app-no-data-found>
+                        </td>
+                    </tr>
+                    <ng-container *ngFor="let row of customerLevelOppData">
+                    <tr>
+                        <td>
+                            <mat-checkbox 
+                                [checked]="isCustomerSelected(row)"
+                                (change)="toggleCustomerSelection(row)">
+                            </mat-checkbox>
+                        </td>
+                        <td *ngFor="let column of selectedColumnsForCustomerLevel; let i = index" [ngClass]="{'text-right': i !== 0 && numericFields.includes(columnMap[column]), 'text-left': i !== 0 && !numericFields.includes(columnMap[column])}">
+                            <ng-container *ngIf="i === 0; else normalCell">
+                                <span class="btn_text_td">
+                                    <button mat-icon-button class="matIcon red_icn mr-2" (click)="onCollapseToggleForCustomerL(row)"
+                                    [ngClass]="{'rotate_icon': !collapseStatesCustomerL[row.cust_name]}">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                		<b *ngIf="column === 'Customer Name'" class="clickable-customer" (click)="onCustomerBureauClick(row)">{{ row[columnMap[column]] }}</b>
+                                        <b *ngIf="column !== 'Customer Name'">{{ row[columnMap[column]] }}</b>
+                                </span>
+                            </ng-container>
+
+                            <ng-template #normalCell>
+                                <ng-container *ngIf="column === 'Customer Name'; else otherCell">
+                                    <b class="clickable-customer" (click)="onCustomerBureauClick(row)">{{ row[columnMap[column]] }}</b>
+                                </ng-container>
+                                <ng-template #otherCell>
+                                    <ng-container *ngIf="numericFields.includes(columnMap[column]); else textCell">
+                                        {{ row[columnMap[column]] | number:getColumnFormat(column):'en-US' }}
+                                    </ng-container>
+                            
+                                    <ng-template #textCell>
+                                        {{ row[columnMap[column]] }}
+                                    </ng-template>
+                                </ng-template>
+                            </ng-template>
+                        </td>
+                    </tr>
+
+                    <tr class="collapsing_tr"
+                    [ngbCollapse]="collapseStatesCustomerL[row.cust_name]">
+                        <td colspan="15" class="intable_td">
+                            <div class="box_design mb-2">
+                                <div class="tableResponsive inside_table">
+                                    <table class="bordered_table w-100 after_cont_none">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%">#</th>
+                                                <th class="text-left">Product
+                                                    <span class="sort-container">
+                                                        <mat-icon class="sort-icon sort-icon-up"
+                                                            [class.active]="childTableSortOrderObj.order_by_column === 'product_name' && childTableSortOrderObj.order_by_type === 'ASC'"
+                                                            (click)="toggleSort('product_name', 'ASC', 'customerWiseProductsData', row.cust_name)" 
+                                                            role="button" tabindex="0"
+                                                            (keydown.enter)="toggleSort('product_name', 'ASC', 'customerWiseProductsData', row.cust_name)" 
+                                                            (keydown.space)="toggleSort('product_name', 'ASC', 'customerWiseProductsData', row.cust_name)"
+                                                            [attr.aria-label]="'Sort by Product ascending'">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon class="sort-icon sort-icon-down"
+                                                            [class.active]="childTableSortOrderObj.order_by_column === 'product_name' && childTableSortOrderObj.order_by_type === 'DESC'"
+                                                            (click)="toggleSort('product_name', 'DESC', 'customerWiseProductsData', row.cust_name)" 
+                                                            role="button" tabindex="0"
+                                                            (keydown.enter)="toggleSort('product_name', 'DESC', 'customerWiseProductsData', row.cust_name)" 
+                                                            (keydown.space)="toggleSort('product_name', 'DESC', 'customerWiseProductsData', row.cust_name)"
+                                                            [attr.aria-label]="'Sort by Product descending'">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                                <th *ngFor="let item of dynamicProductsColumns" [ngClass]="{'text-right': numericFields.includes(columnMap[item]), 'text-left': !numericFields.includes(columnMap[item])}">{{item}}
+                                                    <span class="sort-container">
+                                                        <mat-icon class="sort-icon sort-icon-up"
+                                                            [class.active]="childTableSortOrderObj.order_by_column === columnMap[item] && childTableSortOrderObj.order_by_type === 'ASC'"
+                                                            (click)="toggleSort(columnMap[item], 'ASC', 'customerWiseProductsData', row.cust_name)" 
+                                                            role="button" tabindex="0"
+                                                            (keydown.enter)="toggleSort(columnMap[item], 'ASC', 'customerWiseProductsData', row.cust_name)" 
+                                                            (keydown.space)="toggleSort(columnMap[item], 'ASC', 'customerWiseProductsData', row.cust_name)"
+                                                            [attr.aria-label]="'Sort by ' + item + ' ascending'">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon class="sort-icon sort-icon-down"
+                                                            [class.active]="childTableSortOrderObj.order_by_column === columnMap[item] && childTableSortOrderObj.order_by_type === 'DESC'"
+                                                            (click)="toggleSort(columnMap[item], 'DESC', 'customerWiseProductsData', row.cust_name)" 
+                                                            role="button" tabindex="0"
+                                                            (keydown.enter)="toggleSort(columnMap[item], 'DESC', 'customerWiseProductsData', row.cust_name)" 
+                                                            (keydown.space)="toggleSort(columnMap[item], 'DESC', 'customerWiseProductsData', row.cust_name)"
+                                                            [attr.aria-label]="'Sort by ' + item + ' descending'">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="customerWiseProductsData || isLoading" [ngClass]="{'subloaderShowing': isLoading && !customerWiseProductsData}">
+                                            <div class="table_sep_loader" *ngIf="isLoading && !customerWiseProductsData">
+                                                <div class="loaderoverlay loader_screen">
+                                                    <div class="loader_screen_center">
+                                                        <div class="loader_screen_lottie">
+                                                            <span class="logo_loader">
+                                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                                    alt="">
+                                                            </span>
+                                                        </div>
+                                                        <h3>Please wait data is loading</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                                    <td></td>
+                                                    <td>
+                                                        <fieldset class="NP_HSBC_ComInput">
+                                                            <mat-form-field appearance="outline">
+                                                                <input matInput placeholder="Search Product" [value]="getChildSearchValue('Product')" (input)="onChildSearch('Product', $event, row.cust_name)">
+                                                            </mat-form-field>
+                                                        </fieldset>
+                                                    </td>
+                                                    <td *ngFor="let item of dynamicProductsColumns">
+                                                        <fieldset class="NP_HSBC_ComInput">
+                                                            <mat-form-field appearance="outline">
+                                                                <input matInput placeholder="Search {{item}}" [value]="getChildSearchValue(item)" (input)="onChildSearch(item, $event, row.cust_name)">
+                                                            </mat-form-field>
+                                                        </fieldset>
+                                                    </td>
+                                            </tr>
+                                            <tr *ngFor="let product of customerWiseProductsData; let i = index" >
+                                                <td>{{ (i + 1) + ((customerProductPage - 1) * customerProductPageSize) }}</td>
+                                                <td class="text-left"><b>{{ product.product_name }}</b></td>
+                                                <td *ngFor="let column of dynamicProductsColumns; let j = index"
+                                                    [ngClass]="{
+                                                        'text-left': !numericFields.includes(columnMap[column]),
+                                                        'text-right': numericFields.includes(columnMap[column])
+                                                    }">
+                                                    <ng-container *ngIf="numericFields.includes(columnMap[column]); else productTextCell">
+                                                        {{ product[columnMap[column]] | number:getColumnFormat(column):'en-US' }}
+                                                    </ng-container>
+                                                    <ng-template #productTextCell>
+                                                        {{ product[columnMap[column]] }}
+                                                    </ng-template>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                        <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                            Showing {{ customerProductStartRow }} to {{ customerProductEndRow }} of {{ totalRecordsCustomerProducts }} rows
+
+                                            <div class="dataTables_length">
+                                                <div class="NP_HSBC_ComInput select-field">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select [(value)]="customerProductPageSize" (selectionChange)="onCustomerProductPageSizeChange($event.value)">
+                                                            <mat-option *ngFor="let psize of [5,10,20,50]" [value]="psize">{{ psize }}</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <span class="grey_text">row per page</span>
+                                        </div>
+                                        <div class="text-md-right float-md-right pagination-rounded">
+                                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="totalRecordsCustomerProducts" [(page)]="customerProductPage"
+                                                    [pageSize]="customerProductPageSize" [boundaryLinks]="true" (pageChange)="onCustomerProductPageChange($event)">
+                                                </ngb-pagination>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </ng-container>
+                    </tbody>
+                    </table>
+                    <div *ngIf="mySelectedValue == 'Customer Level' && !((isLoading && !productLevelOppData) || isLoadingFromParent)" class="pagination-table NP_LeftPagintion">
+                        <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing {{ startRow }} to {{ endRow }} of {{ totalRecordsCustomer }} rows
+
+                                <div class="dataTables_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(value)]="pageSize" (selectionChange)="onPageSizeChange($event.value)">
+                                                <mat-option *ngFor="let size of [5,10,20,50]" [value]="size">{{ size }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <span class="grey_text">row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="totalRecordsCustomer" [(page)]="page"
+                                        [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="onPageChange($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    </div>
+</div>

@@ -1,0 +1,29 @@
+<!-- <div class="modal-header">
+  <h4 class="modal-title"><strong>Mark File Completed</strong></h4>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <p>
+        Are you sure you want to Mark File as Completed
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-psb btn-secondary waves-effect" (click)="dialogRef.close()">Cancel</button>
+  <button type="button" class="btn btn-psb btn-psbpurple" (click)="callMarkCompleted(data?.fileId, data?.revertFlag)">
+    <i class="zmdi zmdi-lock mr-1"></i> Confirm
+  </button>
+</div> -->
+
+ <h2 mat-dialog-title>Confirmation</h2>
+<mat-dialog-content>
+  {{ data.message }}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onConfirm()">Confirm</button>
+</mat-dialog-actions>

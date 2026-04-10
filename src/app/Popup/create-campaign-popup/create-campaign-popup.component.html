@@ -1,0 +1,251 @@
+<section class="popup_design max-600">
+    <div class="popup_header" mat-dialog-title>
+        <h3><span *ngIf="!inEditMode">Create</span><span *ngIf="inEditMode">Edit</span> Campaign</h3>
+        <a class="modal_closeicn_btn" href="javascript:void(0)">
+            <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+        </a>
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content class="p-0">
+            <div class="popup_body">
+                <div class="popup_content">
+                    <div class="wrap_box">
+                        <div class="input_fieldNew">
+                            <mat-label>Campaign Name</mat-label>
+                            <mat-form-field appearance="outline"
+                                [class.error-field]="isFieldEmpty(campaignName) || campaignName?.trim().length > 50"
+                                *ngIf="!inEditMode">
+                                <input type="text" [(ngModel)]="campaignName" matInput required maxlength="50">
+                                <mat-hint align="end">{{campaignName?.trim().length || 0}}/50</mat-hint>
+                                <mat-error *ngIf="isFieldEmpty(campaignName)">Campaign name is required</mat-error>
+                                <mat-error *ngIf="campaignName?.trim().length > 50">Campaign name cannot exceed 50
+                                    characters</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [class.error-field]="isFieldEmpty(campaignName)"
+                                *ngIf="inEditMode">
+                                <input matInput [matAutocomplete]="auto" [(ngModel)]="campaignName"
+                                    placeholder="Select campaign..." required readonly
+                                    #autoTrigger="matAutocompleteTrigger" (focus)="autoTrigger.openPanel()"
+                                    (click)="autoTrigger.openPanel()">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCampaign"
+                                    (optionSelected)="onCampaignSelected($event)">
+                                    <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                        <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                            <input type="text" [(ngModel)]="campaignSearchText"
+                                                (input)="filterCampaignOptions()" (keydown)="$event.stopPropagation()"
+                                                placeholder="Search" class="searchbox_input">
+                                            <em class="fas fa-search searchbox_Icn"></em>
+                                        </div>
+                                    </mat-option>
+                                    <mat-option *ngFor="let campaign of filteredCampaigns" [value]="campaign">
+                                        {{ campaign.campaignName }}
+                                    </mat-option>
+                                    <mat-option *ngIf="filteredCampaigns.length === 0" disabled>
+                                        No records found
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="isFieldEmpty(campaignName)">
+                                    Campaign name is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="input_fieldNew" *ngIf="!hidden">
+                            <mat-label [matMenuTriggerFor]="prFilterTopBar" #searchByTrigger="matMenuTrigger" class="black_text cursor_pointer">Produscts <i class="fi fi-rr-angle-small-down ml-1"></i></mat-label>
+                            <mat-menu class="filter_option_menu filter_option_menu_new" #prFilterTopBar="matMenu"(click)="$event.stopPropagation()">
+                                <button mat-menu-item color="primary">Products</button>
+                                <button mat-menu-item color="primary">Estimated Revenue</button>
+                             </mat-menu>
+                            <mat-form-field appearance="outline">
+                                <mat-select class="w-100" multiple>
+                                    <mat-option value="0">Fex Revenue</mat-option>
+                                    <mat-option value="1">Fex Revenue</mat-option>
+                                    <mat-option value="2">Fex Revenue</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="input_fieldNew">
+                            <mat-label>Estimated Revenue</mat-label>
+                            <mat-form-field appearance="outline" [class.error-field]="isFieldEmpty(estimatedRevenue)">
+                                <input type="text" [(ngModel)]="estimatedRevenue" matInput required
+                                    (input)="onRevenueInput()" (keydown)="onRevenueKeydown($event)"
+                                    [disabled]="fieldsDisabled">
+                                <mat-error *ngIf="isFieldEmpty(estimatedRevenue)">Estimated revenue is
+                                    required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="input_fieldNew">
+                            <mat-label>From Date</mat-label>
+                            <mat-form-field appearance="outline" [class.error-field]="!startDate">
+                                <input matInput [matDatepicker]="datepicker" [(ngModel)]="startDate" readonly
+                                    [min]="minStartDate" [max]="maxStartDate" required [disabled]="inEditMode" />
+                                <mat-error *ngIf="!startDate">Start date is required</mat-error>
+                                <mat-datepicker-toggle matSuffix [for]="datepicker">
+                                    <mat-icon class="material-symbols-outlined"
+                                        matDatepickerToggleIcon>calendar_month</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #datepicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="input_fieldNew">
+                            <mat-label>To Date</mat-label>
+                            <mat-form-field appearance="outline"
+                                [class.error-field]="!endDate || isEndDateInvalid() || isToDateInvalid">
+                                <input matInput [matDatepicker]="datepicker2" [(ngModel)]="endDate" readonly
+                                    [min]="getMinEndDate()" [max]="getMaxEndDate()" required [disabled]="fieldsDisabled"
+                                    (dateChange)="onEndDateChange()" #endDateInput id="endDateInput" />
+                                <mat-error *ngIf="!endDate">End date is required</mat-error>
+                                <mat-error *ngIf="isToDateInvalid">{{toDateError}}</mat-error>
+                                <mat-datepicker-toggle matSuffix [for]="datepicker2">
+                                    <mat-icon class="material-symbols-outlined"
+                                        matDatepickerToggleIcon>calendar_month</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #datepicker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <h2 class="total_count">Total Customer : <span class="darkgreen_text">{{customerCount}}</span></h2>
+                    <div class="wrap_box">
+                        <div class="input_fieldNew w-100">
+                            <mat-label>Objective</mat-label>
+                            <mat-form-field appearance="outline" class="w-100"
+                                [class.error-field]="isFieldEmpty(objective) || objective?.trim().length > 250">
+                                <textarea rows="2" [(ngModel)]="objective" matInput required [disabled]="fieldsDisabled"
+                                    maxlength="250"></textarea>
+                                <mat-hint align="end">{{objective?.trim().length || 0}}/250</mat-hint>
+                                <mat-error *ngIf="isFieldEmpty(objective)">Objective is required</mat-error>
+                                <mat-error *ngIf="objective?.trim().length > 250">Objective cannot exceed 250
+                                    characters</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="input_fieldNew w-100">
+                            <mat-label>Parameters</mat-label>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <textarea rows="2" [(ngModel)]="parameters" matInput readonly
+                                    placeholder="No filter has been applied."></textarea>
+                                <!-- <mat-hint align="end">{{parameters?.trim().length || 0}}/250</mat-hint>
+                            <mat-error *ngIf="isFieldEmpty(parameters)">Parameters is required</mat-error>
+                            <mat-error *ngIf="parameters?.trim().length > 250">Parameters cannot exceed 250 characters</mat-error> -->
+                            </mat-form-field>
+                            <!-- <mat-form-field appearance="outline" class="w-100" [class.error-field]="isFieldEmpty(parameters) || parameters?.trim().length > 250">
+                            <textarea rows="2" [(ngModel)]="parameters" matInput required [disabled]="fieldsDisabled" maxlength="250"></textarea>
+                            <mat-hint align="end">{{parameters?.trim().length || 0}}/250</mat-hint>
+                            <mat-error *ngIf="isFieldEmpty(parameters)">Parameters is required</mat-error>
+                            <mat-error *ngIf="parameters?.trim().length > 250">Parameters cannot exceed 250 characters</mat-error>
+                        </mat-form-field> -->
+                        </div>
+                    </div>
+                    <hr *ngIf="!inEditMode">
+                    <div class="apr_off_txt" *ngIf="!inEditMode">
+                        <h2>Want To Run Pre-Approved Offer</h2>
+                        <div class="radio-group-wrapper pe-4">
+                            <mat-radio-group [(ngModel)]="preApprovedOffer" required
+                                (change)="onPreApprovedOfferChange($event)" [disabled]="fieldsDisabled">
+                                <mat-radio-button class="ml-1" value="yes">Yes</mat-radio-button>
+                                <mat-radio-button class="ml-1" value="no">No</mat-radio-button>
+                            </mat-radio-group>
+                            <div *ngIf="isFieldEmpty(preApprovedOffer)" class="text-danger mt-1">Please select an option
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cir-info-box" *ngIf="!inEditMode && preApprovedOffer === 'yes'" @fadeInOut>
+                        <p class="mb-2">To proceed with Pre-Approval, please choose how CIR reports should be handled
+                            for the customers in this campaign. </p>
+                        <p class="mb-2">If any customer’s existing CIR report is older than 60 days or not available,
+                            the system will detect this in the background.</p>
+                        <p class="mb-2">If you select <b>Yes – Fetch Fresh CIR Report</b>, the approval process will be
+                            triggered and the system will fetch new CIR reports for customers who need them post
+                            approval.</p>
+                        <p class="mb-2">If you select <b>No – Do Not Fetch CIR Report</b>, Preapproval Journey will be processed as per available data.
+                        </p>
+                        <div class="radio-group-wrapper pe-4">
+                            <mat-radio-group [(ngModel)]="fetchFreshCIR" required [disabled]="fieldsDisabled"
+                                class="d-flex flex-column">
+                                <mat-radio-button class="ml-1 mb-2" value="yes">Yes – Fetch Fresh CIR
+                                    Report</mat-radio-button>
+                                <mat-radio-button class="ml-1" value="no">No – Do Not Fetch CIR
+                                    Report</mat-radio-button>
+                            </mat-radio-group>
+                            <div *ngIf="isFieldEmpty(fetchFreshCIR)" class="text-danger mt-1">Please select an option
+                            </div>
+                        </div>
+                    </div>
+                    <div class="apr_off_txt check_pro_wrap" *ngIf="!inEditMode && loadProductDropDown">
+                        <h2>Select Product For Pre-Approved?</h2>
+                        <div class="checkbox_lists" *ngFor="let item of allProductList">
+                            <mat-checkbox [(ngModel)]="selectedProducts[item?.value]"
+                                (change)="onProductCheckboxChange(item, $event.checked)" class="checkbox-aligned">{{
+                                item?.label }}</mat-checkbox>
+                        </div>
+                    </div>
+                    <div class="checkbox_lists" *ngIf="inEditMode">
+                        <mat-checkbox [(ngModel)]="markInactive" (change)="onMarkInactiveChange($event.checked)"
+                            [disabled]="isToDateInvalid" class="checkbox-aligned"><span
+                                *ngIf="includeInactiveCampaigns">Mark Inactive</span><span
+                                *ngIf="!includeInactiveCampaigns">Mark Active</span></mat-checkbox>
+                        <!-- <div *ngIf="isToDateInvalid && !includeInactiveCampaigns" class="text-danger mt-1">{{toDateError}}</div> -->
+                    </div>
+                    <div class="bottom_content" *ngIf="inEditMode && cirCountsLoaded && !markInactive">
+                        <h2>Re-Run Pre-Approval with Fresh CIBIL</h2>
+                        
+                        <!-- Priority 1: Show message if retry journey already done -->
+                        <div *ngIf="isRetryJourneyDone" class="alert-box warning-box">
+                            <mat-icon class="alert-icon">info</mat-icon>
+                            <div>
+                                <h3>Campaign Not Eligible for Re-Run</h3>
+                                <p>This campaign has already been re-run with fresh CIBIL data. The re-run pre-approval action can only be performed once per campaign.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Priority 2: Show message if all CIBIL already available AND no in-progress (nullCount === 0) -->
+                        <div *ngIf="!isRetryJourneyDone && allCibilAlreadyAvailable && inProgressCibilCount === 0" class="alert-box success-box">
+                            <mat-icon class="alert-icon">check_circle</mat-icon>
+                            <div>
+                                <h3>All Customers Have Fresh CIBIL Data</h3>
+                                <p>All {{totalCibilCount}} customers in this campaign already have fresh CIBIL reports available. No re-run is needed at this time.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Priority 3: Show normal flow if there are stale, missing, or in-progress CIBIL customers -->
+                        <div *ngIf="!isRetryJourneyDone && (!allCibilAlreadyAvailable) && (staleCibilCount > 0 || missingCibilCount > 0 || inProgressCibilCount > 0)" class="normal-flow">
+                            <p>This action will fetch fresh CIBIL and re-run pre-approval for the following eligible customers:</p>
+                            <ul>
+                                <li>Stale CIBIL: {{staleCibilCount}} customers</li>
+                                <li *ngIf="canProceedJourney">Missing CIBIL: {{missingCibilCount}} customers</li>
+                                <li *ngIf="inProgressCibilCount > 0">In Progress: {{inProgressCibilCount}} customers</li>
+                                <li *ngIf="pendingCount > 0">Pending: {{pendingCount}} customers</li>
+                                <li *ngIf="notOptedCount > 0">Not Opted: {{notOptedCount}} customers</li>
+                                <li *ngIf="cirRejectedCount > 0">CIR Rejected: {{cirRejectedCount}} customers</li>
+                                <li *ngIf="cirApprovalPendingCount > 0">CIR Approval Pending: {{cirApprovalPendingCount}} customers</li>
+                                <li *ngIf="cirApprovalCount > 0">CIR Approved: {{cirApprovalCount}} customers</li>
+                            </ul>
+                            
+                            <!-- Warning if journey is blocked -->
+                            <div *ngIf="!canProceedJourney" class="alert-box warning-box mt-3">
+                                <mat-icon class="alert-icon">warning</mat-icon>
+                                <div>
+                                    <p *ngIf="notOptedCount > 0"><strong>Cannot proceed:</strong> {{notOptedCount}} customer(s) have not opted for CIBIL consent. Please ensure all customers provide consent before re-running pre-approval.</p>
+                                    <p *ngIf="inProgressCibilCount > 0"><strong>Cannot proceed:</strong> {{inProgressCibilCount}} customer(s) already have CIBIL approval in process. Please wait for the current process to complete before re-running pre-approval.</p>
+                                    <p *ngIf="pendingCount > 0"><strong>Cannot proceed:</strong> {{pendingCount}} customer(s) already have CIBIL approval in process. Please wait for the current process to complete before re-running pre-approval.</p>
+                                    <p *ngIf="cirApprovalPendingCount > 0"><strong>Cannot proceed:</strong> {{cirApprovalPendingCount}} customer(s) have CIR approval pending. Please wait for approval to complete.</p>
+                                    <p *ngIf="cirApprovalCount > 0"><strong>Cannot proceed:</strong> {{cirApprovalCount}} customer(s) already have CIR approval done. Re-run is not required for these customers.</p>
+                                    <p *ngIf="cirRejectedCount > 0"><strong>Cannot proceed:</strong> {{cirRejectedCount}} customer(s) have CIR rejected status. Please review before re-running pre-approval.</p>
+                                </div>
+                            </div>
+                            
+                            <p *ngIf="canProceedJourney">This action can be performed only once for this campaign.</p>
+                            <mat-radio-group class="small_w_radio small_radio" [(ngModel)]="reRunPreApproval" [disabled]="!canProceedJourney">
+                                <mat-label>Do you want to proceed?</mat-label>
+                                <mat-radio-button class="ml-1 mb-2" [value]="true">Yes</mat-radio-button>
+                                <mat-radio-button class="ml-1" [value]="false">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                </div>
+                <div class="action_btn">
+                    <button mat-flat-button color="primary" (click)="onSubmit()"
+                        [disabled]="!isFormValid() || isSubmitButtonDisabled">Submit</button>
+                </div>
+            </div>
+        </mat-dialog-content>
+    </div>
+</section>

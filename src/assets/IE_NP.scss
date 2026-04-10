@@ -1,0 +1,100 @@
+// Lender
+@import './ThemeVar.scss';
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .Dual-Cont-flex{
+        align-items: stretch;
+    }
+    .card-box{
+        &.card-flexbox{
+            flex: 0 1 45.5%;
+        }
+    }
+    // Proposal View
+    .main-dash-Cont {
+        .psb-input-group-text{
+            background: rgba(255, 255, 255, 0.10); 
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-left: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    }
+    .dash-forms {    
+        .form-control {
+          background: rgba(255, 255, 255, 0.10);
+          color: $opl-white;
+          border: 1px solid rgba(255, 255, 255, 0.10);
+          border-right: 0;
+        }
+      
+        .symbole-input {
+          background: rgba(255, 255, 255, 0.10);
+          border: 1px solid rgba(255, 255, 255, 0.10);
+      
+          i {
+            background: rgba(255, 255, 255, 0.10);
+          }
+        }
+      }
+      .sub-main-dash{
+        background: rgba(255, 255, 255, 0.20); 
+        .bb-1-20{
+            border-bottom: 1px solid rgba(255, 255, 255, 0.20);; 
+          }
+      }
+      .DetailsCard-teaserView{
+        align-items: stretch;
+        .teaserView-complney-details{
+            flex: 0 1 46.5%;
+        }
+      }
+      .teaser-Center-view {
+          .teaserView-Barnchtext{
+            a{
+                background: rgba(255, 255, 255, 0.20); 
+            }
+          }
+      }
+
+      // table Scaling materix 
+
+
+      .CommonTable_NP {     
+        &.NP_BGR0{
+          thead{
+            background: transparent;
+            tr{
+              border-top: 1px solid $opl-bc;
+            }
+          }
+          
+          thead,
+          tbody{
+      
+            tr{
+      
+              th,
+              td{
+                text-align: $left;
+      
+                &:nth-child(2){
+                  .sitr-scoring-number{
+                    max-width: 200px;
+                  }
+                }
+      
+                &:nth-child(n){
+                  .sitr-Scale-number, .sitr-Interpretation-number, .sitr-Spread-number{
+                    max-width: 105px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .input-margin{
+        &.input-width_np{
+          width: 30%;
+        }
+      }
+ }

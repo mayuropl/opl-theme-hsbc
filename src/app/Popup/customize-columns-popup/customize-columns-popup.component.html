@@ -1,0 +1,73 @@
+<div class="popup_design min-800 HSBC_Common_Pages border_popup Customize_popupmain white_bg">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+<div class="modal-header ">
+    <h4 class="modal-title">Customize Columns</h4>
+  </div>
+  <mat-dialog-content class="p-0">
+  <div class="modal-body">
+    <div class="Customize_box_wrap">
+        <div class="left_side">
+            <div class="box_title">
+                <h4>Select columns to view</h4>
+            </div>
+              <div class="grey_search_box">
+                <div class="searchBox_input">
+                  <div class="input_field">
+                    <mat-form-field appearance="outline">
+                      <input type="text" matInput placeholder="Search columns..." [(ngModel)]="searchTerm">
+                      <!-- <button  matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                        <mat-icon>close</mat-icon>
+                      </button> -->
+                      <i matSuffix *ngIf="searchTerm" class="fi fi-br-cross-small cursor_pointer" (click)="clearSearch()"></i>
+                      <i *ngIf="!searchTerm" matSuffix class="fi fi-br-search"></i>
+                     </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="list_check_text">
+                @for (col of filteredColumns; track col) {
+                <mat-checkbox 
+                  [checked]="isChecked(col)" 
+                  [disabled]="isMandatory(col)"
+                  (change)="toggleSelection(col, $event)"
+                  >
+                  {{ col }}
+                </mat-checkbox>
+                }
+                @if (filteredColumns.length === 0) {
+                  <p class="no-results">No columns found matching "{{ searchTerm }}"</p>
+                }
+              </div>
+              </div>
+        <div class="right_side">
+            <div class="box_title">
+                <h4>Reorder columns</h4>
+                <p>Drag and drop to rearrange</p>
+            </div>
+            <div class="drag_listwrap">
+            <div #dragListRef cdkDropList class="customizedrag_list" (cdkDropListDropped)="drop($event)">
+                @for (column of selectedColumns; track column) {
+                  <div class="draglist-box" cdkDrag cdkDragLockAxis="y" [cdkDragBoundary]="dragListRef">{{column}} <i class="fas fa-sort"></i></div>
+                }
+              </div>
+            </div>
+        </div>
+        
+    </div>
+  </div>
+  </mat-dialog-content>
+  <div class="modal-footer d-flex jc-center">
+    <div class="d-flex align-items-center justify-content-between w-100">
+        <div class="left_side_footer">
+          <p class="msg_text"><i class="fi fi-rr-info mr-1"></i> You can select upto 9 columns</p>
+          <a class="cursor_pointer back_link darkgreen_text" (click)="resetToDefault()"><i class="fas fa-reply mr-1"></i> Reset to default</a>
+        </div>
+        <div class="right_side_footer">
+            <button type="button" mat-stroked-button class="btn_design greay_text ln_40" color="grey" (click)="cancel()">Cancel</button>
+            <button type="submit" class="ln_40" mat-flat-button color="primary" (click)="submit()">Submit</button>
+        </div>
+    </div>
+  </div>
+  </div>

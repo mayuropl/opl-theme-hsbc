@@ -1,0 +1,94 @@
+<div class="box_design">
+    <div class="tableResponsive">
+        <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+            <thead>
+                <tr>
+                    <th class="text-center">Sr.No</th>
+                    <th>PAN</th>
+                    <th>Name Of Customer<span class="shorting"> <mat-icon>unfold_more</mat-icon></span></th>
+                    <th>Persona</th>
+                    <th>Region<span class="shorting"> <mat-icon>unfold_more</mat-icon></span></th>
+                    <th>City<span class="shorting"> <mat-icon>unfold_more</mat-icon></span></th>
+                    <th>Segment</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                    <td></td>
+                    <td>
+                        <fieldset class="NP_HSBC_ComInput">
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="Enter PAN" formControlName="applicationCode"
+                                    name="applicationCode">
+                            </mat-form-field>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset class="NP_HSBC_ComInput">
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="Enter name" formControlName="name" name="name">
+                            </mat-form-field>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset class="NP_HSBC_ComInput">
+                            <mat-form-field appearance="outline">
+                                <mat-select placeholder="Select" [panelClass]="'design_select'">
+                                    <mat-option>
+                                        a
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </fieldset>
+                    </td>
+
+                    <td>
+                        <fieldset class="NP_HSBC_ComInput">
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="Enter Amount">
+                            </mat-form-field>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset class="NP_HSBC_ComInput">
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="Enter Amount">
+                            </mat-form-field>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset class="NP_HSBC_ComInput">
+                            <mat-form-field appearance="outline">
+                                <input matInput placeholder="Enter Amount">
+                            </mat-form-field>
+                        </fieldset>
+                    </td>
+
+
+                    <td></td>
+                </tr>
+                <tr>
+                    <td data-label="Sr.No" class="text-center">1</td>
+                    <td data-label="PAN"><span class="skyblue_badge">HSBC-00009547</span></td>
+                    <td data-label="Name Of Customer">OSB Overseas Pvt Ltd.</td>
+                    <td data-label="Persona" class="red_text">Start-Up</td>
+                    <td data-label="Region">North</td>
+                    <td data-label="City">Mumbai</td>
+                    <td data-label="Segment">10</td>
+                    <td class="nowrap_td" data-label="Action">
+                        <a routerLink="/hsbc//rmExisitingPortfolioView" mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a mat-icon-button class="matIcon delete_icn" ngbTooltip="Assign user" (click)="useridPopup()">
+                            <i class="fe-user-plus"></i>
+                        </a>
+                        <a mat-icon-button class="matIcon grey_icn" ngbTooltip="Audit Trail">
+                            <mat-icon [svgIcon]="'fileSearch_Icon'"></mat-icon>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

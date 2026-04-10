@@ -1,0 +1,161 @@
+<div class="page_Title_sec">
+    <div class="page_Title_left">
+        <h4>
+            Insights & Analysis
+        </h4>
+    </div>
+    <div class="page_Title_Right">
+       <div class="white_menu">
+        <button mat-button [matMenuTriggerFor]="unitMenu" class="ln_40">
+            {{ selectedUnitC }}
+            <i class="fas fa-sort-down ml-2"></i>
+          </button>
+          <mat-menu #unitMenu="matMenu" class="common_menu">
+            <button mat-menu-item (click)="setUnitC('Million')" [class.active]="selectedUnitC === 'Million'">
+              Million
+            </button>
+            <button mat-menu-item (click)="setUnitC('Billion')" [class.active]="selectedUnitC === 'Billion'">
+              Billion
+            </button>
+            <button mat-menu-item (click)="setUnitC('Absolute')" [class.active]="selectedUnitC === 'Absolute'">
+              Absolute
+            </button>
+          </mat-menu>
+       </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="slide_box">
+    <div class="scroll-controls">
+        <button #leftBtn class="control_btn left_btn" (click)="scroll.scrollLeft()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button #rightBtn class="control_btn right_btn" (click)="scroll.scrollRight()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+<div class="wallet_tabing_main" appScrollButtons #scroll="appScrollButtons" [leftButton]="leftBtn" [rightButton]="rightBtn">
+    <ul>
+        <li>
+            <div class="tab_wrp">
+                <div class="left_side align_side">
+                    <div class="box_icon">
+                        <i class="fi fi-rr-users blue_text"></i>
+                    </div>
+                    <h5 class="short_desc ml-2">Total Sanction</h5>
+                </div>
+                <div class="btm_desc">
+                    <div class="left_side">
+                        <h5 class="short_desc">{{dateOfReportMap.get(latestDateOfReport)}}</h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.latest_total_sanction?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                    <div class="left_side">
+                        <h5 class="short_desc">{{dateOfReportMap.get(selectedDateOfReport)}}</h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.selected_total_sanction?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="tab_wrp">
+                <div class="left_side align_side">
+                    <div class="box_icon">
+                        <img src="assets/images/hsbc-title.svg" alt="">
+                    </div>
+                    <h5 class="short_desc ml-2">Bank Sanction</h5>
+                </div>
+                <div class="btm_desc">
+                    <div class="left_side">
+                        <h5 class="short_desc">{{dateOfReportMap.get(latestDateOfReport)}}</h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.latest_hsbc_sanction?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                    <div class="left_side">
+                        <h5 class="short_desc">{{dateOfReportMap.get(selectedDateOfReport)}}</h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.selected_hsbc_sanction?? 0)  | number:numberFormat:'en-US' }}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                </div>
+            </div> 
+        </li>
+        <li>
+            <div class="tab_wrp">
+                <div class="left_side align_side">
+                    <div class="box_icon">
+                        <img src="assets/images/hsbc-title.svg" alt="">
+                    </div>
+                    <h5 class="short_desc ml-2">Change in Sanction Wallet</h5>
+                </div>
+                <div class="btm_desc">
+                    <div class="left_side">
+                        <!-- <h5 class="short_desc"></h5> -->
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.change_sanction_wallet?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                    <div class="left_side">
+                        <!-- <h5 class="short_desc"></h5> -->
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading, 'red_text': lendingAnalysisC?.change_sanction_wallet_pct < 0}">{{ (lendingAnalysisC?.change_sanction_wallet_pct?? 0 | number:numberFormatForPer:'en-US') }}%</h2>
+                    </div>
+                </div>
+            </div>  
+        </li>
+        <li>
+            <div class="tab_wrp">
+                <div class="left_side align_side">
+                    <div class="box_icon">
+                        <i class="fi fi-rr-gym-bag green_text"></i>
+                    </div>
+                    <h5 class="short_desc ml-2">Total Utilization</h5>
+                </div>
+                <div class="btm_desc">
+                    <div class="left_side">
+                        <h5 class="short_desc">{{dateOfReportMap.get(latestDateOfReport)}}</h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.latest_total_utilization?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                    <div class="left_side">
+                        <h5 class="short_desc">{{dateOfReportMap.get(selectedDateOfReport)}}</h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.selected_total_utilization?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                </div>
+            </div>  
+        </li>
+        <li>
+            <div class="tab_wrp">
+                <div class="left_side align_side">
+                    <div class="box_icon">
+                        <img src="assets/images/hsbc-title.svg" alt="">
+                    </div>
+                    <h5 class="short_desc ml-2">Bank Utilisation</h5>
+                </div>
+                <div class="btm_desc">
+                    <div class="left_side">
+                        <h5 class="short_desc">{{dateOfReportMap.get(latestDateOfReport)}}</h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.latest_hsbc_utilization?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                    <div class="left_side">
+                        <h5 class="short_desc">{{dateOfReportMap.get(selectedDateOfReport)}}</h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.selected_hsbc_utilization?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                </div>
+            </div> 
+        </li>
+        <li> 
+            <div class="tab_wrp">
+                <div class="left_side align_side">
+                    <div class="box_icon">
+                        <img src="assets/images/hsbc-title.svg" alt="">
+                    </div>
+                    <h5 class="short_desc ml-2">Change in Utilization Wallet</h5>
+                </div>
+                <div class="btm_desc">
+                    <div class="left_side">
+                        <h5 class="short_desc"></h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">₹ {{(lendingAnalysisC?.change_utilization_wallet?? 0)  | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}</h2>
+                    </div>
+                    <div class="left_side">
+                        <h5 class="short_desc"></h5>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading, 'red_text': lendingAnalysisC?.change_utilization_wallet_pct < 0}">{{(lendingAnalysisC?.change_utilization_wallet_pct?? 0 | number:numberFormatForPer:'en-US') }}%</h2>
+                    </div>
+                </div>
+            </div> 
+        </li>
+    </ul>
+</div>
+</div>

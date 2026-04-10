@@ -1,0 +1,21 @@
+<div class="modal-header d-block">
+  <h4 class="modal-title">Reason Name</h4>
+  <!-- <span class="text-muted">Please provide the details provided by {{ (popUpId == 4) || popUpId == 3 ? 'Experian' : 'Crif Highmark'}} here</span> -->
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Reason Name*</label>
+        <input type="text" placeholder="Enter Reason Name" [(ngModel)]="reasonName"class="form-control" required/>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+  <div class="modal-footer">
+    <a href="javascript: void(0)" class="btn btn-psb btn-secondary waves-effect" (click) = "cancel()" >Cancel</a>
+    <a href="javascript: void(0)" class="btn btn-psb btn-psbpurple waves-effect" (click) = "saveRejectionDetails()"> <i class="fmdi fmdi-floppy mr-1"></i>Save </a>
+  </div>
+  

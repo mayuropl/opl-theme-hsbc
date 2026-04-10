@@ -1,0 +1,85 @@
+<section class="popup_design HSBC_Common_Pages pb-0 profile-detail-popup">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial (click)="closeDialog()">close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Profile Details</h3>
+            <p class="desc"><span>Location:</span> {{joinLocation}}</p>
+        </div>
+        <div class="desc-txt">
+            <strong>Description Of Business -</strong> {{this.data?.profileDetails?.tracxnInvestorProfileReq?.[0]?.description}}
+        </div>
+        <div class="profile-detail-body">
+            <div class="sub_popup_header">
+                <h3>Business Model And Coverage Area</h3>
+            </div>
+            <mat-dialog-content class="px-0">
+                <div class="popup_body">
+                    <div class="table_sec">
+                        <div
+                            class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                            <div class="tableResponsive inside_table">
+                                <table class="bordered_table w-100">
+                                    <thead>
+                                        <tr class="tr_lightred_bg">
+                                            <th>Sectors</th>
+                                            <th>Sub Sector</th>
+                                            <th>Business</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr  *ngFor="let businessModel of investorBusinessDetailsAndCoverageAreaList[0]; let i = index">
+                                            <td>{{businessModel?.sector || '-'}}</td>
+                                            <td><b>{{businessModel?.subSector || '-'}}</b></td>
+                                            <td>{{businessModel?.business || '-'}} 
+                                                 <i class="fa fa-check-circle ml-1" *ngIf="businessModel?.business" matTooltip="{{businessModel?.description}}" matTooltipPosition="before"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="pagination-table NP_LeftPagintion">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(tracxnInvestorProfileDetailsPage.startIndex()+1)}} to
+                                {{(tracxnInvestorProfileDetailsPage.pageSize()*tracxnInvestorProfileDetailsPage.page()) >
+                                (tracxnInvestorProfileDetailsPage.totalSize) ? (tracxnInvestorProfileDetailsPage.totalSize) :
+                                (tracxnInvestorProfileDetailsPage.pageSize()*tracxnInvestorProfileDetailsPage.page())}} of
+                                {{tracxnInvestorProfileDetailsPage.totalSize}} rows
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(ngModel)]="tracxnInvestorProfileDetailsPage.pageSize"
+                                                [panelClass]="'pagination_select'" (selectionChange)="getInnovateProfileBasicDetails()">
+                                                <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                    {{pages.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <span class="grey_text"> row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="tracxnInvestorProfileDetailsPage.totalSize" [maxSize]="3"
+                                        [(page)]="tracxnInvestorProfileDetailsPage.page" [rotate]="true" [boundaryLinks]="true"
+                                        [pageSize]="tracxnInvestorProfileDetailsPage.pageSize()" (pageChange)="getInnovateProfileBasicDetails()">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </mat-dialog-content>
+                 <div class="btn-group mt-2">
+                    <button type="submit" class="ln_40" mat-flat-button color="primary cancle-btn" (click)="closeDialog()">Cancel</button>
+                    <button type="submit" class="ln_40" mat-flat-button color="primary" (click)="closeDialog()">OK</button>
+                </div>
+         </div>
+    </div>
+</section>

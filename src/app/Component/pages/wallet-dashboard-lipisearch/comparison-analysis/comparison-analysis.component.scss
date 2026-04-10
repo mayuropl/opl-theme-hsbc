@@ -1,0 +1,62 @@
+.subloaderShowing{
+    height: 30vh;
+    overflow: hidden;
+}
+
+.parent_table_loader {
+    height: 60vh;
+    overflow: hidden;
+}
+
+.parent_loader {
+    height: 60vh !important;
+}
+
+.child_loader {
+    height: 30vh !important;
+}
+
+
+// Sort container styles (same as PR Reconciliation Dashboard)
+.sort-container {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  line-height: 0.5;
+  margin-left: 2px;
+  gap: 0;
+  position: relative;
+  top: 2px;
+}
+
+.sort-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 12px;
+  cursor: pointer;
+  color: #424242;
+  transition: all 0.2s ease;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: #00847F;
+    background-color: rgba(25, 118, 210, 0.1);
+    border-radius: 3px;
+    transform: scale(1.1);
+  }
+
+  &.active {
+    color: #00847F;
+  }
+
+  &.sort-icon-up {
+    margin-bottom: -2px;
+  }
+
+  &.sort-icon-down {
+    margin-top: -2px;
+  }
+}

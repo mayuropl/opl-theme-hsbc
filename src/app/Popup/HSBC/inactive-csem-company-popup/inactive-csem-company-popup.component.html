@@ -1,0 +1,26 @@
+<div class="popup_design max-600 warning_popup">
+    <a class="modal_closeicn_btn" href="javascript:void(0)"><mat-icon class="material-symbols-outlined"
+            matDialogClose="" cdkFocusInitial>close</mat-icon></a>
+    <div class="pop_up_container">
+        <mat-dialog-content>
+            <div class="popup_body text-center ">
+                <div class="lottie_icn">
+                    <lottie-player class="__HSBC_lotties_Not" src="../assets/images/Json/warning_lottie.json" background="transparent" speed="1" loop autoplay></lottie-player>    
+                </div>
+                @if (this.customerTypeId == 3) {
+                    <p class="max-w-100">The Company is part of Prospects identified by SAGE - <b>{{scope}}</b></p>
+                }
+                @else{
+                    <p class="max-w-100">This customer is of your <b>{{customerType}}</b> {{' - '}} <b>{{scope}}</b></p>
+                }
+                <p class="max-w-100" *ngIf="isDiffCompanyName" > With diffrante name <b>{{diffCompanyName}}</b> </p>
+                <p class="max-w-100 mt-2" *ngIf="rmName">and is Assigned to <b> {{rmName}} .</b></p>
+                <p class="max-w-100 mt-2">Please click on view profile button</p>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+            <button mat-stroked-button color="primary" matDialogClose="close" (click)="onYes()">View profile</button>
+<!--        <button mat-flat-button color="primary" matDialogClose="close" (click)="onYes()">OK</button>-->
+        </mat-dialog-actions>
+    </div>
+</div>

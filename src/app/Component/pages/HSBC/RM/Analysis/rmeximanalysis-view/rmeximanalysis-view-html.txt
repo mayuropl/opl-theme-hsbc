@@ -1,0 +1,1801 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <mat-card class="card-box">
+            <div class="__Top_Heading_GRP __PB_20">
+                <div class="Top_Heading_Txt_left __ArrowLeft">
+                    <mat-icon svgIcon="chevron_left" class="primary" matRipple></mat-icon>
+                    <h4 class="Heading__H4 _afterview">
+                        EXIM Analysis
+                    </h4>
+                </div>
+                <div class="Top_Heading__Right __DFS_Btn_Grp tab_Btn_Grp">
+                    <div class="HSBC_BGCard_View __HeadingTab">
+                        <div class="nav-bordered dash-tab-Np ">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item tx-center">
+                                    <div class="nav-link">
+                                        <span>Name</span>
+                                        <p class="notification-list">OSB Overseas Private...</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- <button mat-flat-button color="primary" class="Btn__Common __Primary">Download Report</button> -->
+                </div>
+            </div>
+            <div class="NP_Com_Group MT_MB_15px">
+                <mat-tab-group mat-align-tabs="start" class="tabs-design tabBorder" animationDuration="500ms"
+                    [selectedIndex]="selectedTabIndex" (selectedIndexChange)="selectedTabIndex=$event;">
+                    <mat-tab label="Summary Info">
+                        <mat-card-content>
+                            <div class="DetailsCard_teaserView single_cols">
+                                <div class="LH_NP_Com">
+                                    <div class="NP_Group_Heading">
+                                        <div class="_Heading_grp">
+                                            <mat-icon [svgIcon]="'company_Icon'"></mat-icon>
+                                            <h4 class="Heading_Title">Summary</h4>
+                                        </div>
+                                    </div>
+                                    <div class="teaserView_Details">
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>Name Of Company</span>
+                                            <span>OSB Overseas Private Limited</span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>PAN</span>
+                                            <span>AAGCV5214N</span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>Address</span>
+                                            <span>"19/41,Gowdiamutt Road, Royapettah, Azad Nagar, Royapettah, Chennai,
+                                                Tamil Nadu 600014, India</span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>Report Fetched On</span>
+                                            <span>25th June 2024 06:18 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Export Analysis">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Export Details
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive" onWheel="this.scrollLeft+=event.deltaY>0?250:-250">
+                                    <table class="CommonTable_FixedScroll FirstColsExpend">
+                                        <thead>
+                                            <tr>
+                                                <th class="mWidth80">&nbsp;</th>
+                                                <th class="mWidth80">Sr.No</th>
+                                                <th>Buyer Name</th>
+                                                <th>Buyer since</th>
+                                                <th>Country</th>
+                                                <th>No. of shipment 2023-24</th>
+                                                <th>No. of shipment 2024-25</th>
+                                                <th>Shipment value 2023-24</th>
+                                                <th>Shipment value 2024-25</th>
+                                                <th>Currency</th>
+                                                <th>Address</th>
+                                                <th>Parent Company </th>
+                                                <th>Address Of Parent Company</th>
+                                                <th>Duns ID</th>
+                                                <th>HSBC Presence</th>
+                                                <th>HSBC Banking</th>
+                                                <th>Wallet Share last 3 Months</th>
+                                                <th class="mWidth80">HSN</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody [ngClass]="{active : !isCollapsed}">
+                                            <tr>
+                                                <td class="mWidth80">
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed"><em
+                                                            class="fa fa-chevron-down"></em></button>
+                                                </td>
+                                                <td class="mWidth80">1</td>
+                                                <td>Shah industies</td>
+                                                <td>6 year </td>
+                                                <td>Denmark</td>
+                                                <td>12</td>
+                                                <td>8</td>
+                                                <td>$15,500</td>
+                                                <td>$12,500</td>
+                                                <td>USD</td>
+                                                <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                <td>Wellcome fisheries ltd</td>
+                                                <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                <td>2541030</td>
+                                                <td><span class="active">Yes</span></td>
+                                                <td>6854</td>
+                                                <td>5200</td>
+                                                <td class="mWidth80">
+                                                    <button mat-icon-button class="matIcon" (click)="HSNCodePopup();">
+                                                        <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td colspan="11" class="expandTables">
+                                                    <div class="expandTablesView">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="firstChild">Financial year</th>
+                                                                    <th>Total</th>
+                                                                    <th>Jan</th>
+                                                                    <th>Feb</th>
+                                                                    <th>Mar</th>
+                                                                    <th>Apr</th>
+                                                                    <th>May</th>
+                                                                    <th>Jun</th>
+                                                                    <th>Jul</th>
+                                                                    <th>Aug</th>
+                                                                    <th>Sep</th>
+                                                                    <th>Oct</th>
+                                                                    <th>Nov</th>
+                                                                    <th>Dec</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2023-2024</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2024-2025</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody [ngClass]="{active : !isCollapsed}">
+                                            <tr>
+                                                <td class="mWidth80">
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed"><em
+                                                            class="fa fa-chevron-down"></em></button>
+                                                </td>
+                                                <td class="mWidth80">1</td>
+                                                <td>Shah industies</td>
+                                                <td>6 year </td>
+                                                <td>Denmark</td>
+                                                <td>12</td>
+                                                <td>8</td>
+                                                <td>$15,500</td>
+                                                <td>$12,500</td>
+                                                <td>USD</td>
+                                                <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                <td>Wellcome fisheries ltd</td>
+                                                <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                <td>2541030</td>
+                                                <td><span class="active">Yes</span></td>
+                                                <td>6854</td>
+                                                <td>5200</td>
+                                                <td class="mWidth80">
+                                                    <button mat-icon-button class="matIcon">
+                                                        <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td colspan="11" class="expandTables">
+                                                    <div class="expandTablesView">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="firstChild">Financial year</th>
+                                                                    <th>Total</th>
+                                                                    <th>Jan</th>
+                                                                    <th>Feb</th>
+                                                                    <th>Mar</th>
+                                                                    <th>Apr</th>
+                                                                    <th>May</th>
+                                                                    <th>Jun</th>
+                                                                    <th>Jul</th>
+                                                                    <th>Aug</th>
+                                                                    <th>Sep</th>
+                                                                    <th>Oct</th>
+                                                                    <th>Nov</th>
+                                                                    <th>Dec</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2023-2024</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2024-2025</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody [ngClass]="{active : !isCollapsed}">
+                                            <tr>
+                                                <td class="mWidth80">
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed"><em
+                                                            class="fa fa-chevron-down"></em></button>
+                                                </td>
+                                                <td class="mWidth80">1</td>
+                                                <td>Shah industies</td>
+                                                <td>6 year </td>
+                                                <td>Denmark</td>
+                                                <td>12</td>
+                                                <td>8</td>
+                                                <td>$15,500</td>
+                                                <td>$12,500</td>
+                                                <td>USD</td>
+                                                <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                <td>Wellcome fisheries ltd</td>
+                                                <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                <td>2541030</td>
+                                                <td><span class="active">Yes</span></td>
+                                                <td>6854</td>
+                                                <td>5200</td>
+                                                <td class="mWidth80">
+                                                    <button mat-icon-button class="matIcon">
+                                                        <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td colspan="11" class="expandTables">
+                                                    <div class="expandTablesView">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="firstChild">Financial year</th>
+                                                                    <th>Total</th>
+                                                                    <th>Jan</th>
+                                                                    <th>Feb</th>
+                                                                    <th>Mar</th>
+                                                                    <th>Apr</th>
+                                                                    <th>May</th>
+                                                                    <th>Jun</th>
+                                                                    <th>Jul</th>
+                                                                    <th>Aug</th>
+                                                                    <th>Sep</th>
+                                                                    <th>Oct</th>
+                                                                    <th>Nov</th>
+                                                                    <th>Dec</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2023-2024</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2024-2025</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Import Analysis">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Import Details
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive" onWheel="this.scrollLeft+=event.deltaY>0?250:-250">
+                                    <table class="CommonTable_FixedScroll FirstColsExpend">
+                                        <thead>
+                                            <tr>
+                                                <th class="mWidth80">&nbsp;</th>
+                                                <th class="mWidth80">Sr.No</th>
+                                                <th>Supplier Name</th>
+                                                <th>Supplier since</th>
+                                                <th>Country</th>
+                                                <th>No. of shipment 2023-24</th>
+                                                <th>No. of shipment 2024-25</th>
+                                                <th>Shipment value 2023-24</th>
+                                                <th>Shipment value 2024-25</th>
+                                                <th>Currency</th>
+                                                <th>Address</th>
+                                                <th>Parent Company </th>
+                                                <th>Address Of Parent Company</th>
+                                                <th>Duns ID</th>
+                                                <th>HSBC Presence</th>
+                                                <th>HSBC Banking</th>
+                                                <th>Wallet Share last 3 Months</th>
+                                                <th class="mWidth80">HSN</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="mWidth80">
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed"><em
+                                                            class="fa fa-chevron-down"></em></button>
+                                                </td>
+                                                <td class="mWidth80">1</td>
+                                                <td>Shah industies</td>
+                                                <td>6 year </td>
+                                                <td>Denmark</td>
+                                                <td>12</td>
+                                                <td>8</td>
+                                                <td>$15,500</td>
+                                                <td>$12,500</td>
+                                                <td>USD</td>
+                                                <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                <td>Wellcome fisheries ltd</td>
+                                                <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                <td>2541030</td>
+                                                <td><span class="active">Yes</span></td>
+                                                <td>6854</td>
+                                                <td>5200</td>
+                                                <td class="mWidth80">
+                                                    <button mat-icon-button class="matIcon">
+                                                        <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td colspan="11" class="expandTables">
+                                                    <div class="expandTablesView">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="firstChild">Financial year</th>
+                                                                    <th>Total</th>
+                                                                    <th>Jan</th>
+                                                                    <th>Feb</th>
+                                                                    <th>Mar</th>
+                                                                    <th>Apr</th>
+                                                                    <th>May</th>
+                                                                    <th>Jun</th>
+                                                                    <th>Jul</th>
+                                                                    <th>Aug</th>
+                                                                    <th>Sep</th>
+                                                                    <th>Oct</th>
+                                                                    <th>Nov</th>
+                                                                    <th>Dec</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2023-2024</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2024-2025</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td class="mWidth80">
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed"><em
+                                                            class="fa fa-chevron-down"></em></button>
+                                                </td>
+                                                <td class="mWidth80">1</td>
+                                                <td>Shah industies</td>
+                                                <td>6 year </td>
+                                                <td>Denmark</td>
+                                                <td>12</td>
+                                                <td>8</td>
+                                                <td>$15,500</td>
+                                                <td>$12,500</td>
+                                                <td>USD</td>
+                                                <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                <td>Wellcome fisheries ltd</td>
+                                                <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                <td>2541030</td>
+                                                <td><span class="active">Yes</span></td>
+                                                <td>6854</td>
+                                                <td>5200</td>
+                                                <td class="mWidth80">
+                                                    <button mat-icon-button class="matIcon">
+                                                        <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td colspan="11" class="expandTables">
+                                                    <div class="expandTablesView">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="firstChild">Financial year</th>
+                                                                    <th>Total</th>
+                                                                    <th>Jan</th>
+                                                                    <th>Feb</th>
+                                                                    <th>Mar</th>
+                                                                    <th>Apr</th>
+                                                                    <th>May</th>
+                                                                    <th>Jun</th>
+                                                                    <th>Jul</th>
+                                                                    <th>Aug</th>
+                                                                    <th>Sep</th>
+                                                                    <th>Oct</th>
+                                                                    <th>Nov</th>
+                                                                    <th>Dec</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2023-2024</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2024-2025</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td class="mWidth80">
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed"><em
+                                                            class="fa fa-chevron-down"></em></button>
+                                                </td>
+                                                <td class="mWidth80">1</td>
+                                                <td>Shah industies</td>
+                                                <td>6 year </td>
+                                                <td>Denmark</td>
+                                                <td>12</td>
+                                                <td>8</td>
+                                                <td>$15,500</td>
+                                                <td>$12,500</td>
+                                                <td>USD</td>
+                                                <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                <td>Wellcome fisheries ltd</td>
+                                                <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                <td>2541030</td>
+                                                <td><span class="active">Yes</span></td>
+                                                <td>6854</td>
+                                                <td>5200</td>
+                                                <td class="mWidth80">
+                                                    <button mat-icon-button class="matIcon">
+                                                        <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td colspan="11" class="expandTables">
+                                                    <div class="expandTablesView">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="firstChild">Financial year</th>
+                                                                    <th>Total</th>
+                                                                    <th>Jan</th>
+                                                                    <th>Feb</th>
+                                                                    <th>Mar</th>
+                                                                    <th>Apr</th>
+                                                                    <th>May</th>
+                                                                    <th>Jun</th>
+                                                                    <th>Jul</th>
+                                                                    <th>Aug</th>
+                                                                    <th>Sep</th>
+                                                                    <th>Oct</th>
+                                                                    <th>Nov</th>
+                                                                    <th>Dec</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2023-2024</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">2024-2025</td>
+                                                                    <td>No. of shipment</td>
+                                                                    <td>5</td>
+                                                                    <td>2</td>
+                                                                    <td>1</td>
+                                                                    <td>4</td>
+                                                                    <td>5</td>
+                                                                    <td>6</td>
+                                                                    <td>1</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Value of Shipment ($)</td>
+                                                                    <td>1256</td>
+                                                                    <td>250</td>
+                                                                    <td>500</td>
+                                                                    <td>1256</td>
+                                                                    <td>4100</td>
+                                                                    <td>1254</td>
+                                                                    <td>2145</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                    <td>0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+                       <mat-tab label="Same Buyer Peer">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Competition Within Buyer Network
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>Parent company</th>
+                                                <th>Parent company address</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Same Seller Peer">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Competition Within Seller Network
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>Parent company</th>
+                                                <th>Parent company address</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Product Export Peer">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Competitors Same Product Export
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>Parent company</th>
+                                                <th>Parent company address</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Product Import Peer">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Competitors Same Product Import
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>Parent company</th>
+                                                <th>Parent company address</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="New buyer">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        New buyer
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>Parent company</th>
+                                                <th>Parent company address</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+                    <mat-tab label="New seller">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        New seller
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>Parent company</th>
+                                                <th>Parent company address</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Search Competitors">
+                        <mat-card-content>
+                            <div class="NP_Com_Group">
+                                <form class="NP_Form Form_Cont" autocomplete="off">
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-label>HSN code</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter HSN code" required>
+                                        </mat-form-field>
+                                    </fieldset>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-label>HSN Analysis</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter HSN Analysis" required>
+                                        </mat-form-field>
+                                    </fieldset>
+                                    <fieldset class="NP_HSBC_ComInput Btn_Filter">
+                                        <button mat-flat-button color="primary" class="Btn__Common __Primary">Search</button>
+                                    </fieldset>
+                                </form>
+                                <button mat-flat-button color="primary" class="Btn__Common __Primary __btn_Icon"><em class="fa fa-arrow-down"></em> Download HSN Code </button>
+                            </div>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Competitors Details
+                                    </h4>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="CommonTable_NP table_BG GSTListTable Mobile_table_View_NP">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>Rating</th>
+                                                <th>Financials</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">Krunal Goswami</td>
+                                                <td data-label="Rating">3 Jul, 2024</td>
+                                                <td data-label="Financials">3 Jul, 2024</td>
+                                                <td data-label="Address">3 Jul, 2024</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">2</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">Krunal Goswami</td>
+                                                <td data-label="Rating">3 Jul, 2024</td>
+                                                <td data-label="Financials">3 Jul, 2024</td>
+                                                <td data-label="Address">3 Jul, 2024</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">3</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">Krunal Goswami</td>
+                                                <td data-label="Rating">3 Jul, 2024</td>
+                                                <td data-label="Financials">3 Jul, 2024</td>
+                                                <td data-label="Address">3 Jul, 2024</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">4</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">Krunal Goswami</td>
+                                                <td data-label="Rating">3 Jul, 2024</td>
+                                                <td data-label="Financials">3 Jul, 2024</td>
+                                                <td data-label="Address">3 Jul, 2024</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+
+
+                    <mat-tab label="Search by Anchor">
+                        <mat-card-content>
+                            <div class="NP_Com_Group">
+                                <form class="NP_Form Form_Cont" autocomplete="off">
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-label>Search by Anchor Name</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Search by Name" required>
+                                        </mat-form-field>
+                                    </fieldset>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-label>Analysis Data Require</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select Any One" [panelClass]="'pagination_select'">
+                                                <mat-option *ngFor="let data of DataStatus" [value]="data.value">
+                                                    {{data.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                    <fieldset class="NP_HSBC_ComInput Btn_Filter">
+                                        <button mat-flat-button color="primary" class="Btn__Common __Primary">Search</button>
+                                    </fieldset>
+                                </form>
+                                <!-- <button mat-flat-button color="primary" class="Btn__Common __Primary __btn_Icon"><em class="fa fa-arrow-down"></em> Download HSN Code </button> -->
+                            </div>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Search by Anchor
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px" onWheel="this.scrollLeft+=event.deltaY>0?250:-250">
+                                    <table class="CommonTable_FixedScroll firstSrCols">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr.No</th>
+                                                    <th>Supplier Name</th>
+                                                    <th>Supplier since</th>
+                                                    <th>Country</th>
+                                                    <th>No. of shipment 2023-24</th>
+                                                    <th>No. of shipment 2024-25</th>
+                                                    <th>Shipment value 2023-24</th>
+                                                    <th>Shipment value 2024-25</th>
+                                                    <th>Currency</th>
+                                                    <th>Address</th>
+                                                    <th>Parent Company </th>
+                                                    <th>Address Of Parent Company</th>
+                                                    <th>Duns ID</th>
+                                                    <th>HSBC Presence</th>
+                                                    <th>HSBC Banking</th>
+                                                    <th>Wallet Share last 3 Months</th>
+                                                    <th class="mWidth80">HSN</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Shah industies</td>
+                                                    <td>6 year </td>
+                                                    <td>Denmark</td>
+                                                    <td>12</td>
+                                                    <td>8</td>
+                                                    <td>$15,500</td>
+                                                    <td>$12,500</td>
+                                                    <td>USD</td>
+                                                    <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                    <td>Wellcome fisheries ltd</td>
+                                                    <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                    <td>2541030</td>
+                                                    <td><span class="active">Yes</span></td>
+                                                    <td>6854</td>
+                                                    <td>5200</td>
+                                                    <td class="mWidth80">
+                                                        <button mat-icon-button class="matIcon">
+                                                            <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Shah industies</td>
+                                                    <td>6 year </td>
+                                                    <td>Denmark</td>
+                                                    <td>12</td>
+                                                    <td>8</td>
+                                                    <td>$15,500</td>
+                                                    <td>$12,500</td>
+                                                    <td>USD</td>
+                                                    <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                    <td>Wellcome fisheries ltd</td>
+                                                    <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                    <td>2541030</td>
+                                                    <td><span class="active">Yes</span></td>
+                                                    <td>6854</td>
+                                                    <td>5200</td>
+                                                    <td class="mWidth80">
+                                                        <button mat-icon-button class="matIcon">
+                                                            <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Search by Product">
+                        <mat-card-content>
+                            <div class="NP_Com_Group">
+                                <form class="NP_Form Form_Cont" autocomplete="off">
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-label>Search by Product Name</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Product by Name" required>
+                                        </mat-form-field>
+                                    </fieldset>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-label>Analysis Data Require</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select Any One" [panelClass]="'pagination_select'">
+                                                <mat-option *ngFor="let data of DataStatus" [value]="data.value">
+                                                    {{data.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                    <fieldset class="NP_HSBC_ComInput Btn_Filter">
+                                        <button mat-flat-button color="primary" class="Btn__Common __Primary">Search</button>
+                                    </fieldset>
+                                </form>
+                                <!-- <button mat-flat-button color="primary" class="Btn__Common __Primary __btn_Icon"><em class="fa fa-arrow-down"></em> Download HSN Code </button> -->
+                            </div>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left bgColor">
+                                    <h4 class="Heading__H4">
+                                        Competitors Details
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px" onWheel="this.scrollLeft+=event.deltaY>0?250:-250">
+                                    <table class="CommonTable_FixedScroll firstSrCols">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>Parent company</th>
+                                                <th>Parent company address</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr.No">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        row per page
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+
+                </mat-tab-group>
+            </div>
+        </mat-card>
+    </div>
+</div>

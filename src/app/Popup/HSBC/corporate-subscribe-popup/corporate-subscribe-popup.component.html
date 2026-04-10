@@ -1,0 +1,106 @@
+<section class="popup_design max-900 HSBC_Common_Pages subscribe_popup pb-0">
+    <div class="popup_header" mat-dialog-title>
+        <a class="modal_closeicn_btn" href="javascript:void(0)" (click)="dialogRef.close()">
+            <mat-icon>close</mat-icon>
+        </a>
+        <h3>
+            <ng-container *ngIf="isSubscribe">Subscribe To</ng-container>
+            <ng-container *ngIf="!isSubscribe">Unsubscribe From</ng-container>
+            <br> {{data.parentCategory !== 'All' ? data.parentCategory : 'Corporate Actions'}} Updates
+        </h3>
+        <div class="right_fields">
+            <div class="subscribe_toggle">
+                <button type="button" class="toggle_btn" [class.active]="isSubscribe"
+                    (click)="isSubscribe = true">Create Subscription</button>
+                <button type="button" class="toggle_btn" [class.active]="!isSubscribe"
+                    (click)="isSubscribe = false">Active Subscriptions</button>
+            </div>
+        </div>
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content class="p-0">
+            <div class="popup_body">
+                <div class="subscribe_box">
+                    <h2>Select sub categories</h2>
+                    <div class="input_field">
+                        <mat-form-field appearance="outline" class="w-auto">
+                            <input type="text" placeholder="Search" matInput [(ngModel)]="searchSubcategoryText">
+                            <em matSuffix class="fas fa-search searchbox_Icn mr-2"></em>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="bottom_sb_list" *ngIf="isSubscribe">
+                    <div class="checklist_box checkbox_lists">
+                        <mat-checkbox
+                            *ngIf="filteredSubscribeList.length > 0 && (!searchSubcategoryText || 'all'.includes(searchSubcategoryText.toLowerCase()))"
+                            [checked]="isAllSubscribeSelected" 
+                            [disabled]="isAllSubscribeDisabled"
+                            (change)="toggleAllSubscribe($event.checked)">
+                            All
+                        </mat-checkbox>
+                        <mat-checkbox *ngFor="let item of filteredSubscribeList" [checked]="item.selected"
+                            [disabled]="item.disabled" (change)="item.selected = $event.checked">
+                            {{item.name}}
+                        </mat-checkbox>
+                        <p *ngIf="filteredSubscribeList.length === 0">No subcategories match your search.</p>
+                    </div>
+                </div>
+
+                <div class="bottom_sb_list" *ngIf="!isSubscribe">
+                    <div class="checklist_box checkbox_lists">
+                        <mat-checkbox
+                            *ngIf="filteredUnsubscribeList.length > 0 && (!searchSubcategoryText || 'all'.includes(searchSubcategoryText.toLowerCase()))"
+                            [checked]="isAllUnsubscribeSelected" (change)="toggleAllUnsubscribe($event.checked)">
+                            All
+                        </mat-checkbox>
+                        <mat-checkbox *ngFor="let item of filteredUnsubscribeList" [checked]="item.selected"
+                            (change)="item.selected = $event.checked">
+                            {{item.name}}
+                        </mat-checkbox>
+                        <p *ngIf="filteredUnsubscribeList.length === 0">No active subscriptions found.</p>
+                    </div>
+                </div>
+
+                <div class="date_box" *ngIf="isSubscribe">
+                    <h2>Date Range</h2>
+                    <div class="date_range_box">
+                        <div class="input_fieldNew">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <input type="text" matInput [matDatepicker]="pickerFrom" 
+                                    [(ngModel)]="fromDate" 
+                                    [min]="minDate"
+                                    [disabled]="isAllSubscribeDisabled"
+                                    (dateChange)="onFromDateChange($event.value)"
+                                    readonly
+                                    placeholder="From Date">
+                                <mat-datepicker-toggle matSuffix [for]="pickerFrom" [disabled]="isAllSubscribeDisabled">
+                                    <mat-icon class="material-symbols-outlined"
+                                        matDatepickerToggleIcon>calendar_month</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #pickerFrom></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="input_fieldNew ml-2">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <input type="text" matInput [matDatepicker]="pickerTo" 
+                                    [(ngModel)]="toDate" 
+                                    [min]="minToDate"
+                                    [disabled]="isAllSubscribeDisabled"
+                                    readonly
+                                    placeholder="End Date">
+                                <mat-datepicker-toggle matSuffix [for]="pickerTo" [disabled]="isAllSubscribeDisabled">
+                                    <mat-icon class="material-symbols-outlined"
+                                        matDatepickerToggleIcon>calendar_month</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #pickerTo></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-end popup_actions_btns">
+            <button mat-flat-button color="primary" (click)="onSave()">Save</button>
+        </mat-dialog-actions>
+    </div>
+</section>

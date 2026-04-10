@@ -1,0 +1,51 @@
+<!-- <div class="modal-header d-block">
+    <h4 class="modal-title">Bulk upload instructions</h4>
+</div>
+<div class="modal-body Modal-scroll">
+    <div class="row m-0">
+        <div class="col-12 pr-4 pl-4"> -->
+<div class="popup_design max-500">
+
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Bulk upload instructions</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">
+                <div class="read-instruction-p">
+                    <p>Step 1: For Bulk upload, First Download sample template file from the top right hand side corner.
+                    </p>
+                    <p>Step 2: Open the PNB CBS sample excel sheet and need to enter all details of borrower as per
+                        heading
+                        listed for borrower registration.</p>
+                    <p>Step 3: After entering all borrower details, Follow below step:</p>
+                    <ul>
+                        <li>Click File > Save As</li>
+                        <li>Click Browse to choose where you want to save your file.</li>
+                        <li>Select "CSV (MS-DOS)" from the "Save as type" drop down menu.
+                        </li>
+                        <li>Click Save</li>
+                    </ul>
+                    <p>Step 4: Upload the saved CSV (MS-DOS) file on the Platform</p>
+                    <p>Step 5: After uploading, wait for a while and then check the status of the file you have uploaded
+                        in File History.</p>
+
+                    <h4>Note</h4>
+                    <ul>
+                        <li>Do not open or edit the file once you have saved in CSV format.</li>
+                        <li>Do not Edit/Delete any of the columns.</li>
+                        <li>Do not Edit/Delete the top Header Rows.</li>
+                        <li>Please do not use formulas (e.g. V-lookup, etc) in any cell of the excel.</li>
+                        <!-- <li>Current Account number should be unique.</li>
+                    <li>All the Dates should be in DD-MM-YYYY format only.</li>
+                    <li>All Amount is needed in absolute values only. Avoid using amounts in Crores/Lacs</li>
+                    <li>All Amount format should be numeric with two decimal points only. Avoid using amount in comma separated</li> -->
+                    </ul>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+            <button mat-flat-button color="primary" mat-dialog-close (click)="reload()">OK</button>
+        </mat-dialog-actions>
+    </div>
+</div>

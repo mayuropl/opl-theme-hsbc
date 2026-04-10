@@ -1,0 +1,231 @@
+<div class="box_design">
+    <div class="top_filter_toogle">
+        <h3>Customer Type <span [ngClass]="isActive ? 'darkgreen_text' : 'red_text'">{{ isActive ? 'ACTIVE' : 'INACTIVE'
+                }}</span></h3>
+        <mat-slide-toggle class="sliderToggle_design2" [(ngModel)]="isActive"
+            (change)="onToggle($event)"></mat-slide-toggle>
+    </div>
+    <div class="box_design_ttl_bar">
+        <div class="box_design_ttl_bar_left">
+            <h4><em class="fas fa-sort-amount-up"></em> Filter</h4>
+        </div>
+        <div class="box_design_ttl_bar_right">
+            <button type="button" mat-flat-button class="btn_design reset_btn_design"
+                (click)="onReset(); accordion().closeAll()" color="primary">Reset</button>
+            <button type="button" mat-flat-button class="btn_design " (click)="onApply()" [disabled]="isProcessing"
+                color="secondary">Apply</button>
+        </div>
+    </div>
+    <div class="box_design_details p-0">
+        <mat-accordion class="accordion_design">
+            <!--- Company Type FIlter Start -->
+            @for(item of filterListMaster;track $index){
+            @if(shouldShowItem(item)) {
+            <mat-expansion-panel [class.panel-error]="hasFilterError(item)">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{item.filterName}}
+                        @if(hasFilterError(item)) {
+                        <em class="fas fa-exclamation-circle error-icon"></em>
+                        }
+                    </mat-panel-title>
+                    <mat-panel-subtitle class="filter_count">{{item.count}}x</mat-panel-subtitle>
+                </mat-expansion-panel-header>
+                <div class="accordion_content">
+                    <mat-accordion class="accordion_design_2">
+                        @for(filter2 of item.insightTwoFilter;track $index){
+                        <mat-expansion-panel [class.panel-error]="hasSubFilterError(filter2)">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{filter2.filterTwoName}}
+                                    @if(hasSubFilterError(filter2)) {
+                                    <em class="fas fa-exclamation-circle error-icon"></em>
+                                    }
+                                </mat-panel-title>
+                                <mat-panel-subtitle class="filter_count">{{filter2?.json?.count}}x</mat-panel-subtitle>
+                            </mat-expansion-panel-header>
+                            @if(filter2.type=="checkbox"){
+                            <div class="accordion_content_2">
+                                @if(filter2?.json?.isDualFIlter) {
+                                <div class="filter_details radio_lists">
+                                    <mat-radio-group aria-label="Select an option" name="{{filter2.json.listName}}"
+                                        [(ngModel)]="filter2.json.value" (change)="onKeysDualChange(item, filter2)">
+                                        @for(checkBox of filter2.json?.keysDual;track checkBox; let j = $index) {
+                                        <mat-radio-button [value]="checkBox.value"
+                                            name="{{checkBox.name}}">{{checkBox.name}}</mat-radio-button>
+                                        }
+                                    </mat-radio-group>
+                                </div>
+                                }
+                                @if(filter2?.json?.isAllowSearch && !filter2?.json?.isFetchFromAPi) {
+                                <div class="filter_searchbox">
+                                    <input type="text" placeholder="Search" class="searchbox_input"
+                                        [(name)]="filter2.searchValue" [(ngModel)]="filter2.searchValue"
+                                        (ngModelChange)="filterCheckBox(filter2)">
+                                    <em class="fas fa-search searchbox_Icn"></em>
+                                </div>
+                                } @else if(filter2?.json?.isAllowSearch && filter2?.json?.isFetchFromAPi) {
+                                <div class="filter_searchbox">
+                                    <input type="text" placeholder="Search" class="searchbox_input"
+                                        [(name)]="filter2.searchValue" [(ngModel)]="filter2.searchValue"
+                                        (ngModelChange)="onSearchChange(item, filter2)">
+                                    <em class="fas fa-search searchbox_Icn"></em>
+                                </div>
+                                @if(filter2.noResultsFound && filter2.searchValue) {
+                                <div class="no-results-msg">No results found</div>
+                                }
+                                }
+                                <div class="filter_details checkbox_lists">
+                                    @if(filter2.keyName == "AvailingProducts" || filter2.keyName == "businessLine"){
+                                    @for(checkBox of filter2.json?.keys ;track checkBox; let k = $index) {
+                                    <mat-expansion-panel class="sub_expansion">
+                                        <mat-expansion-panel-header class="p-0">
+                                            <mat-checkbox (click)="$event.stopPropagation()"
+                                                name="{{checkBox.name}}+{{k}}"
+                                                (change)="checkCountCheckBox($event,item,filter2,checkBox.sNo, true)"
+                                                [(ngModel)]="checkBox.selected" [value]="checkBox.value"
+                                                [checked]="checkBox.selected"
+                                                (keydown)="$event.stopPropagation()">{{checkBox.name}}</mat-checkbox>
+                                        </mat-expansion-panel-header>
+                                        <div class="insidecheck_box">
+                                            @for(subCheckBox of checkBox.subKeys ;track subCheckBox; let k = $index) {
+                                            <mat-checkbox
+                                                (change)="checkCountCheckBox($event,item,filter2,subCheckBox.sNo, true)"
+                                                name="{{subCheckBox.name}}+{{k}}" [(ngModel)]="subCheckBox.selected"
+                                                [value]="subCheckBox.value" [checked]="subCheckBox.selected">
+                                                {{subCheckBox.name}}
+                                            </mat-checkbox>
+                                            }
+                                        </div>
+                                    </mat-expansion-panel>
+                                    }
+
+                                    } @else if (filter2.keyName == "businessLine"){
+                                    @for(checkBox of filter2.json?.keys ;track checkBox; let k = $index) {
+                                    <mat-expansion-panel class="sub_expansion">
+                                        <mat-expansion-panel-header class="p-0">
+                                            <mat-checkbox (click)="$event.stopPropagation()"
+                                                name="{{checkBox.name}}+{{k}}"
+                                                (change)="onBusinessLineParentChange($event,item,filter2,checkBox)"
+                                                [(ngModel)]="checkBox.selected" [value]="checkBox.value"
+                                                [checked]="checkBox.selected"
+                                                (keydown)="$event.stopPropagation()">{{checkBox.name}}</mat-checkbox>
+                                        </mat-expansion-panel-header>
+                                        <div class="insidecheck_box">
+                                            @for(subCheckBox of checkBox.subKeys ;track subCheckBox; let k = $index) {
+                                            <mat-checkbox
+                                                (change)="onBusinessLineChildChange($event,item,filter2,checkBox,subCheckBox)"
+                                                name="{{subCheckBox.name}}+{{k}}" [(ngModel)]="subCheckBox.selected"
+                                                [value]="subCheckBox.value" [checked]="subCheckBox.selected">
+                                                {{subCheckBox.name}}
+                                            </mat-checkbox>
+                                            }
+                                        </div>
+                                    </mat-expansion-panel>
+                                    }
+
+                                    }@else{
+
+                                    @for(checkBox of filter2.json?.keys ;track checkBox; let k = $index) {
+                                    @if(!(item.filterName === 'Customer type' && filter2.filterTwoName === 'Customer
+                                    Type' && checkBox.name === 'Inactive')){
+                                    <mat-checkbox (change)="checkCountCheckBox($event,item,filter2,checkBox.sNo)"
+                                        name="{{checkBox.name}}+{{k}}" [(ngModel)]="checkBox.selected"
+                                        [value]="checkBox.value" [checked]="checkBox.selected"> {{checkBox.name}}
+                                        <em class="fmdi fmdi-info ml-1"
+                                            *ngIf="checkBox.description && (filter2.json.listName === 'PRODUCT_HSN'  || filter2.json.listName === 'PRODUCT_SAC')"
+                                            matTooltipPosition="below" matTooltip="{{checkBox.description}}"
+                                            placement="bottom"></em>
+                                    </mat-checkbox>
+                                    }
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            } @else if(filter2.type=="radioButton"){
+                            <div class="accordion_content_2">
+                                <div class="filter_details radio_lists">
+                                    <mat-radio-group aria-label="Select an option" name="{{filter2.json.listName}}"
+                                        [(ngModel)]="filter2.json.value"
+                                        (ngModelChange)="checkCountRadioButton(item,filter2)">
+                                        @for(checkBox of filter2.json?.keys;track checkBox; let j = $index) {
+                                        <mat-radio-button [value]="checkBox.value"
+                                            name="{{checkBox.name}}">{{checkBox.name}}</mat-radio-button>
+                                        }
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            } @else if(filter2.type=="minMax"){
+                            <div class="accordion_content_2">
+                                <div class="filter_details range_filter_box">
+                                    <div class="range_input">
+                                        <label>Min. Range</label>
+                                        <input type="text" specialIsAlphaNumeric name="minValue" class="form-control"
+                                            [class.input-error]="filter2.json.validationError"
+                                            [(ngModel)]="filter2.json.min" #minValue="ngModel"
+                                            [ngModelOptions]="{standalone: true}" (input)="onMinInput(filter2, $event)"
+                                            (blur)="onMinBlur(item, filter2)" (focus)="onMinFocus(filter2)">
+                                    </div>
+                                    <div class="range_input">
+                                        <label>Max. Range</label>
+                                        <input type="text" specialIsAlphaNumeric name="maxValue" class="form-control"
+                                            [class.input-error]="filter2.json.validationError"
+                                            [(ngModel)]="filter2.json.max" #maxValue="ngModel"
+                                            [ngModelOptions]="{standalone: true}" (input)="onMaxInput(filter2, $event)"
+                                            (blur)="onMaxBlur(item, filter2)" (focus)="onMaxFocus(filter2)">
+                                    </div>
+                                </div>
+                                @if(filter2.json.validationError) {
+                                <div class="validation-error">{{filter2.json.validationError}}</div>
+                                }
+                            </div>
+                            }@else if(filter2.type=="date"){
+                            <div class="accordion_content_2">
+                                <div class="filter_details range_filter_box date_box_filter">
+                                    <div class="range_input">
+                                        <label>From</label>
+                                        <div class="inp_box">
+                                            <input class="form-control" [matDatepicker]="fromDatePicker" [max]="maxDate"
+                                                [min]="minDate" [(ngModel)]="filter2.json.fromDate"
+                                                [value]="filter2.json.fromDate" placeholder="From Date"
+                                                (ngModelChange)="onModelChanged('from', fromDatePicker, $event)"
+                                                (dateChange)="onDateChanged('from', item,filter2, $event)"
+                                                (focus)="onFocus('from', item, filter2)" (click)="fromDatePicker.open()"
+                                                (keydown.backspace)="filter2.json.fromDate=null"
+                                                (keydown.delete)="filter2.json.fromDate=null" />
+                                            <mat-datepicker-toggle matSuffix [for]="fromDatePicker"
+                                                class="cal_icon_toggle"></mat-datepicker-toggle>
+                                            <mat-datepicker #fromDatePicker
+                                                (opened)="onDatepickerOpened('from', item, filter2)"></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <div class="range_input">
+                                        <label>To</label>
+                                        <div class="inp_box">
+                                            <input class="form-control" [matDatepicker]="ToDatePicker" [max]="maxDate"
+                                                [min]="minDate" [(ngModel)]="filter2.json.toDate"
+                                                [value]="filter2.json.toDate" placeholder="To Date"
+                                                (ngModelChange)="onModelChanged('to', ToDatePicker, $event)"
+                                                (dateChange)="onDateChanged('to', item,filter2, $event)"
+                                                (focus)="onFocus('to', item, filter2)" (click)="ToDatePicker.open()"
+                                                (keydown.backspace)="filter2.json.toDate=null"
+                                                (keydown.delete)="filter2.json.toDate=null" />
+                                            <mat-datepicker-toggle [for]="ToDatePicker"
+                                                class="cal_icon_toggle"></mat-datepicker-toggle>
+                                            <mat-datepicker #ToDatePicker
+                                                (opened)="onDatepickerOpened('to', item, filter2)"></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </mat-expansion-panel>
+                        }
+                    </mat-accordion>
+                </div>
+            </mat-expansion-panel>
+            }
+            }
+        </mat-accordion>
+    </div>
+</div>

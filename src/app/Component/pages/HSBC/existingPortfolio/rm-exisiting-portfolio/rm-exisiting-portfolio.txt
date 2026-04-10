@@ -1,0 +1,286 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4>
+                    Existing Portfolio
+                </h4>
+            </div>
+            <div class="page_Title_Right">
+                <button type="button" mat-flat-button class="btn_design with_icn" color="secondary">Download<em
+                        class="fa fa-arrow-down ml-2"></em></button>
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="box_design">
+                <div class="tableResponsive">
+                    <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table">
+                        <thead>
+                            <tr>
+                                <th>Sr.No</th>
+                                <th>Customer Id</th>
+                                <th>Name Of Customer</th>
+                                <th>Persona</th>
+                                <th>HSBC Wallet</th>
+                                <th>Total Opportunity</th>
+                                <th>Share (%)</th>
+                                <th>Pre-Approved</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                <td></td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter code">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter name">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+
+                                <td>
+                                <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select Persona"
+                                                [panelClass]="'design_multiselect'">
+                                                <mat-optgroup label="Foreign MNC">
+                                                    <mat-option value="DPIIT - Start Up">DPIIT - Start Up</mat-option>
+                                                    <mat-option value="NASSCOM">NASSCOM</mat-option>
+                                                    <mat-option value="IT/ITES">IT/ITES</mat-option>
+                                                    <mat-option value="PE Deals">PE Deals</mat-option>
+                                                    <mat-option value="EXIM">EXIM</mat-option>
+                                                    <mat-option value="Others">Others</mat-option>
+                                                </mat-optgroup>
+                                                <mat-optgroup label="Foreign Domestic">
+                                                    <mat-option value="FD DPIIT - Start Up">DPIIT - Start
+                                                        Up</mat-option>
+                                                    <mat-option value="FD NASSCOM">NASSCOM</mat-option>
+                                                    <mat-option value="FD IT/ITES">IT/ITES</mat-option>
+                                                    <mat-option value="FD PE Deals">PE Deals</mat-option>
+                                                    <mat-option value="FD EXIM">EXIM</mat-option>
+                                                    <mat-option value="FD Others">Others</mat-option>
+                                                </mat-optgroup>
+                                                <mat-optgroup label="Domestic">
+                                                    <mat-option value="Domestic DPIIT - Start Up">DPIIT - Start
+                                                        Up</mat-option>
+                                                    <mat-option value="Domestic NASSCOM">NASSCOM</mat-option>
+                                                    <mat-option value="Domestic IT/ITES">IT/ITES</mat-option>
+                                                    <mat-option value="Domestic PE Deals">PE Deals</mat-option>
+                                                    <mat-option value="Domestic EXIM">EXIM</mat-option>
+                                                    <mat-option value="Domestic Others">Others</mat-option>
+                                                </mat-optgroup>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select Persona" [panelClass]="'design_select'">
+                                                <mat-option *ngFor="let data of proposalStatus" [value]="data.value">
+                                                    {{data.viewValue}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter">
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                </td>
+                                <td>
+                                    <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter Amount">
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                </td>
+                                <td>
+                                    <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter No.">
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                </td>
+                                <td>
+                                    <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter Amount">
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                </td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td data-label="Sr.No">1</td>
+                                <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
+                                <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
+                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
+                                <td data-label="Total Opportunity">₹ 1,50,20,000</td>
+                                <td data-label="Share (%)">10 %</td>
+                                <td data-label="Pre-Approved">₹ 2,00,20,000</td>
+                                <td data-label="Action">
+                                    <a mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View"
+                                        routerLink="/rmExisitingPortfolioView">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Sr.No">2</td>
+                                <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
+                                <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
+                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
+                                <td data-label="Total Opportunity">₹ 1,50,20,000</td>
+                                <td data-label="Share (%)">10 %</td>
+                                <td data-label="Pre-Approved">₹ 2,00,20,000</td>
+                                <td data-label="Action">
+                                    <a mat-icon-button class="matIcon" ngbTooltip="View"
+                                        routerLink="/rmExisitingPortfolioView">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Sr.No">3</td>
+                                <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
+                                <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
+                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
+                                <td data-label="Total Opportunity">₹ 1,50,20,000</td>
+                                <td data-label="Share (%)">10 %</td>
+                                <td data-label="Pre-Approved">₹ 2,00,20,000</td>
+                                <td data-label="Action">
+                                    <a mat-icon-button class="matIcon" ngbTooltip="View"
+                                        routerLink="/rmExisitingPortfolioView">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Sr.No">4</td>
+                                <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
+                                <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
+                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
+                                <td data-label="Total Opportunity">₹ 1,50,20,000</td>
+                                <td data-label="Share (%)">10 %</td>
+                                <td data-label="Pre-Approved">₹ 2,00,20,000</td>
+                                <td data-label="Action">
+                                    <a mat-icon-button class="matIcon" ngbTooltip="View"
+                                        routerLink="/rmExisitingPortfolioView">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Sr.No">5</td>
+                                <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
+                                <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
+                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
+                                <td data-label="Total Opportunity">₹ 1,50,20,000</td>
+                                <td data-label="Share (%)">10 %</td>
+                                <td data-label="Pre-Approved">₹ 2,00,20,000</td>
+                                <td data-label="Action">
+                                    <a mat-icon-button class="matIcon" ngbTooltip="View"
+                                        routerLink="/rmExisitingPortfolioView">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Sr.No">6</td>
+                                <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
+                                <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
+                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
+                                <td data-label="Total Opportunity">₹ 1,50,20,000</td>
+                                <td data-label="Share (%)">10 %</td>
+                                <td data-label="Pre-Approved">₹ 2,00,20,000</td>
+                                <td data-label="Action">
+                                    <a mat-icon-button class="matIcon" ngbTooltip="View"
+                                        routerLink="/rmExisitingPortfolioView">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Sr.No">7</td>
+                                <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
+                                <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
+                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
+                                <td data-label="Total Opportunity">₹ 1,50,20,000</td>
+                                <td data-label="Share (%)">10 %</td>
+                                <td data-label="Pre-Approved">₹ 2,00,20,000</td>
+                                <td data-label="Action">
+                                    <a mat-icon-button class="matIcon" ngbTooltip="View"
+                                        routerLink="/rmExisitingPortfolioView">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Sr.No">8</td>
+                                <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
+                                <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
+                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
+                                <td data-label="Total Opportunity">₹ 1,50,20,000</td>
+                                <td data-label="Share (%)">10 %</td>
+                                <td data-label="Pre-Approved">₹ 2,00,20,000</td>
+                                <td data-label="Action">
+                                    <a mat-icon-button class="matIcon" ngbTooltip="View"
+                                        routerLink="/rmExisitingPortfolioView">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pagination-table NP_LeftPagintion">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{(startIndex+1)}} to
+                    {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                    {{totalSize}}
+                    <div class="dataTables_length" id="tickets-table_length">
+                        <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                                <mat-select [(ngModel)]="pageSize" (ngModelChange)="onPageChange(page)">
+                                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                        {{pages.value}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <span class="grey_text"> row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                        <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                            [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                        </ngb-pagination>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

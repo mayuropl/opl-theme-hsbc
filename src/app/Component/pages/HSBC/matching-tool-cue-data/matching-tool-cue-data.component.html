@@ -1,0 +1,249 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+      <form class="NP_Form" [formGroup]="matchingToolUploadForm">
+        <div class="page_Title_sec">
+          <div class="page_Title_left">
+            <h4 class="cursor_pointer">
+              Matching Tool for CUE Data
+            </h4>
+          </div>
+          
+          <div class="page_Title_right">
+            <div class="select_wrap">
+              <div class="select_label_grp">
+                  <div class="select_group d-flex">
+                     <fieldset class="NP_HSBC_ComInput">
+                  <div class="page_Title_Right">
+                    <a type="button" mat-flat-button class="btn_design with_right_icn" color="secondary"
+                      href="assets/files/download_template_format.xlsx" download>Download Template<mat-icon
+                        class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+                  </div>
+            </fieldset>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page_Details">
+          <div class="box_design mb-3 p-3">
+            <!-- Input File Section -->
+            <div class="NP_Com_Group">
+              <div class="box_design_ttl_bar bg-white">
+                <h4 class="upload_title">Input File</h4>
+                <div class="box_design_ttl_bar_right">
+                  <div class="input_fieldNew">
+                    <mat-form-field appearance="outline" floatLabel="never">
+                      <mat-select [(value)]="selectedInputFileType" placeholder="Select File Type">
+                        <mat-option *ngFor="let fileType of fileTypes" [value]="fileType.value">
+                          {{fileType.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="dragDrop-Common" appDragDrop>
+                <div class="Input-text-Fill-Cutome">
+                  <input class="File-input-common" type="file" formControlName="inputFileUpload" multiple
+                    accept=".csv" (change)="fileBrowseHandler($event.target.files)"
+                    #fileDropRef id="inputFileUpload" name="inputFileUpload" />
+                  <div class="Input-text-File">
+                    <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                    <p class="Drop-text-common" for="fileDropRef">Browse file or drag and drop CSV</p>
+                  </div>
+                </div>
+              </div>
+              <div class="__Btn_Group __MT15px">
+               <p class="note_file_upload">Upload CSV file (Allow multiple file)</p>
+              </div>
+            </div>
+
+            <!-- Input File List -->
+            <mat-card class="box_design b0 bx_none mt-3">
+              <div class="files-list">
+                  <h2 class="file_list">Input File <span class="bedge">{{inputFiles.length}}</span></h2>
+              </div>
+              <div class="files_list_Grp" *ngIf="inputFiles.length > 0">
+                <div class="singlefile_btn_grp" *ngFor="let file of inputFiles; let i = index">
+                  <div class="singlefile_View">
+                      <div class="fileProgress">
+                          <div class="FileName_IconUpload">
+                              <span class="number_list">{{i + 1}}</span>
+                              <div class="file_Icon green_text">
+                                  <mat-icon>description</mat-icon>
+                              </div>
+                              <div class="info">
+                                  <h4 class="fileName mb-1">{{file.name}}</h4>
+                                  <div class="Progreebar">
+                                      <mat-progress-bar value="{{file.progress}}" [max]="100"></mat-progress-bar>
+                                  </div>
+                               </div>
+                              <div class="delete_Icon">
+                                  <mat-icon class="primary lightGreentxt">check_circle</mat-icon>
+                                  <mat-icon class="blckTxt" (click)="removeInputFile(i)">cancel</mat-icon>
+                               </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <!-- Single Submit Button for all Input Files -->
+                <div class="text-right mt-3">
+                  <button mat-flat-button color="primary" class="btn_design" type="button" (click)="submitInputFiles()">Submit</button>
+                </div>
+              </div>
+            </mat-card>
+
+            <!-- Match File Section -->
+            <div class="NP_Com_Group mt-3" *ngIf="matchFile.length == 0">
+              <div class="box_design_ttl_bar bg-white">
+                <h4 class="upload_title">Match File</h4>
+              </div>
+              <!-- Hide upload box when file is already uploaded -->
+              <div class="dragDrop-Common" appDragDrop>
+                <div class="Input-text-Fill-Cutome">
+                  <input class="File-input-common" type="file" formControlName="matchfileUpload"
+                    accept=".csv" (change)="fileBrowseHandlerForMatchFile($event.target.files)"
+                    #fileDropRef2 id="matchfileUpload" name="matchfileUpload" />
+                  <div class="Input-text-File">
+                    <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                    <p class="Drop-text-common" for="fileDropRef">Browse file or drag and drop CSV</p>
+                  </div>
+                </div>
+              </div>
+              <div class="__Btn_Group __MT15px">
+               <p class="note_file_upload">Upload CSV file (Only One file)</p>
+              </div>
+            </div>
+
+            <!-- Match File List -->
+            <mat-card class="box_design b0 bx_none mt-3">
+              <div class="files-list">
+                  <h2 class="file_list">Match File</h2>
+              </div>
+              <div class="files_list_Grp" *ngIf="matchFile.length > 0">
+                <div class="singlefile_View" *ngFor="let file of matchFile; let i = index">
+                    <div class="fileProgress">
+                        <div class="FileName_IconUpload">
+                            <span class="number_list">{{i + 1}}</span>
+                            <div class="file_Icon green_text">
+                                <mat-icon>description</mat-icon>
+                            </div>
+                            <div class="info">
+                                <h4 class="fileName mb-1">{{file.name}}</h4>
+                                <div class="Progreebar">
+                                    <mat-progress-bar value="{{file.progress}}" [max]="100"></mat-progress-bar>
+                                </div>
+                             </div>
+                            <div class="delete_Icon">
+                                <mat-icon class="primary lightGreentxt">check_circle</mat-icon>
+                                <mat-icon class="blckTxt" (click)="removeMatchFile(i)">cancel</mat-icon>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Submit Button for Match File -->
+                <div class="text-right mt-3">
+                  <button mat-flat-button color="primary" class="btn_design" type="button" (click)="submitMatchFile()">Submit</button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- File History Section -->
+          <div class="box_design">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>File History</h4>
+              </div>
+            </div>
+            <div class="box_design_details p-0">
+              <div class="tableResponsive" appTableScroll>
+                <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap no_sticky_table">
+                  <thead>
+                    <tr class="tr_lightred_bg">
+                      <th width="5%">Sr. No.</th>
+                      <th width="20%">File Name(Input File)</th>
+                      <th width="12%">File Type</th>
+                      <th width="12%">Upload Date</th>
+                      <th width="12%">Completion Date</th>
+                      <th width="10%">Uploaded By</th>
+                      <th width="10%">Status</th> 
+                      <th width="12%">Output File</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                       <tr *ngFor="let item of matchingToolReportHistory; let i=index">
+                        <td>{{ startIndex + i + 1 }}</td>
+                        <td>{{item?.file_name || '-'}}</td>
+                        <td>{{item?.audit_type || '-'}}</td>
+                        <td>{{item?.upload_date ? (item?.upload_date | date: 'dd-MM-yyyy HH:mm:ss') : '-'}}</td>
+                        <td>{{item?.completion_date ? (item?.completion_date | date: 'dd-MM-yyyy HH:mm:ss') : '-'}}</td>
+                        <td>{{item?.userName || '-'}}</td>
+                        <td>
+                          <span [ngClass]="{
+                              'yellow_badge': item?.status === 'PROCESSING',
+                              'lightred_badge': item?.status === 'FAILED',
+                              'green_badge': item?.status === 'COMPLETED'
+                          }">
+                              {{ item?.status || '-' }}
+                          </span>
+                          <i *ngIf="item?.status === 'FAILED'" class="fa fa-info-circle mr-1 red_text ml-1" [ngbTooltip]="item?.error_remark"></i>
+                        </td>
+                        <td>
+                          <a *ngIf="item?.audit_type === 'Match File' && item?.status === 'COMPLETED' "
+                            class="ml-1 green_text"
+                            (click)="downloadFile(item)">
+                            Download <i class="fas fa-download ml-1"></i>
+                          </a>
+
+                          <span *ngIf="!(item?.audit_type === 'Match File' 
+                                        )">
+                            -
+                          </span>
+                        </td>
+                      </tr>
+                   </tbody>
+
+                </table>
+              </div>
+            </div>
+
+            <div class="pagination-table NP_LeftPagintion">
+              <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{(startIndex+1)}} to
+                  {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                  {{totalSize}}
+                  row
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                          (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-5">
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                      [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

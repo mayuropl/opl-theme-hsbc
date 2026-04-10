@@ -1,0 +1,230 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <!-- <h4 class="cursor_pointer" *ngIf="auditType === '1' && dropDownFlag ===true && tabId ===1" routerLink="/hsbc/rmExisitingPortfolio">
+                    <em class="fmdi fmdi-arrow-left mr-2"></em>
+                    API Audit Log
+                </h4>
+                <h4 class="cursor_pointer" *ngIf="auditType === '1' && dropDownFlag ===true && tabId ===2" routerLink="/hsbc/rmTargetsProspects">
+                    <em class="fmdi fmdi-arrow-left mr-2"></em>
+                    API Audit Log
+                </h4>
+                <h4 class="cursor_pointer" *ngIf="auditType === '1' && dropDownFlag ===false" routerLink="/hsbc/rmDashboard">
+                    <em class="fmdi fmdi-arrow-left mr-2"></em>
+                    API Audit Log
+                </h4>
+                <h4 class="cursor_pointer" *ngIf="auditType === '3'" routerLink="/hsbc/rmDashboard">
+                    <em class="fmdi fmdi-arrow-left mr-2"></em>
+                    Cibil Log
+                </h4> -->
+                <h4 class="cursor_pointer" (click)="goBack()">
+                    <em class="fmdi fmdi-arrow-left mr-2"></em>
+                    {{ apiType.displayValue}}
+                </h4>
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="box_design">
+                @if(dropDownFlag){
+                <div class="box_design_ttl_bar form_design">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Log Filter</h4>
+                    </div>
+                    <div class="box_design_ttl_bar_right">
+                        <div class="filter_Sec_Dsign">
+                            <form [formGroup]="searchForm">
+                                <div class="row justify-content-end">
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="form-group m-0">
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline" floatLabel="never">
+                                                    <mat-select placeholder="Select product" name="selectedProduct"
+                                                        formControlName="selectedProduct">
+                                                        <mat-option *ngFor="let item of apiList"
+                                                            [value]="item.viewValue">
+                                                            {{item.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="form-group m-0">
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline" floatLabel="never">
+                                                    <input matInput placeholder="Enter PAN" name="pan"
+                                                        formControlName="pan">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-12">
+                                        <button mat-flat-button color="primary" class=""
+                                            (click)="getAuditDataAPI()">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                }
+                <div class="box_design_details p-0 border-top" *ngIf="stageauditList?.length > 0">
+                    <div class="tableResponsive">
+                        <table class="CommonTable_NP NP_BGBHSBC Mobile_table_View_NP ">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th class="text-center">Sr. No.</th>
+                                    <th>Application Id</th>
+                                    <th>Api Name</th>
+                                    <th>Request Time</th>
+                                    <th>Responce Type</th>
+                                    <th>Status Code</th>
+                                    <th>Server IP</th>
+                                    <th>HTTP Code</th>
+                                    <th class="text-center">View Request</th>
+                                    <th class="text-center">View Response</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <ng-container> -->
+                                <!-- <tr class="Mobile_View_Filter_Hide_NP">
+                                <td></td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" floatLabel="never ">
+                                            <input matInput placeholder="Enter Application Code" [(ngModel)]="applicationCode" name="applicationCode" (input)="onNameInput()">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" floatLabel="never">
+                                            <input matInput placeholder="Enter name" [(ngModel)]="name" name="name" (input)="onNameInput()">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" floatLabel="never">
+                                            <input matInput [matDatepicker]="picker" readonly [(ngModel)]="selectedDate" name="selectedDate" (dateChange)="onDateChange($event)">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" floatLabel="never">
+                                            <input matInput placeholder="Enter PAN" [(ngModel)]="pan" name="pan" (input)="onNameInput()">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" floatLabel="never">
+                                            <mat-select placeholder="Select product" [(ngModel)]="selectedProduct" name="selectedProduct" (input)="onNameInput()">
+                                                <mat-option *ngFor="let item of Somedata" [value]="item.value">
+                                                    {{item.viewValue}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" floatLabel="never">
+                                            <mat-select placeholder="Select" [(ngModel)]="selectedOption" name="selectedOption" (input)="onNameInput()">
+                                                <mat-option *ngFor="let item of Somedata" [value]="item.value">
+                                                    {{item.viewValue}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                            </tr> -->
+
+
+
+                                <tr *ngFor="let stageAudit of stageauditList;let i = index">
+                                    <ng-container
+                                        *ngIf="isShowAuditAPI === 'true' || ((isShowAuditAPI === 'false' || isShowAuditAPI === 'null') && stageAudit.name=='MCA_COMPANY_HISTORY')">
+                                        <td data-label="Sr. No." class="text-center">{{(page-1)*pageSize+(i+1)}}</td>
+                                        <td data-label="Audit Id">{{stageAudit.applicationId || stageAudit.refId}} </td>
+                                        <td data-label="Api Name">{{stageAudit.name || stageAudit.apiName}}
+                                             <span *ngIf="stageAudit.refType && stageAudit.refType !== '' && stageAudit.apiName?.startsWith('CRISIL')">_{{ stageAudit.refType }}</span>
+                                            {{stageAudit.refValue?('('+stageAudit.refValue+ ')'):''}}<em
+                                                class="fmdi fmdi-info ml-1" ngbTooltip="{{stageAudit.description}}"
+                                                placement="right"></em></td>
+                                        <td data-label="Request Time">{{stageAudit.createdDate || stageAudit.refTime}}
+                                        </td>
+                                        <td data-label="Response Type">{{stageAudit.status}}</td>
+                                        <td data-label="Status Code">{{ stageAudit?.statusCode != "null" ? stageAudit.statusCode : '-' }} </td>
+                                        <td data-label="Server IP">{{stageAudit.serverIp}}</td>
+                                        <td data-label="HTTP Code">{{stageAudit.httpCode}}</td>
+                                        <td data-label="View Request" class="text-center">
+                                            <a mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View Request"
+                                                (click)="showPopupForReqRes('Request',stageAudit.request)"><i
+                                                    class="fa fa-eye"></i>
+                                            </a>
+                                        </td>
+                                        <td data-label="View Response" class="text-center">
+                                            <a mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View Response"
+                                                (click)="showPopupForReqRes('Response',stageAudit.response)">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+
+                                        </td>
+                                    </ng-container>
+                                </tr>
+
+
+                                <!-- </ng-container> -->
+                                <!-- <tr>
+                        <td colspan="10">
+                            <div class="HSBC_No_Data_Found">
+                                <lottie-player class="__HSBC_lotties_Not"
+                                    src="../../../../assets/images/Json/No_data_Found.json"
+                                    background="transparent" speed="1" loop autoplay></lottie-player>
+                            </div>
+                        </td>
+                    </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(startIndex+1)}} to
+                                {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                {{totalSize}}
+                                row
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <label class="d-inline-flex align-items-center"> <ng-select [clearable]="false"
+                                            name="tickets-table_length" class="hide-clear" aria-controls="tickets-table"
+                                            name="pageSize" [(ngModel)]="pageSize" bindLabel="name" bindValue="value"
+                                            [items]="PageSelectNumber" (ngModelChange)="onPageChange(page)" dropdownPosition="top"></ng-select>
+                                        row per page</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end  mb-0 pl-0">
+                                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                        [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                        (pageChange)="onPageChange($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

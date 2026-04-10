@@ -1,0 +1,102 @@
+<div class="top_tgl_box">
+    <div class="top_search_form" *ngIf="showComparison">
+        <h2 class="lebel_text mr-2">Search View By</h2>
+            <div class="input_fieldNew labelinput mr-2">
+                <app-common-select
+                    [options]="optionList"
+                    [isMultiple]="false"
+                    [placeholder]="'Select'"
+                    [searchEnabled]="false"
+                    [showRadioGroup]="false"
+                    [(selectedValue)]="mySelectedValue"
+                    (selectedValueChange)="onOptionSelected($event)">
+                    controlClass="common_select_view"
+                    >
+                </app-common-select>
+            </div>
+        <div class="input_fieldNew labelinput" *ngIf="mySelectedValue !==''">
+            <app-common-select
+            [options]="OptionArray"
+            [placeholder]="'Select'"
+            [isMultiple]="true"
+            [searchEnabled]="true"
+             controlClass="common_select_view"
+            [(selectedValue)]="selectModel"
+            (onOptionSelected)="onOptionSelectedF($event)"
+             [showRadioGroup]="false"
+             (searchValueChange)="onSearchValueChange($event)"
+             (scrolledToBottom)="onScroll()"
+             (openedChange)="($event ? onDropdownOpened() : null)">
+            </app-common-select>
+         </div>
+    </div>
+    <div *ngIf="pageData && commonService.isActionAvailable(pageData,consValue.pageMaster.PR_DASHBOARD,consValue.PageActions.COMPARISON_VIEW)" class="slide_both_label ml-auto">
+        <label class="mr-1">Summary</label>
+        <mat-slide-toggle class="sliderToggle_design2" [(ngModel)]="showComparison"
+        (change)="onSummaryToggleChange($event.checked)" >Comparison</mat-slide-toggle>
+    </div>
+</div>
+<div class="top_form_box mt-4">
+    <div class="top_form" *ngIf="!showComparison">
+        <div class="input_fieldNew labelinput" *ngFor="let filter of topBarFilters">
+            <app-common-select [placeholder]="'Select ' + filter.filter_label" [options]="filter.options" [groupedOptions]="filter.groupedOptions" 
+                [showGroupedAll]="filter.showGroupedAll !== false"
+                [skipAutoSelect]="filter.filter_name === 'product_sub_type' ? skipSubTypeAutoSelect : (filter.filter_name === 'product_type' ? skipProductTypeAutoSelect : false)"
+                [isMultiple]="filter.isMultiple" [searchEnabled]="filter.searchEnabled"
+                [showRadioGroup]="filter.isShowRadioGroup" [radioOptions]="topBarRadioFilters"
+                [(radioSelection)]="radioValue" [(selectedValue)]="selectedValues[filter.filter_name]"
+                [label]="filter.filter_label" [labelIconClass]="getIcon(filter.filter_name)"
+                 [controlClass]="'common_select_view'" (selectedValueChange)="onSelectionChange($event,  filter)"
+                 [infoTooltip]="getInfoTooltip(filter)"
+                 [usePopup]="shouldUsePopup(filter)"
+                 [popupData]="getPopupData(filter)"
+                 [infoIconClass]="'fas fa-info-circle darkgreen_text ml-1'"
+                 (openPopup)="onOpenTooltipPopup($event)"
+                 >
+            </app-common-select>
+        </div>
+        <!-- Product Sub-Type Grouped Dropdown -->
+        <!-- <div class="input_fieldNew labelinput" *ngIf="productSubTypeOptions && productSubTypeOptions.length > 0">
+            <app-common-select 
+                [placeholder]="'Select Product Sub-Type'"
+                [groupedOptions]="productSubTypeOptions"
+                [isMultiple]="true"
+                [searchEnabled]="true"
+                [showRadioGroup]="false"
+                [(selectedValue)]="selectedProductSubTypes"
+                [label]="'Product Sub-Type'"
+                 [labelIconClass]="'fi fi-rr-cube mr-1 red_text'"
+                [controlClass]="'common_select_view'"
+                (selectedValueChange)="onProductSubTypeChange($event)">
+            </app-common-select>
+        </div> -->
+        <div class="act_btn">
+            <button mat-stroked-button class="btn_design white_bg ln_40" color="primary" (click)="resetFilters()">
+                <i class="fas fa-sync-alt mr-1"></i> Reset
+            </button>
+            <button mat-flat-button class="ln_40 ml-2" color="primary" (click)="applyFilters()" [disabled]="isApplyDisabled()">Apply</button>
+        </div>
+    </div>
+    <div class="top_form" *ngIf="showComparison">
+        <div class="input_fieldNew labelinput" *ngFor="let filter of topBarFiltersC">
+            <app-common-select [placeholder]="'Select ' + filter.filter_label" [options]="filter.options" [groupedOptions]="filter.groupedOptions" 
+                [showGroupedAll]="filter.showGroupedAll !== false"
+                [skipAutoSelect]="filter.filter_name === 'product_sub_type' ? skipSubTypeAutoSelectC : (filter.filter_name === 'wallet' && (minValue !== null || maxValue !== null))"
+                [isMultiple]="filter.isMultiple" [searchEnabled]="filter.searchEnabled"
+                [showRadioGroup]="filter.isShowRadioGroup" [radioOptions]="topBarRadioFiltersC" [clearMinMax]="clearWalletMinMax"
+                [showMinCount]="filter.isshowMinCount" (minMaxChanged)="onMinMaxChanged($event, filter)" [resetTrigger]="resetFlag"
+                [initialMinValue]="filter.filter_name === 'wallet' ? minValue : null"
+                [initialMaxValue]="filter.filter_name === 'wallet' ? maxValue : null"
+                [(radioSelection)]="radioValueC" [(selectedValue)]="selectedValuesC[filter.filter_name]"
+                [label]="filter.filter_label" [labelIconClass]="getIcon(filter.filter_name)" [disableOptions]="filter.filter_name === 'wallet' && isWalletDisabled"
+                [controlClass]="'common_select_view'" (selectedValueChange)="onSelectionChangeC($event,  filter)">
+            </app-common-select>
+        </div>
+        <div class="act_btn">
+            <button mat-stroked-button class="btn_design white_bg ln_40" color="primary" (click)="resetFiltersC()" [disabled]="isDisabled || isApplyDisabledC()">
+                <i class="fas fa-sync-alt mr-1"></i> Reset
+            </button>
+            <button mat-flat-button class="ln_40 ml-2" color="primary" (click)="applyFiltersC()" [disabled]="isDisabled || isApplyDisabledC()">Apply</button>
+        </div>
+    </div>
+</div>

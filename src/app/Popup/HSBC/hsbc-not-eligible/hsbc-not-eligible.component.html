@@ -1,0 +1,22 @@
+<main class="HSBC_Common_popup __Pad0PX">
+    <div class="__HSBC_Popup__header _Icon_TopRight __Jcfend">
+        <!--  <p class="HSBC__title"></p> -->
+        <button mat-icon-button (click)="closePopup('cancel')" class="HSBC__Btn_Icon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="HSBC__Popup_Body ">
+        <div class="__HSBC_Common_Cont_Popup ConfirmationTxt">
+            <div class="__Common_texts _Img_Text_Pop _pd0px">
+                <lottie-player class="__HSBC_lotties_Not" src="./../../../../assets/images/hsbc/NotEligible.json"
+                    background="transparent" speed="1" loop autoplay></lottie-player>
+                <p class="__ptext">Not Eligible</p>
+                <span class="Text_span_ML">It Seems Your Profile Is Not Matching With Bank's Policy.</span>
+            </div>
+        </div>
+    </div>
+    <div class="HSBC_Popup_btn_Grp JC_Center">
+        <button mat-raised-button color="primary" class="Btn__Common __Primary"
+            (click)="closePopup('ok')">Proceed <mat-icon>arrow_right_alt</mat-icon></button>
+    </div>
+</main>

@@ -1,0 +1,222 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page">
+    <div class="__main_Container">
+        <div class="searchBox_section withpageTitle_Sec"
+            style="background-image: url(assets/images/Dashabord/searchBox_bg.jpg);">
+            <div class="searchBox_section_left">
+                <h2>EXIM Analysis</h2>
+                <p><span>Important Instructions</span> : All tabs contain confidential data and shouldn’t be used for customer presentations or shared with customers. This is strictly for internal purposes only.</p>
+            </div>
+            <div class="searchBox_design max-w-none">
+                <form class="searchBox_Form" autocomplete="off" [formGroup]="panForm">
+                    <div class="searchBox_input input_field_2">
+                        <div class="input_field">
+                            <mat-form-field appearance="outline">
+                                <mat-select placeholder="Select Search By" [panelClass]="'design_select'"
+                                    formControlName="searchBy" (selectionChange)="searchSelectionChange()">
+                                    <mat-option *ngFor="let persona of personaList" [value]="persona.value"
+                                        [disabled]="isExistingPanFound">
+                                        {{persona.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="input_field">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{panPlaceHolder}}</mat-label>
+                                <input matInput placeholder="" required formControlName="pan"
+                                    [readonly]=" isExistingPanFound">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="searchBox_btn">
+                        <button type="submit" mat-flat-button color="primary" [disabled]="!panForm.valid"
+                            (click)="verifyPan();">{{submitBtnTitle}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="page_Details ">
+            @if(panVerified ){
+            <div class="page_Title_sec">
+                <div class="page_Title_left w-50">
+                    @if (!isExistingPanFound) {
+                    <h4>
+                        EXIM Analysis History
+                    </h4>
+                    }@else if(isExistingPanFound) {
+                    <h4 class="cursor_pointer" (click)="navigateToViewComponent(pan)">
+                        <em class="fa fa-arrow-left mr-2"></em>
+                        EXIM Analysis History
+                    </h4>
+                    }
+                    <div class="mt-1">Check past records and date of extractions below. For fetching New records, Please click on refresh button.</div>
+                </div>
+                <div class="page_Title_Right">
+                    <button mat-flat-button color="primary" class="btn_design" (click)="onRefresh()">
+                        Refresh</button>
+                    <!-- <button mat-flat-button color="primary" class="btn_design" (click)="EximSearch_Popup()">
+                        Refresh</button> -->
+                    <div style="margin-top: 5px;">Fetch latest EXIM details</div>
+                </div>
+            </div>
+            <mat-card class="box_design">
+                <div class="box_design_details p-0">
+                    <div class="table-responsive">
+                        <table
+                            class="CommonTable_NP CommonNP_BGR0 GSTListTable Mobile_table_View_NP design_Main_listTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Sr.No</th>
+                                    <th>Name Of Company</th>
+                                    <th>Reference Id</th>
+                                    <th>RM Name</th>
+                                    <th>Date Of Report</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="searchForm">
+                                    <td></td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput placeholder="Enter Name Of Company"
+                                                    formControlName="nameOfCompany" name="CompanyName">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput placeholder="Enter Reference Id"
+                                                    formControlName="eximId" name="constitution">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput placeholder="Enter RM Name" formControlName="rmName"
+                                                    name="constitution">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput placeholder="Select Date" [matDatepicker]="picker1"
+                                                    formControlName="dateOfReport" readonly>
+                                                <mat-datepicker-toggle matSuffix
+                                                    [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                @for (eximAnalysisHistory of eximAnalysisHistories; track $index) {
+                                <tr>
+                                    <!-- <td data-label="Sr.No">{{(pagination.page-1)*pagination.pageSize+($index+1)}}</td> -->
+                                    <td data-label="Sr.No" class="text-center">
+                                        {{(pagination.page()-1)*pagination.pageSize()+($index+1)}}
+                                    </td>
+                                    <td data-label="Name Of Company">{{(eximAnalysisHistory.name) || '-'}} </td>
+                                    <td data-label="Reference Id">{{(eximAnalysisHistory.eximId) || '-'}}</td>
+                                    <td data-label="RM Name">{{(eximAnalysisHistory.rmName) || '-'}}</td>
+                                    <td data-label="Date Of Report">
+                                        {{eximAnalysisHistory.dateOfReport | date:'d MMM, y'}}
+                                    </td>
+                                    <td data-label="Action" class="no_wrap">
+                                        <button mat-icon-button class="matIcon skyblue_icn" matTooltip="Detailed analysis" matTooltipPosition="above"
+                                            (click)="navigateToView(eximAnalysisHistory)">
+                                            <em class="fa fa-eye"></em>
+                                            <!-- <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon> -->
+                                        </button>
+                                        <button mat-icon-button class="matIcon grey_icn"
+                                            (click)="viewAuditPage(eximAnalysisHistory.eximId)"
+                                            *ngIf="isActionAvail(constants.PageActions.AUDIT)"
+                                            matTooltip="Audit trail" matTooltipPosition="above">
+                                            <mat-icon [svgIcon]="'fileSearch_Icon'"></mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                                } @empty {
+                                <tr>
+                                    <td colspan="6">
+                                        <app-no-data-found message="No data found" />
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="pagination-table NP_LeftPagintion">
+                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(pagination.startIndex+1)}} to
+                        {{(pagination.pageSize*pagination.page) > (pagination.totalSize) ? (pagination.totalSize) : (pagination.pageSize*pagination.page)}} of
+                        {{pagination.totalSize}} rows
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                        <mat-select [value]="pagination.pageSize"  (selectionChange)="onPageSizeChange($event.value)">
+                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                            {{pages.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        row per page
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="pagination.totalSize" [maxSize]="3" [(page)]="pagination.page" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="pagination.pageSize" (pageChange)="onPageChange($event)">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div> -->
+
+                    <div class="pagination-table NP_LeftPagintion">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            <!-- {{pagination.pageSize()}} - {{pagination.page()}}
+                    {{pagination.startIndex()}} - {{pagination.endIndex()}} -->
+                            Showing
+                            {{(pagination.startIndex()+1)}} to
+                            {{(pagination.pageSize()*pagination.page()) > (pagination.totalSize) ?
+                            (pagination.totalSize) :
+                            (pagination.pageSize()*pagination.page())}} of
+                            {{pagination.totalSize}} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <!-- <mat-select [(ngModel)]="pagination.pageSize" (ngModelChange)="onPageChange(pagination.page)"> -->
+                                        <!-- <mat-select [(ngModel)]="pagination.pageSize"  (ngModelChange)="onPageSizeChange(pagination.pageSize)"> -->
+                                        <!-- <mat-select [value]="pagination.pageSize()"  (selectionChange)="verifyPan()"> -->
+                                        <mat-select [(ngModel)]="pagination.pageSize" (selectionChange)="verifyPan()">
+
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span>row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="pagination.totalSize" [(page)]="pagination.page"
+                                    [maxSize]="3" [rotate]="true" [boundaryLinks]="true"
+                                    [pageSize]="pagination.pageSize()" (pageChange)="verifyPan()">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+            }
+        </div>
+    </div>
+</div>

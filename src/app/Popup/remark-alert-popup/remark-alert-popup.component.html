@@ -1,0 +1,45 @@
+<div class="popup_design max-700"> 
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+             <h3 class="text-left">Remarks</h3>
+        </div>
+         <mat-dialog-content class="mt-2">
+            <div class="popup_body">
+                  <p class="text_list">Status:
+                    <span class="yellow_badge" *ngIf="alertData.status== undefined || alertData.status==1">Pending</span>
+                    <span class="grey_badge" *ngIf="alertData.status==2">Submitted</span>
+                    <span class="grey_badge" *ngIf="alertData.status==3">Completed</span>
+                </p>
+                  <p class="text_list">Alert:<span>{{alertData.Comment}}</span></p>
+                  <div class="remark_box" *ngIf="alertData.status==2 || alertData.status==3">
+                    <h2>Submission Remarks</h2>
+                    <div class="remark_content">
+                        <p>{{alertData.submittedRemark}}</p>
+                        <p class="own_name"><span>{{alertData.submittedByName}}</span> <span>{{alertData.submittedDate | date:'dd-MM-yyyy HH:mm:ss'}}</span></p>
+                    </div>
+                  </div>
+                  <div class="remark_box" *ngIf="alertData.status==3">
+                    <h2>Completed Remarks</h2>
+                    <div class="remark_content">
+                        <p>{{alertData.completedRemark}}</p>
+                        <p class="own_name"><span>{{alertData.completedByName}}</span> <span>{{alertData.completedDate | date:'dd-MM-yyyy HH:mm:ss'}}</span></p>
+                    </div>
+                  </div>
+                  <div class="form-group input_field mt-2" *ngIf="(alertData.status== undefined || alertData.status==1) || alertData.status==2">
+                      <fieldset class="">
+                        <mat-form-field appearance="outline" class="w-100">
+                             <textarea [(ngModel)]="remarks" class="text_area" matInput rows="4" placeholder="Type your remark here"></textarea>
+                          </mat-form-field>
+                    </fieldset>
+                  </div>
+                  
+             </div>
+        </mat-dialog-content>
+        <mat-dialog-actions *ngIf="(alertData.status== undefined || alertData.status==1) || alertData.status==2" class="d-flex justify-content-end popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" (click)="updateAlert(alertData)" disabled="{{((alertData.status==undefined || alertData.status ==1) && !remarks)}}">{{(alertData.status==undefined || alertData.status == 1) ? 'Submit For Review' : 'Mark as Complete'}}</button>
+        </mat-dialog-actions>
+    </div>
+</div>

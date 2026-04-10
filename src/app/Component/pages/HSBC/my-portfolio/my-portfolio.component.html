@@ -1,0 +1,683 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4>My Portfolio</h4>
+            </div>
+            <div class="page_Title_Right with_filtertop" *ngIf="selectedTab === 0">
+                <!-- <button mat-stroked-button class="btn_design white_bg" color="primary"
+                    (click)="openTeamStructurePopup()">
+                    My Team
+                </button> -->
+                <button mat-stroked-button [matMenuTriggerFor]="searchByMenu" #searchByTrigger="matMenuTrigger"
+                    color="grey" class="btn_design flex-row-reverse greay_text"
+                    (click)="activeFilterMenu = null">
+                    Search by <mat-icon class="ml-2 mr-0">unfold_more</mat-icon>
+                </button>
+            </div>
+            <div class="page_Title_Right with_filtertop" *ngIf="selectedTab === 1">
+                <div class="custom_daterange_picker">
+                    <div class="inner_inp_box">
+                        <span class="calendar-label">{{calendarDisplayLabel}}</span>
+                        <input type="text" name="daterange" ngxDaterangepickerMd [(ngModel)]="selectedRange"
+                            [showCustomRangeLabel]="true" [alwaysShowCalendars]="true"
+                            [singleDatePicker]="false" [autoApply]="false" [linkedCalendars]="false" [ranges]="ranges"
+                            [showClearButton]="true" [locale]="calendarLocale"[timePicker]="false"
+                            [placeholder]="calendarPlaceholder" [opens]="'left'"
+                            [isInvalidDate]="isInvalidDate"
+                            [keepCalendarOpeningWithRange]="true" class="form-control calendar-input-hidden" readonly="true" (datesUpdated)="onNewsDateRangeChange($event)"
+                        (rangeChanged)="onRangeLabel($event)"/>
+                        <i class="fas fa-chevron-down small_icon_btn"></i>
+                    </div>
+                </div>
+                <button mat-stroked-button [color]="isActive ? 'primary' : ''"
+                    class="btn_design flex-row-reverse ln_40"
+                    [ngClass]="{'grey_text': !isActive}" (click)="activateButton()">
+                    <i class="fas fa-save mr-1"></i>
+                    Saved Articles
+                    <span class="light_badge ml-1" *ngIf="savedArticlesCount > 0">{{savedArticlesCount}}</span>
+                </button>
+            </div>
+        </div>
+        <div class="page_Details with_filter_page">
+            <div class="box_design b0 box-shadow-0">
+                <mat-card-content>
+                    <div class="top_tab_section">
+                        <div class="left_side_btn">
+                            <ul>
+                                <li (click)="toggleTab(0)" [ngClass]="{'active': selectedTab === 0}">Corporate Announcements</li>
+                                <li (click)="toggleTab(1)" [ngClass]="{'active': selectedTab === 1}">Industry News</li>
+                            </ul>
+                        </div>
+                        <div class="right_side_btn" *ngIf="selectedTab === 0">
+                            <button type="button" mat-flat-button color="primary" [matMenuTriggerFor]="subscribeMenu"
+                                class="btn_design with_right_icn">
+                                <ng-container *ngIf="subscriptionFilter === 'ALL'">
+                                    <i class="fas fa-layer-group mr-1"></i> All
+                                </ng-container>
+                                <ng-container *ngIf="subscriptionFilter === 'SUBSCRIBED'">
+                                    <i class="fa fa-bell mr-1"></i> Subscribed
+                                </ng-container>
+                                <ng-container *ngIf="subscriptionFilter === 'UNSUBSCRIBED'">
+                                    <i class="fa fa-bell-slash mr-1"></i> Unsubscribed
+                                </ng-container>
+                                <i class="fas fa-chevron-down small_icon_btn ml-2"></i>
+                            </button>
+                            <mat-menu #subscribeMenu="matMenu" class="filter_option_menu filter_option_menu_new">
+                                <h3 class="title_menu">
+                                    <span class="left_side">Search Options</span>
+                                    <button mat-icon-button type="button">
+                                        <i class="fi fi-br-cross-small"></i>
+                                    </button>
+                                </h3>
+                                <button mat-menu-item class="mr-0 pr-1 no_wrap"
+                                    (click)="setSubscriptionFilter('ALL')">
+                                    <span class="menu_text"
+                                        [ngClass]="{'font-weight-bold': subscriptionFilter === 'ALL'}">
+                                        <i class="fas fa-layer-group"></i> All
+                                    </span>
+                                    <span class="right_value mr-2">
+                                        <span class="filter_num">{{ subscriptionCounts.all || 0 }}</span>
+                                    </span>
+                                </button>
+                                <button mat-menu-item class="mr-0 pr-1 no_wrap"
+                                    (click)="setSubscriptionFilter('SUBSCRIBED')">
+                                    <span class="menu_text"
+                                        [ngClass]="{'font-weight-bold': subscriptionFilter === 'SUBSCRIBED'}">
+                                        <i class="fa fa-bell"></i> Subscribed
+                                    </span>
+                                    <span class="right_value mr-2">
+                                        <span class="filter_num">{{ subscriptionCounts.subscribed || 0 }}</span>
+                                    </span>
+                                </button>
+                                <button mat-menu-item class="mr-0 pr-1 no_wrap"
+                                    (click)="setSubscriptionFilter('UNSUBSCRIBED')">
+                                    <span class="menu_text"
+                                        [ngClass]="{'font-weight-bold': subscriptionFilter === 'UNSUBSCRIBED'}">
+                                        <i class="fa fa-bell-slash"></i> Unsubscribed
+                                    </span>
+                                    <span class="right_value mr-2">
+                                        <span class="filter_num">{{ subscriptionCounts.unsubscribed || 0 }}</span>
+                                    </span>
+                                </button>
+                            </mat-menu>
+                            <div class="custom_daterange_picker">
+                                <div class="inner_inp_box">
+                                    <input type="text" name="daterange" id="portfolioAnnouncement" ngxDaterangepickerMd [(ngModel)]="corporateSelectedRange"
+                                        [showCustomRangeLabel]="true" [alwaysShowCalendars]="true"
+                                        [singleDatePicker]="false" [autoApply]="false" [linkedCalendars]="false"
+                                        [ranges]="ranges" [showClearButton]="true" [locale]="calendarLocale"
+                                        [placeholder]="calendarPlaceholder" [opens]="'left'"
+                                        [isInvalidDate]="isInvalidDate"
+                                        [keepCalendarOpeningWithRange]="true" class="form-control" readonly="true"
+                                        (ngModelChange)="onCorporateDateChange($event)" />
+                                    <label for="portfolioAnnouncement">
+                                        <i class="fas fa-chevron-down small_icon_btn"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right_side_btn" *ngIf="selectedTab === 1">
+                            <div class="input_field radious_input" *ngIf="selectedIndustry === null">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-select #industrySelect placeholder="Industry" multiple [(ngModel)]="selectedIndustryIds" (selectionChange)="onIndustryDropdownSelectAll($event)" [panelClass]="'design_select'">
+                                        <mat-select-trigger>
+                                            {{selectedIndustryIds.includes('ALL') ? 'All' : (industrySelect.triggerValue || 'Industry')}}
+                                        </mat-select-trigger>
+                                        <mat-option [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
+                                        <mat-option *ngFor="let ind of industries" [value]="ind.id">{{ind.name}}</mat-option>
+                                                 <mat-divider></mat-divider>
+
+                                                <mat-option  class="reset-option">
+                                                <button mat-flat-button class="no_wrap br_8" color="primary" (click)="resetIndustryFilter($event, industrySelect)">
+                                                    Reset
+                                                </button>
+                                                </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field radious_input">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-select #sectorSelect placeholder="Sector" multiple [(ngModel)]="selectedSectorIds" (selectionChange)="onSectorSelectAll($event)" [panelClass]="'design_select'">
+                                        <mat-select-trigger>
+                                            {{selectedSectorIds.includes('ALL') ? 'All' : (sectorSelect.triggerValue || 'Sector')}}
+                                        </mat-select-trigger>
+                                        <mat-option #allSectors [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
+                                        <mat-option *ngFor="let sector of sectors" [value]="sector.id">{{sector.name}} <span class="red_text">({{sector.count || 0}})</span></mat-option>
+                                        <mat-divider></mat-divider>
+
+                                        <mat-option  class="reset-option">
+                                        <button mat-flat-button class="no_wrap br_8" color="primary" (click)="resetSectorFilter($event, sectorSelect)">
+                                            Reset
+                                        </button>
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                             <div class="input_field radious_input">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-select #subSectorSelect placeholder="Sub-Sectors" multiple [(ngModel)]="selectedSubSectorIds" (selectionChange)="onSubSectorSelectAll($event)" [disabled]="selectedSectorIds.length === 0" [panelClass]="'design_select'">
+                                        <mat-select-trigger>
+                                            {{selectedSubSectorIds.includes('ALL') ? 'All' : (subSectorSelect.triggerValue || 'Sub-Sectors')}}
+                                        </mat-select-trigger>
+                                        <mat-option [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
+                                        <mat-option *ngFor="let ss of subSectors" [value]="ss.id">{{ss.name}} <span class="red_text">({{ss.count || 0}})</span></mat-option>
+                                        <mat-divider></mat-divider>
+
+                                        <mat-option  class="reset-option">
+                                        <button mat-flat-button class="no_wrap br_8" color="primary" (click)="resetSubSectorFilter($event, subSectorSelect)">
+                                            Reset
+                                        </button>
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field radious_input">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-select #developmentSelect placeholder="Developments" multiple [(ngModel)]="selectedDevelopmentIds" (selectionChange)="onDevelopmentSelectAll($event)" [panelClass]="'design_select'">
+                                        <mat-select-trigger>
+                                            {{selectedDevelopmentIds.includes('ALL') ? 'All' : (developmentSelect.triggerValue || 'Developments')}}
+                                        </mat-select-trigger>
+                                        <mat-option [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
+                                        <mat-option *ngFor="let dev of developments" [value]="dev.id">{{dev.name}}</mat-option>
+                                        <mat-divider></mat-divider>
+
+                                        <mat-option  class="reset-option">
+                                        <button mat-flat-button class="no_wrap br_8" color="primary" (click)="resetDevelopmentFilter($event, developmentSelect)">
+                                            Reset
+                                        </button>
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field radious_input">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-select #categorySelect placeholder="Categories" multiple [(ngModel)]="selectedCategoryIds" (selectionChange)="onCategorySelectAll($event)" [disabled]="selectedDevelopmentIds.length === 0" [panelClass]="'design_select'">
+                                        <mat-select-trigger>
+                                            {{selectedCategoryIds.includes('ALL') ? 'All' : (categorySelect.triggerValue || 'Categories')}}
+                                        </mat-select-trigger>
+                                        <mat-option [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
+                                        <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
+                                        <mat-divider></mat-divider>
+
+                                        <mat-option  class="reset-option">
+                                        <button mat-flat-button class="no_wrap br_8" color="primary" (click)="resetCategoryFilter($event, categorySelect)">
+                                            Reset
+                                        </button>
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ══════════ CORPORATE ANNOUNCEMENTS TAB ══════════ -->
+                    <div class="corporate-action-page" *ngIf="selectedTab === 0 && !isPageLoading">
+
+                        <!-- LEFT SIDEBAR: Parent Categories with Counts -->
+                        <div class="corporate-action-sidebar">
+                            <div class="corporate-action-sidebar-header">
+                                <h5 class="corporate-action-sidebar-title">Categories</h5>
+                                <button type="button" mat-stroked-button color="primary"
+                                    class="btn_design white_bg bo_rad_8" (click)="openMyportfolioSubscribePopup()"
+                                    *ngIf="selectedParentCategory !== 'All'">Manage</button>
+                            </div>
+                            <ul class="corporate-action-category-list">
+                                <!-- "All" option -->
+                                <li>
+                                    <a class="corporate-action-category-link"
+                                       [ngClass]="{'active': selectedParentCategory === 'All'}"
+                                       href="javascript:void(0)"
+                                       (click)="selectParentCategory('All')">
+                                        All
+                                    </a>
+                                </li>
+                                <!-- Dynamic parent categories -->
+                                <li *ngFor="let cat of allParentCategories">
+                                    <a class="corporate-action-category-link"
+                                       [ngClass]="{'active': selectedParentCategory === cat}"
+                                       href="javascript:void(0)"
+                                       (click)="selectParentCategory(cat)">
+                                        <span>{{ cat }}
+                                            <span class="red_text">({{ getCategoryCount(cat) }})</span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- MAIN CONTENT: Subcategory Tabs + Grid -->
+                        <div class="corporate-action-main box_design">
+
+                            <!-- TOP BAR: Subcategory Tabs (shown when a parent category is selected) -->
+                            <div *ngIf="selectedParentCategory !== 'All' && corporateInnerTabLabels.length > 0"
+                                 class="mb-2">
+                                <mat-tab-group (selectedTabChange)="onCorporateInnerTabChange($event)"
+                                               [selectedIndex]="corporateInnerSelectedIndex"
+                                               class="corporate-inner-tabs">
+                                    <mat-tab *ngFor="let label of corporateInnerTabLabels; let i = index"
+                                             [label]="formatSubgroup(label) + ' (' + getSubcategoryCount(label) + ')'">
+                                    </mat-tab>
+                                </mat-tab-group>
+                            </div>
+
+                            <!-- ANNOUNCEMENT GRID TABLE -->
+                    .
+                          <div class="tableResponsive">
+                                <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="table_check_box"><mat-checkbox [checked]="isAllSelected" (change)="toggleSelectAll($event.checked)"></mat-checkbox> #</th>
+                                            <th>Company
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortColumn === 'companyName' && sortDirection === 'asc'"
+                                                        (click)="toggleSort('companyName', 'asc')">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortColumn === 'companyName' && sortDirection === 'desc'"
+                                                        (click)="toggleSort('companyName', 'desc')">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Category</th>
+                                            <th>Announcement Title</th>
+                                            <th>Customer Type</th>
+                                            <th>Date
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortColumn === 'sourceDate' && sortDirection === 'asc'"
+                                                        (click)="toggleSort('sourceDate', 'asc')">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortColumn === 'sourceDate' && sortDirection === 'desc'"
+                                                        (click)="toggleSort('sourceDate', 'desc')">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Master Group
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortColumn === 'masterGroup' && sortDirection === 'asc'"
+                                                        (click)="toggleSort('masterGroup', 'asc')">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortColumn === 'masterGroup' && sortDirection === 'desc'"
+                                                        (click)="toggleSort('masterGroup', 'desc')">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>City
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortColumn === 'city' && sortDirection === 'asc'"
+                                                        (click)="toggleSort('city', 'asc')">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortColumn === 'city' && sortDirection === 'desc'"
+                                                        (click)="toggleSort('city', 'desc')">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Segment
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortColumn === 'segment' && sortDirection === 'asc'"
+                                                        (click)="toggleSort('segment', 'asc')">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortColumn === 'segment' && sortDirection === 'desc'"
+                                                        (click)="toggleSort('segment', 'desc')">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Subscribe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Empty state -->
+                                        <tr *ngIf="corporateDetails.length === 0">
+                                            <td colspan="10" class="text-center py-4">
+                                                <app-no-data-found message="No Data Available"></app-no-data-found>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Dynamic rows -->
+                                        <ng-container *ngFor="let item of sortedCorporateDetails; let i = index">
+                                            <tr>
+                                                <td class="no_wrap table_check_box">
+                                                    <mat-checkbox [checked]="isRowSelected(item.id)" (change)="toggleSelectRow(item.id)"></mat-checkbox>
+                                                    <a href="javascript:void(0)" class="red_text ml-1"
+                                                       (click)="toggleRowExpand(item.id)"
+                                                       [ngClass]="{'rotate_icon': isRowExpanded(item.id)}">
+                                                        <i class="fas fa-chevron-down"></i>
+                                                    </a>
+                                                </td>
+                                                <td>{{ item.companyName || 'N/A' }}</td>
+                                                <td>
+                                                    <span class="grey_badge no_wrap white_bg">
+                                                        {{ selectedParentCategory === 'All' ? item.group : formatSubgroup(item.subgroup) }}
+                                                    </span>
+                                                </td>
+                                                <td>{{ item.corporateAction || 'N/A' }}</td>
+                                                <td>{{ item.customerType || 'N/A' }}</td>
+                                                <td>{{ item.sourceDate || 'N/A' }}</td>
+                                                <td>{{ item.masterGroup || 'N/A' }}</td>
+                                                <td>{{ item.city || 'N/A' }}</td>
+                                                <td>{{ item.segment || 'N/A' }}</td>
+                                                <td class="text-center">
+                                                    <i class="fa bell_rounded"
+                                                        [ngClass]="{
+                                                            'fa-bell-slash': getAnnouncementSubscriptionStatus(item) === 'unsubscribed',
+                                                            'fa-bell': getAnnouncementSubscriptionStatus(item) === 'subscribed' || getAnnouncementSubscriptionStatus(item) === 'untouched',
+                                                            'text-success': getAnnouncementSubscriptionStatus(item) === 'subscribed',
+                                                            'text-muted': getAnnouncementSubscriptionStatus(item) === 'unsubscribed' || getAnnouncementSubscriptionStatus(item) === 'untouched'
+                                                        }"
+                                                        [ngStyle]="{'opacity': getAnnouncementSubscriptionStatus(item) === 'subscribed' ? '1' : '0.5'}"
+                                                        [title]="getAnnouncementSubscriptionStatus(item) === 'subscribed' ? 'Subscribed' :
+                                                                 getAnnouncementSubscriptionStatus(item) === 'unsubscribed' ? 'Unsubscribed' : 'Not subscribed yet'">
+                                                    </i>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Expanded row: Announcement details -->
+                                            <tr class="collapsing_tr" *ngIf="isRowExpanded(item.id)">
+                                                <td colspan="10" class="b0">
+                                                    <div class="box_design box-shadow-0">
+                                                        <div class="tableResponsive inside_table">
+                                                            <table class="w-100">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td colspan="10" class="p-3 b0">
+                                                                            <p>{{ item.details || 'No details available' }}</p>
+                                                                            <span class="grey_badge white_bg mr-2" *ngIf="item.subgroup">
+                                                                                {{ formatSubgroup(item.subgroup) }}
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- PAGINATION -->
+                            <div class="pagination-table NP_LeftPagintion py-2" *ngIf="corporateTotalElements > 0">
+                                <div class="dataTables_info" role="status" aria-live="polite">
+                                    Showing {{ ((corporatePageNumber - 1) * corporatePageSize) + 1 }}
+                                    to {{ corporatePageNumber * corporatePageSize > corporateTotalElements ? corporateTotalElements : corporatePageNumber * corporatePageSize }}
+                                    of {{ corporateTotalElements }} rows
+                                    <div class="dataTables_length">
+                                        <div class="NP_HSBC_ComInput select-field">
+                                            <mat-form-field appearance="outline">
+                                                <mat-select [(ngModel)]="corporatePageSize"
+                                                            (selectionChange)="onCorporatePageSizeChange($event)"
+                                                            [panelClass]="'pagination_select'">
+                                                    <mat-option [value]="5">5</mat-option>
+                                                    <mat-option [value]="10">10</mat-option>
+                                                    <mat-option [value]="25">25</mat-option>
+                                                    <mat-option [value]="50">50</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <span>rows per page</span>
+                                </div>
+                                <div class="text-md-right float-md-right pagination-rounded">
+                                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                        <ngb-pagination [collectionSize]="corporateTotalElements"
+                                            [(page)]="corporatePageNumber"
+                                            [pageSize]="corporatePageSize"
+                                            [maxSize]="3" [rotate]="true"
+                                            [boundaryLinks]="true"
+                                            (pageChange)="onCorporatePageChange($event)">
+                                        </ngb-pagination>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══════════ INDUSTRY NEWS TAB (placeholder - unchanged) ══════════ -->
+                    <div class="corporate-action-page" *ngIf="selectedTab === 1 && !isPageLoading">
+                        <div class="corporate-action-sidebar">
+                            <div class="corporate-action-sidebar-header">
+                                <h5 class="corporate-action-sidebar-title">Industry</h5>
+                            </div>
+                            <ul class="corporate-action-category-list">
+                                <li><a class="corporate-action-category-link" href="javascript:void(0)"
+                                    [ngClass]="{'active': selectedIndustry === null}"
+                                    (click)="onIndustrySelect(null)"><span>All
+                                            <span class="red_text">({{totalCount}})</span></span> <span
+                                            class="darkgreen_text no_wrap">{{newCount}} New</span></a></li>
+                                <li *ngFor="let stat of industryStats"><a class="corporate-action-category-link" href="javascript:void(0)"
+                                    [ngClass]="{'active': selectedIndustry && selectedIndustry.name === stat.name}"
+                                    (click)="onIndustrySelect(stat)"><span>{{stat.name}}
+                                            <span class="red_text">({{stat.totalCount}})</span></span> <span
+                                            class="darkgreen_text no_wrap">{{stat.newCount}} New</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="corporate-action-main">
+                            <div class="corporate-action-feed">
+                                <div class="corporate-action-news-card" *ngFor="let card of newsCards">
+                                    <div class="corporate-action-news-header">
+                                        <div class="corporate-action-news-header-left">
+                                            <a [href]="card.newsCard?.['Url'] || 'javascript:void(0)'" target="_blank" class="corporate-action-news-title-link">
+                                                <h6 class="corporate-action-news-title">{{card.newsCard?.['News Heading']}}</h6>
+                                            </a>
+                                        </div>
+                                        <i class="fi rounded_icon cursor_pointer"
+                                           [ngClass]="card.isSaved ? 'fi-sr-bookmark' : 'fi-rr-bookmark'"
+                                           (click)="toggleSaveArticle(card)"></i>
+                                    </div>
+                                    <div class="corporate-action-news-content">
+                                         <ul class="list_design">
+                                            <li *ngIf="selectedIndustry === null">Industry <span>{{card.newsCard?.['Industry'] || '-'}}</span></li>
+                                            <li>Sector <span>{{card.newsCard?.['Sector'] || '-'}}</span></li>
+                                            <li>SubSector <span>{{card.newsCard?.['SubSector'] || '-'}}</span></li>
+                                            <li>Development <span>{{card.newsCard?.['Development'] || '-'}}</span></li>
+                                            <li>Category <span>{{card.newsCard?.['Category'] || '-'}}</span></li>
+                                          </ul>
+                                        <ul class="corporate-action-news-meta">
+                                            <li><i class="fa fa-calendar mr-1"></i> {{card.newsCard?.['News Date']}}</li>
+                                         </ul>
+                                    </div>
+                                </div>
+                                <div *ngIf="newsCards.length === 0" class="text-center py-4 box_design no_data_box">
+                                    <app-no-data-found message="No news articles found for the selected filters."></app-no-data-found>
+                                </div>
+                            </div>
+                            <div class="pagination-table NP_LeftPagintion py-2" *ngIf="newsTotalElements > 0">
+                                <div class="dataTables_info" id="tickets-table_info" role="status"
+                                    aria-live="polite">
+                                    Showing
+                                    {{(newsUiPage - 1) * newsPageSize + 1}} to {{((newsUiPage - 1) * newsPageSize + newsCards.length)}} of {{newsTotalElements}} rows
+                                    <div class="dataTables_length" id="tickets-table_length">
+                                        <div class="NP_HSBC_ComInput select-field">
+                                            <mat-form-field appearance="outline">
+                                                <mat-select [panelClass]="'pagination_select'" [(ngModel)]="newsPageSize" (selectionChange)="onNewsPageSizeChange($event.value)">
+                                                    <mat-option *ngFor="let opt of pageSizeOptions" [value]="opt">
+                                                        {{opt}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <span>row per page</span>
+                                </div>
+                                <div class="text-md-right float-md-right pagination-rounded">
+                                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                        <ngb-pagination
+                                            [collectionSize]="newsTotalElements"
+                                            [(page)]="newsUiPage"
+                                            [pageSize]="newsPageSize"
+                                            [maxSize]="3" [rotate]="true"
+                                            [boundaryLinks]="true"
+                                            (pageChange)="onNewsPageChange($event)">
+                                        </ngb-pagination>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search By Menu -->
+<mat-menu #searchByMenu="matMenu" [overlapTrigger]="false" class="filter_option_menu filter_option_menu_new">
+
+  <!-- Main Menu View -->
+  <ng-container *ngIf="!activeFilterMenu">
+    <h3 class="title_menu" (click)="$event.stopPropagation()">
+      <span class="left_side">
+        Search Options
+        <button mat-icon-button color="primary" class="ref_icon" (click)="resetAllSearchByFilters()">
+          <i class="fi fi-br-refresh red_text"></i>
+        </button>
+      </span>
+      <button mat-icon-button type="button" (click)="searchByTrigger.closeMenu()">
+        <i class="fi fi-br-cross-small"></i>
+      </button>
+    </h3>
+
+    <!-- Customer Type Selection -->
+    <div class="input_field select_input_menu" (click)="$event.stopPropagation()">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select placeholder="Select Customer Type" [(ngModel)]="selectedCustomerType" (selectionChange)="onCustomerTypeChange($event.value)">
+          <mat-option [value]="'ALL'">All</mat-option>
+          <mat-option [value]="'ETB'">ETB</mat-option>
+          <mat-option [value]="'TARGET'">Target</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- TopBar Filters (City, Parent Company) -->
+    <ng-container *ngFor="let opt of searchByOptionsTopBar; let i = index">
+      <button mat-menu-item class="mr-0 pr-1 no_wrap"
+        *ngIf="!shouldHideFilter(opt.key)"
+        (click)="openFilterView(opt, i, $event, 'topbar')">
+        <span class="menu_text">
+          <i [ngClass]="getSearchByIcon(opt.key)"></i> {{ opt.key }}
+        </span>
+        <span class="right_value">
+          <span class="filter_num">{{ getSelectedCount(opt.filter_name) }}</span>
+          <i class="fas fa-chevron-right ml-2"></i>
+        </span>
+      </button>
+    </ng-container>
+
+    <!-- RM Filter -->
+    <button mat-menu-item class="mr-0 pr-1 no_wrap"
+      *ngIf="!isRmFilterHidden()"
+      (click)="openFilterView(rmUserFilter, -1, $event, 'rm')">
+      <span class="menu_text">
+        <i class="fas fa-user"></i> RM
+      </span>
+      <span class="right_value">
+        <span class="filter_num">{{ selectedRmUsers?.length || 0 }}</span>
+        <i class="fas fa-chevron-right ml-2"></i>
+      </span>
+    </button>
+  </ng-container>
+
+  <!-- Filter Detail View -->
+  <ng-container *ngIf="activeFilterMenu && selectedFilterOption">
+    <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+      <h3 class="title_menu">
+        <button mat-icon-button (click)="activeFilterMenu = null" class="back_btn mr-1">
+          <i class="fi fi-rr-arrow-small-left"></i>
+        </button>
+        {{ activeFilterMenu }}
+        <button mat-icon-button class="close_btn ml-auto" (click)="searchByTrigger.closeMenu()">
+          <i class="fi fi-br-cross-small"></i>
+        </button>
+      </h3>
+
+      <div class="pos_rel" [ngClass]="{'subloaderShowingmenu': isLoadingSearchBy}">
+        <div class="table_sep_loader" *ngIf="isLoadingSearchBy">
+          <div class="loaderoverlay loader_screen">
+            <div class="loader_screen_center">
+              <div class="loader_screen_lottie">
+                <span class="logo_loader">
+                  <img src="assets/images/loader.svg" alt="Loading">
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TopBar Filter Detail (City, Parent Company) -->
+        <ng-container *ngIf="selectedFilterType === 'topbar'">
+          <div class="filter_searchbox">
+            <div class="filter_searchbox_wrapper">
+              <i class="fas fa-search searchbox_Icn"></i>
+              <input type="text" placeholder="Search" class="searchbox_input"
+                [(ngModel)]="searchByDataHistory[selectedFilterOption.dataset_id].searchValue"
+                (ngModelChange)="searchFilterOptions($event)"/>
+            </div>
+          </div>
+
+          <div class="filter_details checkbox_lists" style="max-height: 300px; overflow-y: auto;">
+            <mat-checkbox *ngFor="let item of dependantFilters"
+              (click)="$event.stopPropagation()"
+              [checked]="isItemSelected(item, selectedFilterOption?.filter_name)"
+              (change)="toggleItemSelection(item, selectedFilterOption?.filter_name)">
+              {{ item.key }}
+            </mat-checkbox>
+          </div>
+        </ng-container>
+
+        <!-- RM Filter Detail -->
+        <ng-container *ngIf="selectedFilterType === 'rm'">
+          <div class="filter_searchbox">
+            <div class="filter_searchbox_wrapper">
+              <i class="fas fa-search searchbox_Icn"></i>
+              <input type="text" placeholder="Search" class="searchbox_input"
+                [(ngModel)]="rmUserFilter.searchValue"
+                (ngModelChange)="searchFilterOptions($event)"/>
+            </div>
+          </div>
+
+          <div class="filter_details checkbox_lists" style="max-height: 300px; overflow-y: auto;">
+            <ng-container *ngFor="let rm of rmUserFilter?.optionFilter">
+              <mat-checkbox *ngIf="rm.empCode !== 'All' && rm.firstName !== 'All'"
+                (click)="$event.stopPropagation()"
+                [checked]="isRmSelected(rm)"
+                (change)="toggleRmSelection(rm)">
+                {{ rm.firstName }}
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <div class="filter_action">
+          <button mat-flat-button color="primary" class="no_wrap"
+            (click)="applySearchByFilter(); searchByTrigger.closeMenu()">Apply</button>
+          <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+            (click)="resetCurrentFilter(selectedFilterOption?.dataset_id, selectedFilterOption?.dataset_name, activeFilterMenu); searchByTrigger.closeMenu()">
+            <i class="fi fi-br-refresh mr-1"></i> Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</mat-menu>

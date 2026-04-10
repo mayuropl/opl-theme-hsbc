@@ -1,0 +1,98 @@
+<section *ngIf="!showSaveForm" class="popup_design max-600 HSBC_Common_Pages save_filter_popup pb-0">
+    <div class="popup_header" mat-dialog-title>
+        <a class="modal_closeicn_btn" href="javascript:void(0)" matDialogClose="">
+            <mat-icon>close</mat-icon>
+        </a>
+         <button type="button" mat-flat-button class="btn_design with_right_icn br_8 filter_design_btn" color="secondary" (click)="openSaveFilterForm()" [disabled]="isLoading || !isAnyFilterApplied">
+            <i class="fi fi-rr-add-document mr-1 vr_2"></i> Save Filter 
+        </button> 
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content>
+            <div class="popup_body">
+                <span class="or_text">OR</span>
+                <div class="serach_box">
+                    <h4>Your Saved Filter Searches</h4>
+                    <div class="input_field gray_input ">
+                        <mat-form-field appearance="outline" class="w-auto">
+                            <input type="text" placeholder="Search" matInput [(ngModel)]="searchQuery" (input)="searchFilters()">
+                            <em matSuffix class="fas fa-search searchbox_Icn mr-2"></em>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Loading state -->
+                <div *ngIf="isLoading" class="loading-state text-center p-3">
+                    <span>Loading...</span>
+                </div>
+
+                <!-- Empty state -->
+                <div *ngIf="!isLoading && filteredFilters.length === 0" class="empty-state text-center p-3">
+                    <span>No saved filters found</span>
+                </div>
+
+                <div class="tableResponsive max-h-200" *ngIf="!isLoading && filteredFilters.length > 0">
+                    <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <tbody>
+                            <tr *ngFor="let filter of filteredFilters; let i = index">
+                                <td>
+                                    <!-- Display mode -->
+                                    <span *ngIf="!filter.isEditing" class="cursor_pointer" (click)="applyFilter(filter)">
+                                        {{i + 1}}. {{filter.filterName}}
+                                    </span>
+                                    <a *ngIf="!filter.isEditing" href="javascript:void(0)" class="darkgreen_text ml-1" (click)="enableEditMode(filter)">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <!-- Edit mode -->
+                                    <input *ngIf="filter.isEditing" type="text" [(ngModel)]="filter.editedName" class="edit-filter-input" maxlength="25">
+                                </td>
+                                <td class="text-right">
+                                    <!-- Display mode actions -->
+                                    <ng-container *ngIf="!filter.isEditing">
+                                        <span class="darkgreen_text cursor_pointer" (click)="updateFilter(filter)" [class.disabled]="isLoading">Update</span>
+                                        <span class="grey_text pl-1 pr-1">|</span>
+                                        <span class="grey_text cursor_pointer" (click)="deleteFilter(filter.id)" [class.disabled]="isLoading">Delete</span>
+                                    </ng-container>
+                                    <!-- Edit mode actions -->
+                                    <ng-container *ngIf="filter.isEditing">
+                                        <span class="darkgreen_text cursor_pointer" (click)="updateNameFilter(filter)" [class.disabled]="isLoading">Save</span>
+                                        <span class="grey_text pl-1 pr-1">|</span>
+                                        <span class="grey_text cursor_pointer" (click)="cancelEdit(filter)">Cancel</span>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+        </mat-dialog-content> 
+    </div>
+</section>
+
+
+
+
+
+<section *ngIf="showSaveForm" class="popup_design max-400 HSBC_Common_Pages save_filter_popup pb-0">
+    <div class="popup_header" mat-dialog-title>
+        <a class="modal_closeicn_btn" href="javascript:void(0)" matDialogClose="">
+            <mat-icon>close</mat-icon>
+        </a>
+        <h3>Save Filter</h3>  
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content>
+            <div class="popup_body">
+                <div class="input_field ">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input type="text" placeholder="Enter Name" matInput [(ngModel)]="filterName" [disabled]="isLoading" maxlength="25">
+                    </mat-form-field>
+                 </div> 
+            </div> 
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-start popup_actions_btns">
+            <button mat-flat-button color="primary" class="btn_design gray_btn br_8" (click)="cancelSaveForm()" [disabled]="isLoading">Cancel</button> 
+            <button mat-flat-button color="primary" (click)="saveNewFilter()" [disabled]="isLoading">{{isLoading ? 'Saving...' : 'Save'}}</button> 
+        </mat-dialog-actions>
+    </div>
+</section>

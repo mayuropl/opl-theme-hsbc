@@ -1,0 +1,1022 @@
+//Here we importing _custom.scss file but we don't need to include underscore.
+// variable scss
+$psbblue: #2d3079 !default;
+$psbdarkblue: #271e79 !default;
+$psbgrey: #d2d2d2 !default;
+$psbred: #f22828 !default;
+$psbwhite: #ffffff !default;
+$psbblack: #000000 !default;
+$psbmainlyblue: #f6f9ff !default;
+$psbskyblue: #0833aa !default;
+$psbdarkgrey: #999999 !default;
+$psbpink: #fff2f2 !default;
+$psborange: #ff9900 !default;
+// $psbdarkblue:#25386C !default;
+$psblightblue: #edede7 !default;
+$psbSilver: #f6f6fa !default;
+$psblightgreen: #14be46 !default;
+$psbwarning: #ffa000 !default;
+$psbinfo: #38a7ff !default;
+$psberror: #eb1818 !default;
+$psbsuccess: #43a047 !default;
+$psbborder: #f6f6fa !default;
+$psbcyanblue: #ecf3ff !default;
+$psblightgray: #f0f0f0 !default;
+$opl-Lgrey: #6c757d !default;
+$opl-Dgrey: #343a40 !default;
+$opl-igrey: #898f95 !default;
+$opl-blue: #2737af !default;
+$opl-bc: #dee2e6 !default;
+$opl-dr: #eff1f4 !default;
+$opl-white: #ffffff !default;
+$opl-danger: #e02020 !default;
+$opl-Lightdanger: #ff0000 !default;
+$opl-success: #0fac37 !default;
+$opl-ExLdanger: #f1556c !default;
+$opl-warning: #ff9900 !default;
+$opl-info: #32c5ff !default;
+$opl-greeen: #81b945 !default;
+$opl-ldanger: #ff4e4e !default;
+$opl-orange: #ff4d00 !default;
+$gray-900: #323a46 !default;
+$PnbColor: #a30c3b !default;
+
+$HsbcColor: #32327F !default;
+
+// Width variable
+$w-10: 10% !default;
+$w-20: 20% !default;
+$w-30: 30% !default;
+$w-40: 40% !default;
+$w-50: 50% !default;
+$w-60: 60% !default;
+$w-70: 70% !default;
+$w-80: 80% !default;
+$w-90: 90% !default;
+$w-100: 100% !default;
+// height SCSS
+$h-auto: auto !default;
+$h-10: 10% !default;
+$h-25: 25% !default;
+$h-50: 50% !default;
+$h-60: 60% !default;
+$h-70: 70% !default;
+$h-80: 80% !default;
+$h-90: 90% !default;
+$h-100: 100% !default;
+$hv-auto: auto !default;
+$hv-10: 10vh !default;
+$hv-25: 25vh !default;
+$hv-50: 50vh !default;
+$hv-60: 60vh !default;
+$hv-70: 70vh !default;
+$hv-80: 80vh !default;
+$hv-90: 90vh !default;
+$hv-100: 100vh !default;
+// float SCSS
+$fl: left !default;
+$fr: right !default;
+$fnone: none !default;
+// display flex
+$d-flex: flex !default;
+$d-block: block !default;
+$d-none: none !default;
+$d-inline-block: inline-block !default;
+$d-inline-flex: inline-flex !default;
+$d-inline-flexbox: inline-flexbox !default;
+$d-inline-table: inline-table !default;
+$d-flexbox: flexbox !default;
+// justify-content  scss
+$jc-center: center !default;
+$jc-space-around: space-around !default;
+$jc-space-between: space-between !default;
+$jc-space-evenly: space-evenly !default;
+$jc-flex-end: flex-end !default;
+$jc-flex-start: flex-start !default;
+$jc-left: left !default;
+$jc-right: right !default;
+$jc-end: end !default;
+$jc-start: start !default;
+//align-items SCSS
+$ai-center: center !default;
+$ai-normal: normal !default;
+$ai-baseline: baseline !default;
+$ai-flexStart: flex-start !default;
+$ai-flexend: flex-end !default;
+$ai-stretch: stretch !default;
+$ai-inherit: inherit !default;
+// Common Some
+$initial: initial !default;
+$center: center !default;
+$right: right !default;
+$left: left !default;
+$flexStart: flex-start !default;
+$flexend: flex-end !default;
+$stretch: stretch !default;
+$unset: unset !default;
+$pointer: pointer !default;
+$column: column !default;
+$column-reverse: column-reverse !default;
+$row: row !default;
+$row-reverse: row-reverse !default;
+// position SCSS
+$p-fixed: fixed !default;
+$p-relative: relative !default;
+$p-absolute: absolute !default;
+$p-static: static !default;
+$p-sticky: sticky !default;
+$capitalize: capitalize !default;
+$uppercase: uppercase !default;
+$lowercase: lowercase !default;
+//opacity scss
+$opacity-1: 1 !default;
+$opacity-04: 0.4 !default;
+$opacity-05: 0.5 !default;
+$opacity-06: 0.6 !default;
+//font-family
+$ff-rb: "Roboto", Sans-serif;
+$ff-ns: "Nunito Sans", sans-serif;
+$ff-cs: "Cerebri Sans,sans-serif";
+
+$ff-stevie: "stevie-sans", sans-serif;
+
+@mixin stevieSans {
+  font-family: "stevie-sans", sans-serif;
+}
+
+//font-weight
+$f-w300: 300;
+$f-w400: 400;
+$f-w500: 500;
+$f-w550: 550;
+$f-w600: 600;
+$f-w650: 650;
+$f-w700: 700;
+$f-w800: 800;
+// font-size
+$fs-10: 0.625rem;
+$fs-12: 0.75rem;
+$fs-13: 0.8125rem;
+$fs-14: 0.875rem;
+$fs-15: 0.9375rem;
+$fs-16: 1rem;
+$fs-18: 1.125rem;
+$fs-20: 1.25rem;
+$fs-22: 1.375rem;
+$fs-24: 1.5rem;
+$fs-26: 1.625rem;
+$fs-28: 1.75rem;
+$fs-30: 1.875rem;
+$fs-32: 2rem;
+$fs-44: 2.75rem;
+// linehight
+$lh-17: 17px;
+$lh-20: 20px;
+$lh-1-5: 1.5;
+$lh-22: 22px;
+$lh-21: 21px;
+$lh-26: 26px;
+$lh-28: 28px;
+$lh-30: 30px;
+$lh-32: 32px;
+$lsp-n: normal;
+
+// Responsive Media Query
+$small: 376px;
+$mobile: 520px;
+$below-ipad: 767px;
+$ipad: 768px;
+$medium: 989px;
+$landscap-ipad: 1024px;
+$large: 1366px;
+
+// Create Class
+@mixin b-1 {
+  border: 1px solid #dee2e6;
+}
+
+@mixin bt-1 {
+  border-top: 1px solid #dee2e6;
+}
+
+@mixin bb-1 {
+  border-bottom: 1px solid #dee2e6;
+}
+
+@mixin br-1 {
+  border-right: 1px solid #dee2e6;
+}
+
+@mixin bl-1 {
+  border-right: 1px solid #dee2e6;
+}
+
+@mixin bt-bb {
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.bt-1 {
+  @include bt-1;
+}
+
+@mixin b-0 {
+  border: 0;
+}
+
+@mixin br-0 {
+  border-right: 0;
+}
+
+@mixin bl-0 {
+  border-left: 0;
+}
+
+@mixin bb-0 {
+  border-bottom: 0;
+}
+
+.bb-0 {
+  border-bottom: 0;
+}
+
+@mixin bt-0 {
+  border-top: 0;
+}
+
+@mixin activate-border {
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-color: $opl-blue !important;
+}
+
+@mixin activet-border {
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-color: $opl-blue !important;
+  color: $opl-blue !important;
+}
+
+@mixin activate-bb {
+  border-bottom-width: 2px !important;
+  border-style: solid !important;
+  border-color: $opl-blue !important;
+}
+
+@mixin lsp-n {
+  letter-spacing: normal;
+}
+
+// Padding css
+@mixin p0 {
+  padding: 0;
+}
+
+@mixin p0-5 {
+  padding: 0.5rem;
+}
+
+@mixin p1 {
+  padding: 1rem;
+}
+
+@mixin p15px {
+  padding: 0.9375rem;
+}
+
+.pb-1-5 {
+  padding-bottom: 1.5rem !important;
+}
+
+.pt-1-5 {
+  padding-top: 1.5rem;
+}
+
+@mixin m0 {
+  margin: 0;
+}
+
+@mixin mt0-5 {
+  margin-top: 0.5rem;
+}
+
+@mixin mt-1 {
+  margin-top: 1rem;
+}
+
+@mixin mb0-5 {
+  margin-bottom: 0.5rem;
+}
+
+@mixin mr0-5 {
+  margin-right: 0.5rem;
+}
+
+@mixin ml0-5 {
+  margin-left: 0.5rem;
+}
+
+// margin css
+.m0 {
+  @include m0;
+}
+
+.ml-1-5 {
+  margin-left: -1.5rem;
+}
+
+.mb-1-5 {
+  margin-bottom: 1.5rem;
+}
+
+.ml-psb-1-5 {
+  margin-left: 1.5rem;
+}
+
+.ml-mr-2 {
+  margin-left: 0.75rem;
+  margin-right: 0;
+}
+
+.ml-d-3 {
+  margin-left: 1.5rem;
+}
+
+.mt-1-5 {
+  margin-top: 1.5rem;
+}
+
+.btn-ml-3 {
+  margin-left: 1.5rem;
+}
+
+.cMr-3 {
+  margin-right: 1.5rem;
+}
+
+@mixin flex-dc {
+  flex-direction: column;
+}
+
+.row {
+  &.jc-fe {
+    justify-content: $jc-flex-end;
+  }
+}
+
+// Common-Class
+@mixin Com-sp {
+  display: $d-flex;
+  justify-content: $jc-space-between;
+  align-items: $ai-center;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-sp-afs {
+  display: $d-flex;
+  justify-content: $jc-space-between;
+  align-items: $ai-flexStart;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-sp-an {
+  display: $d-flex;
+  justify-content: $jc-space-between;
+  align-items: $ai-normal;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-jc {
+  display: $d-flex;
+  justify-content: $jc-center;
+  align-items: $ai-center;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-fe {
+  display: $d-flex;
+  justify-content: $jc-flex-end;
+  align-items: $ai-center;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-fe-ab {
+  display: $d-flex;
+  justify-content: $jc-flex-end;
+  align-items: $ai-baseline;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-fe-afs {
+  display: $d-flex;
+  justify-content: $jc-flex-end;
+  align-items: $ai-flexStart;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-fe-afe {
+  display: $d-flex;
+  justify-content: $jc-flex-end;
+  align-items: $ai-flexend;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-fs {
+  display: $d-flex;
+  justify-content: $jc-flex-start;
+  align-items: $ai-center;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-fs-afe {
+  display: $d-flex;
+  justify-content: $jc-flex-start;
+  align-items: $ai-flexend;
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Cjc-sp {
+  display: $d-flex;
+  justify-content: $jc-space-between;
+}
+
+@mixin Cjc-center {
+  display: $d-flex;
+  justify-content: $jc-center;
+}
+
+@mixin Cjc-fs {
+  display: $d-flex;
+  justify-content: $jc-flex-start;
+}
+
+@mixin Cjc-fe {
+  display: $d-flex;
+  justify-content: $jc-flex-end;
+}
+
+@mixin Cjc-sp-ai {
+  display: $d-flex;
+  justify-content: $jc-space-between;
+  align-items: $ai-center;
+}
+
+@mixin Cjc-center-ai {
+  display: $d-flex;
+  justify-content: $jc-center;
+  align-items: $ai-center;
+}
+
+@mixin Cjc-fs-ai {
+  display: $d-flex;
+  justify-content: $jc-flex-start;
+  align-items: $ai-center;
+}
+
+@mixin Cjc-fe-ai {
+  display: $d-flex;
+  justify-content: $jc-flex-end;
+  align-items: $ai-center;
+}
+
+@mixin Cjc-fe-ab {
+  display: $d-flex;
+  justify-content: $jc-flex-end;
+  align-items: $ai-baseline;
+}
+
+@mixin Cai-start {
+  display: $d-flex;
+  align-items: $ai-flexStart;
+}
+
+@mixin Cai-normal {
+  display: $d-flex;
+  align-items: $ai-normal;
+}
+
+@mixin Cai-end {
+  display: $d-flex;
+  align-items: $ai-flexend;
+}
+
+@mixin Cai-center {
+  display: $d-flex;
+  align-items: $ai-center;
+}
+
+@mixin Cai-baseline {
+  display: $d-flex;
+  align-items: $ai-baseline;
+}
+
+@mixin Com-aic-fw {
+  float: $fl;
+  width: $w-100;
+  display: $d-flex;
+  align-items: $ai-center;
+}
+
+@mixin Com-aifs-fw {
+  float: $fl;
+  width: $w-100;
+  display: $d-flex;
+  align-items: $ai-flexStart;
+}
+
+@mixin Com-ain-fw {
+  float: $fl;
+  width: $w-100;
+  display: $d-flex;
+  align-items: $ai-normal;
+}
+
+@mixin Com-aibs-fw {
+  float: $fl;
+  width: $w-100;
+  display: $d-flex;
+  align-items: $ai-baseline;
+}
+
+.psb-flex-end {
+  justify-content: $jc-flex-end;
+  display: $d-flex;
+}
+
+.psb-flex {
+  display: $d-flex;
+}
+
+.psb-space-between {
+  justify-content: $jc-space-between;
+}
+
+.al-center {
+  align-items: $ai-center;
+}
+
+@mixin Com-fw {
+  float: $fl;
+  width: $w-100;
+}
+
+@mixin Com-fw-60 {
+  float: $fl;
+  width: $w-70;
+}
+
+@mixin Com-fw-70 {
+  float: $fl;
+  width: $w-70;
+}
+
+@mixin Com-fw-80 {
+  float: $fl;
+  width: $w-80;
+}
+
+@mixin Com-fw-90 {
+  float: $fl;
+  width: $w-90;
+}
+
+// Font size-weight 14 px  400,500,550,600,650,700
+@mixin fsw-44 {
+  font-size: $fs-14;
+  font-weight: $f-w400;
+}
+
+@mixin fsw-45 {
+  font-size: $fs-14;
+  font-weight: $f-w500;
+}
+
+@mixin fsw-455 {
+  font-size: $fs-14;
+  font-weight: $f-w550;
+}
+
+@mixin fsw-46 {
+  font-size: $fs-14;
+  font-weight: $f-w600;
+}
+
+@mixin fsw-465 {
+  font-size: $fs-14;
+  font-weight: $f-w650;
+}
+
+@mixin fsw-47 {
+  font-size: $fs-14;
+  font-weight: $f-w700;
+}
+
+// Font size-weight 16 px  400,500,550,600,650,700
+@mixin fsw-64 {
+  font-size: $fs-16;
+  font-weight: $f-w400;
+}
+
+@mixin fsw-65 {
+  font-size: $fs-16;
+  font-weight: $f-w500;
+}
+
+@mixin fsw-655 {
+  font-size: $fs-16;
+  font-weight: $f-w550;
+}
+
+@mixin fsw-66 {
+  font-size: $fs-16;
+  font-weight: $f-w600;
+}
+
+@mixin fsw-665 {
+  font-size: $fs-16;
+  font-weight: $f-w650;
+}
+
+@mixin fsw-67 {
+  font-size: $fs-16;
+  font-weight: $f-w700;
+}
+
+// Font size-weight 18 px  400,500,550,600,650,700
+@mixin fsw-84 {
+  font-size: $fs-18;
+  font-weight: $f-w400;
+}
+
+@mixin fsw-85 {
+  font-size: $fs-18;
+  font-weight: $f-w500;
+}
+
+@mixin fsw-855 {
+  font-size: $fs-18;
+  font-weight: $f-w550;
+}
+
+@mixin fsw-86 {
+  font-size: $fs-18;
+  font-weight: $f-w600;
+}
+
+@mixin fsw-865 {
+  font-size: $fs-18;
+  font-weight: $f-w650;
+}
+
+@mixin fsw-87 {
+  font-size: $fs-18;
+  font-weight: $f-w700;
+}
+
+// Font
+@mixin font-44 {
+  font: $f-w400 $fs-14/$lh-30 $ff-rb;
+}
+
+@mixin font-45 {
+  font: $f-w500 $fs-14/$lh-30 $ff-rb;
+}
+
+@mixin font-64 {
+  font: $f-w400 $fs-16/$lh-30 $ff-rb;
+}
+
+@mixin font-cs5 {
+  font-family: $ff-cs;
+  font-weight: $f-w500;
+}
+
+@mixin font-C46 {
+  font-size: $fs-14;
+  font-weight: $f-w600;
+  color: $opl-Lgrey;
+}
+
+@mixin font-756 {
+  font-size: $fs-12;
+  font-weight: $f-w600;
+}
+
+@mixin font-0-81256 {
+  font-size: $fs-13;
+  font-weight: $f-w600;
+}
+
+@mixin font-0-81255 {
+  font-size: $fs-13;
+  font-weight: $f-w500;
+}
+
+@mixin font-0-81254 {
+  font-size: $fs-13;
+  font-weight: $f-w400;
+}
+
+.fw-400 {
+  font-weight: $f-w400;
+}
+
+.fs-14 {
+  font-size: 14px !important;
+}
+
+.width-60 {
+  width: 60%;
+}
+
+.fw-500 {
+  font-weight: $f-w500 !important;
+}
+
+.fw-600 {
+  font-weight: $f-w600;
+}
+
+.fw-700 {
+  font-weight: $f-w700;
+}
+
+.txt-purpal {
+  color: $opl-blue;
+}
+
+.maxh-20 {
+  max-height: 20rem;
+}
+
+.maxh-25 {
+  max-height: 25rem;
+}
+
+.maxh-26 {
+  max-height: 26.188rem;
+}
+
+.maxh-32 {
+  max-height: 32rem;
+}
+
+.maih-32 {
+  min-height: 32rem;
+}
+
+// table css
+@mixin Com-tr {
+  @include Com-aic-fw;
+  border-bottom: 1px solid $opl-bc;
+}
+
+@mixin C-tr {
+  @include Com-fw;
+  border-bottom: 1px solid $opl-bc;
+}
+
+@mixin Com-md-tr {
+  @include Com-ain-fw;
+  border-bottom: 1px solid $opl-bc;
+}
+
+@mixin Com-afs-tr {
+  @include Com-aifs-fw;
+  border-bottom: 1px solid $opl-bc;
+}
+
+@mixin Com-bs-tr {
+  @include Com-aibs-fw;
+  border-bottom: 1px solid $opl-bc;
+}
+
+@mixin Com-NPPS-tr {
+  @include Com-fw;
+  border-bottom: 1px solid $opl-bc;
+}
+
+@mixin Com-th-td {
+  font-weight: $f-w600;
+  font-size: $fs-14;
+  padding: 0.85rem;
+  vertical-align: baseline;
+  color: #000000;
+  float: left;
+  word-break: break-word;
+  @media (-webkit-min-device-pixel-ratio: 1.25) {
+    font-size: $fs-12;
+  }
+}
+
+@mixin tdSE {
+  font-weight: $f-w600;
+  color: $opl-Dgrey;
+}
+
+@mixin Com-th-td-dl {
+  font-weight: $f-w600;
+  font-size: $fs-14;
+  padding: 0.85rem;
+  vertical-align: middle;
+  color: $opl-Lgrey;
+  display: $d-flex;
+  align-items: $ai-center;
+  float: left;
+  word-break: break-word;
+}
+
+@mixin Com-th-td-dfs {
+  font-weight: $f-w600;
+  font-size: $fs-14;
+  padding: 0.85rem;
+  vertical-align: middle;
+  color: $opl-Lgrey;
+  display: $d-flex;
+  align-items: $ai-flexStart;
+  float: left;
+  word-break: break-word;
+}
+
+@mixin Com-th-td-db {
+  padding: 0.85rem;
+  vertical-align: middle;
+  display: $d-flex;
+  align-items: $ai-baseline;
+  float: left;
+  word-break: break-word;
+}
+
+@mixin thcw {
+  font-weight: $f-w700;
+  color: $opl-Lgrey;
+}
+
+@mixin thbt {
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
+
+@mixin thtd-fp {
+  font-size: $fs-13;
+  padding: 0.85rem 0.5rem;
+}
+
+@mixin thtd-f12p {
+  font-size: $fs-12;
+  padding: 0.85rem 0.5rem;
+}
+
+@mixin thtd-f14p {
+  font-size: $fs-14;
+  padding: 0.85rem 0.5rem;
+}
+
+// popup module Width
+@mixin popup-400px {
+  max-width: 400px;
+}
+
+@mixin popup-450px {
+  max-width: 450px;
+}
+
+@mixin popup-500px {
+  max-width: 500px;
+}
+
+@mixin popup-650px {
+  max-width: 650px;
+}
+
+@mixin popup-700px {
+  max-width: 700px;
+}
+
+@mixin popup-750px {
+  max-width: 750px;
+}
+
+@mixin popup-800px {
+  max-width: 800px;
+}
+
+@mixin popup-850px {
+  max-width: 850px;
+}
+
+@mixin popup-900px {
+  max-width: 900px;
+}
+
+@mixin popup-950px {
+  max-width: 950px;
+}
+
+// table Srcll responsive
+@mixin table-Scroll {
+  overflow-x: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  flex-direction: column;
+}
+
+// Common Css For All Page
+.al-center {
+  align-items: center;
+}
+
+.pb-1-5 {
+  padding-bottom: 1.5rem;
+}
+
+.pt-1-5 {
+  padding-top: 1.5rem;
+}
+
+.br-1 {
+  @include br-1;
+}
+
+.bt-1 {
+  @include bt-1;
+}
+
+.bb-1 {
+  @include bb-1;
+}
+
+.bb-1-20 {
+  border-bottom: 1px solid #ffffff20;
+}
+
+.border-bottom-0 {
+  border-bottom: 0;
+}
+
+.bt-1 {
+  @include bt-1;
+}
+
+.margin-bottom-1 {
+  margin-bottom: 1rem;
+}
+
+.psb-mr-1 {
+  margin-right: 1rem;
+}
+
+.NP_img_mr {
+  img {
+    margin-right: 0.5rem;
+  }
+}
+
+.cs-w-55 {
+  width: 55%;
+  margin-bottom: 0;
+}
+
+// .Tw-100{
+//   width: 100%;
+// }
+// Common  media query Css
+.ng-dropdown-panel {
+  z-index: 9 !important;
+}
+
+.ak-NgSelect {
+  .ng-dropdown-panel {
+    .ng-dropdown-panel-items {
+      max-height: 135px;
+    }
+  }
+}
+
+.ng-select.ng-select-opened .ng-select-container {
+  z-index: 1 !important;
+}
+
+.jc-FEnd {
+  justify-content: $flexend !important;
+}
+
+.Icon-switch {
+  @include Com-fe-afe;
+}
+
+.BT_PT_1 {
+  border-top: 1px solid $opl-bc;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}

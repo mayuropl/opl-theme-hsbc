@@ -1,0 +1,1143 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page">
+  <div class="__main_Container">
+    <div class="page_Title_sec" [ngClass]="{ fixedtitle: scrolled }">
+      <div class="page_Title_left">
+        <h4 class="cursor_pointer" (click)="navBack();">
+          <em class="fa fa-arrow-left mr-2"></em>
+          Bank Statement Analysis
+        </h4>
+      </div>
+      <div class="page_Title_Right">
+                <span class="lightred_badge mr-2"><span>Account Holder Name :</span>
+                  {{this.selectedbsDetails?.accholderName}}</span>
+        <button type="button" mat-flat-button class="btn_design with_icn" color="secondary" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD)"
+                [matMenuTriggerFor]="menu">Download<em class="fas fa-caret-down ml-2"></em></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="downloadExcelFile()">Download Report</button>
+          <button mat-menu-item (click)="downloadPdfFile()">Download Pdf</button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="page_Details">
+      <div class="NP_Com_Group MT_MB_15px">
+        <div class="_gst_Slider_Grp">
+          <div class="_View_gst_Slider _fullSlider">
+            <!-- #slickModal="slick-carousel" -->
+            <ngx-slick-carousel class="carousel" #slickModal="" [config]="slideConfig"
+                                (init)="slickInit($event)" (breakpoint)="breakpoint($event)"
+                                (afterChange)="afterChange($event)" (beforeChange)="beforeChange($event)">
+<!--              {{consolidatedRequired}} {{consolidatedSelected}}-->
+              <mat-card *ngIf="consolidatedRequired == 'true'" class="GstCards" id="bsCard" ngxSlickItem
+                        [ngClass]="consolidatedSelected ? 'acitve':''"
+                        (click)="activeClick(1,'',true)">
+
+                <div class="gst_txt_grp">
+                  <span class="Gst_State">Consolidated Bank</span>
+                  <span class="Gst_Number">Consolidated Analysis</span>
+                </div>
+              </mat-card>
+              @for (accountDetail of bankStatementAnalysisData?.accountList; track $index) {
+                <!-- <div ngxSlickItem> -->
+                <mat-card class="GstCards" id="bsCard" ngxSlickItem
+                          [ngClass]="(accountDetail.accountNo == this.selectedbsDetails?.accountNo ) && (!consolidatedSelected)  ? 'acitve':''"
+                          (click)="activeClick($index+1,accountDetail)">
+                  <div class="gst_txt_grp">
+                    <span class="Gst_State">{{accountDetail.bankName}}</span>
+                    <span class="Gst_Number">{{accountDetail.accountNo}}</span>
+                  </div>
+                  <!-- <div class="overlay_viewCount Completed"> -->
+                  <!-- <div class="txt_count"
+                              *ngIf="profileVersionData?.bsCompleted == null">
+                              <a href="javascript:Void(0);"
+                                  class="linkView">{{i+1}}/{{fileData?.length}}</a>
+                          </div> -->
+                  <!-- <mat-icon>check_circle</mat-icon> -->
+                  <!-- </div> -->
+                </mat-card>
+                <!-- </div> -->
+              }
+            </ngx-slick-carousel>
+          </div>
+
+          <!-- <div class="_add_New_BtnGrp">
+              <button mat-button color="primary" class="Common_add_btn bsBtn">+ Add Another Account</button>
+          </div> -->
+        </div>
+      </div>
+      <div class="NP_Com_Group MT_MB_15px">
+        <mat-tab-group mat-align-tabs="start" class="tabs-design " [@.disabled]="true"
+                       [selectedIndex]="selectedTabIndex" (selectedIndexChange)="selectedTabIndex=$event;">
+          <mat-tab label="Summary Info" *ngIf="isSubpageIsAvailable(constants.pageMaster.SUMMARY_INFO)">
+            <mat-card-content class="p-0">
+              <div class="box_design" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.SUMMARY_INFO,consValue.PageActions.SUMMARY_INFO) && !consolidatedSelected">
+                <div class="box_design_ttl_bar">
+                  <div class="box_design_ttl_bar_left">
+                    <h4>Summary Info</h4>
+                  </div>
+                </div>
+                <div class="box_design_details with_padding">
+                  <div class="Common_sCard">
+                    <div class="common_scard">
+                      <span class="span_head">Name of the Account Holder</span>
+                      <span class="span_details">{{ bankStatementAnalysisData?.summaryInfo?.name
+                      ||
+                      '-'}}</span>
+                    </div>
+                    <div  class="common_scard">
+                      <span class="span_head">Name of the Bank</span>
+                      <span class="span_details">{{ bankStatementAnalysisData?.summaryInfo?.bank
+                      ||
+                      '-'}}</span>
+                    </div>
+                    <div  class="common_scard">
+                      <span class="span_head">Account Number</span>
+                      <span class="span_details">{{
+                          bankStatementAnalysisData?.summaryInfo?.accountNo
+                          || '-'}}</span>
+                    </div>
+                    <div  class="common_scard">
+                      <span class="span_head">Account Type</span>
+                      <span class="span_details">{{
+                          bankStatementAnalysisData?.summaryInfo?.accountType || '-'}}</span>
+                    </div>
+                    <div  class="common_scard">
+                      <span class="span_head">IFSC code</span>
+                      <span class="span_details">{{ bankStatementAnalysisData?.summaryInfo?.ifsc
+                      ||
+                      '-'}}</span>
+                    </div>
+                    <div  class="common_scard">
+                      <span class="span_head">MICR code</span>
+                      <span class="span_details">{{ bankStatementAnalysisData?.summaryInfo?.micr
+                      ||
+                      '-'}}</span>
+                    </div>
+                    <div  class="common_scard">
+                      <span class="span_head">Mobile Number</span>
+                      <span class="span_details">{{ bankStatementAnalysisData?.summaryInfo?.mobile
+                      ||
+                      '-'}}</span>
+                    </div>
+                    <div  class="common_scard">
+                      <span class="span_head">Address</span>
+                      <span class="span_details">{{
+                          bankStatementAnalysisData?.summaryInfo?.address ||
+                          '-'}}</span>
+                    </div>
+                    <div class="common_scard">
+                      <span class="span_head">Duration</span>
+                      <span class="span_details">{{
+                          bankStatementAnalysisData?.summaryInfo?.timeperiod
+                          || '-'}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="summary_Card __ViewDetails">
+
+                <div class="DetailsCard_teaserView three_cols m-0">
+                  <div class="LH_NP_Com my-3" *ngIf="consolidatedSelected">
+                    <div class="NP_Group_Heading">
+                      <div class="_Heading_grp">
+                        <h4 class="Heading_Title">Summary Info</h4>
+                      </div>
+                    </div>
+
+                    <div class="teaserView_Details tableLikeBlock">
+                      <!--                      <div class="TeaserView_Header">-->
+                      <!--                        <span class="columnHeader">Bank Name</span>-->
+                      <!--                        <span class="columnHeader">Account Number</span>-->
+                      <!--                      </div>-->
+
+                      <div class="TeaserView_Details_CGRP" >
+                        <span class="span_head">Name of the Account Holder</span>
+                        <span class="span_details">{{ bankStatementAnalysisData?.summaryInfo?.name
+                        ||
+                        '-'}}</span>
+                      </div><div class="TeaserView_Details_CGRP" >
+                      <span class="span_head">Duration</span>
+                      <span class="span_details">{{
+                          bankStatementAnalysisData?.summaryInfo?.timeperiod
+                          || '-'}}</span>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="LH_NP_Com my-3" *ngIf="consolidatedSelected">
+                    <div class="NP_Group_Heading">
+                      <div class="_Heading_grp">
+                        <h4 class="Heading_Title">Accounts Considered for Consolidated Analysis</h4>
+                      </div>
+                    </div>
+
+                    <div class="teaserView_Details tableLikeBlock">
+<!--                      <div class="TeaserView_Header">-->
+<!--                        <span class="columnHeader">Bank Name</span>-->
+<!--                        <span class="columnHeader">Account Number</span>-->
+<!--                      </div>-->
+
+                      <div class="TeaserView_Details_CGRP" *ngFor="let accountDetails of bankStatementAnalysisData?.accountList">
+                        <span>{{ accountDetails.bankName }}</span>
+                        <span>{{ accountDetails.accountNo }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="LH_NP_Com my-3" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.SUMMARY_INFO,consValue.PageActions.BANK_BALANCE_SUMMARY)">
+                    <div class="NP_Group_Heading">
+                      <div class="_Heading_grp">
+                        <h4 class="Heading_Title">Bank Balance Summary</h4>
+                      </div>
+                    </div>
+                    <div class="teaserView_Details">
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Avg. Monthly Balance</span>
+                        <span
+                          [ngClass]="{ 'dangerColor': bankStatementAnalysisData?.summaryInfo?.bankBalanceSummary?.balAvg < 0 }">₹
+                          {{(
+                            bankStatementAnalysisData?.summaryInfo?.bankBalanceSummary?.balAvg |
+                              indianCurrency )|| 0}}</span>
+                      </div>
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Minimum Balance</span>
+                        <span
+                          [ngClass]="{ 'dangerColor': bankStatementAnalysisData?.summaryInfo?.bankBalanceSummary?.balMin < 0 }">₹
+                          {{(
+                            bankStatementAnalysisData?.summaryInfo?.bankBalanceSummary?.balMin |
+                              indianCurrency )|| 0}}</span>
+                      </div>
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Maximum Balance</span>
+                        <span
+                          [ngClass]="{ 'dangerColor': bankStatementAnalysisData?.summaryInfo?.bankBalanceSummary?.balMax < 0 }">₹
+                          {{(
+                            bankStatementAnalysisData?.summaryInfo?.bankBalanceSummary?.balMax |
+                              indianCurrency )|| 0}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="LH_NP_Com my-3" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.SUMMARY_INFO,consValue.PageActions.CREDIT_SUMMARY)">
+                    <div class="NP_Group_Heading">
+                      <div class="_Heading_grp">
+                        <h4 class="Heading_Title">Credit Summary</h4>
+                      </div>
+                    </div>
+                    <div class="teaserView_Details" >
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Total no. of Credit transaction</span>
+                        <span>{{ (bankStatementAnalysisData?.summaryInfo?.creditSummary?.credits
+                          | indianCurrency )|| '-'}}</span>
+                      </div>
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Total Credit amount</span>
+                        <span
+                          [ngClass]="{ 'dangerColor': bankStatementAnalysisData?.summaryInfo?.creditSummary?.totalCredit < 0 }">₹
+                          {{(
+                            bankStatementAnalysisData?.summaryInfo?.creditSummary?.totalCredit |
+                              indianCurrency )|| 0 }}</span>
+                      </div>
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Average credit balance</span>
+                        <span
+                          [ngClass]="{ 'dangerColor': bankStatementAnalysisData?.summaryInfo?.creditSummary?.totalAvgCredit < 0 }">₹
+                          {{(
+                            bankStatementAnalysisData?.summaryInfo?.creditSummary?.totalAvgCredit
+                              | indianCurrency )|| 0}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="LH_NP_Com my-3" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.SUMMARY_INFO,consValue.PageActions.DEBIT_SUMMARY)">
+                    <div class="NP_Group_Heading">
+                      <div class="_Heading_grp">
+                        <h4 class="Heading_Title">Debit Summary</h4>
+                      </div>
+                    </div>
+                    <div class="teaserView_Details">
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Total no. of Debit transaction</span>
+                        <span>{{( bankStatementAnalysisData?.summaryInfo?.debitSummary?.debits
+                        )|| '-'}}</span>
+                      </div>
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Total Debit amount</span>
+                        <span
+                          [ngClass]="{ 'dangerColor': bankStatementAnalysisData?.summaryInfo?.debitSummary?.totalDebit < 0 }">₹
+                          {{ (bankStatementAnalysisData?.summaryInfo?.debitSummary?.totalDebit
+                            | indianCurrency )|| 0 }}</span>
+                      </div>
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Average Debit balance</span>
+                        <span
+                          [ngClass]="{ 'dangerColor': bankStatementAnalysisData?.summaryInfo?.debitSummary?.totalDebitAvg < 0 }">₹
+                          {{
+                            (bankStatementAnalysisData?.summaryInfo?.debitSummary?.totalDebitAvg
+                              | indianCurrency )|| 0 }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="LH_NP_Com my-3" *ngIf="consolidatedSelected">
+                    <div class="NP_Group_Heading">
+                      <div class="_Heading_grp">
+                        <h4 class="Heading_Title">Bounce Details</h4>
+                      </div>
+                    </div>
+
+                    <div class="teaserView_Details tableLikeBlock">
+                      <!--                      <div class="TeaserView_Header">-->
+                      <!--                        <span class="columnHeader">Bank Name</span>-->
+                      <!--                        <span class="columnHeader">Account Number</span>-->
+                      <!--                      </div>-->
+
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Cheque Bounce For last 1 Month</span>
+                        <span>{{ bankStatementAnalysisData?.summaryInfo?.bounceDetail?.checkBounceForLast1Month }}</span>
+                      </div>
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Cheque Bounce For last 6 Month</span>
+                        <span>{{  bankStatementAnalysisData?.summaryInfo?.bounceDetail?.checkBounceForLast6Month }}</span>
+                      </div>
+                      <div class="TeaserView_Details_CGRP">
+                        <span>Total Cheque Bounce</span>
+                        <span>{{ bankStatementAnalysisData?.summaryInfo?.bounceDetail?.chequeBounce }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-tab>
+
+          <mat-tab label="Monthwise Details" *ngIf="isSubpageIsAvailable(constants.pageMaster.MONTHWISE_DETAILS)">
+            <mat-card-content class="p-0">
+              <div class="NP_Com_Group Com_Table_grp">
+                <div class="Top_Heading_Txt_left ">
+                  <h4 class="Heading__H4">
+                    Monthwise Details
+                  </h4>
+                </div>
+                <div class="tableResponsive pad0px">
+                  <table class="CommonTable_Scroll Mobile_table_View_NP no_stripe_borderX_table">
+                    <thead>
+                    <tr class="tr_lightred_bg">
+                      <th class="firstCols">Transactional Analysis</th>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <th>{{monthDetail.monthName}}</th>
+                      }
+                      <!-- <th>Jan-24</th>
+                      <th>Feb-24</th>
+                      <th>Mar-24</th>
+                      <th>Apr-24</th>
+                      <th>May-24</th>
+                      <th>Apr-24</th> -->
+                      <!-- <th class="lastCols">Total</th> -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td data-label="Transactional Analysis">No. of credit transactions</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.credits| indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Transactional Analysis">Total amount of Credit</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalCredit < 0 }">₹
+                          {{(monthDetail?.details?.totalCredit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Transactional Analysis">No. of debit transactions</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.debits) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Transactional Analysis">Total amount of Debit</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalDebit < 0 }">₹
+                          {{(monthDetail?.details?.totalDebit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Transactional Analysis">Total No. of Cash Deposits</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.cashDeposits) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Transactional Analysis">Total Amount of Cash Deposits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalCashDeposit < 0 }">₹
+                          {{(monthDetail?.details?.totalCashDeposit | indianCurrency)|| 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total No. of Cash Withdrawals
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.cashWithdrawals) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total Amount of Cash
+                        Withdrawals</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalCashWithdrawal < 0 }">₹
+                          {{(monthDetail?.details?.totalCashWithdrawal | indianCurrency)||
+                          0 }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total No. of Cheque Deposits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.chqDeposits | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total Amount of Cheque
+                        Deposits</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalChqDeposit < 0 }">₹
+                          {{(monthDetail?.details?.totalChqDeposit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total No. of Cheque Issues
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.chqIssues | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total Amount of Cheque Issues
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalChqIssue < 0 }">₹
+                          {{(monthDetail?.details?.totalChqIssue | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total No. Issued Cheque
+                        Bounces</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.outwBounces | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total No. Of Received Cheque
+                        Bounces</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.inwBounces | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total No. of NEFT credits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.neftCredits | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total amount of NEFT credits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalNeftCredit < 0 }">₹
+                          {{(monthDetail?.details?.totalNeftCredit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total no. of NEFT debits</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.neftDebits | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total amount of NEFT debits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalNeftDebit < 0 }">₹
+                          {{(monthDetail?.details?.totalNeftDebit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total No. of RTGS credits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.rtgsCredits | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total amount of RTGS credits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalRtgsCredit < 0 }">₹
+                          {{(monthDetail?.details?.totalRtgsCredit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total No. of RTGS debits</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.rtgsDebits | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total amount of RTGS debits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalRtgsDebit < 0 }">₹
+                          {{(monthDetail?.details?.totalRtgsDebit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total no. of UPI credits</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.upiCredits | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total amount of UPI credits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalUpiCredit < 0 }">₹
+                          {{(monthDetail?.details?.totalUpiCredit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total no. UPI debits</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName">
+                          {{(monthDetail?.details?.upiDebits | indianCurrency) || '-'}}</td>
+                      }
+                    </tr>
+
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Total amount of UPI debits
+                      </td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.totalUpiDebit < 0 }">₹
+                          {{(monthDetail?.details?.totalUpiDebit | indianCurrency) || 0
+                          }}</span></td>
+                      }
+                    </tr>
+
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Min EOD Balance</td>
+
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.balMin < 0 }">₹
+                          {{(monthDetail?.details?.balMin | indianCurrency) || 0 }}</span>
+                        </td>
+                      }
+                    </tr>
+
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Max EOD Balance</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.balMax < 0 }">₹
+                          {{(monthDetail?.details?.balMax | indianCurrency) || 0 }}</span>
+                        </td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Average EOD Balance</td>
+                      @for ( monthDetail of bankStatementAnalysisData?.monthWiseDetails; track
+                        $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.details?.balAvg < 0 }">₹
+                          {{(monthDetail?.details?.balAvg | indianCurrency) || 0 }}</span>
+                        </td>
+                      }
+                    </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-tab>
+
+          <mat-tab label="Top Transactions" *ngIf="commonService.isSubpageIsAvailable(pageData,consValue.pageMaster.TOP_TRANSACTIONS) ">
+            <mat-card-content class="p-0">
+              <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.TOP_TRANSACTIONS,consValue.PageActions.TOP_FUND_PAYMENT)">
+                <div class="Top_Heading_Txt_left ">
+                  <h4 class="Heading__H4">
+                    Top Fund Payment
+                  </h4>
+                </div>
+                <div class="table-responsive">
+                  <table class="CommonTable_NP table_BG_bs Mobile_table_View_NP">
+                    <thead>
+                    <tr class="tr_lightred_bg">
+                      <th>Date
+                        <span class="shorting" (click)="toggleSort('dateTopPay',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'dateTopPay'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'dateTopPay' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'dateTopPay' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                      <th>Description</th>
+                      <th>Mode of Payment</th>
+                      <th>Amount
+                        <span class="shorting" (click)="toggleSort('amountTopPay',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'amountTopPay'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'amountTopPay' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'amountTopPay' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @for ( debitDetail of bankStatementAnalysisData?.topTransaction?.topDebits;
+                        track $index) {
+
+                        <tr>
+                          <td data-label="Date">{{ (debitDetail?.date | date: 'dd-MM-yyyy') ||
+                          '-'}}</td>
+                          <td data-label="Description">{{ debitDetail?.narration || '-'}}</td>
+                          <td data-label="Mode of Payment">{{ debitDetail?.modeOfPayment || '-'}}
+                          </td>
+                          <td data-label="Amount">₹ {{ (debitDetail?.amount | indianCurrency) || 0
+                            }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="NP_Com_Group Com_Table_grp mt-3" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.TOP_TRANSACTIONS,consValue.PageActions.TOP_FUND_RECEIVED)">
+                <div class="Top_Heading_Txt_left ">
+                  <h4 class="Heading__H4">
+                    Top Fund Received
+                  </h4>
+                </div>
+                <div class="table-responsive">
+                  <table class="CommonTable_NP table_BG_bs Mobile_table_View_NP">
+                    <thead>
+                    <tr class="tr_lightred_bg">
+                      <th>Date
+                        <span class="shorting" (click)="toggleSort('dateTopRec',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'dateTopRec'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'dateTopRec' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'dateTopRec' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                      <th>Description</th>
+                      <th>Mode of Payment</th>
+                      <th>Amount
+                        <span class="shorting" (click)="toggleSort('amountTopRec',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'amountTopRec'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'amountTopRec' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'amountTopRec' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @for ( debitDetail of bankStatementAnalysisData?.topTransaction?.topCredits;
+                        track $index) {
+                        <tr>
+                          <td data-label="Date">{{ (debitDetail?.date | date: 'dd-MM-yyyy') ||
+                          '-'}}</td>
+                          <td data-label="Description">{{ debitDetail?.narration || '-'}}</td>
+                          <td data-label="Mode of Payment">{{ debitDetail?.modeOfPayment || '-'}}
+                          </td>
+                          <td data-label="Amount">₹ {{ (debitDetail?.amount | indianCurrency) || 0
+                            }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </mat-card-content>
+          </mat-tab>
+
+          <mat-tab label="Bounced cheque" *ngIf="isSubpageIsAvailable(constants.pageMaster.BOUNCED_CHEQUE) && !consolidatedSelected ">
+            <mat-card-content class="p-0">
+              <div class="NP_Com_Group Com_Table_grp">
+                <div class="Top_Heading_Txt_left ">
+                  <h4 class="Heading__H4">
+                    Monthwise Details
+                  </h4>
+                </div>
+                <div class="table-responsive">
+                  <table class="CommonTable_NP table_BG_tlf_tcr Mobile_table_View_NP ">
+                    <thead>
+                    <tr class="tr_lightred_bg">
+                      <th>Sr no.</th>
+                      <th>Date
+                        <span class="shorting" (click)="toggleSort('dateMW',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'dateMW'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'dateMW' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'dateMW' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                      <th>Cheque No.</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th class="txtCenter">Amount
+                        <span class="shorting" (click)="toggleSort('amountMW',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'amountMW'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'amountMW' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'amountMW' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                      <th class="txtCenter">Balance
+                        <span class="shorting" (click)="toggleSort('balanceMW',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'balanceMW'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'balanceMW' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'balanceMW' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                      @if(bankStatementBounceCheque?.content?.length>0){
+                        @for (transaction of bankStatementBounceCheque?.content; track $index) {
+                          <tr>
+                            <td data-label="Sr no.">
+                              {{(bCPagination.page-1)*bCPagination.pageSize+($index+1)}}</td>
+                            <td data-label="Date">{{(transaction?.date | date: 'dd-MM-yyyy') ||
+                            '-'}}</td>
+                            <td data-label="Cheque No.">{{(transaction.chqNo) || '-'}} </td>
+                            <td data-label="Description">{{(transaction.narration) || '-'}} </td>
+                            <td data-label="Category">{{(transaction.category) || '-'}}</td>
+                            <td data-label="Amount" class="txtCenter">₹ {{(transaction.amount |
+                              indianCurrency) || '-'}}</td>
+                            <td data-label="Balance" class="txtCenter"><span
+                              [ngClass]="{ 'dangerColor': transaction?.balance < 0 }">₹
+                              {{(transaction.balance| indianCurrency) || 0 }}</span></td>
+                          </tr>
+                        }
+                      } @else {
+                        <tr>
+                          <td colspan="10">
+                            <app-no-data-found message="No previous history found" />
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+                <div class="pagination-table NP_LeftPagintion my-1">
+                  <!-- {{bCPagination| json}} -->
+                  <div class="dataTables_info" id="tickets-table_info" role="status"
+                       aria-live="polite">
+                    {{(bCPagination.startIndex+1)}} to
+                    {{(bCPagination.pageSize*bCPagination.page) > (bCPagination?.totalSize) ?
+                    (bCPagination?.totalSize) : (bCPagination?.pageSize*bCPagination?.page)}} of
+                    {{bankStatementBounceCheque?.totalElements}} rows
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                          <mat-select [(ngModel)]="bCPagination.pageSize"
+                                      [panelClass]="'pagination_select'"
+                                      (ngModelChange)="onPageChangeBounceCheque(bCPagination.page)">
+                            <mat-option *ngFor="let pages of PageSelectNumber"
+                                        [value]="pages.value">
+                              {{pages.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <span>row per page</span>
+                  </div>
+                  <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                      <ngb-pagination [collectionSize]="bCPagination?.totalSize" [maxSize]="3"
+                                      [(bCPagination.page)]="bCPagination.page" [rotate]="true"
+                                      [boundaryLinks]="true" [pageSize]="bCPagination?.pageSize"
+                                      (pageChange)="onPageChangeBounceCheque($event)">
+                      </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-tab>
+          <mat-tab label="Transactions" *ngIf="commonService.isSubpageIsAvailable(pageData,consValue.pageMaster.TRANSACTIONS)  && !consolidatedSelected ">
+            <mat-card-content class="p-0">
+              <div class="NP_Com_Group Com_Table_grp">
+                <div class="Top_Heading_Txt_left ">
+                  <h4 class="Heading__H4">
+                    Statement XNS
+                  </h4>
+                </div>
+                <div class="table-responsive">
+                  <table class="CommonTable_NP table_BG_tlf_tcr Mobile_table_View_NP ">
+                    <thead>
+                    <tr class="tr_lightred_bg">
+                      <th>Sr no.</th>
+                      <th>Date
+                        <span class="shorting" (click)="toggleSort('dateXNS',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'dateXNS'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'dateXNS' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'dateXNS' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                      <th>Cheque No.</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th class="txtCenter">Amount
+                        <span class="shorting" (click)="toggleSort('amountXNS',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'amountXNS'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'amountXNS' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'amountXNS' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                      <th class="txtCenter">Balance
+                        <span class="shorting" (click)="toggleSort('balanceXNS',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'balanceXNS'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'balanceXNS' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'balanceXNS' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @if(bankStatementTranaction?.content?.length>0){
+                        @for (transaction of bankStatementTranaction?.content; track $index) {
+                          <tr>
+                            <td data-label="Sr no.">
+                              {{(trxPagination.page-1)*trxPagination.pageSize+($index+1)}}</td>
+                            <td data-label="Date">{{(transaction.date | date: 'dd-MM-yyyy') || '-'}}
+                            </td>
+                            <td data-label="Cheque No.">{{(transaction.chqNo) || '-'}}</td>
+                            <td data-label="Description">{{(transaction.narration) || '-'}}</td>
+                            <td data-label="Category">{{(transaction.category) || '-'}}</td>
+                            <td data-label="Amount" class="txtCenter"><span
+                              [ngClass]="{ 'dangerColor': transaction?.type == 'Debit' && transaction?.amount > 0 }">₹
+                              {{(transaction.amount | indianCurrency) || 0 }}</span></td>
+                            <td data-label="Balance" class="txtCenter"><span
+                              [ngClass]="{ 'dangerColor': transaction?.balance < 0 }">₹
+                              {{(transaction.balance | indianCurrency) || 0 }}</span></td>
+                          </tr>
+                        }
+                      } @else {
+                        <tr>
+                          <td colspan="10">
+                            <app-no-data-found message="No previous history found" />
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+                <div class="pagination-table NP_LeftPagintion my-1">
+                  <div class="dataTables_info" id="tickets-table_info" role="status"
+                       aria-live="polite">
+                    Showing
+                    {{(trxPagination.startIndex+1)}} to
+                    {{(trxPagination.pageSize*trxPagination.page) > (trxPagination.totalSize) ?
+                    (trxPagination.totalSize) : (trxPagination.pageSize*trxPagination.page)}} of
+                    {{trxPagination.totalSize}} rows
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                          <mat-select [(ngModel)]="trxPagination.pageSize"
+                                      [panelClass]="'pagination_select'"
+                                      (ngModelChange)="onPageChangeTrx(trxPagination.page)">
+                            <mat-option *ngFor="let pages of PageSelectNumber"
+                                        [value]="pages.value">
+                              {{pages.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <span>row per page</span>
+                  </div>
+                  <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                      <ngb-pagination [collectionSize]="trxPagination.totalSize" [maxSize]="3"
+                                      [(page)]="trxPagination.page" [rotate]="true" [boundaryLinks]="true"
+                                      [pageSize]="trxPagination.pageSize"
+                                      (pageChange)="onPageChangeTrx($event)">
+                      </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-tab>
+          <mat-tab label="EOD Balances" *ngIf="isSubpageIsAvailable(constants.pageMaster.EOD_BALANCES)">
+            <mat-card-content class="p-0">
+              <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.EOD_BALANCES,consValue.PageActions.MONTHWISE_DETAILS)">
+                <div class="Top_Heading_Txt_left ">
+                  <h4 class="Heading__H4">
+                    Monthwise Details
+                  </h4>
+                </div>
+                <div class="tableResponsive pad0px">
+                  <table class="CommonTable_FixedScroll no_stripe_borderX_table">
+                    <thead>
+                    <tr class="tr_lightred_bg">
+                      <th>Consolidated EOD Balances</th>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.monthWiseEod; track $index) {
+                        <th>{{(monthDetail?.monthName) || '-'}}</th>
+                      }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">5th Day</td>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.monthWiseEod; track $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.eodMondto?.five < 0 }">{{(monthDetail?.eodMondto?.five
+                          | indianCurrency) || '-'}}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">15th Day</td>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.monthWiseEod; track $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.eodMondto?.onefive < 0 }">{{(monthDetail?.eodMondto?.onefive
+                          | indianCurrency) || '-'}}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">25th Day</td>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.monthWiseEod; track $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.eodMondto?.twofive < 0 }">{{(monthDetail?.eodMondto?.twofive
+                          | indianCurrency) || '-'}}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Min EOD Balance</td>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.monthWiseEod; track $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.eodMondto?.balMin < 0 }">{{(monthDetail?.eodMondto?.balMin
+                          | indianCurrency) || '-'}}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Max EOD Balance</td>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.monthWiseEod; track $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.eodMondto?.balMax < 0 }">{{(monthDetail?.eodMondto?.balMax
+                          | indianCurrency) || '-'}}</span></td>
+                      }
+                    </tr>
+                    <tr>
+                      <td data-label="Consolidated EOD Balances">Average EOD Balance</td>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.monthWiseEod; track $index) {
+                        <td [attr.data-label]="monthDetail.monthName"><span
+                          [ngClass]="{ 'dangerColor': monthDetail?.eodMondto?.balMax < 0 }">{{(monthDetail?.eodMondto?.balAvg
+                          | indianCurrency) || '-'}}</span></td>
+                      }
+                    </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+                <!-- <div class="pagination-table NP_LeftPagintion mt_mb_20px">
+                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(startIndex+1)}} to
+                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                        {{totalSize}}
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="pageSize" [panelClass]="'pagination_select'" (ngModelChange)="onPageChange(page)">
+                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                            {{pages.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        row per page
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div> -->
+              </div>
+              <div class="NP_Com_Group Com_Table_grp mt-3" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.EOD_BALANCES,consValue.PageActions.DAYWISE_DETAILS) &&  !consolidatedSelected ">
+                <div class="Top_Heading_Txt_left ">
+                  <h4 class="Heading__H4">
+                    Daywise Details
+                  </h4>
+                </div>
+                <div class="tableResponsive pad0px">
+                  <table class="CommonTable_FixedScroll no_stripe_borderX_table">
+                    <thead>
+                    <tr class="tr_lightred_bg">
+                      <th>Day of the Month</th>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.dayWiseEod; track $index; ) {
+                        <th>{{(monthDetail?.monthYear) || '-'}}</th>
+                      }
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @for ( monthDetail of
+                        bankStatementAnalysisData?.eodBalances?.dayWiseEod[0].monthBalance; track
+                        monthDetail.day; ) {
+                        <tr>
+                          <td>{{(monthDetail?.day) || '-'}}</td>
+                          @for ( monthBalance of
+                            bankStatementAnalysisData?.eodBalances?.dayWiseEod;track monthBalance) {
+                            <td data-label="Day of the Month"><span
+                              [ngClass]="{ 'dangerColor': monthBalance.monthBalance[monthDetail.day-1]?.balance< 0 }">{{(monthBalance.monthBalance[monthDetail.day-1]?.balance)
+                            || '-'}}</span></td>
+                          }
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+                <!-- <div class="pagination-table NP_LeftPagintion mt_mb_20px">
+                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(startIndex+1)}} to
+                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                        {{totalSize}}
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="pageSize" [panelClass]="'pagination_select'" (ngModelChange)="onPageChange(page)">
+                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                            {{pages.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        row per page
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div> -->
+              </div>
+            </mat-card-content>
+          </mat-tab>
+
+        </mat-tab-group>
+      </div>
+    </div>
+
+  </div>
+</div>

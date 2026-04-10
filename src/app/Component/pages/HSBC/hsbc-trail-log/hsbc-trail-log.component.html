@@ -1,0 +1,171 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4 class="cursor_pointer" (click)="goBack()">
+                    <em class="fmdi fmdi-arrow-left mr-2"></em>
+                    Trail Log
+                </h4>
+            </div>
+        </div>
+        
+        <!-- Application Summary Section -->
+        <div class="page_Details" *ngIf="companyName">
+            <div class="box_design">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Application Summary</h4>
+                    </div>
+                </div>
+                <div class="box_design_details trail_summary_section">
+                         <div class="trail_box">
+                            <div class="summary_item">
+                                <h5>Application ID</h5>
+                                <span class="value">{{applicationId}}</span>
+                            </div>
+                        </div>
+                        <div class="trail_box">
+                            <div class="summary_item">
+                                <h5>Company Name</h5>
+                                <span class="value">{{companyName}}</span>
+                            </div>
+                        </div>
+                        <div class="trail_box">
+                            <div class="summary_item">
+                                <h5>PAN</h5>
+                                <span class="value">{{pan}}</span>
+                            </div>
+                        </div>
+                        <div class="trail_box">
+                            <div class="summary_item red_badge">
+                                <h5>Total Trails</h5>
+                                <span class="value">{{totalTrails}}</span>
+                            </div>
+                        </div> 
+                        <!-- <div class="trail_box">
+                            <div class="summary_item">
+                                <h5>Journey Duration</h5>
+                                <span class="value duration_badge">
+                                    <em class="fmdi fmdi-clock mr-1"></em>
+                                    {{journeyDurationMinutes}} minute(s)
+                                </span>
+                            </div>
+                        </div> -->
+                        <div class="trail_box">
+                            <div class="summary_item">
+                                <h5>First Trail Date</h5>
+                                <span class="value">{{firstTrailDate}}</span>
+                            </div>
+                        </div>
+                        <div class="trail_box">
+                            <div class="summary_item">
+                                <h5>Last Trail Date</h5>
+                                <span class="value">{{lastTrailDate}}</span>
+                            </div>
+                        </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- Trail Log Table -->
+        <div class="page_Details mt-3">
+            <div class="box_design">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Trail Details</h4>
+                    </div>
+                    <div class="box_design_ttl_bar_right" *ngIf="totalTrails">
+                        <span class="badge skyblue_badge">{{totalTrails}} Total Trails</span>
+                    </div>
+                </div>
+                <div class="box_design_details p-0 border-top">
+                    <div class="tableResponsive" appTableScroll>
+                        <table class="CommonTable_Scroll CommonTable_NP no_stripe_borderX_table">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th width="3%">Sr. No.</th>
+                                    <th >Application ID</th>
+                                    <th >Page Name</th>
+                                    <th >Activity Name</th>
+                                    <th>Description</th>
+                                    <th>Action By</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoading}">
+                                <div class="table_sep_loader" *ngIf="isLoading">
+                                    <div class="loaderoverlay loader_screen">
+                                        <div class="loader_screen_center">
+                                            <div class="loader_screen_lottie">
+                                                <span class="logo_loader">
+                                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                                </span>
+                                            </div>
+                                            <h3>Please wait data is loading</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <tr *ngFor="let trail of trailLogList; let i = index">
+                                    <td data-label="Sr. No.">{{(page-1)*pageSize+(i+1)}}</td>
+                                    <td data-label="Application ID">
+                                        <span class="grey_badge">{{applicationId || '-'}}</span>
+                                    </td>
+                                    <td data-label="Stage Group">
+                                        <span class="stage_badge" *ngIf="trail.stageGroup">
+                                            {{trail.stageGroup}}
+                                        </span>
+                                        <span *ngIf="!trail.stageGroup">-</span>
+                                    </td>
+                                    <td data-label="Action Name">
+                                        <strong>{{trail.stageName || '-'}}</strong>
+                                    </td>
+                                      <td data-label="Description">
+                                        <strong>{{trail.description || '-'}}</strong>
+                                    </td>
+                                     <td data-label="Action By">{{trail.createdBy || '-'}}</td>
+                                    <td data-label="Timestamp">{{formatTimestamp(trail.createdDate)}}</td>
+                                </tr>
+                                <tr *ngIf="!isLoading && (!trailLogList || trailLogList.length === 0)">
+                                    <td colspan="6">
+                                        <app-no-data-found />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="trailLogList && trailLogList.length > 0">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(startIndex+1)}} to
+                                {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                {{totalSize}}
+                                row
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <label class="d-inline-flex align-items-center"> 
+                                        <ng-select [clearable]="false"
+                                            name="tickets-table_length" class="hide-clear" aria-controls="tickets-table"
+                                            name="pageSize" [(ngModel)]="pageSize" bindLabel="name" bindValue="value"
+                                            [items]="PageSelectNumber" (ngModelChange)="onPageSizeChange($event)" dropdownPosition="top">
+                                        </ng-select>
+                                        row per page
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-5">
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                        [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

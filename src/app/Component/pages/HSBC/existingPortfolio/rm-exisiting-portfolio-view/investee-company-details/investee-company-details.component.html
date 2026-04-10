@@ -1,0 +1,536 @@
+<div class="container-fluid HSBC_Common_Pages rmExisitingPortfolioView_page  pb-0" *ngIf="isRLoaded">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4 class="cursor_pointer" *ngIf="this.data?.isFrom == 1 && this.data?.isPage == 1">
+                    <em class="fmdi fmdi-arrow-left mr-1" (click)="navigateToViewComponent()" ></em>Investor Profile Details
+                </h4>
+                <h4 class="cursor_pointer" *ngIf="this.data?.isFrom == 2 && this.data?.isPage == 1">
+                    <em class="fmdi fmdi-arrow-left mr-1" (click)="navigateToViewComponent()" ></em>Facilitator Profile Details
+                </h4>
+                <h4 class="cursor_pointer" *ngIf="(this.data?.isFrom == 3 || this.data?.isFrom == 4 || this.data?.isFrom == 5) || this.data?.isShow === 'true' ">
+                    <em class="fmdi fmdi-arrow-left mr-1" (click)="navigateToViewComponent()" ></em>Companies Profile Details
+                </h4>
+            </div>
+            <!-- <div class="page_Title_right">
+                <div class="input_field">
+                    <mat-form-field appearance="outline" class="w-200px">
+                       <mat-select [(ngModel)]="selectedCompanyDomain" (selectionChange)="onDomainSelected($event)" panelClass="radioSelect">
+                        <mat-option *ngFor="let companyDomain of tracxnCompanyDomainList; let i = index" [value]="companyDomain">
+                            <mat-radio-group [(ngModel)]="selectedCompanyDomain">
+                                <mat-radio-button [value]="companyDomain">{{ companyDomain }}</mat-radio-button>
+                              </mat-radio-group>
+                         </mat-option>
+                         </mat-select>
+                   </mat-form-field>
+               </div>
+            </div> -->
+        </div>
+
+        <div class="page_Details">
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Basic Details</h4>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <tbody>
+                            <tr>
+                                <td>Name of the brand</td>
+                                 <td class="text-right"><b>{{this.innovateBankingDetails?.nameOfBrand ?? 'NA'}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Domain</td>
+                                 <td class="text-right green_text"><u>{{this.innovateBankingDetails?.domain?? 'NA'}}</u></td>
+                            </tr>
+                            <tr>
+                                <td>Founded Year</td>
+                                 <td class="text-right"><b>{{this.innovateBankingDetails?.foundedYear ?? 'NA'}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Location</td>
+                                 <td class="text-right"><b>{{this.innovateBankingDetails?.country ?? 'NA'}},{{this.innovateBankingDetails?.city ?? 'NA'}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Contact information</td>
+                                 <td class="text-right"><b>{{this.innovateBankingDetails?.countryCode ?? 'NA'}} {{this.innovateBankingDetails?.contactNumber ?? 'NA'}} | {{this.innovateBankingDetails?.email ?? 'NA'}}</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Description of Business - <span class="sub-title">{{this.innovateBankingDetails?.description ?? 'NA' }}</span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar">
+                  <div class="box_design_ttl_bar_left">
+                      <h4>Business Model and Coverage Area</h4>
+                  </div>
+              </div>
+              <div class="tableResponsive">
+                <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                     <thead>
+                        <tr class="tr_lightred_bg">
+                            <th>Sectors</th>
+                            <th>Sub Sector</th>
+                            <th>Business</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="this.innovateBankingDetails?.tracxnBusinessModelAndCoverageAreaDetails?.length > 0; else noBusinesAndCoveragedetails">
+                        <tr *ngFor="let businessModel of this.innovateBankingDetails?.tracxnBusinessModelAndCoverageAreaDetails; let i = index">
+                            <td><b>{{businessModel?.sector || '-'}}</b></td>
+                            <td>{{businessModel?.subSector || '-'}}</td>
+                             <td>{{businessModel?.business || '-'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-template #noBusinesAndCoveragedetails>
+                    <tr>
+                        <td colspan="4" class="text-center text-danger">
+                            <app-no-data-found message="No Business Model and Coverage Area found." />
+                        </td>
+                    </tr>
+                </ng-template>
+            </div>
+            <div class="pagination-table NP_LeftPagintion">
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                  <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{(tracxnBusinessAndCoveragePage.startIndex() + 1)}} to
+                    {{(tracxnBusinessAndCoveragePage.pageSize()*tracxnBusinessAndCoveragePage.page()) > (tracxnBusinessAndCoveragePage.totalSize) ?
+                    (tracxnBusinessAndCoveragePage.totalSize) : (tracxnBusinessAndCoveragePage.pageSize()*tracxnBusinessAndCoveragePage.page())}} of
+                    {{tracxnBusinessAndCoveragePage.totalSize}} rows
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                            <mat-select [(ngModel)]="tracxnBusinessAndCoveragePage.pageSize" [panelClass]="'pagination_select'"
+                            (selectionChange)="getAllBusinessAndCoverageDetails()">
+                            <mat-option *ngFor="let pages of PageSelectNumber"
+                                [value]="pages.value">
+                                {{pages.value}}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <span class="grey_text">row per page</span>
+                  </div>
+                  <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                        <ngb-pagination [collectionSize]="tracxnBusinessAndCoveragePage.totalSize" [maxSize]="3"
+                        [(page)]="tracxnBusinessAndCoveragePage.page" [rotate]="true" [boundaryLinks]="true"
+                        [pageSize]="tracxnBusinessAndCoveragePage.pageSize()" (pageChange)="getAllBusinessAndCoverageDetails()">
+                       </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="page_Title_sec">
+                <div class="page_Title_left">
+                    <h4> Employee Details &amp; Co-Ordinates </h4>
+                </div>
+            </div>
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Key Personel</h4>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Designation</th>
+                                <th>City</th>
+                                <th>Country</th>
+                                <th>Linkedin Handle</th>
+                                <th>Twitter Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="listOfEmployeeDetailsData.length > 0; else noData">
+                            <tr *ngFor="let employee of listOfEmployeeDetailsData; let i = index">
+                                <td>{{employee?.name ?? 'NA'}}</td>
+                                <td class="green_text">{{employee?.email ?? 'NA'}}</td>
+                                 <td>{{employee?.designation ?? 'NA'}}</td>
+                                 <td>{{employee?.city ?? 'NA'}}</td>
+                                 <td>{{employee?.country ?? 'NA'}}</td>
+                                 <td class="green_text"><u class="cursor_link"> 
+                                    <a class="green_text" *ngIf="employee?.linkedHandle; else noLinkedin"
+                                    [href]="employee.linkedHandle.startsWith('http') ? employee.linkedHandle : 'https://' + employee.linkedHandle"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                   {{ employee.linkedHandle }}
+                                 </a>
+                                 <ng-template #noLinkedin>NA</ng-template></u></td>
+                                 <td class="green_text"><u class="cursor_link">
+                                    <a class="green_text" *ngIf="employee?.twitterHanle; else noTwitter"
+                                    [href]="employee.twitterHanle.startsWith('http') ? employee.twitterHanle : 'https://' + employee.twitterHanle"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    {{employee?.twitterHanle}}
+                                 </a>
+                                 <ng-template #noTwitter>NA</ng-template>
+                                </u>
+                             </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ng-template #noData>
+                        <tr>
+                            <td colspan="7" class="text-center text-danger">
+                                <app-no-data-found message="No Employee Details & Co-Ordinates found." />
+                             </td>
+                        </tr>
+                      </ng-template>
+                </div>
+                <div class="pagination-table NP_LeftPagintion">
+                    <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                      <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(tracxnEmployeePage.startIndex() + 1)}} to
+                        {{(tracxnEmployeePage.pageSize()*tracxnEmployeePage.page()) > (tracxnEmployeePage.totalSize) ?
+                        (tracxnEmployeePage.totalSize) : (tracxnEmployeePage.pageSize()*tracxnEmployeePage.page())}} of
+                        {{tracxnEmployeePage.totalSize}} rows
+                        <div class="dataTables_length" id="tickets-table_length">
+                          <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                                <mat-select [(ngModel)]="tracxnEmployeePage.pageSize" [panelClass]="'pagination_select'"
+                                (selectionChange)="getAllEmployeeDetails()">
+                                <mat-option *ngFor="let pages of PageSelectNumber"
+                                    [value]="pages.value">
+                                    {{pages.value}}
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                      </div>
+                      <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="tracxnEmployeePage.totalSize" [maxSize]="3"
+                            [(page)]="tracxnEmployeePage.page" [rotate]="true" [boundaryLinks]="true"
+                            [pageSize]="tracxnEmployeePage.pageSize()" (pageChange)="getAllEmployeeDetails()">
+                           </ngb-pagination>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Employee Count</h4>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th>Particular</th>
+                                <th>Current Year ({{innovateBankingDetails?.currentYear}})</th>
+                                <th>Previous Year ({{innovateBankingDetails?.previousYear}})</th>
+                                <th>M-o-M Trend %</th>
+                                <th>Y-o-Y Trend %</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="innovateBankingDetails?.tracxnEmployeeCountDetails?.length > 0; else noEmployeeCount">
+                            <tr *ngFor="let empCount of innovateBankingDetails?.tracxnEmployeeCountDetails;">
+                                <td>{{empCount?.month}}</td>
+                                <td>{{empCount?.currentYear || '-'}}</td>
+                                <td>{{empCount?.previousYear || '-'}}</td>
+                                <!-- <td>{{ (empCount?.momTrend && parseFloatValue(empCount?.momTrend) > 0) ? empCount?.momTrend : '-' }}</td>
+                                <td>{{ (empCount?.yoyTrend && parseFloatValue(empCount?.yoyTrend) > 0) ? empCount?.yoyTrend : '-' }}</td> -->
+                                <td>
+                                    {{
+                                      (empCount?.currentYear && empCount?.previousYear && empCount?.currentYear != null && empCount?.previousYear != null && empCount?.momTrend != null)
+                                        ? empCount?.momTrend
+                                        : '-'
+                                    }}
+                                  </td>
+                                  <td>
+                                    {{
+                                      (empCount?.currentYear && empCount?.previousYear && empCount?.currentYear != null && empCount?.previousYear != null && empCount?.yoyTrend != null)
+                                        ? empCount?.yoyTrend
+                                        : '-'
+                                    }}
+                                  </td>
+                            </tr>
+                            <tr>
+                                <td>Total Employees Count</td>
+                                <td>{{innovateBankingDetails?.totalCurrentYearCount || '-'}}</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <!-- <td>Total</td>
+                                <td>{{innovateBankingDetails?.totalCurrentYearCount}}</td>
+                                <td>{{innovateBankingDetails?.totalPreviousYearCount}}</td>
+                                <td>{{ (innovateBankingDetails?.totalMoMTrend && parseFloatValue(innovateBankingDetails?.totalMoMTrend) > 0) ? innovateBankingDetails?.totalMoMTrend : '-' }}</td>
+                                <td>{{ (innovateBankingDetails?.totalYoYTrend && parseFloatValue(innovateBankingDetails?.totalYoYTrend) > 0) ? innovateBankingDetails?.totalYoYTrend : '-' }}</td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ng-template #noEmployeeCount>
+                        <tr>
+                          <td colspan="4" class="text-center text-danger">
+                            <app-no-data-found message="No Employee Count found." />
+                         </td>
+                        </tr>
+                   </ng-template>
+                </div>
+            </div>
+            <div class="box_design mb-2">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Investment Details</h4>
+                    </div>
+                </div>
+                <div class="teaserView_Details p-2">
+                    <div class="export_details_cols cols_3 wihout_boxDesign without_lottie_cols">
+                        <div class="exp_col">
+                            <div class="exp_col_dtl" *ngIf="(this.innovateBankingDetails?.totalEquityFunding || this.innovateBankingDetails?.totalEquityRound) && (this.innovateBankingDetails?.totalEquityFunding != null || this.innovateBankingDetails?.totalEquityRound != null)">
+                                <p>Total Equity Funding</p>
+                                <h3>{{ innovateBankingDetails?.totalEquityFunding != null ? (innovateBankingDetails.totalEquityFunding | millionFormat) : 'NA' }}</h3>
+                                <p>(in {{ innovateBankingDetails?.totalEquityRound ?? 'NA' }} Rounds)</p>
+                            </div>
+                            <div class="exp_col_dtl" *ngIf="!this.innovateBankingDetails?.totalEquityFunding && !this.innovateBankingDetails?.totalEquityRound && this.innovateBankingDetails?.totalEquityFunding == null && this.innovateBankingDetails?.totalEquityRound == null">
+                                <p>Total Equity Funding</p>
+                                <h3>NA</h3>
+                            </div>
+                        </div>
+                        <div class="exp_col">
+                            <div class="exp_col_dtl" *ngIf="(this.innovateBankingDetails?.totalMoneyRaised || this.innovateBankingDetails?.totalEquityRound) && (this.innovateBankingDetails?.totalMoneyRaised != null || this.innovateBankingDetails?.totalEquityRound != null)">
+                                <p>Total Money Raised</p>
+                                <h3>{{ innovateBankingDetails?.totalMoneyRaised != null ? (innovateBankingDetails.totalMoneyRaised | millionFormat) : 'NA' }}</h3>
+                                <p>(in {{ innovateBankingDetails?.totalEquityRound ?? 'NA' }} Rounds)</p>
+                            </div>
+                            <div class="exp_col_dtl" *ngIf="!this.innovateBankingDetails?.totalMoneyRaised && !this.innovateBankingDetails?.totalEquityRound && this.innovateBankingDetails?.totalMoneyRaised == null && this.innovateBankingDetails?.totalEquityRound == null">
+                                <p>Total Money Raised</p>
+                                <h3>NA</h3>
+                            </div>
+                        </div>
+                        <div class="exp_col">
+                            <div class="exp_col_dtl" *ngIf="(this.innovateBankingDetails?.latestFunding || this.innovateBankingDetails?.latestFundingName || this.innovateBankingDetails?.latestFundingDate) && (this.innovateBankingDetails?.latestFunding != null || this.innovateBankingDetails?.latestFundingName != null || this.innovateBankingDetails?.latestFundingDate != null)">
+                                <p>Latest Funding Round</p>
+                                <h3>{{ this.innovateBankingDetails?.latestFunding !=null ? (this.innovateBankingDetails?.latestFunding | millionFormat) : 'NA'}}, {{ this.innovateBankingDetails?.latestFundingName != null ? this.innovateBankingDetails?.latestFundingName:'NA'}}</h3>
+                                <p>({{ this.innovateBankingDetails?.latestFundingDate!= null ? (this.innovateBankingDetails?.latestFundingDate | date:'MMM dd, yyyy') :'NA'}})</p>
+                            </div>
+                            <div class="exp_col_dtl" *ngIf="!this.innovateBankingDetails?.latestFunding && !this.innovateBankingDetails?.latestFundingName && !this.innovateBankingDetails?.latestFundingDate && this.innovateBankingDetails?.latestFunding == null && this.innovateBankingDetails?.latestFundingName == null && this.innovateBankingDetails?.latestFundingDate == null">
+                                <p>Latest Funding Round</p>
+                                <h3>NA</h3>
+                            </div>
+                        </div>
+                        <div class="exp_col">
+                            <div class="exp_col_dtl" *ngIf="(this.innovateBankingDetails?.moneyValuation || this.innovateBankingDetails?.moneyValuationMin || this.innovateBankingDetails?.moneyValuationMax || this.innovateBankingDetails?.moneyValuationDate) && (this.innovateBankingDetails?.moneyValuation!= null || this.innovateBankingDetails?.moneyValuationMin != null || this.innovateBankingDetails?.moneyValuationMax != null || this.innovateBankingDetails?.moneyValuationDate != null)">
+                                <p>Post Money Valuation</p>
+                                <h3>
+                                    <ng-container *ngIf="innovateBankingDetails?.moneyValuation != null; else valuationRange">
+                                      {{ innovateBankingDetails.moneyValuation | millionFormat }}
+                                    </ng-container>
+                                    <ng-template #valuationRange>
+                                      {{ innovateBankingDetails?.moneyValuationMin | millionFormat }} -
+                                      {{ innovateBankingDetails?.moneyValuationMax | millionFormat }}
+                                    </ng-template>
+                                  </h3>
+                                <p>(as on {{this.innovateBankingDetails?.moneyValuationDate | date:'MMM dd, yyyy'}})</p>
+                            </div>
+                            <div class="exp_col_dtl" *ngIf="!this.innovateBankingDetails?.moneyValuation && !this.innovateBankingDetails?.moneyValuationMin && !this.innovateBankingDetails?.moneyValuationMax && !this.innovateBankingDetails?.moneyValuationDate && this.innovateBankingDetails?.moneyValuationMin == null && this.innovateBankingDetails?.moneyValuationMax == null && this.innovateBankingDetails?.moneyValuationDate == null && this.innovateBankingDetails?.moneyValuation == null">
+                                <p>Post Money Valuation</p>
+                                <h3>NA</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="f_round_txt">List of funding rounds <a class="green_text" (click)="Funding_Round_popup()"><u>Click Here</u></a></p>
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar">
+                  <div class="box_design_ttl_bar_left">
+                      <h4>List of Facilitors</h4>
+                  </div>
+              </div>
+              <div class="tableResponsive">
+                <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                    <thead>
+                        <tr class="tr_lightred_bg">
+                            <th>Sr. No.</th>
+                            <th>Name</th>
+                            <th>Domain</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="listOfFacilitorsData.length > 0; else noFacilitiorData">
+                        <tr *ngFor="let faciliotrDetails of listOfFacilitorsData; let i = index">
+                            <td>{{(((tracxnFacilitorPage.page()-1) * tracxnFacilitorPage.pageSize()) + (i+1))}}</td>
+                            <td>{{faciliotrDetails?.name || 'NA'}}</td>
+                            <td class="green_text">
+                                {{faciliotrDetails.domainName || 'NA'}}
+                                <!-- <u (click)="investeeCompaniesDialog(faciliotrDetails)" class="ml-2 cursor_pointer">{{faciliotrDetails.domainName || 'NA'}}</u>
+                                <i class="fa fa-hourglass ml-1 investor-hourglass" matTooltip="We are fetching the data. Please wait" *ngIf="(investorCompanyProgressMap[faciliotrDetails?.id] || faciliotrDetails?.investorCompanyStatus === 'Pending')"></i>
+                                <i class="fa fa-check-circle ml-1" matTooltip=" We have fetched the data successfully. Click on link to view the details" *ngIf="(!investorCompanyProgressMap[faciliotrDetails?.id] && (faciliotrDetails?.investorCompanyStatus === 'Success' || investorCompanySuccessMap[faciliotrDetails?.id]))"></i> -->
+                            </td>
+                            <td>{{faciliotrDetails?.type || 'NA'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-template #noFacilitiorData>
+                    <tr>
+                      <td colspan="4" class="text-center text-danger">
+                        <app-no-data-found message="No Facilitors details found." />
+                     </td>
+                    </tr>
+               </ng-template>
+            </div>
+            <div class="pagination-table NP_LeftPagintion">
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                  <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{(tracxnFacilitorPage.startIndex() + 1)}} to
+                    {{(tracxnFacilitorPage.pageSize()*tracxnFacilitorPage.page()) > (tracxnFacilitorPage.totalSize) ?
+                    (tracxnFacilitorPage.totalSize) : (tracxnFacilitorPage.pageSize()*tracxnFacilitorPage.page())}} of
+                    {{tracxnFacilitorPage.totalSize}} rows
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="tracxnFacilitorPage.pageSize" [panelClass]="'pagination_select'"
+                            (selectionChange)="getAllFacilitors()">
+                            <mat-option *ngFor="let pages of PageSelectNumber"
+                                [value]="pages.value">
+                                {{pages.value}}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <span class="grey_text">row per page</span>
+                  </div>
+                  <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                        <ngb-pagination [collectionSize]="tracxnFacilitorPage.totalSize" [maxSize]="3"
+                         [(page)]="tracxnFacilitorPage.page" [rotate]="true" [boundaryLinks]="true"
+                         [pageSize]="tracxnFacilitorPage.pageSize()" (pageChange)="getAllFacilitors()">
+                        </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar">
+                  <div class="box_design_ttl_bar_left">
+                      <h4>List of Investors</h4>
+                  </div>
+              </div>
+              <div class="tableResponsive">
+                <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                    <thead>
+                        <tr class="tr_lightred_bg">
+                            <th>Sr. No.</th>
+                            <th>Investor Name</th>
+                            <th>Investor Domain</th>
+                            <th>Leading Investor</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="listOfinvestorDetailsData.length > 0; else noInvestorData">
+                        <tr *ngFor="let investorDetails of listOfinvestorDetailsData; let i = index">
+                            <td> {{(((tracxnInvestorPage.page()-1) * tracxnInvestorPage.pageSize()) + (i+1))}}</td>
+                            <td>{{investorDetails?.investorName}}</td>
+                            <td class="green_text">
+                                {{investorDetails.investorDomain || 'NA'}}
+                                <!-- <u (click)="investeeCompaniesDialog(investorDetails)" class="ml-2 cursor_pointer">{{investorDetails.investorName || 'NA'}}</u>
+                                <i class="fa fa-hourglass ml-1 investor-hourglass" matTooltip="We are fetching the data. Please wait" *ngIf="(investorCompanyProgressMap[investorDetails?.id] || investorDetails?.investorCompanyStatus === 'Pending')"></i>
+                                <i class="fa fa-check-circle ml-1" matTooltip=" We have fetched the data successfully. Click on link to view the details" *ngIf="(!investorCompanyProgressMap[investorDetails?.id] && (investorDetails?.investorCompanyStatus === 'Success' || investorCompanySuccessMap[investorDetails?.id]))"></i> -->
+                            </td>
+                            <td *ngIf="investorDetails?.isLeadingInvestor">Yes</td>
+                            <td *ngIf="!investorDetails?.isLeadingInvestor">NO</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-template #noInvestorData>
+                    <tr>
+                      <td colspan="4" class="text-center text-danger">
+                        <app-no-data-found message="No Investor details found." />
+                     </td>
+                    </tr>
+                </ng-template>
+            </div>
+            <div class="pagination-table NP_LeftPagintion">
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                  <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{(tracxnInvestorPage.startIndex()+1)}} to
+                    {{(tracxnInvestorPage.pageSize()*tracxnInvestorPage.page()) > (tracxnInvestorPage.totalSize) ?
+                    (tracxnInvestorPage.totalSize) : (tracxnInvestorPage.pageSize()*tracxnInvestorPage.page())}} of
+                    {{tracxnInvestorPage.totalSize}} rows
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="tracxnInvestorPage.pageSize" [panelClass]="'pagination_select'"
+                            (selectionChange)="getAllInvestorDetails()">
+                            <mat-option *ngFor="let pages of PageSelectNumber"
+                                [value]="pages.value">
+                                {{pages.value}}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <span class="grey_text">row per page</span>
+                  </div>
+                  <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                        <ngb-pagination [collectionSize]="tracxnInvestorPage.totalSize" [maxSize]="3"
+                         [(page)]="tracxnInvestorPage.page" [rotate]="true" [boundaryLinks]="true"
+                         [pageSize]="tracxnInvestorPage.pageSize()" (pageChange)="getAllInvestorDetails()">
+                        </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box_design mb-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Latest Financial Summary</h4>
+                    </div>
+                </div>
+                <div class="teaserView_Details p-2">
+                    <div class="export_details_cols cols_3 wihout_boxDesign without_lottie_cols">
+                        <div class="exp_col">
+                            <div class="exp_col_dtl">
+                                <p>Revenue</p>
+                                <h3>{{this.innovateBankingDetails?.revenue | millionFormat}}</h3>
+                             </div>
+                        </div>
+                        <div class="exp_col">
+                            <div class="exp_col_dtl">
+                                <p>Net Profit</p>
+                                <h3>{{this.innovateBankingDetails?.netProfit  | millionFormat}}</h3>
+                             </div>
+                        </div>
+                        <div class="exp_col">
+                            <div class="exp_col_dtl">
+                                <p>EBIDTA</p>
+                                <h3>{{this.innovateBankingDetails?.ebidta | millionFormat}}</h3>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,30 @@
+.ellips_txt{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 75px;
+    display: block;
+  }
+ ::ng-deep .mat-option.selected-item {
+  background-color: #e0f7fa !important;
+  font-weight: bold;
+  color: #00796b;
+}
+
+
+
+.tr_lightred_bg{
+  border-top: 1px solid #DADDDE;
+}
+
+
+
+.dots_icon_drop{
+  vertical-align: middle;
+  .mdi-dots-horizontal{
+      font-size: 20px;
+      line-height: 10px;
+      color: #707070;
+  }
+}
+ 

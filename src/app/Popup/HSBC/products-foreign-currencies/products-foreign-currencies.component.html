@@ -1,0 +1,74 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Products Sanctioned In Foriegn Currencies</h3>
+        </div>
+        <mat-dialog-content class="px-0">
+            <div class="popup_body">
+                <div class="table_sec">
+                    <div class="tableResponsive ">
+                        <table class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table compressed_table ">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th>Product</th>
+                                    <th>Foreign Currencies</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Bank Guarantee</td>
+                                    <td>JPY, EURO, USD</td>
+                                </tr>
+                                <tr>
+                                    <td>Term Loan</td>
+                                    <td>USD , JPY</td>
+                                </tr>
+
+                                <!-- <tr>
+                                    <td colspan="2">
+                                        <app-no-data-found message="No record found" />
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="pagination-table NP_LeftPagintion" *ngIf="columnsData.length != 0">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing {{(opportunityDataPeg.startIndex()+1)}} to
+                            {{(opportunityDataPeg.pageSize()*opportunityDataPeg.page()) >
+                            (opportunityDataPeg.totalSize) ? (opportunityDataPeg.totalSize) :
+                            (opportunityDataPeg.pageSize()*opportunityDataPeg.page())}} of
+                            {{opportunityDataPeg.totalSize}} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="opportunityDataPeg.pageSize"
+                                            [panelClass]="'pagination_select'">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages">
+                                                {{pages}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span class="grey_text"> row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="opportunityDataPeg.totalSize" [maxSize]="3"
+                                    [(page)]="opportunityDataPeg.page" [rotate]="true" [boundaryLinks]="true"
+                                    [pageSize]="opportunityDataPeg.pageSize()">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

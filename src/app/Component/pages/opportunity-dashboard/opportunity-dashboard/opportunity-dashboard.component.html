@@ -1,0 +1,1058 @@
+<div class="container-fluid op_dashboard_design HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left small_title">
+                <h4>Campaign Dashboard - ETB</h4>
+            </div>
+            <div class="page_Title_Right with_filtertop">
+
+                <div class="filter_top_bar filter_top_bar_new d-flex">
+                    <mat-slide-toggle [(ngModel)]="includeInactiveCampaigns" (change)="onToggleChange()"
+                        class="sliderToggle_design3 mr-2">
+                        {{ includeInactiveCampaigns ? 'Active' : 'Inactive' }}
+                    </mat-slide-toggle>
+                    <button mat-stroked-button class="btn_design white_bg" color="primary"
+                        *ngIf="(commonService.isActionAvailable(pageData,consValue.pageMaster.ETB_CAMPAIGN_DASHBOARD,consValue.PageActions.EDIT)) || (userRoleCampaign)"
+                        (click)="CreateCampaignPopup()">
+                        <i class="fas fa-pen mr-2"></i> Edit Campaign
+                    </button>
+                    <div class="topside_btn d-flex al-center">
+                        <!-- Search By Button with Menu -->
+                        <button mat-flat-button [matMenuTriggerFor]="searchByopt" #searchByTrigger="matMenuTrigger"
+                            class="search_label_btn" (click)="activeFilterMenu = null">
+                            Search Campaign By <mat-icon>unfold_more</mat-icon>
+                        </button>
+
+                        <!-- <div class="filter_action">
+                            <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                                (click)="resetCampaignAndPmNameFilter()"
+                                [disabled]="isApplyAndResetButtonDisabled(selectedMenuCampaigns) && isApplyAndResetButtonDisabled(selectedMenuPmNames)">
+                                <i class="fi fi-sr-refresh mr-1"></i> Reset
+                            </button>
+                        </div> -->
+
+                        <!-- Search By Menu -->
+                        <mat-menu #searchByopt="matMenu" class="filter_option_menu filter_option_menu_new"
+                            (closed)="clearSearchValues()">
+
+                            <!-- Main Menu View -->
+                            <ng-container *ngIf="!activeFilterMenu">
+                                <h3 class="title_menu" (click)="$event.stopPropagation()">
+                                    <span class="left_side">
+                                        Search Options
+                                        <button type="button" mat-icon-button class="ref_icon" color="primary"
+                                            (click)="resetCampaignAndPmNameFilter()"
+                                            [disabled]="isApplyAndResetButtonDisabled(selectedMenuCampaigns) && isApplyAndResetButtonDisabled(selectedMenuPmNames)"><i
+                                                class="fi fi-br-refresh red_text"></i></button>
+                                    </span>
+
+                                    <button mat-icon-button class="ref_icon" type="button"
+                                        (click)="searchByTrigger.closeMenu()">
+                                        <i class="fi fi-br-cross-small"></i>
+                                    </button>
+                                </h3>
+
+                                <!-- Creator Name Menu Item -->
+                                <button mat-menu-item class="mr-0 pr-1"
+                                    (click)="openFilterView('Creator Name', $event)">
+                                    <span class="menu_text">
+                                        <i class="fi fi-sr-layers"></i> Creator Name
+                                    </span>
+                                    <span class="right_value">
+                                        <span class="filter_num">{{ getSelectedPmNamesCount() }}</span>
+                                        <i class="fas fa-chevron-right ml-2"></i>
+                                    </span>
+                                </button>
+
+                                <!-- Campaign Menu Item -->
+                                <button mat-menu-item class="mr-0 pr-1" (click)="openFilterView('Campaign', $event)">
+                                    <span class="menu_text">
+                                        <i class="fas fa-map-marker-alt"></i> Campaign
+                                    </span>
+                                    <span class="right_value">
+                                        <span class="filter_num">{{ getFilteredCampaignCount() }}</span>
+                                        <i class="fas fa-chevron-right ml-2"></i>
+                                    </span>
+                                </button>
+                            </ng-container>
+
+                            <!-- Campaign Filter Detail View -->
+                            <ng-container *ngIf="activeFilterMenu === 'Campaign'">
+                                <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()"
+                                    (keydown)="$event.stopPropagation()">
+                                    <h3 class="title_menu">
+                                        <button mat-icon-button (click)="goBackToMenu($event)" class="back_btn mr-1">
+                                            <i class="fi fi-rr-arrow-small-left"></i>
+                                        </button>
+                                        Campaign
+                                        <button mat-icon-button class="close_btn ml-auto"
+                                            (click)="searchByTrigger.closeMenu()">
+                                            <i class="fi fi-br-cross-small"></i>
+                                        </button>
+                                    </h3>
+
+                                    <div class="filter_searchbox">
+                                        <div class="filter_searchbox_wrapper">
+                                            <i class="fas fa-search searchbox_Icn"></i>
+                                            <input type="text" placeholder="Search" class="searchbox_input"
+                                                [(ngModel)]="menuCampaignSearchText" (input)="filterMenuCampaigns()" />
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_details checkbox_lists">
+                                        <div class="radio-group-wrapper small_radio wrap_radio">
+                                            <mat-radio-group [(ngModel)]="selectedMenuCampaigns">
+                                                <ng-container *ngFor="let campaign of filteredMenuCampaigns">
+                                                    <mat-radio-button *ngIf="!isAllCampaignData(campaign.campaignId)"
+                                                        [value]="campaign.campaignName">
+                                                        {{campaign.campaignName}}
+                                                    </mat-radio-button>
+                                                </ng-container>
+                                            </mat-radio-group>
+                                            <div *ngIf="shouldShowNoCampaignRecords()" class="no-records-message">
+                                                No records found
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_action">
+                                        <button mat-flat-button color="primary" class="no_wrap"
+                                            (click)="applyPmNameAndCampaignNameFilter('Campaign')"
+                                            [disabled]="isApplyAndResetButtonDisabled(selectedMenuCampaigns)">Apply</button>
+                                        <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                                            (click)="resetCampaignNameFilter()">
+                                            <i class="fi fi-br-refresh mr-1"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <!-- Creator Name Filter Detail View -->
+                            <ng-container *ngIf="activeFilterMenu === 'Creator Name'">
+                                <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()"
+                                    (keydown)="$event.stopPropagation()">
+                                    <h3 class="title_menu">
+                                        <button mat-icon-button (click)="goBackToMenu($event)" class="back_btn mr-1">
+                                            <i class="fi fi-rr-arrow-small-left"></i>
+                                        </button>
+                                        Creator Name
+                                        <button mat-icon-button class="close_btn ml-auto"
+                                            (click)="searchByTrigger.closeMenu()">
+                                            <i class="fi fi-br-cross-small"></i>
+                                        </button>
+                                    </h3>
+
+                                    <div class="filter_searchbox">
+                                        <div class="filter_searchbox_wrapper">
+                                            <i class="fas fa-search searchbox_Icn"></i>
+                                            <input type="text" placeholder="Search" class="searchbox_input"
+                                                [(ngModel)]="menuPmNameSearchText" (input)="filterMenuPmNames()" />
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_details checkbox_lists">
+                                        <mat-checkbox *ngFor="let pmName of filteredMenuPmNames"
+                                            [(ngModel)]="selectedMenuPmNames[pmName]">
+                                            {{pmName}}
+                                        </mat-checkbox>
+                                        <div *ngIf="filteredMenuPmNames.length === 0" class="no-records-message">
+                                            No records found
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_action">
+                                        <button mat-flat-button color="primary" class="no_wrap"
+                                            (click)="applyPmNameAndCampaignNameFilter('PM')"
+                                            [disabled]="isApplyAndResetButtonDisabled(selectedMenuPmNames)">Apply</button>
+                                        <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                                            (click)="resetPmNameFilter()">
+                                            <i class="fi fi-br-refresh mr-1"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </mat-menu>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="slide_box" style="cursor:pointer;">
+                <div class="scroll-controls">
+                    <button *ngIf="showLeftButton" class="control_btn left_btn" (click)="scrollLeft()"><i
+                            class="fas fa-chevron-left"></i></button>
+                    <button *ngIf="showRightButton" class="control_btn right_btn" (click)="scrollRight()"><i
+                            class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="tabing-main" #scrollContainer appScrollButtons #scrollButtons="appScrollButtons"
+                    [leftButton]="null" [rightButton]="null" (scroll)="onScroll()">
+                    <ul class="stepper-list">
+                        <li *ngFor="let campaign of allCampaignData; let i = index"
+                            [ngClass]="{ 'active': selectedCampaignIndex === i, 'processing': campaign?.processingStatus === 'Pending', 'failed': campaign?.processingStatus === 'Failed' }"
+                            (click)="(campaign?.processingStatus === 'Pending' || campaign?.processingStatus === 'Failed') ? null : selectCampaign(i)">
+                            <div class="box_list"
+                                [attr.title]="campaign?.processingStatus === 'Pending' ? 'Campaign is currently being processed' : (campaign?.processingStatus === 'Failed' ? 'Campaign processing failed' : null)">
+                                <div *ngIf="campaign?.processingStatus === 'Pending'" class="processing-overlay">
+                                    <div class="processing-text">Processing<span class="dots"></span></div>
+                                </div>
+                                <div class="top_content">
+                                    <div class="left_desc">
+                                        <div class="icon_circle"><i class="fi fi-rr-revenue-alt"></i></div>
+                                        <div class="step-content">
+                                            <div class="step-title">
+                                                <span class="campaign-name" [ngbTooltip]="campaign.campaignName"
+                                                    tooltipClass="custom_tooltip" placement="bottom">
+                                                    {{ truncateText(campaign.campaignName) }}
+                                                </span>
+                                                <i *ngIf="!isAllCampaignData(campaign.campaignId)"
+                                                    class="fas fa-info-circle grey_text ml-1"
+                                                    tooltipClass="custom_tooltip" [ngbTooltip]="statusTooltip"
+                                                    placement="bottom" container="body"></i>
+                                            </div>
+                                            <ng-template #statusTooltip>
+                                                <div class="tooltip-wrapper">
+                                                    <div class="tooltip-section">
+                                                        <div class="tooltip-title"><i class="fas fa-circle mr-1"></i>
+                                                            Objective</div>
+                                                        <div class="tooltip-text">
+                                                            {{campaign.objective}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="tooltip-section">
+                                                        <div class="tooltip-title"><i
+                                                                class="fas fa-circle mr-1"></i>Parameters</div>
+                                                        <div class="tooltip-text">
+                                                            {{campaign.parameter || "No Parameters applied while
+                                                            creating this campaign"}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <div class="step-desc" *ngIf="!isAllCampaignData(campaign.campaignId)">
+                                                Creator
+                                                Name : {{campaign.pmName || 'N/A'}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="right_desc" *ngIf="!isAllCampaignData(campaign.campaignId)">
+                                        <span class="red_text">{{getDaysText(campaign.dueDays)}}</span>
+                                    </div>
+                                </div>
+                                <div class="btm-content">
+                                    <div class="count-title">
+                                        <p>Estimated Revenue</p>
+                                        <h4>{{formatRevenue(campaign.revenue)}}</h4>
+                                    </div>
+                                    <div class="count-title">
+                                        <p>No of Customers</p>
+                                        <h4>{{campaign.customerCount || 0}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pre_approved_sec">
+                <div class="box_list" [ngClass]="{ 'active': selectedStatus === 'Converted' }"
+                    (click)="convertRejectStatusBasedFiltering('Converted')">
+                    <div class="boxes_content">
+                        <div class="left_content">
+                            <p class="title">Converted</p>
+                            <h2 *ngIf="!isLoading">{{formatRevenue(convertedCustomerRevenue)}} <span
+                                    *ngIf="!isAllCampaignData(allCampaignData[selectedCampaignIndex]?.campaignId)"
+                                    class="sort_text"><span class="darkgreen_text">{{convertedCustomerCount}}</span> No
+                                    of
+                                    {{convertedCustomerCount <= 1 ? 'Customer' : 'Customers' }}</span>
+                            </h2>
+                            <div *ngIf="isLoading" class="skeleton-loader"></div>
+                        </div>
+                        <div class="right_icon">
+                            <i class="fi fi-rr-file-conversion"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="box_list" [ngClass]="{ 'active': selectedStatus === 'Rejected' }"
+                    (click)="convertRejectStatusBasedFiltering('Rejected')">
+                    <div class="boxes_content">
+                        <div class="left_content">
+                            <p>Rejected</p>
+                            <h2 *ngIf="!isLoading">{{formatRevenue(rejectedCustomerRevenue)}}<span
+                                    *ngIf="!isAllCampaignData(allCampaignData[selectedCampaignIndex]?.campaignId)"
+                                    class="sort_text"><span class="darkgreen_text">{{rejectedCustomerCount}}</span> No
+                                    of
+                                    {{rejectedCustomerCount <= 1 ? 'Customer' : 'Customers' }}</span>
+                            </h2>
+                            <div *ngIf="isLoading" class="skeleton-loader"></div>
+                        </div>
+                        <div class="right_icon">
+                            <i class="fi fi-rr-document-circle-wrong"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="box_list" [ngClass]="{ 'active': selectedStatus === 'Work In Progress' }"
+                    (click)="convertRejectStatusBasedFiltering('Work In Progress')">
+                    <div class="boxes_content">
+                        <div class="left_content">
+                            <p>Work In Progress</p>
+                            <h2 *ngIf="!isLoading">{{formatRevenue(inProcessCustomerRevenue)}}<span
+                                    *ngIf="!isAllCampaignData(allCampaignData[selectedCampaignIndex]?.campaignId)"
+                                    class="sort_text"><span class="darkgreen_text">{{inProcessCustomerCount}}</span> No
+                                    of
+                                    {{inProcessCustomerCount <= 1 ? 'Customer' : 'Customers' }}</span>
+                            </h2>
+                            <div *ngIf="isLoading" class="skeleton-loader"></div>
+                        </div>
+                        <div class="right_icon">
+                            <i class="fi fi-rr-document-autosave"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="box_list" [ngClass]="{ 'active': selectedStatus === 'Awaiting Action' }"
+                    (click)="convertRejectStatusBasedFiltering('Awaiting Action')">
+                    <div class="boxes_content">
+                        <div class="left_content">
+                            <p>Awaiting Action</p>
+                            <h2 *ngIf="!isLoading">{{formatRevenue(awaitingActionCustomerRevenue)}}<span
+                                    *ngIf="!isAllCampaignData(allCampaignData[selectedCampaignIndex]?.campaignId)"
+                                    class="sort_text"><span
+                                        class="darkgreen_text">{{awaitingActionCustomerCount}}</span> No
+                                    of
+                                    {{awaitingActionCustomerCount <= 1 ? 'Customer' : 'Customers' }}</span>
+                            </h2>
+                            <div *ngIf="isLoading" class="skeleton-loader"></div>
+                        </div>
+                        <div class="right_icon">
+                            <i class="fi fi-rr-clock"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <app-opportunity-data-table class="w-100"></app-opportunity-data-table> -->
+        <div class="page_Title_sec mt-2">
+            <div class="page_Title_left">
+                <h4>{{ isAllCampaignData(allCampaignData[selectedCampaignIndex]?.campaignId) ? 'All Campaigns' :
+                    allCampaignData[selectedCampaignIndex]?.campaignName }}</h4>
+            </div>
+            <div class="page_Title_Right with_filtertop">
+                <div class="filter_top_bar filter_top_bar_new d-flex">
+                    <!-- <button type="button" mat-stroked-button class="btn_design greay_text ln_40" color="grey"><i class="fi fi-sr-gears mr-1"></i>Customize Columns</button>   -->
+<!--
+                    <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                        (click)="resetAllFilters()" [disabled]="isResetDisabled()">
+                        <i class="fi fi-sr-refresh mr-1"></i> Reset
+                    </button> -->
+
+                    <div class="topside_btn d-flex al-center">
+                        <button mat-flat-button [matMenuTriggerFor]="searchByopt2" #searchByTrigger2="matMenuTrigger"
+                            class="search_label_btn" (click)="activeCitySegmentMenu = null">
+                            Search by <mat-icon>unfold_more</mat-icon>
+                        </button>
+
+                        <mat-menu #searchByopt2="matMenu" class="filter_option_menu filter_option_menu_new"
+                            (closed)="clearCitySegmentSearchValues()">
+
+                            <!-- Main Menu View -->
+                            <ng-container *ngIf="!activeCitySegmentMenu">
+                                <h3 class="title_menu" (click)="$event.stopPropagation()">
+                                    <span class="left_side">
+                                        Search Options
+                                        <button type="button" mat-icon-button class="ref_icon" color="primary"
+                                            (click)="resetAllFilters()" [disabled]="isResetDisabled()"><i
+                                                class="fi fi-br-refresh red_text"></i></button>
+                                    </span>
+                                    <button mat-icon-button type="button" (click)="searchByTrigger2.closeMenu()">
+                                        <i class="fi fi-br-cross-small"></i>
+                                    </button>
+                                </h3>
+
+                                <!-- City Menu Item -->
+                                <button mat-menu-item class="mr-0 pr-1" (click)="openCitySegmentView('City', $event)">
+                                    <span class="menu_text">
+                                        <i class="fas fa-city"></i> City
+                                    </span>
+                                    <span class="right_value">
+                                        <span class="filter_num">{{selectedCityCount}}</span>
+                                        <i class="fas fa-chevron-right ml-2"></i>
+                                    </span>
+                                </button>
+
+                                <!-- Segment Menu Item -->
+                                <button mat-menu-item class="mr-0 pr-1"
+                                    (click)="openCitySegmentView('Segment', $event)">
+                                    <span class="menu_text">
+                                        <i class="fas fa-chart-pie"></i> Segment
+                                    </span>
+                                    <span class="right_value">
+                                        <span class="filter_num">{{selectedSegmentCount}}</span>
+                                        <i class="fas fa-chevron-right ml-2"></i>
+                                    </span>
+                                </button>
+
+                                <!-- Parent Company Menu Item -->
+                                <button mat-menu-item class="mr-0 pr-1"
+                                    (click)="openCitySegmentView('Parent Company', $event)">
+                                    <span class="menu_text">
+                                        <i class="fas fa-building"></i> Parent Company
+                                    </span>
+                                    <span class="right_value">
+                                        <span class="filter_num">{{selectedParentCompanyCount}}</span>
+                                        <i class="fas fa-chevron-right ml-2"></i>
+                                    </span>
+                                </button>
+
+                                <!-- Parent Country Menu Item -->
+                                <button mat-menu-item class="mr-0 pr-1"
+                                    (click)="openCitySegmentView('Parent Country', $event)">
+                                    <span class="menu_text">
+                                        <i class="fas fa-globe"></i> Parent Country
+                                    </span>
+                                    <span class="right_value">
+                                        <span class="filter_num">{{selectedParentCountryCount}}</span>
+                                        <i class="fas fa-chevron-right ml-2"></i>
+                                    </span>
+                                </button>
+                            </ng-container>
+
+                            <!-- City Filter Detail View -->
+                            <ng-container *ngIf="activeCitySegmentMenu === 'City'">
+                                <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()"
+                                    (keydown)="$event.stopPropagation()">
+                                    <h3 class="title_menu">
+                                        <button mat-icon-button (click)="goBackToCitySegmentMenu($event)"
+                                            class="back_btn mr-1">
+                                            <i class="fi fi-rr-arrow-small-left"></i>
+                                        </button>
+                                        City
+                                        <button mat-icon-button class="close_btn ml-auto"
+                                            (click)="searchByTrigger2.closeMenu()">
+                                            <i class="fi fi-br-cross-small"></i>
+                                        </button>
+                                    </h3>
+
+                                    <div class="filter_searchbox">
+                                        <div class="filter_searchbox_wrapper">
+                                            <i class="fas fa-search searchbox_Icn"></i>
+                                            <input type="text" placeholder="Search" class="searchbox_input"
+                                                [(ngModel)]="citySearchText" (input)="filterCityList()" />
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_details checkbox_lists">
+                                        <mat-checkbox *ngFor="let city of filteredCityList; let i=index"
+                                            (change)="onCityChange(i)" [(ngModel)]="selectedCities[city]">
+                                            {{city}}
+                                        </mat-checkbox>
+                                        <div *ngIf="filteredCityList.length === 0" class="no-records-message">
+                                            No records found
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_action">
+                                        <button mat-flat-button color="primary" class="no_wrap"
+                                            (click)="applyAllFilters()"
+                                            [disabled]="isApplyAndResetButtonDisabledForCity(selectedCities)">Apply</button>
+                                        <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                                            (click)="resetCityFilter()">
+                                            <i class="fi fi-br-refresh mr-1"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <!-- Segment Filter Detail View -->
+                            <ng-container *ngIf="activeCitySegmentMenu === 'Segment'">
+                                <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()"
+                                    (keydown)="$event.stopPropagation()">
+                                    <h3 class="title_menu">
+                                        <button mat-icon-button (click)="goBackToCitySegmentMenu($event)"
+                                            class="back_btn mr-1">
+                                            <i class="fi fi-rr-arrow-small-left"></i>
+                                        </button>
+                                        Segment
+                                        <button mat-icon-button class="close_btn ml-auto"
+                                            (click)="searchByTrigger2.closeMenu()">
+                                            <i class="fi fi-br-cross-small"></i>
+                                        </button>
+                                    </h3>
+
+                                    <div class="filter_searchbox">
+                                        <div class="filter_searchbox_wrapper">
+                                            <i class="fas fa-search searchbox_Icn"></i>
+                                            <input type="text" placeholder="Search" class="searchbox_input"
+                                                [(ngModel)]="segmentSearchText" (input)="filterSegmentList()" />
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_details checkbox_lists">
+                                        <mat-checkbox *ngFor="let segment of filteredSegmentList; let i=index"
+                                            (change)="onSegmentChange(i)" [(ngModel)]="selectedSegments[segment]">
+                                            {{segment}}
+                                        </mat-checkbox>
+                                        <div *ngIf="filteredSegmentList.length === 0" class="no-records-message">
+                                            No records found
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_action">
+                                        <button mat-flat-button color="primary" class="no_wrap"
+                                            (click)="applyAllFilters()"
+                                            [disabled]="isApplyAndResetButtonDisabledForCity(selectedSegments)">Apply</button>
+                                        <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                                            (click)="resetSegmentFilter()">
+                                            <i class="fi fi-br-refresh mr-1"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <!-- Parent Company Filter Detail View -->
+                            <ng-container *ngIf="activeCitySegmentMenu === 'Parent Company'">
+                                <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()"
+                                    (keydown)="$event.stopPropagation()">
+                                    <h3 class="title_menu">
+                                        <button mat-icon-button (click)="goBackToCitySegmentMenu($event)"
+                                            class="back_btn mr-1">
+                                            <i class="fi fi-rr-arrow-small-left"></i>
+                                        </button>
+                                        Parent Company
+                                        <button mat-icon-button class="close_btn ml-auto"
+                                            (click)="searchByTrigger2.closeMenu()">
+                                            <i class="fi fi-br-cross-small"></i>
+                                        </button>
+                                    </h3>
+
+                                    <div class="filter_searchbox">
+                                        <div class="filter_searchbox_wrapper">
+                                            <i class="fas fa-search searchbox_Icn"></i>
+                                            <input type="text" placeholder="Search Parent Company"
+                                                class="searchbox_input" [(ngModel)]="parentCompanySearchText"
+                                                (input)="filterParentCompanyList()" />
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_details checkbox_lists" (scroll)="loadMoreParentCompany()">
+                                        <mat-checkbox [(ngModel)]="selectedParentCompanies['All']"
+                                            (change)="onParentCompanyAllChange()">
+                                            All
+                                        </mat-checkbox>
+                                        <mat-checkbox *ngFor="let company of filteredParentCompanyList; let i=index"
+                                            [(ngModel)]="selectedParentCompanies[company]"
+                                            (change)="onParentCompanyChange(i)">
+                                            {{company}}
+                                        </mat-checkbox>
+                                        <div *ngIf="parentCompanyLoading" class="loading-indicator">
+                                            Loading...
+                                        </div>
+                                        <div *ngIf="filteredParentCompanyList.length === 0 && !parentCompanyLoading"
+                                            class="no-records-message">
+                                            No records found
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_action">
+                                        <button mat-flat-button color="primary" class="no_wrap"
+                                            (click)="applyParentFilters()">Apply</button>
+                                        <button mat-stroked-button color="primary" class="no_wrap"
+                                            (click)="resetParentCompanyFilter()">
+                                            <i class="fi fi-rr-refresh mr-1"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <!-- Parent Country Filter Detail View -->
+                            <ng-container *ngIf="activeCitySegmentMenu === 'Parent Country'">
+                                <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()"
+                                    (keydown)="$event.stopPropagation()">
+                                    <h3 class="title_menu">
+                                        <button mat-icon-button (click)="goBackToCitySegmentMenu($event)"
+                                            class="back_btn mr-1">
+                                            <i class="fi fi-rr-arrow-small-left"></i>
+                                        </button>
+                                        Parent Country
+                                        <button mat-icon-button class="close_btn ml-auto"
+                                            (click)="searchByTrigger2.closeMenu()">
+                                            <i class="fi fi-br-cross-small"></i>
+                                        </button>
+                                    </h3>
+
+                                    <div class="filter_searchbox">
+                                        <div class="filter_searchbox_wrapper">
+                                            <i class="fas fa-search searchbox_Icn"></i>
+                                            <input type="text" placeholder="Search Parent Country"
+                                                class="searchbox_input" [(ngModel)]="parentCountrySearchText"
+                                                (input)="filterParentCountryList()" />
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_details checkbox_lists">
+                                        <mat-checkbox [(ngModel)]="selectedParentCountries['All']"
+                                            (change)="onParentCountryAllChange()">
+                                            All
+                                        </mat-checkbox>
+                                        <mat-checkbox *ngFor="let country of filteredParentCountryList; let i=index"
+                                            [(ngModel)]="selectedParentCountries[country]"
+                                            (change)="onParentCountryChange(i)">
+                                            {{country}}
+                                        </mat-checkbox>
+                                        <div *ngIf="filteredParentCountryList.length === 0" class="no-records-message">
+                                            No records found
+                                        </div>
+                                    </div>
+
+                                    <div class="filter_action">
+                                        <button mat-flat-button color="primary" class="no_wrap"
+                                            (click)="applyParentFilters()">Apply</button>
+                                        <button mat-stroked-button color="primary" class="no_wrap"
+                                            (click)="resetParentCountryFilter()">
+                                            <i class="fi fi-rr-refresh mr-1"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </mat-menu>
+                    </div>
+                    <!-- <button mat-stroked-button class="btn_design white_bg" color="primary" (click)="assignTargetPopup()">
+                        <i class="fi fi-sr-file-export mr-1 red_text vr_2"></i> Assign Tareget
+                    </button> -->
+                    <button
+                        *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.ETB_CAMPAIGN_DASHBOARD,consValue.PageActions.EXPORT)"
+                        mat-stroked-button class="btn_design white_bg" color="primary" (click)="opExportPopup()">
+                        <i class="fi fi-sr-file-export mr-1 red_text vr_2"></i> Export
+                    </button>
+                </div>
+            </div>
+        </div>
+        <mat-card class="box_design b0 bx_none">
+            <div class="box_design_details p-0">
+                <div class="tableResponsive">
+                    <table
+                        class="table_design_new CommonTable_NP design_Main_listTable CommonTable_Scroll NonBG_Table table_wrap">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="5%">Sr No.</th>
+                                <th>Customer ID
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up"
+                                            [class.active]="currentSortField === 'customerId' && sortDirection === 'asc'"
+                                            (click)="toggleSort('customerId', 'ASC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('customerId', 'ASC')"
+                                            (keydown.space)="toggleSort('customerId', 'ASC')"
+                                            [attr.aria-label]="'Sort by Customer ID ascending'">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down"
+                                            [class.active]="currentSortField === 'customerId' && sortDirection === 'desc'"
+                                            (click)="toggleSort('customerId', 'DESC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('customerId', 'DESC')"
+                                            (keydown.space)="toggleSort('customerId', 'DESC')"
+                                            [attr.aria-label]="'Sort by Customer ID descending'">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>Name Of Customer
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up"
+                                            [class.active]="currentSortField === 'customerName' && sortDirection === 'asc'"
+                                            (click)="toggleSort('customerName', 'ASC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('customerName', 'ASC')"
+                                            (keydown.space)="toggleSort('customerName', 'ASC')"
+                                            [attr.aria-label]="'Sort by Name Of Customer ascending'">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down"
+                                            [class.active]="currentSortField === 'customerName' && sortDirection === 'desc'"
+                                            (click)="toggleSort('customerName', 'DESC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('customerName', 'DESC')"
+                                            (keydown.space)="toggleSort('customerName', 'DESC')"
+                                            [attr.aria-label]="'Sort by Name Of Customer descending'">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>RM Name
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up"
+                                            [class.active]="currentSortField === 'rmName' && sortDirection === 'asc'"
+                                            (click)="toggleSort('rmName', 'ASC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('rmName', 'ASC')"
+                                            (keydown.space)="toggleSort('rmName', 'ASC')"
+                                            [attr.aria-label]="'Sort by RM Name ascending'">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down"
+                                            [class.active]="currentSortField === 'rmName' && sortDirection === 'desc'"
+                                            (click)="toggleSort('rmName', 'DESC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('rmName', 'DESC')"
+                                            (keydown.space)="toggleSort('rmName', 'DESC')"
+                                            [attr.aria-label]="'Sort by RM Name descending'">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th width="10%"
+                                    *ngIf="!isAllCampaignData(allCampaignData[selectedCampaignIndex]?.campaignId)">
+                                    Status</th>
+                                <th class="no_wrap">Estimated Revenue
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up"
+                                            [class.active]="currentSortField === 'allConvertedValue' && sortDirection === 'asc'"
+                                            (click)="toggleSort('allConvertedValue', 'ASC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('allConvertedValue', 'ASC')"
+                                            (keydown.space)="toggleSort('allConvertedValue', 'ASC')"
+                                            [attr.aria-label]="'Sort by Estimated Revenue ascending'">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down"
+                                            [class.active]="currentSortField === 'allConvertedValue' && sortDirection === 'desc'"
+                                            (click)="toggleSort('allConvertedValue', 'DESC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('allConvertedValue', 'DESC')"
+                                            (keydown.space)="toggleSort('allConvertedValue', 'DESC')"
+                                            [attr.aria-label]="'Sort by Estimated Revenue descending'">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>Pre-Approved
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up"
+                                            [class.active]="currentSortField === 'preApprovedStatus' && sortDirection === 'asc'"
+                                            (click)="toggleSort('preApprovedStatus', 'ASC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('preApprovedStatus', 'ASC')"
+                                            (keydown.space)="toggleSort('preApprovedStatus', 'ASC')"
+                                            [attr.aria-label]="'Sort by Pre-Approved ascending'">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down"
+                                            [class.active]="currentSortField === 'preApprovedStatus' && sortDirection === 'desc'"
+                                            (click)="toggleSort('preApprovedStatus', 'DESC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('preApprovedStatus', 'DESC')"
+                                            (keydown.space)="toggleSort('preApprovedStatus', 'DESC')"
+                                            [attr.aria-label]="'Sort by Pre-Approved descending'">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th>Product Name
+                                    <span class="sort-container">
+                                        <mat-icon class="sort-icon sort-icon-up"
+                                            [class.active]="currentSortField === 'limitApproved' && sortDirection === 'asc'"
+                                            (click)="toggleSort('limitApproved', 'ASC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('limitApproved', 'ASC')"
+                                            (keydown.space)="toggleSort('limitApproved', 'ASC')"
+                                            [attr.aria-label]="'Sort by Product Name ascending'">
+                                            arrow_drop_up
+                                        </mat-icon>
+                                        <mat-icon class="sort-icon sort-icon-down"
+                                            [class.active]="currentSortField === 'limitApproved' && sortDirection === 'desc'"
+                                            (click)="toggleSort('limitApproved', 'DESC')" role="button" tabindex="0"
+                                            (keydown.enter)="toggleSort('limitApproved', 'DESC')"
+                                            (keydown.space)="toggleSort('limitApproved', 'DESC')"
+                                            [attr.aria-label]="'Sort by Product Name descending'">
+                                            arrow_drop_down
+                                        </mat-icon>
+                                    </span>
+                                </th>
+                                <th width="25%">Campaign
+                                    <!-- Campaign column - no sorting -->
+                                </th>
+                                <th width="5%" class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoading}">
+                            <app-sub-loader></app-sub-loader>
+                            <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                <td></td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput [(ngModel)]="customerIdFilter" (input)="debouncedSearch()"
+                                                placeholder="Enter Customer ID">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput [(ngModel)]="customerNameFilter" (input)="debouncedSearch()"
+                                                placeholder="Enter Customer Name">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput [(ngModel)]="rmNameFilter" (input)="debouncedSearch()"
+                                                placeholder="Enter Rm Name">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td *ngIf="!isAllCampaignData(allCampaignData[selectedCampaignIndex]?.campaignId)"></td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <!-- <mat-form-field appearance="outline">
+                                            <input matInput [(ngModel)]="revenueFilter" (input)="debouncedSearch()"
+                                                placeholder="Enter Estimated Revenue">
+                                        </mat-form-field>  -->
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(ngModel)]="selectedPreApproved"
+                                                (selectionChange)="onSearchOnOpportunityData()"
+                                                placeholder="Select Pre-Approved Status" panelClass="radioSelect">
+                                                <mat-option value="pending">
+                                                    <mat-radio-button>Pending</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="in process">
+                                                    <mat-radio-button>In Process</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="eligible">
+                                                    <mat-radio-button>Eligible</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="reject">
+                                                    <mat-radio-button>Reject</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="not opted">
+                                                    <mat-radio-button>Not Opted</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="not initiated">
+                                                    <mat-radio-button>Not Initiated</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="na">
+                                                    <mat-radio-button>Not Applicable</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="Disabled">
+                                                    <mat-radio-button>Disabled</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="CIR Approved">
+                                                    <mat-radio-button>CIR Approved</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="CIR Rejected">
+                                                    <mat-radio-button>CIR Rejected</mat-radio-button>
+                                                </mat-option>
+                                                <mat-option value="CIR Approval Pending">
+                                                    <mat-radio-button>CIR Approval Pending</mat-radio-button>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-select [(ngModel)]="selectedExim"
+                                                (selectionChange)="onSearchOnOpportunityData()"
+                                                placeholder="Select HSBC-Product Name"
+                                                [disabled]="!allProductList?.length" panelClass="productSelect">
+                                                <mat-option *ngFor="let product of allProductList" [value]="product">
+                                                    {{product}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select multiple [(ngModel)]="selectedCampaigns"
+                                                (selectionChange)="onSearchOnOpportunityData()"
+                                                (closed)="campaignSearchText = ''; updateFilteredCampaignOptions()"
+                                                placeholder="Select Campaign Name" [panelClass]="'design_multiselect'">
+                                                <mat-select-trigger> {{ getSelectedCampaignText() }}
+                                                </mat-select-trigger>
+                                                <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                                    <div class="filter_select_search"
+                                                        (click)="$event.stopPropagation()">
+                                                        <input type="text" [(ngModel)]="campaignSearchText"
+                                                            (input)="filterCampaignOptions()"
+                                                            (keydown)="$event.stopPropagation()" placeholder="Search"
+                                                            class="searchbox_input">
+                                                        <em class="fas fa-search searchbox_Icn"></em>
+                                                    </div>
+                                                </mat-option>
+                                                <mat-option *ngFor="let campaign of filteredCampaignOptions"
+                                                    [value]="campaign.id">
+                                                    {{ campaign.campaignName }}
+                                                </mat-option>
+                                                <mat-option *ngIf="filteredCampaignOptions.length === 0" disabled
+                                                    class="no-records-option">
+                                                    <span class="no-records-text">No records found</span>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td style="text-align: center;">
+                                    <button type="button" mat-icon-button ngbTooltip="Clear Filter"
+                                        class="matIcon red_icn" color="primary" (click)="clearAllFilters()"
+                                        [disabled]="!hasAnyFiltersApplied()"><em class="fas fa-eraser"></em></button>
+                                </td>
+                            </tr>
+                            <ng-container *ngIf="opportunityData && opportunityData.length > 0; else noData">
+                                <tr *ngFor="let item of opportunityData; let i = index">
+                                    <td class="text-center">{{ startIndex + i + 1 }}</td>
+                                    <td>
+                                        <span class="lightred_badge">{{ item.customerId || '-' }}</span>
+                                    </td>
+                                    <td>{{ item.customerName || '-' }}</td>
+                                    <td>{{ item.rmName || '-' }}</td>
+
+                                    <td class="no_wrap"
+                                        *ngIf="!isAllCampaignData(allCampaignData[selectedCampaignIndex]?.campaignId)">
+                                        <ng-container *ngIf="item.campaignData?.length > 0; else noStatus">
+                                            <div class="d-flex align-items-center" style="white-space: nowrap;">
+                                                <span>{{ item.campaignData[0]?.convertRejectStatus || '-' }}</span>
+                                                <ng-container
+                                                    *ngIf="item.campaignData[0]?.convertRejectStatus === 'Converted' || item.campaignData[0]?.convertRejectStatus === 'Rejected' || item.campaignData[0]?.convertRejectStatus === 'Work In Progress' || item.campaignData[0]?.convertRejectStatus === 'Work in Progress'">
+                                                    <i class="fas fa-info-circle ml-2" style="cursor: help;"
+                                                        matTooltip="{{ item.campaignData[0]?.convertRejectStatus === 'Converted' ? '$' + (item.campaignData[0]?.convertedValue || 0 | number:'1.0-2') : (item.statusRemark || '-') }}"
+                                                        matTooltipPosition="above">
+                                                    </i>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                        <ng-template #noStatus>-</ng-template>
+                                    </td>
+
+                                    <td class="no_wrap">
+                                        <ng-container *ngIf="item.campaignData?.length > 0; else noValue">
+                                            <ng-container *ngIf="item.campaignId === 0; else individualValues">
+                                                ${{ item.allConvertedValue || 0 | number:'1.0-2' }}
+                                            </ng-container>
+                                            <ng-template #individualValues>
+                                                <span *ngFor="let c of item.campaignData; let i = index">
+                                                    ${{ c.convertedValue || 0 | number:'1.0-2' }}
+                                                    <span *ngIf="i < item.campaignData.length - 1">, </span>
+                                                </span>
+                                            </ng-template>
+                                        </ng-container>
+
+                                        <ng-template #noValue>-</ng-template>
+                                    </td>
+
+                                    <td>
+                                        <span class="skyblue_badge">{{ item.preApprovedStatus || '-' }}</span>
+                                        <i class="fas fa-info-circle ml-1"  matTooltip="Journey processed on stale data"
+                                        matTooltipPosition="above" *ngIf="(item.preApprovedStatus === 'Eligible' || item.preApprovedStatus === 'Reject') && item.isFreshCir === false"
+                                            ></i>
+
+                                    </td>
+                                    <td>
+                                        {{ item.limitApproved ? item.limitApproved : '–' }}
+                                    </td>
+
+                                    <td>
+                                        <ng-container *ngIf="item.campaignData?.length > 0">
+                                            <!-- Show first 2 campaign names -->
+                                            <ng-container
+                                                *ngFor="let c of item.campaignData | slice:0:2; let i = index">
+                                                {{ c.campaignName }}
+                                                <span *ngIf="i < 1 && item.campaignData.length > 1">, </span>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <span *ngIf="item.campaignData?.length > 2" [matMenuTriggerFor]="moreMenu"
+                                            class="darkgreen_text" style="cursor:pointer;">
+                                            More
+                                        </span>
+                                        <mat-menu #moreMenu="matMenu" xPosition="before" class="newtable_menu">
+                                            <!-- Show campaigns beyond the first 2 -->
+                                            <button mat-menu-item *ngFor="let c of item.campaignData | slice:2">
+                                                {{ c.campaignName }}
+                                            </button>
+                                        </mat-menu>
+                                    </td>
+
+                                    <td class="nowrap_td text-center">
+                                        <a mat-icon-button class="grey_text" ngbTooltip="View Profile"
+                                            (click)="navigateToView(item?.pan)">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+
+                                        <div ngbDropdown container="body" class="dropdown d-inline">
+                                            <a *ngIf="canShowActions(item)" href="javascript:void(0);"
+                                                class="action-icon" ngbDropdownToggle>
+                                                <em class="fas fa-ellipsis-v" [placement]="['left','right','auto']"
+                                                    ngbTooltip="More"></em>
+                                            </a>
+
+                                            <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
+                                                <button *ngIf="canShowAudit()" ngbDropdownItem
+                                                    (click)="auditLogPopup(item)">
+                                                    <i class="fas fa-clipboard-list mr-1"></i> Audit Logs
+                                                </button>
+                                                <!-- <span
+                                                    [ngbTooltip]="!hasInProcessCampaigns(item) ? 'All campaigns are up to date.' : ''"
+                                                    class="d-block"> -->
+                                                <!-- <button *ngIf="item?.isSetStatusAllowed" ngbDropdownItem [disabled]="!hasInProcessCampaigns(item)"
+                                                        [ngClass]="{'disabled-button': !hasInProcessCampaigns(item)}"
+                                                        (click)="hasInProcessCampaigns(item) ? OpchangestatusPopup(item) : null">
+                                                        <i class="fas fa-tasks mr-1"></i> Change Status
+                                                    </button> -->
+                                                <button *ngIf="item?.isSetStatusAllowed && hasInProcessCampaigns(item)"
+                                                    ngbDropdownItem (click)="OpchangestatusPopup(item)">
+                                                    <i class="fas fa-tasks mr-1"></i> Change Status
+                                                </button>
+                                                <!-- </span> -->
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <ng-template #noData>
+                                <tr>
+                                    <td colspan="10" class="text-center"><app-no-data-found message="No details found" />
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-table NP_LeftPagintion" *ngIf="!isLoading">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{(startIndex+1)}} to
+                            {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                            {{totalSize}}
+                            row
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee
+                                            [panelClass]="'pagination_select'"
+                                            (valueChange)="pageSizeChange(pagesizee.value,page)"
+                                            [ngModelOptions]="{standalone: true}">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-5">
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                    [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                    (pageChange)="onChangePage($event)">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

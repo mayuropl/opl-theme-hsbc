@@ -1,0 +1,28 @@
+
+  <div class="customdate_header-header">
+    <app-custom-daterangepanel></app-custom-daterangepanel>
+    <div class="cusom_date_head">
+      <button
+      mat-icon-button
+      class="customdate_header-double-arrow"
+      (click)="previousClicked('year')"
+    >
+      <mat-icon>keyboard_arrow_left</mat-icon>
+     </button>
+    <button mat-icon-button (click)="previousClicked('month')">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+     <span class="examplecustomdate_header_label">{{ periodLabel }}</span>
+     <button mat-icon-button (click)="nextClicked('month')">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="customdate_header-double-arrow"
+      (click)="nextClicked('year')"
+    >
+      <mat-icon>keyboard_arrow_right</mat-icon>
+     </button>
+    </div>
+  </div>
+

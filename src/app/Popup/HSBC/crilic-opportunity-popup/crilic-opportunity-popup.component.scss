@@ -1,0 +1,14 @@
+.box_design_ttl_bar{
+    border-bottom: 1px solid #DCDFE0;
+  }
+
+
+  ::ng-deep {
+    .popupMain_design .popup_design .mat-mdc-dialog-content {
+        max-height: inherit !important;
+    }
+  }
+
+  .max-h-300{
+    max-height: 300px !important;
+  }

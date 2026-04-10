@@ -1,0 +1,541 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page">
+    <div class="__main_Container">
+            <div class="page_Title_sec auto_set_top" [ngClass]="{ fixedtitle: scrolled }">
+            <div class="page_Title_left">
+                <h4 class="cursor_pointer" (click)="navBack();">
+                    <em class="fa fa-arrow-left mr-2"></em>
+                    Consumer Bureau Details
+                </h4>
+                <p><span>Important Instructions</span> : Consumer bureau intimates the customer via SMS that HSBC has done bureau pull. Limit this only basis customer consent or for lending customers, UBO only.</p>
+            </div>
+            <div class="page_Title_Right">
+                <span class="lightred_badge"><span>Name:</span> {{consumerData?.borrowerName || '-'}}</span>
+                <!-- <span class="lightred_badge mr-2"><span>PAN:</span> {{ formatPan(consumerData?.pan) }}</span> -->
+                <span class="lightred_badge"><span>PAN:</span> {{consumerData?.pan || '-'}}</span>
+                <!-- <button type="button" mat-flat-button class="btn_design with_icn" color="secondary" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD)"
+                    [matMenuTriggerFor]="menu">Download<em class="fas fa-caret-down ml-2"></em></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="downloadConsumerReport()">Download Report</button>
+                    <button mat-menu-item (click)="downloadConsumerPdf()">Download Pdf</button>
+                </mat-menu> -->
+                <button type="button" mat-flat-button class="btn_design with_icn" color="secondary" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD)"
+                (click)="downloadConsumerReport()" [disabled]="!checkAnalysisExistOrNot">
+          Bureau Report <em class="fas fa-download ml-2"></em>
+        </button>
+        <button type="button" mat-flat-button class="btn_design with_icn" color="secondary" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD)"
+               (click)="downloadConsumerPdf()" [disabled]="!checkAnalysisExistOrNot">
+          Analysis Report <em class="fas fa-download ml-2"></em>
+        </button>
+                <!-- <button type="button" mat-flat-button class="btn_design with_icn" color="secondary"
+                    (click)="downloadConsumerReport()">Download Report<em class="fa fa-arrow-down ml-2"></em></button>
+                <button type="button" mat-flat-button class="btn_design with_icn" color="secondary"
+                    (click)="downloadConsumerPdf()">Download Pdf<em class="fa fa-arrow-down ml-2"></em></button> -->
+            </div>
+        </div>
+        <div class="comingSoon_div mt-3 box_design p-5" *ngIf="checkAnalysisExistOrNot == false">
+                <div class="comingSoon_lottie_icon"> 
+                  <i class="fas fa-exclamation-triangle __HSBC_lotties_Not"></i> 
+                </div> 
+                <div class="comingSoon_text">
+                    <h3 class="theme_text orange_text">
+                      Bureau Analysis Failed.
+                      <p>There is some issue in calculation go back and retry</p>
+                    </h3>
+                </div>
+            </div>
+            <div class="comingSoon_div mt-3 box_design p-5"  *ngIf="checkAnalysisExistOrNot == undefined || checkAnalysisExistOrNot ==null ">
+                <div class="comingSoon_lottie">
+                    <img class="__HSBC_lotties_Not"
+                        src="assets/images/hsbc/comingsoon_img.svg" />
+                </div>
+                <div class="comingSoon_text">
+                    <h3 class="theme_text">Please wait!<br>We are calculating data.</h3>
+                </div>
+            </div> 
+        <div *ngIf="checkAnalysisExistOrNot">
+        <!-- <div class="__Top_Heading_GRP __PB_20 mobileTopHeading">
+
+            <div class="Top_Heading__Right __DFS_Btn_Grp tab_Btn_Grp">
+                <div class="HSBC_BGCard_View __HeadingTab">
+                    <div class="nav-bordered dash-tab-Np ">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item tx-center">
+                                <div class="nav-link">
+                                    <span>Name</span>
+                                    <p class="notification-list">{{consumerData?.borrowerName || '-'}}</p>
+                                </div>
+                            </li>
+                            <li class="nav-item tx-center">
+                                <div class="nav-link">
+                                    <span>PAN</span>
+                                    <p class="notification-list">{{consumerData?.pan || '-'}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <button mat-flat-button color="primary" class="Btn__Common __Primary"
+                    (click)="downloadConsumerReport()">Download Report</button>
+            </div>
+        </div> -->
+
+        <div class="export_details_cols cols_3  without_lottie_cols red_boxes mb-3"
+            *ngIf="consumerData?.creditHistoryFound == true">
+            <div class="exp_col" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU2,consValue.PageActions.BUREAU_SCORE) || commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU,consValue.PageActions.BUREAU_SCORE)">
+                <div class="exp_col_dtl">
+                    <p>Bureau Score</p>
+                    <h3> {{!this.commonService.isObjectNullOrEmpty(consumerData?.cibilScore) ?
+                        consumerData?.cibilScore : '-'}}</h3>
+                </div>
+            </div>
+            <div class="exp_col" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU2,consValue.PageActions.BUREAU_VINTAGE) || commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU,consValue.PageActions.BUREAU_VINTAGE)">
+                <div class="exp_col_dtl">
+                    <p>Bureau Vintage</p>
+                    <h3>{{!this.commonService.isObjectNullOrEmpty(consumerData?.bureauVintage) ?
+                        consumerData?.bureauVintage : '-'}}</h3>
+                </div>
+            </div>
+            <div class="exp_col" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU2,consValue.PageActions.TOTAL_NO_OF_OPEN_ACCOUNTS) || commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU,consValue.PageActions.TOTAL_NO_OF_OPEN_ACCOUNTS)">
+                <div class="exp_col_dtl">
+                    <p>Total no. of open account</p>
+                    <h3>{{!this.commonService.isObjectNullOrEmpty(consumerData?.countOfAccount) ?
+                        consumerData?.countOfAccount : '-'}}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="NP_Com_Group" *ngIf="consumerData?.creditHistoryFound == true">
+            <div class="DetailsCard_teaserView Tablet_mobileView">
+                <div class="LH_NP_Com box_design" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU2,consValue.PageActions.DETAILS_OF_SPECIFIC_LOAN_TYPES) || commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU,consValue.PageActions.DETAILS_OF_SPECIFIC_LOAN_TYPES)">
+                    <div class="box_design_ttl_bar">
+                        <div class="box_design_ttl_bar_left">
+                            <h4>Details of Specific Loan Types</h4>
+                        </div>
+                    </div>
+                    <div class="table-responsive ">
+                        <table class="CommonTable_NP table_BG_br_center Mobile_table_View_NP no_stripe_borderX_table">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th>Particular</th>
+                                    <th>Home Loan</th>
+                                    <th>LAP</th>
+                                    <th>Loan against FD / investments (LAS)</th>
+                                    <th>Credit card</th>
+                                </tr>
+                            </thead>
+                            <tbody
+                                *ngIf="consumerData?.specificLoanTypeProxy !== null && consumerData?.specificLoanTypeProxy !== undefined">
+                                <tr>
+                                    <td data-label="Particular">No. of accounts</td>
+                                    <td data-label="Home Loan">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.noAccHL)
+                                        ? consumerData?.specificLoanTypeProxy?.noAccHL : '-'}}</td>
+                                    <td data-label="LAP">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.noAccLap)
+                                        ? consumerData?.specificLoanTypeProxy?.noAccLap : '-'}}</td>
+                                    <td data-label="Loan against FD / investments (LAS)">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.noAccFd)
+                                        ? consumerData?.specificLoanTypeProxy?.noAccFd : '-'}}</td>
+                                    <td data-label="Credit card">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.noAccCc)
+                                        ? consumerData?.specificLoanTypeProxy?.noAccCc : '-'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td data-label="Particular">Sanction amount</td>
+                                    <td data-label="Home Loan">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.sanctionAmtHL)
+                                        ? '₹' + (consumerData?.specificLoanTypeProxy?.sanctionAmtHL | indianCurrency) : '-'}}</td>
+                                    <td data-label="LAP">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.sanctionAmtLap)
+                                        ? '₹' + (consumerData?.specificLoanTypeProxy?.sanctionAmtLap | indianCurrency) : '-'}}</td>
+                                    <td data-label="Loan against FD / investments (LAS)">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.sanctionAmtFd)
+                                        ? '₹' + (consumerData?.specificLoanTypeProxy?.sanctionAmtFd | indianCurrency) : '-'}}</td>
+                                    <td data-label="Credit card">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.sanctionAmtCc)
+                                        ? '₹' + ( consumerData?.specificLoanTypeProxy?.sanctionAmtCc | indianCurrency) : '-'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td data-label="Particular">o/s amount</td>
+                                    <td data-label="Home Loan">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.ostAmtHl)
+                                        ? '₹' + (consumerData?.specificLoanTypeProxy?.ostAmtHl| indianCurrency) : '-'}}</td>
+                                    <td data-label="LAP">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.ostAmtLap)
+                                        ? '₹' + (consumerData?.specificLoanTypeProxy?.ostAmtLap| indianCurrency) : '-'}}</td>
+                                    <td data-label="Loan against FD / investments (LAS)">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.ostAmtFd)
+                                        ? '₹' + (consumerData?.specificLoanTypeProxy?.ostAmtFd | indianCurrency): '-'}}</td>
+                                    <td data-label="Credit card">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.specificLoanTypeProxy?.ostAmtCc)
+                                        ? '₹' + (consumerData?.specificLoanTypeProxy?.ostAmtCc| indianCurrency) : '-'}}</td>
+                                </tr>
+
+                            </tbody>
+                            <tbody
+                                *ngIf="consumerData?.specificLoanTypeProxy == null && consumerData?.specificLoanTypeProxy == undefined">
+                                <tr>
+                                    <td colspan="10">
+                                        <app-no-data-found />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="LH_NP_Com box_design" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU2,consValue.PageActions.NO_OF_NEW_LOANS) ||commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU,consValue.PageActions.NO_OF_NEW_LOANS)">
+                    <div class="box_design_ttl_bar">
+                        <div class="box_design_ttl_bar_left">
+                            <h4>No. of new loans</h4>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="CommonTable_NP table_BG_br_center Mobile_table_View_NP no_stripe_borderX_table">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th>Status</th>
+                                    <th>Last 1 Year</th>
+                                    <th>Last 6 Months</th>
+                                    <th>Last 3 Months</th>
+                                </tr>
+                            </thead>
+                            <tbody
+                                *ngIf="consumerData?.loanAnalysis !== null && consumerData?.loanAnalysis !== undefined">
+                                <tr>
+                                    <td data-label="Status">No. of New Loans</td>
+                                    <td data-label="Last 1 Year">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.countOfLoanIn6To12Month)
+                                        ? consumerData?.loanAnalysis?.countOfLoanIn6To12Month : '-'}}</td>
+                                    <td data-label="Last 6 Months">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.countOfLoanIn3To6Month)
+                                        ? consumerData?.loanAnalysis?.countOfLoanIn3To6Month : '-'}}</td>
+                                    <td data-label="Last 3 Months">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.countOfLoanIn0To3Month)
+                                        ? consumerData?.loanAnalysis?.countOfLoanIn0To3Month : '-'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td data-label="Status">Sanction amount</td>
+                                    <td data-label="Last 1 Year">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.last6To12MonthSanctionAmt)
+                                        ? '₹' + (consumerData?.loanAnalysis?.last6To12MonthSanctionAmt  | indianCurrency) : '-'}}</td>
+                                    <td data-label="Last 6 Months">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.last3To6MonthSanctionAmt)
+                                        ? '₹' + (consumerData?.loanAnalysis?.last3To6MonthSanctionAmt | indianCurrency) : '-'}}</td>
+                                    <td data-label="Last 3 Months">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.last0To3MonthSanctionAmt)
+                                        ? '₹' + (consumerData?.loanAnalysis?.last0To3MonthSanctionAmt | indianCurrency) : '-'}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td data-label="Status">No. of unsecured / secured business loans</td>
+                                    <td data-label="Last 1 Year">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.countOf6To12MonthSecureUnsecureLoan)
+                                        ? consumerData?.loanAnalysis?.countOf6To12MonthSecureUnsecureLoan : '-'}}
+                                    </td>
+                                    <td data-label="Last 6 Months">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.countOf3To6MonthSecureUnsecureLoan)
+                                        ? consumerData?.loanAnalysis?.countOf3To6MonthSecureUnsecureLoan : '-'}}
+                                    </td>
+                                    <td data-label="Last 3 Months">
+                                        {{!this.commonService.isObjectNullOrEmpty(consumerData?.loanAnalysis?.countOf0To3MonthSecureUnsecureLoan)
+                                        ? consumerData?.loanAnalysis?.countOf0To3MonthSecureUnsecureLoan : '-'}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tbody
+                                *ngIf="consumerData?.loanAnalysis == null && consumerData?.loanAnalysis == undefined">
+                                <tr>
+                                    <td colspan="10">
+                                        <app-no-data-found />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="CommonGrp_View NP_Com_Group" *ngIf="consumerData?.creditHistoryFound == true">
+            <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU2,consValue.PageActions.BASIC_DETAILS) || commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU,consValue.PageActions.BASIC_DETAILS)">
+                <div class="Top_Heading_Txt_left">
+                    <h4 class="Heading__H4">
+                        Basic details
+                    </h4>
+                </div>
+                <div class="table-responsive">
+                    <table
+                        class="CommonTable_NP Mobile_table_View_NP table_BG_br_center no_stripe_table bordered_table">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th rowspan="2">Particular</th>
+                                <th *ngFor="let detail of additionalDtls; let i = index">Report date</th>
+                            </tr>
+                            <tr class="tr_lightred_bg">
+                                <th *ngFor="let detail of additionalDtls; let i = index" class="centered-header">
+                                    {{detail.reportDate || '-'}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody
+                            *ngIf="additionalDtls != null && additionalDtls != undefined && additionalDtls.length > 0">
+                            <tr>
+                                <td data-label="Months">No. of Loan Enquiries</td>
+                                <td *ngFor="let detail of additionalDtls; let i = index" data-label="Report date">
+                                    {{!this.commonService.isObjectNullOrEmpty(detail?.countOfEnquires) ?
+                                    detail?.countOfEnquires : '-'}}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td data-label="Months">No. of Open Credit Facilities</td>
+                                <td *ngFor="let detail of additionalDtls; let i = index" data-label="Report date">
+                                    {{!this.commonService.isObjectNullOrEmpty(detail?.countOfOpenCreditFacility) ?
+                                    detail?.countOfOpenCreditFacility : '-'}}
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td data-label="Months">Total outstanding loan amount</td>
+                                <td *ngFor="let detail of additionalDtls; let i = index" data-label="Report date">
+                                    {{!this.commonService.isObjectNullOrEmpty(detail?.totalOutstandingAmountForAllLoans)
+                                    ?
+                                    '₹' + (detail?.totalOutstandingAmountForAllLoans| indianCurrency) : '-'}}
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td data-label="Months">Sanctioned Loan Amount</td>
+                                <td *ngFor="let detail of additionalDtls; let i = index" data-label="Report date">
+                                    {{!this.commonService.isObjectNullOrEmpty(detail?.totalSanctionLoanAmountForAllLoans)
+                                    ? '₹' + (detail?.totalSanctionLoanAmountForAllLoans| indianCurrency) : '-'}}</td>
+                            </tr>
+
+                            <tr>
+                                <td data-label="Months">Utilisation %</td>
+                                <td *ngFor="let detail of additionalDtls; let i = index" data-label="Report date">
+                                    {{!this.commonService.isObjectNullOrEmpty(detail?.creditFacilityUtilizationPercentage)
+                                    ? (detail?.creditFacilityUtilizationPercentage | number:'1.2-2') + '%' : '-'}}</td>
+                            </tr>
+
+                            <tr>
+                                <td data-label="Months">Total Credit Facility of HSBC in Compare to Overall Credit
+                                    Facility (%)</td>
+                                <td *ngFor="let detail of additionalDtls; let i = index" data-label="Report date">
+                                    {{!this.commonService.isObjectNullOrEmpty(detail.creditFacilityPercentageOfHsbc) ?
+                                    (detail.creditFacilityPercentageOfHsbc | number:'1.2-2') + '%' : '-'}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody
+                            *ngIf="additionalDtls == null || additionalDtls == undefined || additionalDtls.length<=0">
+                            <tr>
+                                <td colspan="10">
+                                    <app-no-data-found />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU2,consValue.PageActions.DEFAULT_DATA_OF_LAST_24_MONTHS) || commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU,consValue.PageActions.DEFAULT_DATA_OF_LAST_24_MONTHS)">
+                <div class="Top_Heading_Txt_left">
+                    <h4 class="Heading__H4">
+                        Default data of last 24 months
+                    </h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="CommonTable_NP Mobile_table_View_NP table_BG_No no_stripe_borderX_table">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th>Sr.no</th>
+                                <th>Status</th>
+                                <th>Amount
+                                    <span class="shorting" (click)="toggleSort('amountD',true)">
+                                        <mat-icon
+                                            *ngIf="currentSortField !== 'amountD'">unfold_more</mat-icon>
+                                        <mat-icon
+                                            *ngIf="currentSortField === 'amountD' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                            *ngIf="currentSortField === 'amountD' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+                                </th>
+                                <th>Closed Date
+                                    <span class="shorting" (click)="toggleSort('closedDateD',true)">
+                                        <mat-icon
+                                            *ngIf="currentSortField !== 'closedDateD'">unfold_more</mat-icon>
+                                        <mat-icon
+                                            *ngIf="currentSortField === 'closedDateD' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                            *ngIf="currentSortField === 'closedDateD' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+                                </th>
+                                <th>Loan Type</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of defaultDetailList; let i = index">
+                            <tr>
+                                <td data-label="Sr.no">{{i + 1}}</td>
+                                <td data-label="Status">{{!this.commonService.isObjectNullOrEmpty(item?.statusName) ?
+                                    item?.statusName : 'NA'}}</td>
+                                <td data-label="Amount">{{!this.commonService.isObjectNullOrEmpty(item?.amount) ? '₹' +
+                                    (item?.amount| indianCurrency) : '-'}}</td>
+                                <td data-label="Date">{{!this.commonService.isObjectNullOrEmpty(item?.closedDate) ?
+                                    item?.closedDate : '-'}}</td>
+                                <td data-label="Account number">
+                                    {{!this.commonService.isObjectNullOrEmpty(item?.loanTypeName) ? item?.loanTypeName :
+                                    'NA'}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody
+                            *ngIf="defaultDetailList == null || defaultDetailList == undefined || defaultDetailList?.length ==0">
+                            <tr>
+                                <td colspan="10">
+                                    <app-no-data-found message="No Defaults reported" />
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                    <!-- <div class="pagination-table NP_LeftPagintion mb-2">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{(startIndex+1)}} to
+                            {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                            {{totalSize}}
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="pageSize" (ngModelChange)="onPageChange(page)">
+                                            <mat-option *ngFor="let pages of PageSelectNumber"
+                                                [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            row per page
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                    [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU2,consValue.PageActions.HSBC_CLOSED_FACILITY) || commonService.isActionAvailable(pageData,consValue.pageMaster.CONSUMER_BUREAU,consValue.PageActions.HSBC_CLOSED_FACILITY)">
+                <div class="Top_Heading_Txt_left">
+                    <h4 class="Heading__H4">
+                        HSBC Closed Facility
+                    </h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="CommonTable_NP Mobile_table_View_NP table_BG_No no_stripe_borderX_table">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th>Sr.no</th>
+                                <th>Facility type</th>
+                                <th>Amount
+                                    <span class="shorting" (click)="toggleSort2('amount',true)">
+                                        <mat-icon
+                                            *ngIf="currentSortField !== 'amount'">unfold_more</mat-icon>
+                                        <mat-icon
+                                            *ngIf="currentSortField === 'amount' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                            *ngIf="currentSortField === 'amount' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+                                </th>
+                                <th>Opened/ Disbursed Date
+                                    <span class="shorting" (click)="toggleSort2('closedDate',true)">
+                                        <mat-icon
+                                            *ngIf="currentSortField !== 'closedDate'">unfold_more</mat-icon>
+                                        <mat-icon
+                                            *ngIf="currentSortField === 'closedDate' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                            *ngIf="currentSortField === 'closedDate' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of hsbcClosedFacilityList  | slice:
+                            (hsbcClosedFacilityPag.page()-1) *
+                            hsbcClosedFacilityPag.pageSize() :
+                            (hsbcClosedFacilityPag.page()-1) *
+                            hsbcClosedFacilityPag.pageSize() +
+                            hsbcClosedFacilityPag.pageSize() ; let i = index">
+                            <tr>
+                                <td data-label="Sr.no">
+                                    {{(hsbcClosedFacilityPag.page()-1)*hsbcClosedFacilityPag.pageSize()+(i+1)}}</td>
+                                <td data-label="Status">{{!this.commonService.isObjectNullOrEmpty(item?.loanTypeName) ?
+                                    item?.loanTypeName : 'NA'}}</td>
+                                <td data-label="Amount">{{!this.commonService.isObjectNullOrEmpty(item?.amount) ? '₹' +
+                                    (item?.amount| indianCurrency) : '-'}}</td>
+                                <td data-label="Date">{{!this.commonService.isObjectNullOrEmpty(item?.closedDate) ?
+                                    item?.closedDate : '-'}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody
+                            *ngIf="hsbcClosedFacilityList == null || hsbcClosedFacilityList == undefined || hsbcClosedFacilityList?.length ==0">
+                            <tr>
+                                <td colspan="10">
+                                    <app-no-data-found message="HSBC Closed Facility not found" />
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                    <div class="pagination-table NP_LeftPagintion">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(hsbcClosedFacilityPag.startIndex()+1)}} to
+                                {{(hsbcClosedFacilityPag.pageSize()*hsbcClosedFacilityPag.page()) >
+                                (hsbcClosedFacilityPag.totalSize) ?
+                                (hsbcClosedFacilityPag.totalSize) :
+                                (hsbcClosedFacilityPag.pageSize()*hsbcClosedFacilityPag.page())}}
+                                of
+                                {{hsbcClosedFacilityPag.totalSize}} rows
+
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <label class="d-inline-flex align-items-center"> <ng-select [clearable]="false"
+                                            name="tickets-table_length" class="hide-clear" aria-controls="tickets-table"
+                                            name="pageSize" [(ngModel)]="hsbcClosedFacilityPag.pageSize"
+                                            bindLabel="name" bindValue="value" [items]="PageSelectNumber"></ng-select>
+                                        row per page</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-5">
+                            <div class="text-md-right float-md-right pagination-rounded">
+
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="hsbcClosedFacilityPag.totalSize" [maxSize]="3"
+                                        [(page)]="hsbcClosedFacilityPag.page" [rotate]="true" [boundaryLinks]="true"
+                                        [pageSize]="hsbcClosedFacilityPag.pageSize()">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-no-data-found message="Oops! Not Found Credit History"
+            *ngIf="consumerData?.cibilScore == '000-1' || consumerData?.creditHistoryFound == false" />
+        </div>
+    </div>
+</div>

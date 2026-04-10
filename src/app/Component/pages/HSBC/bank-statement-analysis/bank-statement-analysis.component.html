@@ -1,0 +1,1956 @@
+<div class="container-fluid HSBC_Common_Pages ">
+    <div class="__main_Container">
+
+        <div class="page_Details ">
+
+            <div class="page_Title_sec">
+                <div class="page_Title_left">
+                    <h4 class="cursor_pointer">
+                        <!-- <em class="fa fa-arrow-left mr-2"></em> -->
+                        Bank Statement Analysis of Last 24 Months
+                    </h4>
+                </div>
+
+            </div>
+
+          <div class="box_design mb-4">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Self Transfer Analysis Portfolio Level</h4>
+              </div>
+              <div class="box_design_ttl_bar_right">
+                <mat-radio-group aria-label="Select an option"  [(ngModel)]="selectedSelfTransfer"
+                                 (change)="updateSelfTransferList($event.value, '1')">
+                  <mat-radio-button value="1">Moving out of HSBC</mat-radio-button>
+                  <mat-radio-button value="2">Moving into HSBC</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+
+            <div class="tableResponsive">
+              <table id="myTable" class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                <thead>
+                <tr class="tr_lightred_bg">
+                   <th>Sr. No.</th>
+                  <th width="55%">Bank Name
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.selfTransfers.column === '1' && sortStates.selfTransfers.order === '1'" (click)="handleSort('selfTransfers', '1', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.selfTransfers.column === '1' && sortStates.selfTransfers.order === '2'" (click)="handleSort('selfTransfers', '1', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                  <th></th>
+                  <th>Amount (Rs.)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.selfTransfers.column === '2' && sortStates.selfTransfers.order === '1'" (click)="handleSort('selfTransfers', '2', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.selfTransfers.column === '2' && sortStates.selfTransfers.order === '2'" (click)="handleSort('selfTransfers', '2', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                  <!-- <th>2024 Amount (₹)
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th>
+                  <th>2025 Amount (₹)
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th>
+                  <th>%Change
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th> -->
+                </tr>
+                </thead>
+
+                <tbody class="pos_rel"  [ngClass]="{'subloaderShowing': isLoading.selfTransfers}">
+                  <div class="table_sep_loader" *ngIf="isLoading.selfTransfers">
+                      <div class="loaderoverlay loader_screen">
+                        <div class="loader_screen_center">
+                            <div class="loader_screen_lottie">
+                                    <span class="logo_loader">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                    </span>
+                            </div>
+                            <h3>Please wait data is loading</h3>
+                        </div>
+                    </div>
+                  </div>
+                    @if(fullSelfTransfersList?.length>0){
+                <ng-container *ngFor="let bank of fullSelfTransfersList; let i = index">
+                  <tr>
+                    <td>  <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.selfTransfers[i] = !collapseStates.selfTransfers[i]"
+                      [ngClass]="{'rotate_icon': !collapseStates.selfTransfers[i]}">
+                <i class="fas fa-chevron-down"></i>
+                    </button>   <b >{{(pagination.selfTransfers.pageIndex-1)*pagination.selfTransfers.pageSize+(i+1)}}</b></td>
+                    <td><b>{{ bank.bankName }}</b></td>
+                    <td></td>
+                    <td><b>₹ {{ bank?.totalAmount | number }}</b></td>
+                    <!-- <td>₹ 6,95,151</td>
+                    <td>₹ 6,95,151</td>
+                    <td>-10%</td> -->
+                  </tr>
+
+                  <tr class="collapsing_tr"  [ngbCollapse]="collapseStates.selfTransfers[i]">
+                    <td colspan="15" class="intable_td">
+                      <div class="box_design mb-2" >
+                        <div class="tableResponsive inside_table">
+                          <table class="bordered_table w-100 after_cont_none">
+                            <thead>
+                            <tr>
+                              <th>Calendar Year</th>
+                              <th>Particulars</th>
+                              <th>Jan</th>
+                              <th>Feb</th>
+                              <th>Mar</th>
+                              <th>Apr</th>
+                              <th>May</th>
+                              <th>Jun</th>
+                              <th>Jul</th>
+                              <th>Aug</th>
+                              <th>Sep</th>
+                              <th>Oct</th>
+                              <th>Nov</th>
+                              <th>Dec</th>
+                              <th>Total</th>
+                            </tr>
+                            </thead>
+                            <ng-container *ngIf="!commonService.isObjectNullOrEmpty(bank?.yearWise); else noData12">
+                              <tbody>
+                              <ng-container *ngFor="let yearData of bank?.yearWise">
+                                <tr>
+                                  <td rowspan="2">{{yearData?.year}}</td>
+                                  <td>Count</td>
+                                  <td *ngFor="let month of yearData?.monthWise">{{ month?.totalCount == null ? '-' : month?.totalCount | number:'1.0-0'}}</td>
+                                </tr>
+                                <tr>
+                                  <td class="none"></td>
+                                  <td>Amount</td>
+                                  <td *ngFor="let month of yearData?.monthWise">
+                                    {{ month?.totalAmount != null ? '₹' : ''}}
+                                    {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                                  </td>
+                                </tr>
+                              </ng-container>
+                              </tbody>
+                            </ng-container>
+
+                            <ng-template #noData12>
+                              <tbody>
+                              <tr>
+                                <td colspan="15" class="no-data-cell">
+                                  <app-no-data-found message="No data found"></app-no-data-found>
+                                </td>
+                              </tr>
+                              </tbody>
+                            </ng-template>
+
+
+                          </table>
+                        </div>
+                        </div>
+                      <div class="box_design">
+                        <div class="tableResponsive inside_table">
+                          <table class="bordered_table w-100">
+                            <thead>
+                            <tr>
+                              <th width="2%">Sr. No.</th>
+                              <th width="40%">HSBC Customer Name</th>
+                              <th>Name matched for Self Transfer</th>
+                              <th>Amount (Rs.)
+                                 <span class="sort-container" >
+                                   <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.selfTransfers.innerColumn === '2' && sortStates.selfTransfers.innerOrder === '1'" (click)="handleSort('selfTransfers', '2', '1', true, bank)" attr.aria-label="Sort by name ascending">
+                                     arrow_drop_up
+                                   </mat-icon>
+                                   <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.selfTransfers.innerColumn === '2' && sortStates.selfTransfers.innerOrder === '2'" (click)="handleSort('selfTransfers', '2', '2', true, bank)" attr.aria-label="Sort by name descending">
+                                     arrow_drop_down
+                                   </mat-icon>
+                                 </span>
+                               </th>
+                              <th>Details</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                              @if(bank.custPagination.displayedCustList?.length>0){
+                            <tr *ngFor="let cust of bank.custPagination.displayedCustList; let j = index">
+                              <td >{{ j + 1 + (bank.custPagination.page-1) * bank.custPagination.pageSize }}</td>
+                              <td>{{cust.cust_name}}</td>
+                              <td>{{cust.matched_name}}</td>
+                              <td>₹ {{ cust.totalAmount | number }}</td>
+                              <td><a class="link"(click)="navigateToViewComponent(cust?.pan,cust?.custId)"><u>View</u></a></td>
+                            </tr>
+                              }  @else {
+                                <tr>
+                                  <td colspan="10">
+                                    <app-no-data-found message="No Data found" />
+                                  </td>
+                                </tr>
+                              }
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <!-- Child Pagination -->
+
+                        <div class="pagination-table NP_LeftPagintion" *ngIf="bank.custPagination.displayedCustList?.length>0">
+                          <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                              Showing
+                              {{((bank?.custPagination?.page - 1) * bank?.custPagination?.pageSize+1)}} to
+                              {{(bank?.custPagination?.pageSize*bank?.custPagination?.page) > (bank?.custPagination?.totalItems) ? (bank?.custPagination?.totalItems) : (bank?.custPagination?.pageSize*bank?.custPagination?.page)}} of
+                              {{bank?.custPagination?.totalItems}} rows
+                              <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                  <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="bank.custPagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                                (ngModelChange)="onChildPageChange(pagination['selfTransfers'],bank,bank.bankName)">
+                                      <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                        {{pages.value}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                              <span class="grey_text">row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                              <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination
+                                  [maxSize]="3"
+                                  [(page)]="bank.custPagination.page"
+                                  [pageSize]="bank.custPagination.pageSize"
+                                  [rotate]="true"
+                                  [collectionSize]="bank.custPagination.totalItems"
+                                  (pageChange)="onChildPageChange(pagination['selfTransfers'],bank,bank.bankName)">
+                                </ngb-pagination>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+                    }  @else {
+                      <tr>
+                        <td colspan="10">
+                          <app-no-data-found message="No Data found" />
+                        </td>
+                      </tr>
+                    }
+                </tbody>
+
+              </table>
+            </div>
+
+            <!-- Parent Pagination -->
+            <div class="pagination-table NP_LeftPagintion" *ngIf="fullSelfTransfersList?.length>0">
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{((pagination.selfTransfers.pageIndex - 1) * pagination.selfTransfers.pageSize+1)}} to
+                  {{(pagination.selfTransfers.pageSize*pagination.selfTransfers.pageIndex) > (selfTransfersList?.totalRows) ? (selfTransfersList?.totalRows) : (pagination.selfTransfers.pageSize*pagination.selfTransfers.pageIndex)}} of
+                  {{selfTransfersList?.totalRows}} rows
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pagination.selfTransfers.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                    (ngModelChange)="onPageChange('selfTransfers',pagesizee.value,pagination.selfTransfers.pageIndex)">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination
+                      [maxSize]="3"
+                      [rotate]="true"
+                      [collectionSize]="selfTransfersList?.totalRows"
+                      [pageSize]="pagination.selfTransfers.pageSize"
+                      [(page)]="pagination.selfTransfers.pageIndex"
+                      (pageChange)="onPageChange('selfTransfers' , pagination.selfTransfers.pageIndex,pagination.selfTransfers.pageSize)"
+                      [boundaryLinks]="true">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box_design mb-4">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Net Self Transfer Analysis</h4>
+              </div>
+         <div class="box_design_ttl_bar_right">
+                <button [matMenuTriggerFor]="Tablemenu1" mat-flat-button class="btn_design mat-secondary min_auto ln_40">Filter <i class="fas fa-sort-amount-up ml-2"></i></button>
+                <mat-menu class="" #Tablemenu1="matMenu">
+                    <div class="table_filter">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline"  (click)="$event.stopPropagation()">
+                          <mat-select  [placeholder]="getAmountTypePlaceholder('netSelfTransfer','amount')" panelClass="filter_input">
+                            <mat-option>
+                              <div class="input_field"  (click)="$event.stopPropagation()">
+                                <label>Min. Count</label>
+                                <mat-form-field appearance="outline" floatLabel="never">
+                                  <input type="text" matInput [(ngModel)]="filter.netSelfTransfer.amountMinInput" name="amountMinInput1" >
+                                 </mat-form-field>
+                              </div>
+                            </mat-option>
+                            <mat-option>
+                              <div class="input_field" (click)="$event.stopPropagation()">
+                                <label>Max. Count</label>
+                                <mat-form-field appearance="outline" floatLabel="never">
+                                  <input type="text" matInput [(ngModel)]="filter.netSelfTransfer.amountMaxInput" name="amountMaxInput1">
+                                 </mat-form-field>
+                              </div>
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+<!--                      <div class="NP_HSBC_ComInput select-field">-->
+<!--                        <mat-form-field appearance="outline"  (click)="$event.stopPropagation()">-->
+<!--                          <mat-select  [placeholder]="getAmountTypePlaceholder('supplier','interaction')" panelClass="filter_input">-->
+<!--                            <mat-option>-->
+<!--                              <div class="input_field"  (click)="$event.stopPropagation()">-->
+<!--                                <label>Min. Count</label>-->
+<!--                                <mat-form-field appearance="outline" floatLabel="never">-->
+<!--                                  <input type="text" matInput  [(ngModel)]="filter.supplier.interactionMinInput" name="interactionMinInput1" >-->
+<!--                                 </mat-form-field>-->
+<!--                              </div>-->
+<!--                            </mat-option>-->
+<!--                            <mat-option>-->
+<!--                              <div class="input_field"  (click)="$event.stopPropagation()">-->
+<!--                                <label>Max. Count</label>-->
+<!--                                <mat-form-field appearance="outline" floatLabel="never">-->
+<!--                                  <input type="text" matInput [(ngModel)]="filter.supplier.interactionMaxInput" name="interactionMaxInput1" >-->
+<!--                                 </mat-form-field>-->
+<!--                              </div>-->
+<!--                            </mat-option>-->
+<!--                          </mat-select>-->
+<!--                        </mat-form-field>-->
+<!--                      </div>-->
+                    <div class="filter_action">
+                      <button mat-flat-button color="primary" (click)="applyFilter('netSelfTransfer')">Apply Filter</button>
+                      <button mat-flat-button color="grey" (click)="clearFilter('netSelfTransfer')">Clear</button>
+                    </div>
+                    </div>
+                </mat-menu>
+              </div>
+              </div>
+
+            <div class="tableResponsive">
+              <table id="myTable" class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                <thead>
+                <tr class="tr_lightred_bg">
+                  <th width="6.5%">Sr. No.</th>
+                  <th width="70%">HSBC Customer Name</th>
+                  <th>Amount (Rs.)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.netSelfTransfer.column === '2' && sortStates.netSelfTransfer.order === '1'" (click)="handleSort('netSelfTransfer', '2', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.netSelfTransfer.column === '2' && sortStates.netSelfTransfer.order === '2'" (click)="handleSort('netSelfTransfer', '2', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                      </th>
+                      <!-- <th>2024 Amount (₹)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                      </th>
+                      <th>2025 Amount (₹)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                      </th>
+                      <th>%Change
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                      </th> -->
+                  <th class="text-center">Action</th>
+                </tr>
+                </thead>
+
+                <tbody class="pos_rel"  [ngClass]="{'subloaderShowing': isLoading.netSelfTransfer}">
+                <div class="table_sep_loader" *ngIf="isLoading.netSelfTransfer">
+                  <div class="loaderoverlay loader_screen">
+                    <div class="loader_screen_center">
+                      <div class="loader_screen_lottie">
+                                    <span class="logo_loader">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                    </span>
+                      </div>
+                      <h3>Please wait data is loading</h3>
+                    </div>
+                  </div>
+                </div>
+                  @if(netTransfersList?.data?.length>0){
+                    <ng-container  *ngFor="let cust of netTransfersList.data; let i = index">
+                      <tr>
+                        <td>
+                          <button mat-icon-button class="matIcon red_icn mr-2"
+                                  (click)="collapseStates.netSelfTransfer[i] = !collapseStates.netSelfTransfer[i]"
+                                  [ngClass]="{'rotate_icon': !collapseStates.netSelfTransfer[i]}">
+                            <i class="fas fa-chevron-down"></i>
+                          </button>
+                          <b>{{(pagination.netSelfTransfer.pageIndex-1)*pagination.netSelfTransfer.pageSize+(i+1)}}</b>
+                        </td>
+                        <td>  <b >{{ cust.cust_name }}</b></td>
+                        <td>  <b >₹ {{ cust.net_amount | number }}</b></td>
+                        <!-- <td>₹ 6,95,151</td>
+                        <td>₹ 6,95,151</td>
+                        <td>-10%</td> -->
+                        <td class="text-center">
+                          <button (click)="navigateToViewComponent(cust?.pan,cust?.cust_id)"
+                                  [placement]="['left', 'right','auto']" ngbTooltip="View"
+                                  class="matIcon skyblue_icn">
+                            <em class="fa fa-eye"></em>
+                          </button>
+                        </td>
+                    
+                      </tr>
+
+                      <tr class="collapsing_tr"  [ngbCollapse]="collapseStates.netSelfTransfer[i]">
+                        <td colspan="15" class="intable_td">
+                          <div class="box_design mb-2" >
+                            <div class="tableResponsive inside_table">
+                              <table class="bordered_table w-100 after_cont_none">
+                                <thead>
+                                <tr>
+                                  <th>Calendar Year</th>
+                                  <th>Particulars</th>
+                                  <th>Jan</th>
+                                  <th>Feb</th>
+                                  <th>Mar</th>
+                                  <th>Apr</th>
+                                  <th>May</th>
+                                  <th>Jun</th>
+                                  <th>Jul</th>
+                                  <th>Aug</th>
+                                  <th>Sep</th>
+                                  <th>Oct</th>
+                                  <th>Nov</th>
+                                  <th>Dec</th>
+                                  <th>Total</th>
+                                </tr>
+                                </thead>
+                                <ng-container *ngIf="!commonService.isObjectNullOrEmpty(cust?.yearWise); else noData13">
+                                  <tbody>
+                                  <ng-container *ngFor="let yearData of cust?.yearWise">
+                                    <tr>
+                                      <td rowspan="2">{{yearData?.year}}</td>
+<!--                                      <td>Count</td>-->
+<!--                                      <td *ngFor="let month of yearData?.monthWise">{{ month?.totalCount == null ? '-' : month?.totalCount | number:'1.0-0'}}</td>-->
+                                    </tr>
+                                    <tr>
+                                      <td class="none"></td>
+                                      <td>Amount</td>
+                                      <td *ngFor="let month of yearData?.monthWise">
+                                        {{ month?.totalAmount != null ? '₹' : ''}}
+                                        {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                                      </td>
+                                    </tr>
+                                  </ng-container>
+                                  </tbody>
+                                </ng-container>
+
+                                <ng-template #noData13>
+                                  <tbody>
+                                  <tr>
+                                    <td colspan="15" class="no-data-cell">
+                                      <app-no-data-found message="No data found"></app-no-data-found>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </ng-template>
+
+
+                              </table>
+                            </div>
+                          </div>
+                          </td>
+                      </tr>
+                    </ng-container>
+                  }  @else {
+                    <tr>
+                      <td colspan="10">
+                        <app-no-data-found message="No Data found" />
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+
+              </table>
+            </div>
+              <!-- Parent Pagination -->
+            <div class="pagination-table NP_LeftPagintion" *ngIf="netTransfersList?.data.length>0">
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{((pagination.netSelfTransfer.pageIndex - 1) * pagination.netSelfTransfer.pageSize+1)}} to
+                  {{(pagination.netSelfTransfer.pageSize*pagination.netSelfTransfer.pageIndex) > (netTransfersList?.totalRows) ? (netTransfersList?.totalRows) : (pagination.netSelfTransfer.pageSize*pagination.netSelfTransfer.pageIndex)}} of
+                  {{netTransfersList?.totalRows}} rows
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pagination.netSelfTransfer.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                    (ngModelChange)="onPageChange('netSelfTransfer',pagesizee.value,pagination.netSelfTransfer.pageIndex)">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                     </div>
+                  </div>
+                  <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination
+                      [collectionSize]="netTransfersList?.totalRows"
+                      [maxSize]="3"
+                      [rotate]="true"
+                      [pageSize]="pagination.netSelfTransfer.pageSize"
+                      [(page)]="pagination.netSelfTransfer.pageIndex"
+                      (pageChange)="onPageChange('netSelfTransfer')"
+                      [boundaryLinks]="true">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="page_Title_sec">
+                <div class="page_Title_left">
+                    <h4 class="cursor_pointer">
+                        Counter Parties Analysis Portfolio Level
+                    </h4>
+                </div>
+
+            </div>
+          <div class="box_design mb-4">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Supplier List (Payment made from HSBC account)</h4>
+              </div>
+         <div class="box_design_ttl_bar_right">
+                <button [matMenuTriggerFor]="Tablemenu" mat-flat-button class="btn_design mat-secondary min_auto ln_40">Filter <i class="fas fa-sort-amount-up ml-2"></i></button>
+                <mat-menu class="" #Tablemenu="matMenu">
+                    <div class="table_filter">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline"  (click)="$event.stopPropagation()">
+                          <mat-select  [placeholder]="getAmountTypePlaceholder('supplier','amount')" panelClass="filter_input">
+                            <mat-option>
+                              <div class="input_field"  (click)="$event.stopPropagation()">
+                                <label>Min. Count</label>
+                                <mat-form-field appearance="outline" floatLabel="never">
+                                  <input type="text" matInput [(ngModel)]="filter.supplier.amountMinInput" name="amountMinInput1" >
+                                 </mat-form-field>
+                              </div>
+                            </mat-option>
+                            <mat-option>
+                              <div class="input_field" (click)="$event.stopPropagation()">
+                                <label>Max. Count</label>
+                                <mat-form-field appearance="outline" floatLabel="never">
+                                  <input type="text" matInput [(ngModel)]="filter.supplier.amountMaxInput" name="amountMaxInput1">
+                                 </mat-form-field>
+                              </div>
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline"  (click)="$event.stopPropagation()">
+                          <mat-select  [placeholder]="getAmountTypePlaceholder('supplier','interaction')" panelClass="filter_input">
+                            <mat-option>
+                              <div class="input_field"  (click)="$event.stopPropagation()">
+                                <label>Min. Count</label>
+                                <mat-form-field appearance="outline" floatLabel="never">
+                                  <input type="text" matInput  [(ngModel)]="filter.supplier.interactionMinInput" name="interactionMinInput1" >
+                                 </mat-form-field>
+                              </div>
+                            </mat-option>
+                            <mat-option>
+                              <div class="input_field"  (click)="$event.stopPropagation()">
+                                <label>Max. Count</label>
+                                <mat-form-field appearance="outline" floatLabel="never">
+                                  <input type="text" matInput [(ngModel)]="filter.supplier.interactionMaxInput" name="interactionMaxInput1" >
+                                 </mat-form-field>
+                              </div>
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    <div class="filter_action">
+                      <button mat-flat-button color="primary" (click)="applyFilter('supplier')">Apply Filter</button>
+                      <button mat-flat-button color="grey" (click)="clearFilter('supplier')">Clear</button>
+                    </div>
+                    </div>
+                </mat-menu>
+              </div>
+              </div>
+
+            <div class="tableResponsive">
+              <table id="myTable" class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                <thead>
+                <tr class="tr_lightred_bg">
+                   <th>Sr. No.</th>
+                  <th width="50%">Name
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.supplier.column === '13' && sortStates.supplier.order === '1'" (click)="handleSort('supplier', '13', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.supplier.column === '13' && sortStates.supplier.order === '2'" (click)="handleSort('supplier', '13', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                  <!-- <th>PAN</th>
+                  <th>Customer Type</th>
+                  <th>Category</th>-->
+                  <th>Interactions
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.supplier.column === '4' && sortStates.supplier.order === '1'" (click)="handleSort('supplier', '4', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.supplier.column === '4' && sortStates.supplier.order === '2'" (click)="handleSort('supplier', '4', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                  <!-- <th>2024 Amount (₹)
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th>
+                  <th>2025 Amount (₹)
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th>
+                  <th>%Change
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th> -->
+                  <th>Amount (Rs.)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.supplier.column === '2' && sortStates.supplier.order === '1'" (click)="handleSort('supplier', '2', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.supplier.column === '2' && sortStates.supplier.order === '2'" (click)="handleSort('supplier', '2', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                  <th class="text-center">Action</th>
+                </tr>
+                </thead>
+
+                <tbody class="pos_rel"  [ngClass]="{'subloaderShowing': isLoading.supplier}">
+                  <div class="table_sep_loader" *ngIf="isLoading.supplier">
+                    <div class="loaderoverlay loader_screen">
+                      <div class="loader_screen_center">
+                          <div class="loader_screen_lottie">
+                                  <span class="logo_loader">
+                                      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                  </span>
+                          </div>
+                          <h3>Please wait data is loading</h3>
+                      </div>
+                  </div>
+                  </div>
+                  @if(fullSupplierList?.length>0){
+                <ng-container *ngFor="let bank of fullSupplierList; let i = index">
+                  <tr>
+                    <td> <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.supplier[i] = !collapseStates.supplier[i]"
+                      [ngClass]="{'rotate_icon': !collapseStates.supplier[i]}">
+                <i class="fas fa-chevron-down"></i>
+              </button><b >{{ i + 1 + (pagination.supplier.pageIndex-1) * pagination.supplier.pageSize }}</b></td>
+                    <td><b>{{ bank.partyName }}</b></td>
+                    <td><b>{{bank.custPagination.totalItems}}</b></td>
+                    <!-- <td>₹ 6,95,151</td>
+                    <td>₹ 6,95,151</td>
+                    <td>-10%</td> -->
+                    <td><b>₹ {{ bank?.totalAmount | number }}</b></td>
+                    <td data-label="Action" class="text-center">
+                      <button [placement]="['left', 'right','auto']" ngbTooltip="View" mat-icon-button
+                              class="matIcon skyblue_icn" (click)="viewProspect(bank.partyName,pagination['supplier'])">
+                        <em class="fa fa-eye"></em>
+                      </button>
+                     </td>
+                  </tr>
+
+                  <tr class="collapsing_tr"  [ngbCollapse]="collapseStates.supplier[i]">
+                    <td colspan="15" class="intable_td">
+                      <div class="box_design">
+                        <div class="tableResponsive inside_table">
+                          <table class="bordered_table w-100">
+                            <thead>
+                            <tr>
+                              <th width="2%">Sr. No.</th>
+                              <th width="50%">HSBC Customer Name</th>
+                              <th>Amount (Rs.)
+                                 <span class="sort-container" >
+                                   <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.supplier.innerColumn === '2' && sortStates.supplier.innerOrder === '1'" (click)="handleSort('supplier', '2', '1', true, bank)" attr.aria-label="Sort by name ascending">
+                                     arrow_drop_up
+                                   </mat-icon>
+                                   <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.supplier.innerColumn === '2' && sortStates.supplier.innerOrder === '2'" (click)="handleSort('supplier', '2', '2', true, bank)" attr.aria-label="Sort by name descending">
+                                     arrow_drop_down
+                                   </mat-icon>
+                                 </span>
+                               </th>
+                              <th>Details</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                              @if(bank.custPagination.displayedCustList?.length>0){
+                            <tr *ngFor="let cust of bank.custPagination.displayedCustList; let j = index">
+                              <td >{{ j + 1 + (bank.custPagination.page-1) * bank.custPagination.pageSize }}</td>
+                              <td>{{cust.cust_name}}</td>
+                              <td>₹ {{ cust.totalAmount | number }}</td>
+                              <td><a class="link"(click)="navigateToViewComponent(cust?.pan ,cust?.custId)"><u>View</u></a></td>
+                            </tr>
+                              }  @else {
+                                <tr>
+                                  <td colspan="10">
+                                    <app-no-data-found message="No Data found" />
+                                  </td>
+                                </tr>
+                              }
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <!-- Child Pagination -->
+                        <div class="pagination-table NP_LeftPagintion" *ngIf="bank.custPagination.displayedCustList?.length>0">
+                          <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                              Showing
+                              {{((bank.custPagination?.page - 1) * bank.custPagination?.pageSize+1)}} to
+                              {{(bank.custPagination?.pageSize*bank.custPagination?.page) > (bank.custPagination.totalItems) ? (bank.custPagination.totalItems) : (bank.custPagination?.pageSize*bank.custPagination?.page)}} of
+                              {{bank.custPagination.totalItems}} rows
+                              <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                  <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="bank.custPagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                                (ngModelChange)="onChildPageChange(pagination['supplier'],bank,bank.partyName)">
+                                      <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                        {{pages.value}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                              <span class="grey_text">row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                              <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination
+                                  [maxSize]="3"
+                                  [rotate]="true"
+                                  [(page)]="bank.custPagination.page"
+                                  [pageSize]="bank.custPagination.pageSize"
+                                  [collectionSize]="bank.custPagination.totalItems"
+                                  (pageChange)="onChildPageChange(pagination['supplier'],bank,bank.partyName)">
+                                </ngb-pagination>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+                  }  @else {
+                  <tr>
+                    <td colspan="10">
+                      <app-no-data-found message="No Data found" />
+                    </td>
+                  </tr>
+                }
+                </tbody>
+
+              </table>
+            </div>
+
+            <!-- Parent Pagination -->
+            <div class="pagination-table NP_LeftPagintion" *ngIf="fullSupplierList?.length>0">
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{((pagination.supplier.pageIndex - 1) * pagination.supplier.pageSize+1)}} to
+                  {{(pagination.supplier.pageSize*pagination.supplier.pageIndex) > (supplierList?.totalRows) ? (supplierList?.totalRows) : (pagination.supplier.pageSize*pagination.supplier.pageIndex)}} of
+                  {{supplierList?.totalRows}} rows
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pagination.supplier.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                    (ngModelChange)="onPageChange('supplier',pagesizee.value,pagination.supplier.pageIndex)">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                     </div>
+                  </div>
+                  <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination
+                      [collectionSize]="supplierList?.totalRows"
+                      [maxSize]="3"
+                      [rotate]="true"
+                      [pageSize]="pagination.supplier.pageSize"
+                      [(page)]="pagination.supplier.pageIndex"
+                      (pageChange)="onPageChange('supplier')"
+                      [boundaryLinks]="true">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box_design mb-4">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Customer List (Payment recieved in HSBC account)</h4>
+              </div>
+              <div class="box_design_ttl_bar_right">
+                <button [matMenuTriggerFor]="Tablemenu2" mat-flat-button class="btn_design mat-secondary min_auto ln_40">Filter <i class="fas fa-sort-amount-up ml-2"></i></button>
+                <mat-menu class="" #Tablemenu2="matMenu">
+                  <div class="table_filter">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline"  (click)="$event.stopPropagation()">
+                        <mat-select  [placeholder]="getAmountTypePlaceholder('customer','amount')" panelClass="filter_input">
+                          <mat-option>
+                            <div class="input_field"  (click)="$event.stopPropagation()">
+                              <label>Min. Count</label>
+                              <mat-form-field appearance="outline" floatLabel="never">
+                                <input type="text" matInput [(ngModel)]="filter.customer.amountMinInput" name="amountMinInput" >
+                              </mat-form-field>
+                            </div>
+                          </mat-option>
+                          <mat-option>
+                            <div class="input_field" (click)="$event.stopPropagation()">
+                              <label>Max. Count</label>
+                              <mat-form-field appearance="outline" floatLabel="never">
+                                <input type="text" matInput [(ngModel)]="filter.customer.amountMaxInput" name="amountMaxInput" >
+                              </mat-form-field>
+                            </div>
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline"  (click)="$event.stopPropagation()">
+                        <mat-select [placeholder]="getAmountTypePlaceholder('customer','interaction')" panelClass="filter_input">
+                          <mat-option>
+                            <div class="input_field"  (click)="$event.stopPropagation()">
+                              <label>Min. Count</label>
+                              <mat-form-field appearance="outline" floatLabel="never">
+                                <input type="text" matInput  [(ngModel)]="filter.customer.interactionMinInput" name="interactionMinInput" >
+                              </mat-form-field>
+                            </div>
+                          </mat-option>
+                          <mat-option>
+                            <div class="input_field"  (click)="$event.stopPropagation()">
+                              <label>Max. Count</label>
+                              <mat-form-field appearance="outline" floatLabel="never">
+                                <input type="text" matInput [(ngModel)]="filter.customer.interactionMaxInput" name="interactionMaxInput" >
+                              </mat-form-field>
+                            </div>
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="filter_action">
+                      <button mat-flat-button color="primary"  (click)="applyFilter('customer')" >Apply Filter</button>
+                      <button mat-flat-button color="grey" (click)="clearFilter('customer')">Clear</button>
+                    </div>
+                  </div>
+                </mat-menu>
+              </div>
+             </div>
+
+            <div class="tableResponsive">
+              <table id="myTable" class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                <thead>
+                <tr class="tr_lightred_bg">
+                   <th>Sr. No.</th>
+                  <th width="50%">Name
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customer.column === '13' && sortStates.customer.order === '1'" (click)="handleSort('customer', '13', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customer.column === '13' && sortStates.customer.order === '2'" (click)="handleSort('customer', '13', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                  <th>Interactions
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customer.column === '4' && sortStates.customer.order === '1'" (click)="handleSort('customer', '4', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customer.column === '4' && sortStates.customer.order === '2'" (click)="handleSort('customer', '4', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                  <!-- <th>2024 Amount (₹)
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th>
+                  <th>2025 Amount (₹)
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th>
+                  <th>%Change
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th> -->
+                  <th>Amount (Rs.)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customer.column === '2' && sortStates.customer.order === '1'" (click)="handleSort('customer', '2', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customer.column === '2' && sortStates.customer.order === '2'" (click)="handleSort('customer', '2', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                  <th class="text-center">Action</th>
+                </tr>
+                </thead>
+
+                <tbody class="pos_rel"  [ngClass]="{'subloaderShowing': isLoading.customer}">
+                  <div class="table_sep_loader" *ngIf="isLoading.customer">
+                    <div class="loaderoverlay loader_screen">
+                      <div class="loader_screen_center">
+                          <div class="loader_screen_lottie">
+                                  <span class="logo_loader">
+                                      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                  </span>
+                          </div>
+                          <h3>Please wait data is loading</h3>
+                      </div>
+                  </div>
+                  </div>
+                  @if(fullCustomerList?.length>0){
+                <ng-container *ngFor="let bank of fullCustomerList; let i = index">
+                  <tr>
+                    <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.customer[i] = !collapseStates.customer[i]"
+                      [ngClass]="{'rotate_icon': !collapseStates.customer[i]}">
+                <i class="fas fa-chevron-down"></i>
+              </button><b >{{ i + 1 + (pagination.customer.pageIndex-1) * pagination.customer.pageSize }}</b></td>
+                    <td><b>{{ bank.partyName }}</b></td>
+                    <td><b>{{bank.custPagination.totalItems}}</b></td>
+                    <!-- <td>₹ 6,95,151</td>
+                    <td>₹ 6,95,151</td>
+                    <td>-10%</td> -->
+                    <td><b>₹ {{ bank?.totalAmount | number }}</b></td>
+                    <td data-label="Action" class="text-center">
+                      <button [placement]="['left', 'right','auto']" ngbTooltip="View" mat-icon-button
+                              class="matIcon skyblue_icn"  (click)="viewProspect(bank.partyName,pagination['customer'])">
+                        <em class="fa fa-eye"></em>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr class="collapsing_tr"  [ngbCollapse]="collapseStates.customer[i]">
+                    <td colspan="15" class="intable_td">
+                      <div class="box_design">
+                        <div class="tableResponsive inside_table">
+                          <table class="bordered_table w-100">
+                            <thead>
+                            <tr>
+                              <th width="2%">Sr. No.</th>
+                              <th width="50%">HSBC Customer Name</th>
+                              <th>Amount (Rs.)
+                                 <span class="sort-container" >
+                                   <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customer.innerColumn === '2' && sortStates.customer.innerOrder === '1'" (click)="handleSort('customer', '2', '1', true, bank)" attr.aria-label="Sort by name ascending">
+                                     arrow_drop_up
+                                   </mat-icon>
+                                   <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customer.innerColumn === '2' && sortStates.customer.innerOrder === '2'" (click)="handleSort('customer', '2', '2', true, bank)" attr.aria-label="Sort by name descending">
+                                     arrow_drop_down
+                                   </mat-icon>
+                                 </span>
+                               </th>
+                              <th>Details</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                              @if(bank.custPagination.displayedCustList?.length>0){
+                            <tr *ngFor="let cust of bank.custPagination.displayedCustList; let j = index">
+                              <td >{{ j + 1 + (bank.custPagination.page-1) * bank.custPagination.pageSize }}</td>
+                              <td>{{cust.cust_name}}</td>
+                              <td>₹ {{ cust.totalAmount | number }}</td>
+                              <td><a class="link"(click)="navigateToViewComponent(cust?.pan ,cust?.custId)"><u>View</u></a></td>
+                            </tr>
+                              }  @else {
+                                <tr>
+                                  <td colspan="10">
+                                    <app-no-data-found message="No Data found" />
+                                  </td>
+                                </tr>
+                              }
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- Child Pagination -->
+                        <div class="pagination-table NP_LeftPagintion" *ngIf="bank.custPagination.displayedCustList?.length>0">
+                          <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                              Showing
+                              {{((bank.custPagination?.page - 1) * bank.custPagination?.pageSize+1)}} to
+                              {{(bank.custPagination?.pageSize*bank.custPagination?.page) > (bank.custPagination.totalItems) ? (bank.custPagination.totalItems) : (bank.custPagination?.pageSize*bank.custPagination?.page)}} of
+                              {{bank.custPagination.totalItems}} rows
+                              <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                  <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="bank.custPagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                                (ngModelChange)="onChildPageChange(pagination['customer'],bank,bank.partyName)">
+                                      <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                        {{pages.value}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                              <span class="grey_text">row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                              <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination
+                                  [maxSize]="3"
+                                  [rotate]="true"
+                                  [(page)]="bank.custPagination.page"
+                                  [pageSize]="bank.custPagination.pageSize"
+                                  [collectionSize]="bank.custPagination.totalItems"
+                                  (pageChange)="onChildPageChange(pagination['customer'],bank,bank.partyName)">
+                                </ngb-pagination>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+                  }  @else {
+                    <tr>
+                      <td colspan="10">
+                        <app-no-data-found message="No Data found" />
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+
+              </table>
+            </div>
+
+            <!-- Parent Pagination -->
+            <div class="pagination-table NP_LeftPagintion" *ngIf="fullCustomerList?.length>0">
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{((pagination.customer.pageIndex - 1) * pagination.customer.pageSize+1)}} to
+                  {{(pagination.customer.pageSize*pagination.customer.pageIndex) > (customerList?.totalRows) ? (customerList?.totalRows) : (pagination.customer.pageSize*pagination.customer.pageIndex)}} of
+                  {{customerList?.totalRows}} rows
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pagination.customer.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                    (ngModelChange)="onPageChange('customer',pagesizee.value,pagination.customer.pageIndex)">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      </div>
+                  </div>
+                  <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination
+                      [maxSize]="3"
+                      [rotate]="true"
+                      [collectionSize]="customerList?.totalRows"
+                      [pageSize]="pagination.customer.pageSize"
+                      [(page)]="pagination.customer.pageIndex"
+                      (pageChange)="onPageChange('customer')"
+                      [boundaryLinks]="true">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box_design mb-4">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Supplier and Customer Bank Data</h4>
+              </div>
+              <div class="box_design_ttl_bar_right">
+                <mat-radio-group aria-label="Select an option"  [(ngModel)]="selectSnC" (change)="snpRadioChange($event.value)">
+                  <mat-radio-button value="1">Payment to Supplier</mat-radio-button>
+                  <mat-radio-button value="2">Receipt From Customer</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+
+            <div class="tableResponsive">
+              <table id="myTable" class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                <thead>
+                <tr class="tr_lightred_bg">
+                    <th width="6.5%">Sr. No.</th>
+                  <th width="80%">Bank Name
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customerSupplier.column === '1' && sortStates.customerSupplier.order === '1'" (click)="handleSort('customerSupplier', '1', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customerSupplier.column === '1' && sortStates.customerSupplier.order === '2'" (click)="handleSort('customerSupplier', '1', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                   <th>Amount (Rs.)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customerSupplier.column === '2' && sortStates.customerSupplier.order === '1'" (click)="handleSort('customerSupplier', '2', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customerSupplier.column === '2' && sortStates.customerSupplier.order === '2'" (click)="handleSort('customerSupplier', '2', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                   </th>
+                 </tr>
+                </thead>
+
+                <tbody class="pos_rel">
+                   <div class="table_sep_loader" *ngIf="isLoading.customerSupplier">
+                      <div class="loaderoverlay loader_screen">
+                        <div class="loader_screen_center">
+                            <div class="loader_screen_lottie">
+                                    <span class="logo_loader">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                    </span>
+                            </div>
+                            <h3>Please wait data is loading</h3>
+                        </div>
+                    </div>
+                  </div>
+                  <ng-container *ngFor="let bank of fullThreeCustDataList; let i = index">
+                   <tr>
+                    <td>   <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseMap['bank-' + i] = !collapseMap['bank-' + i]"
+                      [ngClass]="{'rotate_icon': !collapseMap['bank-' + i]}"><i class="fas fa-chevron-down"></i></button>{{ i + 1 + (pagination.customerSupplier.pageIndex-1) * pagination.customerSupplier.pageSize }}</td>
+                    <td><b>{{ bank.bank }}</b></td>
+                     <td><b>₹ {{ bank.bank_total_amount | number}}</b></td>
+                   </tr>
+
+                  <tr class="collapsing_tr"  [(ngbCollapse)]="collapseMap['bank-' + i]">
+                    <td colspan="15" class="intable_td">
+                      <div class="box_design">
+                        <div class="tableResponsive inside_table">
+                          <table class="w-100">
+                            <thead>
+                            <tr>
+                              <th width="6.5%">Sr. No.</th>
+                              <th width="70%">HSBC Customer Name</th>
+                               <th>Amount (Rs.)
+                                  <span class="sort-container" >
+                                    <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customerSupplier.innerColumn === '2' && sortStates.customerSupplier.innerOrder === '1'" (click)="handleSort('customerSupplier', '2', '1', true, bank, 1)" attr.aria-label="Sort by name ascending">
+                                      arrow_drop_up
+                                    </mat-icon>
+                                    <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customerSupplier.innerColumn === '2' && sortStates.customerSupplier.innerOrder === '2'" (click)="handleSort('customerSupplier', '2', '2', true, bank, 1)" attr.aria-label="Sort by name descending">
+                                      arrow_drop_down
+                                    </mat-icon>
+                                  </span>
+                                </th>
+                                <!-- <th>2024 Amount (₹)
+                                  <span class="sort-container" >
+                                    <mat-icon class="sort-icon sort-icon-up">
+                                      arrow_drop_up
+                                    </mat-icon>
+                                    <mat-icon class="sort-icon sort-icon-down">
+                                      arrow_drop_down
+                                    </mat-icon>
+                                  </span>
+                                </th>
+                                <th>2025 Amount (₹)
+                                  <span class="sort-container" >
+                                    <mat-icon class="sort-icon sort-icon-up">
+                                      arrow_drop_up
+                                    </mat-icon>
+                                    <mat-icon class="sort-icon sort-icon-down">
+                                      arrow_drop_down
+                                    </mat-icon>
+                                  </span>
+                                </th>
+                                <th>%Change
+                                  <span class="sort-container" >
+                                    <mat-icon class="sort-icon sort-icon-up">
+                                      arrow_drop_up
+                                    </mat-icon>
+                                    <mat-icon class="sort-icon sort-icon-down">
+                                      arrow_drop_down
+                                    </mat-icon>
+                                  </span>
+                                </th> -->
+                              <th class="text-center">Details</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              @if(bank.custPagination.displayedCustList?.length>0){
+                            <ng-container *ngFor="let cust of bank?.custIdWise; let j = index">
+                            <tr>
+                              <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseMap['bank-' + i + '-cust-' + j] = !collapseMap['bank-' + i + '-cust-' + j]"
+                                          [ngClass]="{'rotate_icon': !collapseMap['bank-' + i + '-cust-' + j] }"><i class="fas fa-chevron-down"></i></button>
+                                {{ j + 1 + (bank.custPagination.page-1) * bank.custPagination.pageSize }}</td>
+                              <td>{{ cust.cust_name }}</td>
+                              <!-- <td>₹ 6,95,151</td>
+                              <td>₹ 6,95,151</td>
+                              <td>-10%</td> -->
+                              <td>{{ cust.cust_total_amount }}</td>
+                              <td><a class="link"(click)="navigateToViewComponent(cust?.pan ,cust?.cust_id)"><u>View</u></a></td>
+                            </tr>
+                            <tr class="collapsing_tr"   [(ngbCollapse)]="collapseMap['bank-' + i + '-cust-' + j]">
+                              <td colspan="15" class="intable_td">
+                                <div class="box_design">
+                                  <div class="tableResponsive inside_table">
+                                    <table class="w-100">
+                                      <thead>
+                                      <tr>
+                                        <th width="6.5%">Sr. No.</th>
+                                        <th width="70%">Name
+                                          <span class="sort-container" >
+                                            <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customerSupplier.innerColumn === '13' && sortStates.customerSupplier.innerOrder === '1'" (click)="handleSort('customerSupplier', '13', '1', true, bank, 2, cust)" attr.aria-label="Sort by name ascending">
+                                              arrow_drop_up
+                                            </mat-icon>
+                                            <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customerSupplier.innerColumn === '13' && sortStates.customerSupplier.innerOrder === '2'" (click)="handleSort('customerSupplier', '13', '2', true, bank, 2, cust)" attr.aria-label="Sort by name descending">
+                                              arrow_drop_down
+                                            </mat-icon>
+                                          </span>
+                                        </th>
+                                          <th>Amount (Rs.)
+                                            <span class="sort-container" >
+                                              <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.customerSupplier.innerColumn === '2' && sortStates.customerSupplier.innerOrder === '1'" (click)="handleSort('customerSupplier', '2', '1', true, bank, 2, cust)" attr.aria-label="Sort by name ascending">
+                                                arrow_drop_up
+                                              </mat-icon>
+                                              <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.customerSupplier.innerColumn === '2' && sortStates.customerSupplier.innerOrder === '2'" (click)="handleSort('customerSupplier', '2', '2', true, bank, 2, cust)" attr.aria-label="Sort by name descending">
+                                                arrow_drop_down
+                                              </mat-icon>
+                                            </span>
+                                          </th>
+                                        <th class="text-center">Action</th>
+                                      </tr>
+                                      </thead>
+
+                                      <tbody>
+                                        @if(cust.namePagination.displayedNameList?.length>0){
+                                          <ng-container *ngFor="let name of cust.namePagination.displayedNameList; let k = index">
+                                      <tr>
+                                        <td>{{ k + 1 + (cust.namePagination.page-1) * cust.namePagination.pageSize }}</td>
+                                        <td>{{ name.name }}</td>
+                                        <td>{{ name.total_amount }}</td>
+                                        <td class="text-center">  <button [placement]="['left', 'right','auto']" ngbTooltip="View" mat-icon-button
+                                                                        (click)="viewProspect(name.name,pagination['customerSupplier'])"  class="matIcon skyblue_icn">
+                                          <em class="fa fa-eye"></em></button>
+                                        </td>
+                                      </tr>
+
+
+                                          </ng-container>
+                                          <!-- Inner Child Pagination -->
+                                          <tr>
+                                            <td colspan="10">
+                                          <div class="pagination-table NP_LeftPagintion br-top-none" *ngIf="cust?.namePagination?.displayedNameList?.length>0">
+                                            <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                              <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                                Showing
+                                                {{((cust?.namePagination?.page - 1) * cust?.namePagination?.pageSize+1)}} to
+                                                {{(cust?.namePagination?.pageSize*cust?.namePagination?.page) > (cust?.namePagination?.totalItems) ? (cust?.namePagination?.totalItems) : (cust?.namePagination?.pageSize*cust?.namePagination?.page)}} of
+                                                {{cust?.namePagination?.totalItems}} rows
+                                                <div class="dataTables_length" id="tickets-table_length">
+                                                  <div class="NP_HSBC_ComInput select-field">
+                                                    <mat-form-field appearance="outline">
+                                                      <mat-select [(ngModel)]="cust?.namePagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                                                  (ngModelChange)="fetchChildCustList(pagination['customerSupplier'],bank,cust,2,bank.bank,cust.cust_id)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumberChild" [value]="pages.value">
+                                                          {{pages.value}}
+                                                        </mat-option>
+                                                      </mat-select>
+                                                    </mat-form-field>
+                                                  </div>
+                                                </div>
+                                                <span class="grey_text">row per page</span>
+                                              </div>
+                                              <div class="text-md-right float-md-right pagination-rounded">
+                                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                  <ngb-pagination
+                                                    [maxSize]="3"
+                                                    [(page)]="cust?.namePagination.page"
+                                                    [pageSize]="cust?.namePagination.pageSize"
+                                                    [rotate]="true"
+                                                    [collectionSize]="cust?.namePagination.totalItems"
+                                                    (pageChange)="fetchChildCustList(pagination['customerSupplier'],bank,cust,2,bank.bank,cust.cust_id)">
+                                                  </ngb-pagination>
+                                                </ul>
+                                              </div>
+                                            </div>
+                                          </div>
+                                            </td>
+                                          </tr>
+                                        } @else {
+                                           <tr>
+                                            <td colspan="10">
+                                              <app-no-data-found message="No Data found" />
+                                            </td>
+                                          </tr>
+                                        }
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+
+                                </div>
+                              </td>
+                            </tr>
+
+                            </ng-container>
+                                <tr>
+                                  <td colspan="10">
+                                <!-- Child Pagination -->
+
+                                <div class="pagination-table NP_LeftPagintion br-top-none" *ngIf="bank.custPagination.displayedCustList?.length>0">
+                                  <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                      Showing
+                                      {{((bank?.custPagination?.page - 1) * bank?.custPagination?.pageSize+1)}} to
+                                      {{(bank?.custPagination?.pageSize*bank?.custPagination?.page) > (bank?.custPagination?.totalItems) ? (bank?.custPagination?.totalItems) : (bank?.custPagination?.pageSize*bank?.custPagination?.page)}} of
+                                      {{bank?.custPagination?.totalItems}} rows
+                                      <div class="dataTables_length" id="tickets-table_length">
+                                        <div class="NP_HSBC_ComInput select-field">
+                                          <mat-form-field appearance="outline">
+                                            <mat-select [(ngModel)]="bank.custPagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="fetchChildCustList(pagination['customerSupplier'],bank,null,1,bank.bank,null)">
+                                              <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                              </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                        </div>
+                                      </div>
+                                      <span class="grey_text">row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                      <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                        <ngb-pagination
+                                          [maxSize]="3"
+                                          [(page)]="bank.custPagination.page"
+                                          [pageSize]="bank.custPagination.pageSize"
+                                          [rotate]="true"
+                                          [collectionSize]="bank.custPagination.totalItems"
+                                          (pageChange)="fetchChildCustList(pagination['customerSupplier'],bank,null,1,bank.bank,null)">
+                                        </ngb-pagination>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                                  </td>
+                                </tr>
+                              }
+                            @else {
+
+                                 <tr>
+                                  <td colspan="10">
+                                    <app-no-data-found message="No Data found" />
+                                  </td>
+                                </tr>  }
+                            </tbody>
+                           </table>
+                        </div>
+
+
+
+                      </div>
+                    </td>
+                  </tr>
+                      <!-- <tr>
+                        <td colspan="10">
+                          <app-no-data-found message="No Data found" />
+                        </td>
+                      </tr>  -->
+                  </ng-container>
+                </tbody>
+
+              </table>
+            </div>
+
+            <!-- Parent Pagination -->
+             <div class="pagination-table NP_LeftPagintion" *ngIf="fullThreeCustDataList?.length>0">
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{((pagination.customerSupplier.pageIndex - 1) * pagination.customerSupplier.pageSize+1)}} to
+                  {{(pagination.customerSupplier.pageSize*pagination.customerSupplier.pageIndex) > (threeCustData?.totalRows) ? (threeCustData?.totalRows) : (pagination.customerSupplier.pageSize*pagination.customerSupplier.pageIndex)}} of
+                  {{threeCustData?.totalRows}} rows
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pagination.customerSupplier.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                    (ngModelChange)="onPageChange('customerSupplier',pagesizee.value,pagination.customerSupplier.pageIndex)">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination
+                      [maxSize]="3"
+                      [rotate]="true"
+                      [collectionSize]="threeCustData?.totalRows"
+                      [pageSize]="pagination.customerSupplier.pageSize"
+                      [(page)]="pagination.customerSupplier.pageIndex"
+                      (pageChange)="onPageChange('customerSupplier' , pagination.customerSupplier.pageIndex,pagination.customerSupplier.pageSize)"
+                      [boundaryLinks]="true">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box_design mb-4">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Statutory Payments</h4>
+              </div>
+            </div>
+
+            <div class="tableResponsive">
+              <table id="myTable" class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                <thead>
+                <tr class="tr_lightred_bg">
+                    <th width="6.5%">Sr. No.</th>
+                  <th width="80%">Payment Detail
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.statutoryReport.column === '14' && sortStates.statutoryReport.order === '1'" (click)="handleSort('statutoryReport', '14', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.statutoryReport.column === '14' && sortStates.statutoryReport.order === '2'" (click)="handleSort('statutoryReport', '14', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                  </th>
+                   <th>Amount (Rs.)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.statutoryReport.column === '2' && sortStates.statutoryReport.order === '1'" (click)="handleSort('statutoryReport', '2', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.statutoryReport.column === '2' && sortStates.statutoryReport.order === '2'" (click)="handleSort('statutoryReport', '2', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+                   </th>
+                   <!-- <th>2024 Amount (₹)
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th>
+                  <th>2025 Amount (₹)
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th>
+                  <th>%Change
+                    <span class="sort-container" >
+                      <mat-icon class="sort-icon sort-icon-up">
+                        arrow_drop_up
+                      </mat-icon>
+                      <mat-icon class="sort-icon sort-icon-down">
+                        arrow_drop_down
+                      </mat-icon>
+                    </span>
+                  </th> -->
+                 </tr>
+                </thead>
+
+                <tbody class="pos_rel"  [ngClass]="{'subloaderShowing': isLoading.statutoryReport}">
+                <div class="table_sep_loader" *ngIf="isLoading.statutoryReport">
+                  <div class="loaderoverlay loader_screen">
+                    <div class="loader_screen_center">
+                      <div class="loader_screen_lottie">
+                                  <span class="logo_loader">
+                                      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                  </span>
+                      </div>
+                      <h3>Please wait data is loading</h3>
+                    </div>
+                  </div>
+                </div>
+                  @if(fullStatReportList?.length>0){
+                    <ng-container *ngFor="let bank of fullStatReportList; let i = index">
+                      <tr>
+                        <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.statutoryReport[i] = !collapseStates.statutoryReport[i]"
+                                    [ngClass]="{'rotate_icon': !collapseStates.statutoryReport[i]}">
+                          <i class="fas fa-chevron-down"></i>
+                        </button><b >{{ i + 1 + (pagination.statutoryReport.pageIndex-1) * pagination.statutoryReport.pageSize }}</b></td>
+                        <td><b>{{ bank?.category_name }}</b></td>
+                        <td><b>₹ {{ bank?.totalAmount | number }}</b></td>
+                        <!-- <td>₹ 6,95,151</td>
+                        <td>₹ 6,95,151</td>
+                        <td>-10%</td> -->
+                      </tr>
+
+                      <tr class="collapsing_tr"  [ngbCollapse]="collapseStates.statutoryReport[i]">
+                        <td colspan="15" class="intable_td">
+                          <div class="box_design">
+                            <div class="tableResponsive inside_table">
+                              <table class="bordered_table w-100">
+                                <thead>
+                                <tr>
+                                  <th width="2%">Sr. No.</th>
+                                  <th width="50%">HSBC Customer Name</th>
+                                   <th>Amount (Rs.)
+                                     <span class="sort-container" >
+                                       <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.statutoryReport.innerColumn === '2' && sortStates.statutoryReport.innerOrder === '1'" (click)="handleSort('statutoryReport', '2', '1', true, bank)" attr.aria-label="Sort by name ascending">
+                                         arrow_drop_up
+                                       </mat-icon>
+                                       <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.statutoryReport.innerColumn === '2' && sortStates.statutoryReport.innerOrder === '2'" (click)="handleSort('statutoryReport', '2', '2', true, bank)" attr.aria-label="Sort by name descending">
+                                         arrow_drop_down
+                                       </mat-icon>
+                                     </span>
+                                   </th>
+                                  <th>Details</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                  @if(bank.custPagination.displayedCustList?.length>0){
+                                    <tr *ngFor="let cust of bank.custPagination.displayedCustList; let j = index">
+                                      <td >{{ j + 1 + (bank.custPagination.page-1) * bank.custPagination.pageSize }}</td>
+                                      <td>{{cust.cust_name}}</td>
+                                      <td>₹ {{ cust.totalAmount | number }}</td>
+                                      <td><a class="link"(click)="navigateToViewComponent(cust?.pan ,cust?.cust_id)"><u>View</u></a></td>
+                                    </tr>
+                                  }  @else {
+                                    <tr>
+                                      <td colspan="10">
+                                        <app-no-data-found message="No Data found" />
+                                      </td>
+                                    </tr>
+                                  }
+                                </tbody>
+                              </table>
+                            </div>
+                            <!-- Child Pagination -->
+                            <div class="pagination-table NP_LeftPagintion" *ngIf="bank.custPagination.displayedCustList?.length>0">
+                              <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                  Showing
+                                  {{((bank.custPagination?.page - 1) * bank.custPagination?.pageSize+1)}} to
+                                  {{(bank.custPagination?.pageSize*bank.custPagination?.page) > (bank.custPagination.totalItems) ? (bank.custPagination.totalItems) : (bank.custPagination?.pageSize*bank.custPagination?.page)}} of
+                                  {{bank.custPagination.totalItems}} rows
+                                  <div class="dataTables_length" id="tickets-table_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                      <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="bank.custPagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                                    (ngModelChange)="onChildPageChange(pagination['statutoryReport'],bank,bank.category_name)">
+                                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                            {{pages.value}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+                                    </div>
+                                  </div>
+                                  <span class="grey_text">row per page</span>
+                                </div>
+                                <div class="text-md-right float-md-right pagination-rounded">
+                                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination
+                                      [maxSize]="3"
+                                      [rotate]="true"
+                                      [(page)]="bank.custPagination.page"
+                                      [pageSize]="bank.custPagination.pageSize"
+                                      [collectionSize]="bank.custPagination.totalItems"
+                                      (pageChange)="onChildPageChange(pagination['statutoryReport'],bank,bank.category_name)">
+                                    </ngb-pagination>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  }  @else {
+                    <tr>
+                      <td colspan="10">
+                        <app-no-data-found message="No Data found" />
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+
+              </table>
+            </div>
+
+<!--             Parent Pagination-->
+             <div class="pagination-table NP_LeftPagintion" *ngIf="fullStatReportList?.length>0">
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{((pagination.statutoryReport.pageIndex - 1) * pagination.statutoryReport.pageSize+1)}} to
+                  {{(pagination.statutoryReport.pageSize*pagination.statutoryReport.pageIndex) > (statReportList?.totalRows) ? (statReportList?.totalRows) : (pagination.statutoryReport.pageSize*pagination.statutoryReport.pageIndex)}} of
+                  {{statReportList?.totalRows}} rows
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pagination.statutoryReport.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                    (ngModelChange)="onPageChange('statutoryReport',pagesizee.value,pagination.statutoryReport.pageIndex)">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination
+                      [maxSize]="3"
+                      [rotate]="true"
+                      [collectionSize]="statReportList?.totalRows"
+                      [pageSize]="pagination.statutoryReport.pageSize"
+                      [(page)]="pagination.statutoryReport.pageIndex"
+                      (pageChange)="onPageChange('statutoryReport' , pagination.statutoryReport.pageIndex,pagination.statutoryReport.pageSize)"
+                      [boundaryLinks]="true">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="box_design mb-4">
+      <div class="box_design_ttl_bar">
+        <div class="box_design_ttl_bar_left">
+          <h4>Opportunity from Payment</h4>
+        </div>
+        <div class="box_design_ttl_bar_right">
+          <mat-radio-group aria-label="Select an option"  [(ngModel)]="opportunityId"
+                           (change)="updateOpportunityId()">
+            <mat-radio-button value="1">Card</mat-radio-button>
+            <mat-radio-button value="2">Utility</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <div class="tableResponsive">
+        <table id="myTable" class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+          <thead>
+          <tr class="tr_lightred_bg">
+            <th>Sr. No.</th>
+            <th width="55%">Name
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.opportunity.column === '12' && sortStates.opportunity.order === '1'" (click)="handleSort('opportunity', '12', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.opportunity.column === '12' && sortStates.opportunity.order === '2'" (click)="handleSort('opportunity', '12', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+            </th>
+            <th>Interactions
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.opportunity.column === '4' && sortStates.opportunity.order === '1'" (click)="handleSort('opportunity', '4', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.opportunity.column === '4' && sortStates.opportunity.order === '2'" (click)="handleSort('opportunity', '4', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+            </th>
+            <th>Amount (Rs.)
+                        <span class="sort-container" >
+                          <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.opportunity.column === '2' && sortStates.opportunity.order === '1'" (click)="handleSort('opportunity', '2', '1')" attr.aria-label="Sort by name ascending">
+                            arrow_drop_up
+                          </mat-icon>
+                          <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.opportunity.column === '2' && sortStates.opportunity.order === '2'" (click)="handleSort('opportunity', '2', '2')" attr.aria-label="Sort by name descending">
+                            arrow_drop_down
+                          </mat-icon>
+                        </span>
+            </th>
+            <th></th>
+          </tr>
+          </thead>
+
+          <tbody class="pos_rel"  [ngClass]="{'subloaderShowing': isLoading.opportunity}">
+          <div class="table_sep_loader" *ngIf="isLoading.opportunity">
+            <div class="loaderoverlay loader_screen">
+              <div class="loader_screen_center">
+                <div class="loader_screen_lottie">
+                                    <span class="logo_loader">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                    </span>
+                </div>
+                <h3>Please wait data is loading</h3>
+              </div>
+            </div>
+          </div>
+            @if(fullOpportunityList?.length>0){
+              <ng-container *ngFor="let bank of fullOpportunityList; let i = index">
+                <tr>
+                  <td>  <button  mat-icon-button class="matIcon red_icn mr-2"  (click)="toggleOpportunity(i, bank)"
+                                [ngClass]="{'rotate_icon': !collapseStates.opportunity[i]}">
+                    <i class="fas fa-chevron-down"></i>
+                  </button>   <b >{{(pagination.opportunity.pageIndex-1)*pagination.opportunity.pageSize+(i+1)}}</b></td>
+                  <td><b>{{ bank?.company_name }}</b></td>
+                  <td>{{bank?.interactions}}</td>
+                  <td><b>₹ {{ bank?.company_wise_total_amount | number }}</b></td>
+                  <td></td>
+                </tr>
+
+                <tr class="collapsing_tr"  [ngbCollapse]="collapseStates.opportunity[i]">
+                  <td colspan="15" class="intable_td">
+                    <div class="box_design">
+                      <div class="tableResponsive inside_table">
+                        <table class="bordered_table w-100">
+                          <thead>
+                          <tr>
+                            <th width="2%">Sr. No.</th>
+                            <th width="70%">HSBC Customer Name</th>
+                            <th>Amount (Rs.)
+                               <span class="sort-container" >
+                                 <mat-icon class="sort-icon sort-icon-up" [class.active]="sortStates.opportunity.innerColumn === '2' && sortStates.opportunity.innerOrder === '1'" (click)="handleSort('opportunity', '2', '1', true, bank)" attr.aria-label="Sort by name ascending">
+                                   arrow_drop_up
+                                 </mat-icon>
+                                 <mat-icon class="sort-icon sort-icon-down" [class.active]="sortStates.opportunity.innerColumn === '2' && sortStates.opportunity.innerOrder === '2'" (click)="handleSort('opportunity', '2', '2', true, bank)" attr.aria-label="Sort by name descending">
+                                   arrow_drop_down
+                                 </mat-icon>
+                               </span>
+                             </th>
+                          </tr>
+                          </thead>
+
+                          <tbody>
+                            @if(bank?.custPagination?.displayedCustList?.length>0){
+                              <tr *ngFor="let cust of bank?.custPagination?.displayedCustList; let j = index">
+                                <td >{{ j + 1 + (bank?.custPagination?.page-1) * bank?.custPagination?.pageSize }}</td>
+                                <td>{{cust?.cust_name}}</td>
+                                <td>₹ {{ cust?.total_amount | number }}</td>
+<!--                                <td><a class="link"(click)="navigateToViewComponent(cust?.pan,cust?.custId)"><u>View</u></a></td>-->
+                              </tr>
+                            }  @else {
+                              <tr>
+                                <td colspan="10">
+                                  <app-no-data-found message="No Data found" />
+                                </td>
+                              </tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <!-- Child Pagination -->
+
+                      <div class="pagination-table NP_LeftPagintion" *ngIf="bank.custPagination.displayedCustList?.length>0">
+                        <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                          <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{((bank?.custPagination?.page - 1) * bank?.custPagination?.pageSize+1)}} to
+                            {{(bank?.custPagination?.pageSize*bank?.custPagination?.page) > (bank?.custPagination?.totalItems) ? (bank?.custPagination?.totalItems) : (bank?.custPagination?.pageSize*bank?.custPagination?.page)}} of
+                            {{bank?.custPagination?.totalItems}} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                              <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                  <mat-select [(ngModel)]="bank.custPagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                              (ngModelChange)="onChildPageChange(pagination['opportunity'],bank,bank.company_name)">
+                                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                      {{pages.value}}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <span class="grey_text">row per page</span>
+                          </div>
+                          <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                              <ngb-pagination
+                                [maxSize]="3"
+                                [(page)]="bank.custPagination.page"
+                                [pageSize]="bank.custPagination.pageSize"
+                                [rotate]="true"
+                                [collectionSize]="bank.custPagination.totalItems"
+                                (pageChange)="onChildPageChange(pagination['opportunity'],bank,bank.company_name)">
+                              </ngb-pagination>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            }  @else {
+              <tr>
+                <td colspan="10">
+                  <app-no-data-found message="No Data found" />
+                </td>
+              </tr>
+            }
+          </tbody>
+
+        </table>
+      </div>
+
+      <!-- Parent Pagination -->
+      <div class="pagination-table NP_LeftPagintion" *ngIf="fullOpportunityList?.length>0">
+        <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+          <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+            Showing
+            {{((pagination.opportunity.pageIndex - 1) * pagination.opportunity.pageSize+1)}} to
+            {{(pagination.opportunity.pageSize*pagination.opportunity.pageIndex) > (opportunityList?.totalRows) ? (opportunityList?.totalRows) : (pagination.opportunity.pageSize*pagination.opportunity.pageIndex)}} of
+            {{opportunityList?.totalRows}} rows
+            <div class="dataTables_length" id="tickets-table_length">
+              <div class="NP_HSBC_ComInput select-field">
+                <mat-form-field appearance="outline">
+                  <mat-select [(ngModel)]="pagination.opportunity.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                              (ngModelChange)="onPageChange('opportunity',pagesizee.value,pagination.opportunity.pageIndex)">
+                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                      {{pages.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <span class="grey_text">row per page</span>
+          </div>
+          <div class="text-md-right float-md-right pagination-rounded">
+            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+              <ngb-pagination
+                [maxSize]="3"
+                [rotate]="true"
+                [collectionSize]="opportunityList?.totalRows"
+                [pageSize]="pagination.opportunity.pageSize"
+                [(page)]="pagination.opportunity.pageIndex"
+                (pageChange)="onPageChange('opportunity' , pagination.opportunity.pageIndex,pagination.opportunity.pageSize)"
+                [boundaryLinks]="true">
+              </ngb-pagination>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial >close</mat-icon>
+    </a>
+    <mat-tab-group #tabGroup mat-align-tabs="start" class="tabs-design" animationDuration="0ms" (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Reports" >
+        <mat-card-content>
+            <div class="pop_up_container">
+                <mat-dialog-content class="px-0">
+                    <div class="popup_body exp_accordian">
+                        <div class="accordion_design1">
+                            <div class="title_box">
+                                <h3>Please wait for Bank Statement file Status Completed and categorization before downloading file</h3>
+                            </div>
+                            <mat-radio-group name="changeValue" [(ngModel)]="selectedOption">
+                             
+                                   <div class="mat-expansion-panel-header">
+                                        <div class="panel_head">
+                                            <mat-panel-title>
+                                                <mat-radio-button value="highValue"> More than 50 lakh or More than 3 Transaction
+                                            </mat-radio-button>
+                                        </mat-panel-title>
+                                        </div>
+                                   </div>
+                              
+                        </mat-radio-group>
+                        </div>
+                    </div>
+                </mat-dialog-content>
+                <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                    <button mat-flat-button color="primary" (click)="goToStatusTab()" [disabled]="!selectedOption">Submit</button>
+                </mat-dialog-actions>
+            </div>
+        </mat-card-content>
+    </mat-tab>
+    <mat-tab label="Status">
+        <mat-card-content>
+            <mat-dialog-content class="px-0 pt-0">
+            <div class="popup_body ">
+            <div class="tableResponsive">
+                <table
+                    class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                    <thead>
+                        <tr class="tr_lightred_bg">
+                            <th width="2%">Sr. No.</th>
+                            <th width="30%">Report Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Download Status</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="bulkUploadHistory">
+                        <tr *ngFor="let historyData of bulkUploadHistory; let i = index">
+                            <td>{{ (page - 1) * pageSize + i + 1 }}</td>
+                            <td><b>{{ historyData?.report_name ?  historyData?.report_name :'Pending' }}</b></td>
+                            <td>{{ historyData?.created_at | date:'short' }}</td>
+                            <td>{{ historyData.updated_at ? ( historyData.updated_at | date:'MM/dd/yy h:mm a') : 'Pending' }}</td>
+                            <td>
+                            <span [ngClass]="{
+                                'yellow_badge': historyData?.status === 'running',
+                                'green_badge': historyData?.status === 'completed',
+                                'red_badge': historyData?.status === 'failed'
+                            }">
+                            {{ historyData?.status === 'running' ? 'Pending' : (historyData?.status | titlecase) }}
+                            </span>
+                             {{ historyData.success_entries }} 
+                             <a *ngIf="historyData?.status === 'completed'"
+                                (click)="downloadExcel(historyData.job_id)" class="green_text dwn_link cursor_pointer">
+                                    <mat-icon class="ml-2 mr-0">arrow_downward_alt</mat-icon>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                </table>
+            </div>
+           
+
+            </div>
+            </mat-dialog-content>
+             <div class="pagination-table NP_LeftPagintion sticky-pagination" >
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                    <div class="dataTables_info" role="status" aria-live="polite">
+                       Showing
+                        {{(startIndex+1)}} to
+                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                        {{totalSize}}
+                        row
+                        <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                   <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                                        (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                                     <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                         {{pages.value}}
+                                    </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                       <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                              <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                 [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                                </ngb-pagination>
+                  </ul>
+                    </div>
+                </div>
+            </div>
+            <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                <button mat-flat-button color="primary" (click)="onOkClick()">Ok</button>
+            </mat-dialog-actions>
+        </mat-card-content>
+    </mat-tab>
+</mat-tab-group>
+</section>

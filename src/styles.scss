@@ -1,0 +1,146 @@
+// Custom Theming for Angular Material
+@use '@angular/material' as mat;
+// For more information: https://material.angular.io/guide/theming
+@use 'assets/theming' as mats;
+// Plus imports for other components in your app.
+ 
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+@include mat.all-component-typographies();
+@include mat.core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$opl-lender-msme-primary: mat.define-palette(mats.$mat-CommonTheme, 500);
+$opl-lender-msme-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+ 
+// The warn palette is optional (defaults to red).
+$opl-lender-msme-warn: mat.define-palette(mat.$red-palette);
+ 
+// Create the theme object (a Sass map containing all of the palettes).
+$opl-lender-msme-theme: mat.define-light-theme((
+  color: (
+    primary: $opl-lender-msme-primary,
+    accent: $opl-lender-msme-accent,
+    warn: $opl-lender-msme-warn,
+  )
+));
+ 
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($opl-lender-msme-theme);
+
+.error-snackbar {
+  background: #d32f2f;
+}
+
+.success-snackbar {
+  background: #43a047;
+}
+
+// PDF and Video Viewer Dialog Styles 
+.cdk-overlay-backdrop.modal-backdrop {
+  background: rgba(0, 0, 0, 0.85) !important;
+  opacity: 1 !important;
+}
+
+.pdf-viewer-dialog,
+.video-viewer-dialog {
+  .mat-mdc-dialog-container,
+  .mat-dialog-container,
+  .mdc-dialog__container {
+    padding: 0 !important;
+    background: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+  
+  .mat-mdc-dialog-surface,
+  .mdc-dialog__surface {
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+  
+  .cdk-overlay-pane {
+    max-width: none !important;
+    max-height: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
+}
+.info-snackbar {
+  background: #38a7ff;
+}
+
+.warning-snackbar {
+  background: #ffa000;
+}
+.tooltip-inner {
+  max-width: 250px !important;
+}
+
+// Multiline tooltip for common-select component
+.multiline-tooltip {
+  white-space: pre-line !important;
+  max-width: 300px !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  padding: 8px 12px !important; 
+  .mdc-tooltip__surface{
+    text-align: left;
+  }
+}
+
+/* Static demo: mock APIs resolve immediately — hide inline table / section loaders */
+body.static-demo {
+  app-loader,
+  app-sub-loader {
+    display: none !important;
+  }
+
+  .table_sep_loader,
+  .child_loader.table_sep_loader {
+    display: none !important;
+  }
+
+  .subloaderShowing,
+  .subloaderShowingmenu,
+  .subloaderShowing1,
+  .subloaderShowing2,
+  .subloaderShowing3 {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+
+    tr {
+      visibility: visible !important;
+    }
+  }
+
+  .parent_table_loader {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}

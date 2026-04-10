@@ -1,0 +1,23 @@
+.subloaderShowing{
+  height: 50vh;
+  overflow: hidden;
+}
+ 
+.max-h-340{
+  max-height: 340px !important;
+}
+ 
+
+.button_collapse{
+  button{
+    padding: 0;
+    line-height: 34px;
+    font-size: 14px; 
+    height: 30px;
+    width: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+ }

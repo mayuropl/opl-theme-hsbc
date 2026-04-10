@@ -1,0 +1,126 @@
+<section class="popup_design max-800 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Upload Customer File</h3>
+            <div class="page_Title_Right">
+                <a type="button" mat-flat-button class="btn_design with_right_icn" color="secondary"
+                *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_TEMPLATE)" href="assets/files/PAN_TEMPLATE_FILE.xlsx">Download Template<mat-icon
+                    class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+              </div>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">
+              <div class="box_design mb-3 p-3">
+                <div class="dragDrop-Common" appDragDrop>
+                    <div class="files-list" *ngIf="files.length > 0">
+                        <div class="single-file" *ngFor="let file of files; let i = index">
+                            <div class="File-Progress">
+                            <div class="file-icon">
+                                <img src="assets/images/hsbc/FileUpload_Icon.svg" alt="File Icon">
+                            </div>
+                            <div class="info">
+                                <h4 class="name">
+                                {{ file?.name }}
+                                </h4>
+                            </div>
+                            <div class="delete" (click)="deleteFile(i)">
+                                <em class="fmdi fmdi-delete IC-red mr-2"></em> Remove
+                            </div>
+                            </div>
+                            <mat-progress-bar class="Progreebar-File" mode="determinate" value="{{file.progress}}" [max]="100">
+                            </mat-progress-bar>
+                        </div>
+                    </div>
+                    <div class="Input-text-Fill-Cutome" *ngIf="files.length == 0">
+                        <input class="File-input-common" type="file"
+                            accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                            #fileDropRef id="fileUpload" name="fileUpload" (change)="fileBrowseHandler($event.target.files)" required />
+                        <div class="Input-text-File">
+                            <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                            <p class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop
+                        </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="__Btn_Group __MT15px __JcEnd">
+                        <button mat-stroked-button color="primary" class="btn_design" *ngIf="isActionAvail(constants.PageActions.UPLOAD)"
+                                (click)='submit()'><mat-icon>arrow_upward_alt</mat-icon> Upload File</button>
+                </div>
+                <div class="table_sec">
+                    <div class="tableResponsive ">
+                        <table class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table compressed_table ">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th>File Name</th>
+                                    <th>Uploaded On</th>
+                                    <th>File ID</th>
+                                    <th class="text-right">Successful Entries</th>
+                                    <th class="text-right">Failed Entries</th>
+                                    <th class="text-right pr-3">Total Entries</th>
+                                 </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="uploadHistory">
+                                    <tr *ngFor="let data of uploadHistory; let i=index">
+                                        <td data-label="File Name">{{data?.fileName || "-"}}</td>
+                                        <td data-label="Uploaded On">{{data?.createdDate | date:'dd MMM yyyy'}}</td>
+                                        <td data-label="File ID">{{data?.fileId || "-"}}</td>
+                                        <td data-label="Successful Entries" class="text-right">{{data?.success}} <a
+                                            href="javscript:void(0)" (click)="getData(1,data?.id)"><img
+                                            src="assets/images/hsbc/S_Download_Icon.svg" alt="Successful Entries" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_SUCCESS_ENTRY)"></a></td>
+                                        <td data-label="Failed Entries" class="text-right">{{data?.fail}} <a
+                                            href="javscript:void(0)" (click)="getData(2,data?.id)"  *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)"><img
+                                            src="assets/images/hsbc/F_Download_Icon.svg" alt="Failed Entries"></a></td>
+                                        <td data-label="Total Entries" class="text-right pr-3">{{data?.totalRows}} <a
+                                            href="javscript:void(0)" (click)="getData(3,data?.id)" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_TOTAL_ENTRY)"><img
+                                            src="assets/images/hsbc/T_Download_Icon.svg" alt="Total Entries"></a></td>
+                                    </tr>  
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div> 
+                </div>
+            </div>
+          </div>
+        </mat-dialog-content>
+        <div class="pagination-table NP_LeftPagintion">
+            <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{(startIndex+1)}} to
+                    {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                    {{totalSize}}
+                    row 
+                    <div class="dataTables_length" id="tickets-table_length">
+                        <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                                <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                                (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                        {{pages.value}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+              <div class="col-sm-12 col-md-5">
+                <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                        <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                        [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                        </ngb-pagination>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="" (click)="fetchPrescreendata()">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

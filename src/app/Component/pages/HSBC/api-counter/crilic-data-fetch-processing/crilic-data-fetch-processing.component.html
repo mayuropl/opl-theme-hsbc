@@ -1,0 +1,204 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4>
+                    CRILC Data Fetch processing
+                </h4>
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="top_filter_section">
+                <div class="custom_month_picker">
+                    <div class="form_box">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date" bsDatepicker
+                            [maxDate]="maxDate"
+                            placement="bottom left" 
+                            [bsConfig]="{ dateInputFormat: 'MMM YYYY', adaptivePosition: true, maxDate: maxDate }"
+                            (ngModelChange)="getAlertsSubTabData(0)" (onShown)="onOpenCalendar($event)"
+                            onkeydown="return false">
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+                <div class="right_side">
+                    <button mat-flat-button color="primary" class="br_8" (click)="runMonthlyFetch()">
+                        Run Monthly Fetch
+                    </button>
+                    <button mat-flat-button color="primary" class="btn_design gray_btn br_8 ml-2" (click)="rerunFailedFiles()">
+                        Re-run Failed Files
+                    </button>
+                </div>
+            </div>
+            <div class="box_design mt-3">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>CRILC Data Fetch processing</h4>
+                    </div>
+
+                </div>
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th width="5%">Sr.No</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Successful</th>
+                                <th>Failed</th>
+                                <th>Total Customer</th>
+                                <th class="text-center">Status Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let item of auditReportData; let i = index">
+                                <tr>
+                                    <td class="no_wrap table_check_box">
+                                        <a mat-icon-button href="javascript:void(0)" class="matIcon red_text mr-1"
+                                            (click)="toggleDetails(i)" [ngClass]="{'rotate_icon': isRowExpanded(i)}">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </a>
+                                        {{ startIndex + i + 1 }}
+                                    </td>
+                                    <td>{{ item.month }}</td>
+                                    <td>{{ item.year }}</td>
+                                    <td>{{ item.total_successful }} <i class="fas fa-download green_text cursor_pointer ml-1" (click)="downloadAuditReport(item, '1')"></i></td>
+                                    <td>{{ item.total_failed }} <i class="fas fa-download red_text cursor_pointer ml-1" (click)="downloadAuditReport(item, '2')"></i></td>
+                                    <td>{{ item.total_Customers }} <i class="fas fa-download grey_text cursor_pointer ml-1" (click)="downloadAuditReport(item, '3')"></i></td>
+                                    <td class="text-center">
+                                        <a type="button" mat-flat-button class="btn_design with_right_icn br_8"
+                                            color="secondary" href="javascript:void(0)" (click)="downloadConsolidatedReport(item)">Consolidated Monthly Report<mat-icon
+                                                class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+                                    </td>
+                                </tr>
+                                <tr class="collapsing_tr" *ngIf="isRowExpanded(i)">
+                                    <td colspan="10">
+                                        <div class="box_design">
+                                            <div class="tableResponsive inside_table">
+                                                <table class="bordered_table w-100"> 
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr.No</th>
+                                                            <th>Month</th>
+                                                            <th>Year</th>
+                                                            <th>Upload Date</th>
+                                                            <th>Status</th>
+                                                            <th>Successful Entries</th>
+                                                            <th>Failed Entries</th>
+                                                            <th>Total Entries</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let report of item.reports; let j = index">
+                                                            <td>{{ j + 1 }}</td>
+                                                            <td>{{ report.month }}</td>
+                                                            <td>{{ report.year }}</td>
+                                                            <td>{{ report.generated_on }}</td>
+                                                            <!-- <td>{{ report.status }}</td> -->
+                                                           <td>
+                                                            <span [ngClass]="{
+                                                                'orange_badge': report?.status === 1,
+                                                                'green_badge': report?.status === 2,
+                                                                'lightred_badge': report?.status === 3
+                                                            }">
+                                                                {{ report?.status === 1 ? 'Pending' : 
+                                                                report?.status === 2 ? 'Completed' : 
+                                                                report?.status === 3 ? 'Failed' : '' }}
+                                                            </span>
+                                                            <span *ngIf="report?.status === 3 && (report?.file_upload_failure_reason || report?.failure_reason)">
+                                                                <i class="fas fa-info-circle red_text ml-1"
+                                                                matTooltip="{{report?.file_upload_failure_reason || report?.failure_reason}}">
+                                                                </i>
+                                                            </span>
+                                                        </td>
+                                                            <td>{{ report.successful_files }} <i
+                                                                    class="fas fa-download green_text cursor_pointer ml-1" (click)="downloadDetailAuditReport(report, '1')"></i>
+                                                            </td>
+                                                            <td>{{ report.failed_files }} <i
+                                                                    class="fas fa-download red_text cursor_pointer ml-1" (click)="downloadDetailAuditReport(report, '2')"></i>
+                                                            </td>
+                                                            <td>{{ report.total_files_processed }} <i
+                                                                    class="fas fa-download grey_text cursor_pointer ml-1" (click)="downloadDetailAuditReport(report, '3')"></i>
+                                                            </td> 
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- <div class="pagination-table NP_LeftPagintion py-2">
+                                                <div class="dataTables_info" id="tickets-table_info" role="status"
+                                                    aria-live="polite">
+                                                    Showing
+                                                    1 to 1 of 20 rows
+                                                    <div class="dataTables_length" id="tickets-table_length">
+                                                        <div class="NP_HSBC_ComInput select-field">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-select  [panelClass]="'pagination_select'">
+                                                                    <mat-option >
+                                                                        1
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <span>row per page</span>
+                                                </div>
+                                                <div class="text-md-right float-md-right pagination-rounded">
+                                                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                        <ngb-pagination 
+                                                            [maxSize]="3"  [rotate]="true"
+                                                            [boundaryLinks]="true">
+                                                        </ngb-pagination>
+                                                    </ul>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <tr *ngIf="!auditReportData || auditReportData.length === 0">
+                                <td colspan="7" class="text-center">No data available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-table NP_LeftPagintion" *ngIf="auditReportData && auditReportData.length > 0">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{startIndex + 1}} to
+                            {{(pageSize * page) > totalSize ? totalSize : (pageSize * page)}} of
+                            {{totalSize}}
+                            row
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee
+                                            [panelClass]="'pagination_select'"
+                                            (selectionChange)="pageSizeChange(pagesizee.value, page)"
+                                            [ngModelOptions]="{standalone: true}">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-7">
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                    [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                    (pageChange)="onChangePage($event)">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

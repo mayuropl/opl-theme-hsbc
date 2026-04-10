@@ -1,0 +1,111 @@
+<!-- <section class="popup_design max-500 HSBC_Common_Pages pb-0" style="display: none">
+  <a class="modal_closeicn_btn" href="javascript:void(0)">
+    <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+  </a>
+  <div class="pop_up_container">
+    <div class="popup_header" mat-dialog-title>
+      <div class="lottie_icn">
+        <lottie-player class="__HSBC_lotties_Not" src="../assets/images/Json/userid.json" background="transparent"
+          speed="1" loop autoplay></lottie-player>
+      </div>
+      <h3 class="mt-2"><br> PLEASE PROVIDE THE REASON FOR<br>REJECTING THE CUSTOMER</h3>
+    </div>
+    <mat-dialog-content class="px-0">
+      <div class="popup_body"> -->
+        <!-- <div class="input_fieldNew text_box mb-0">
+                    <mat-form-field appearance="outline" floatLabel="never" class="w-100">
+                        <mat-label class="filter_label mb-0">Rejection Reason</mat-label>
+                        <mat-select placeholder="Select Year" panelClass="select_radio" [(ngModel)]="RejectionReason">
+                            <mat-option [value]="'0'">
+                              <mat-icon class="checked" *ngIf="RejectionReason === '0'">radio_button_checked</mat-icon>
+                              <mat-icon class="unchecked" *ngIf="RejectionReason !== '0'">radio_button_unchecked</mat-icon>
+                              Pricing
+                            </mat-option>
+                            <mat-option [value]="'1'">
+                              <mat-icon class="checked" *ngIf="RejectionReason === '1'">radio_button_checked</mat-icon>
+                              <mat-icon class="unchecked" *ngIf="RejectionReason !== '1'">radio_button_unchecked</mat-icon>
+                              Competition Relationship
+                            </mat-option>
+                            <mat-option [value]="'2'">
+                                <mat-icon class="checked" *ngIf="RejectionReason === '2'">radio_button_checked</mat-icon>
+                                <mat-icon class="unchecked" *ngIf="RejectionReason !== '2'">radio_button_unchecked</mat-icon>
+                                Competition TAT
+                              </mat-option>
+                          </mat-select> 
+                    </mat-form-field>
+                </div> -->
+
+        <!-- <div class="form_content text_box">
+          <fieldset class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput placeholder="Enter Remarks" [(ngModel)]="remarks"
+                (keydown)="blockExtraCharacters($event)" (ngModelChange)="updateCharCount($event)" rows="3"></textarea>
+              <mat-hint align="end">{{ charactersRemaining }} characters remaining</mat-hint> -->
+
+              <!-- <input matInput type="text" placeholder="Enter Remarks" [(ngModel)]="remarks" (ngModelChange)="checkWordLimit()">  -->
+            <!-- </mat-form-field>
+            <div *ngIf="charactersRemaining==0" class="text-danger" style="font-size: 13px; margin-top: 5px;">
+              Words should not exceed 5000.
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+      <button mat-flat-button color="primary" (click)="rejectCustomerRemarks()">Reject</button>
+      <button mat-stroked-button color="primary" [mat-dialog-close]="true">Cancel</button>
+    </mat-dialog-actions>
+  </div>
+</section> -->
+
+
+
+
+<section class="popup_design max-500 HSBC_Common_Pages pb-0">
+  <a class="modal_closeicn_btn" href="javascript:void(0)">
+    <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+  </a>
+  <div class="pop_up_container">
+    <div class="popup_header text-left" mat-dialog-title>
+      <h3 class="ml-1">Update Client Details</h3>
+    </div>
+    <mat-dialog-content class="px-0">
+      <div class="popup_body">
+        <mat-radio-group class="radio_group" [(ngModel)]="clientStatus"  (change)="onClientStatusChange()">
+          <mat-radio-button value="work_in_progress">Work In-Progress</mat-radio-button>
+          <mat-radio-button value="reject">Reject</mat-radio-button>
+        </mat-radio-group>
+        <div class="input_field mt-2">
+          <mat-form-field appearance="outline" floatLabel="never" class="w-100">
+            <mat-label class="mb-0">Select</mat-label>
+            <mat-select [(ngModel)]="selectedReason">
+              <mat-option *ngFor="let reason of reasonList" [value]="reason.reasonValue">
+                {{ reason.reasonName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div> 
+        <div class="form_content mt-2">
+          <fieldset class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput placeholder="Enter Remarks" [(ngModel)]="remarks"
+                (keydown)="blockExtraCharacters($event)" (ngModelChange)="updateCharCount($event)" rows="3"></textarea>
+              <mat-hint align="end">{{ charactersRemaining }} characters remaining</mat-hint>
+
+              <!-- <input matInput type="text" placeholder="Enter Remarks" [(ngModel)]="remarks" (ngModelChange)="checkWordLimit()">  -->
+            </mat-form-field>
+            <div *ngIf="charactersRemaining==0" class="text-danger" style="font-size: 13px; margin-top: 5px;">
+              Words should not exceed 5000.
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+      <button mat-flat-button color="primary" (click)="rejectCustomerRemarks()">OK</button>
+      <button mat-stroked-button color="primary" [mat-dialog-close]="true">Cancel</button>
+    </mat-dialog-actions>
+  </div>
+</section>

@@ -1,0 +1,34 @@
+.trail_summary_section{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px !important;
+  .trail_box{
+    display: flex;
+    padding: 5px;
+    max-width: 20%;
+    width: 100%;
+  }
+    .summary_item{ 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px 15px;
+      border: 1px solid #D2DEF0;
+      border-radius: 8px;
+      width: 100%;
+      &.red_badge{
+        border: 1px solid #32327F;
+        background: #FFF2F3;
+      }
+       h5{
+        font-size: 12px;
+         margin: 0 0 5px 0;
+      }
+      span{
+        font-size: 14px;
+        color: #000;
+        font-weight: 500;
+      }
+    }
+  }
+

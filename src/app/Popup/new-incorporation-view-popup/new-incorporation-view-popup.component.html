@@ -1,0 +1,30 @@
+<section class="popup_design max-700 HSBC_Common_Pages pb-0">
+  <a class="modal_closeicn_btn" href="javascript:void(0)">
+      <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+  </a>
+  <div class="pop_up_container">
+      <div class="popup_header" mat-dialog-title>
+          <h3>{{ corporation?.company || 'No Company Name' }}</h3> <!-- Example: Showing Company Name -->
+      </div>
+      <mat-dialog-content class="px-0">
+          <div class="popup_body">
+              <ul>
+                  <li>
+                      Address <span>{{ corporation?.address || 'N/A' }}</span>
+                  </li>
+                  <li>
+                      Email Id <span>{{ corporation?.email || 'N/A' }}</span>
+                  </li>
+                  <li>Obligation Of Contribution (Rs. In Lacs) <span>{{ corporation?.obligationOfContribution || 'N/A' }}</span></li>
+                  <li>Paid Up Capital (Rs. In Lacs) <span>{{ corporation?.paidUpCapital || 'N/A' }}</span></li>
+                  <li>Sector<span>{{ corporation?.sector || 'N/A' }}</span></li>
+                  <li>Key People<span>{{ corporation?.keyPeople || 'N/A' }}</span></li>
+                  <li>Key Related Companies <span>{{ corporation?.keyRelatedCompanies || 'N/A' }}</span></li>
+             </ul>
+          </div>
+      </mat-dialog-content>
+      <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+          <button mat-flat-button color="primary" matDialogClose="">OK</button>
+      </mat-dialog-actions>
+  </div>
+</section>

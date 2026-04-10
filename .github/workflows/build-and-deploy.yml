@@ -1,0 +1,145 @@
+name: Build and Deploy Angular App
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create assets symlink for build
+        run: |
+          # Create symlink from src/assets to public/assets so SCSS can resolve asset paths
+          if [ ! -d "src/assets" ]; then
+            ln -s ../public/assets src/assets
+            echo "✓ Created symlink: src/assets -> public/assets"
+          else
+            echo "src/assets already exists"
+          fi
+
+      - name: Build Angular app
+        run: npm run build:github
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/kms-website/browser
+          retention-days: 7
+
+  deploy-github-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create assets symlink for build
+        run: |
+          # Create symlink from src/assets to public/assets so SCSS can resolve asset paths
+          if [ ! -d "src/assets" ]; then
+            ln -s ../public/assets src/assets
+            echo "✓ Created symlink: src/assets -> public/assets"
+          else
+            echo "src/assets already exists"
+          fi
+
+      - name: Build for production
+        run: npm run build:github
+        continue-on-error: false
+
+      - name: Verify build output
+        run: |
+          echo "Checking build output structure..."
+          if [ -d "dist/kms-website/browser" ]; then
+            echo "✓ dist/kms-website/browser directory exists"
+            ls -la dist/kms-website/browser/ | head -20
+          else
+            echo "✗ dist/kms-website/browser directory not found"
+            echo "Checking dist directory:"
+            ls -la dist/ || echo "dist directory not found"
+            echo "Checking for any build output:"
+            find . -type d -name "browser" 2>/dev/null | head -10
+            exit 1
+          fi
+
+      - name: Create 404.html for GitHub Pages routing
+        run: |
+          # Find index.html and copy to 404.html at the root of dist/kms-website/browser
+          INDEX_FILE=$(find dist/kms-website/browser -name "index.html" -type f | head -1)
+          if [ -n "$INDEX_FILE" ]; then
+            echo "Found index.html at: $INDEX_FILE"
+            INDEX_DIR=$(dirname "$INDEX_FILE")
+            # Copy to same directory as index.html (root of what GitHub Pages serves)
+            cp "$INDEX_FILE" "$INDEX_DIR/404.html"
+            echo "✓ 404.html created successfully at: $INDEX_DIR/404.html"
+            ls -lh "$INDEX_DIR/404.html"
+          else
+            echo "✗ Error: index.html not found in dist/kms-website/browser/"
+            echo "Searching for HTML files:"
+            find dist -name "*.html" -type f
+            exit 1
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        with:
+          enablement: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/kms-website/browser
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

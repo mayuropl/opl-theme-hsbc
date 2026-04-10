@@ -1,0 +1,445 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page  pb-0">
+    <div class="__main_Container">
+        <div class="searchBox_section withpageTitle_Sec"
+            style="background-image: url(assets/images/Dashabord/searchBox_bg.jpg);">
+            <div class="searchBox_section_left">
+                <h2>Commercial Bureau</h2>
+                <p><span>Important Instructions</span> : Any commercial bureau pull leaves HSBC footprint in bureau and also has a significant cost to the bank. Go ahead only for customers where you are prospecting for lending and you have customer consent. We are also enabling bureau checks every 2 months for you. Limit bureau checks to max of 2 in an year.</p>
+            </div>
+            <div class="searchBox_design">
+                <form class="searchBox_Form" autocomplete="off">
+                    <div class="searchBox_input">
+                        <div class="input_field">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Enter PAN</mat-label>
+                                <input matInput placeholder="Enter PAN" [(ngModel)]="panNumber" name="panNumber"
+                                    #panInput="ngModel" required pattern="^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$"
+                                    (input)="onInputChange($event)" required
+                                    [readonly]="isDetailFetched || isExistingPanFound">
+                                <mat-error *ngIf="panInput.errors?.required">PAN is required</mat-error>
+                                <mat-error *ngIf="panInput.errors?.pattern">Invalid PAN format</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="searchBox_btn">
+                        <button *ngIf="!isDetailFetched" type="submit" mat-flat-button color="primary"
+                            [disabled]="!panInput.valid || isExistingPanFound"
+                            (click)="getBuearueHistoryDataAPI($event)">Check
+                            Bureau</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="notesData.companyNoteWantToShow && notesData.companyNote" class="red_text note_text">
+                <p><i class="fas fa-exclamation-triangle mr-2"></i><span>Note</span> : {{notesData.companyNote}}</p>
+            </div>
+        <div class="page_Details ">
+            <div class="box_design mb-5 mt-3" *ngIf="companyForm && !hideForm">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>
+                            Company detail
+                        </h4>
+                    </div>
+                </div>
+                <div class="box_design_details with_padding">
+                    <div class="NP_Com_Group Form_Cont_Grp">
+                        <form class="NP_Form form_design" [formGroup]="companyForm" autocomplete="off">
+
+                            <div class="NP_Com_Group">
+                                <legend class="col-sm-12 col-md-6 col-lg-3">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>PAN</mat-label>
+                                            <input matInput formControlName="pan" placeholder="Enter Pan No."
+                                                (input)="onInputChange($event)" required>
+                                            <mat-error class="error_msg" *ngIf="companyForm.controls.pan.errors?.required">
+                                               <p class="error_text">Enter PANnumber</p>
+                                            </mat-error>
+                                            <mat-error class="error_msg" *ngIf="companyForm.controls.pan.errors?.invalidPanFormat">
+                                               <p class="error_text">Enter correct PAN</p>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </legend>
+                                <legend class="col-sm-12 col-md-6 col-lg-3">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Name of Company</mat-label>
+                                            <input matInput placeholder="Name of Company" formControlName="companyName">
+                                            <!-- <mat-error [control]="companyForm.controls.companyName"
+                                            [appValidateElementNew]="submitted"
+                                        ></mat-error> -->
+                                            <mat-error class="error_msg" *ngIf="companyForm.controls.companyName.errors?.required">Enter
+                                               <p class="error_text">full name of business</p>
+                                            </mat-error>
+                                            <mat-error class="error_msg"
+                                                *ngIf="companyForm.controls.companyName.errors?.invalidCharacters">
+                                               <p class="error_text">Enter characters between 3 to 125. Not allowing special characters except / . - ( )</p>
+                                            </mat-error>
+                                            <mat-error class="error_msg"
+                                                *ngIf="companyForm.controls.companyName.errors?.startsWithSpace">
+                                               <p class="error_text">Not allowing special characters except / . - ( )</p>
+                                            </mat-error>
+                                              <mat-error class="error_msg"
+                                                *ngIf="companyForm.controls.companyName.errors?.endsWithSpace">
+                                               <p class="error_text">Not allowing special characters except / . - ( )</p>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </legend>
+                                <legend class="col-sm-12 col-md-6 col-lg-3">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Date of incorporation</mat-label>
+                                            <input matInput formControlName="dateOfIncorporation"
+                                                [matDatepicker]="picker1" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-error class="error_msg"
+                                                *ngIf="companyForm.controls.dateOfIncorporation.errors?.required">
+                                               <p class="error_text">Date of incorporation is required</p>
+                                            </mat-error>
+                                            <!-- <mat-error *ngIf="companyForm.controls.dateOfIncorporation.errors?.invalidAge">Minimum age should be 18 years and maximum age should be 80 years</mat-error> -->
+                                            <mat-error class="error_msg"
+                                                *ngIf="companyForm.controls.dateOfIncorporation.errors?.futureDate">
+                                               <p class="error_text">Future dates are not allowed</p>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </legend>
+
+                            </div>
+
+
+                            <div class="NP_Com_Group">
+                                <legend class="col-sm-12 col-md-6 col-lg-6">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 1</mat-label>
+                                            <input matInput placeholder="Address Line 1" formControlName="address1"
+                                                (input)="onAddressInput($event, 'address1', companyForm)"
+                                               (blur)="onAddressBlur('address1', companyForm)"
+                                               [matTooltip]="getTooltipText('address1', companyForm)"
+                                               matTooltipPosition="above"
+                                               maxlength="200"
+                                                required>
+                                                <mat-hint align="end">{{getCharacterCount('address1', companyForm)}}</mat-hint>
+                                                <mat-error class="error_msg" *ngIf="companyForm.controls.address1.errors?.required">
+                                                   <p class="error_text">Address Line 1 is required</p>
+                                                </mat-error>
+                                                <mat-error class="error_msg"
+                                                    *ngIf="companyForm.controls.address1.errors?.invalidAddressFormat">
+                                                   <p class="error_text">Address must be between 3 and 200 characters. Only . / \ - are allowed as special characters.</p>
+                                                </mat-error>
+                                                <mat-error class="error_msg"
+                                                    *ngIf="companyForm.controls.address1.errors?.startsWithSpace">
+                                                   <p class="error_text">Allowing to add . / \ - as special characters</p>
+                                                </mat-error>
+                                                <mat-error class="error_msg"
+                                                    *ngIf="companyForm.controls.address1.errors?.endsWithSpace">
+                                                   <p class="error_text">Allowing to add . / \ - as special characters</p>
+                                                </mat-error>
+                                        </mat-form-field>        
+                                    </fieldset>
+                                </legend>
+                                <legend class="col-sm-12 col-md-6 col-lg-6">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 2</mat-label>
+                                            <input matInput placeholder="Address Line 2" formControlName="address2"
+                                             (input)="onAddressInput($event, 'address2', companyForm)"
+                                               (blur)="onAddressBlur('address2', companyForm)"
+                                               [matTooltip]="getTooltipText('address2', companyForm)"
+                                               matTooltipPosition="above"
+                                               maxlength="200">
+                                               <mat-hint align="end">{{getCharacterCount('address2', companyForm)}}</mat-hint>
+                                            <!-- <mat-error *ngIf="companyForm.controls.address2.errors?.required">Address
+                                                Line
+                                                2</mat-error> -->
+                                             <mat-error class="error_msg" *ngIf="companyForm.controls.address2.errors?.invalidAddressFormat">
+                                                <p class="error_text">Address must be between 3 and 200 characters. Only . / \ - are allowed as special characters.</p>
+                                             </mat-error>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </legend>
+
+                            </div>
+
+                            <div class="NP_Com_Group">
+                                <legend class="col-sm-12 col-md-6 col-lg-3">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Pincode</mat-label>
+                                            <input matInput placeholder="Pincode" formControlName="pincode"
+                                                (blur)="getStateCityFromPincode(companyForm.get('pincode').value, companyForm)">
+                                            <mat-error class="error_msg" *ngIf="companyForm.controls.pincode.errors?.required">
+                                               <p class="error_text">Enter Pin code</p>
+                                            </mat-error>
+                                            <mat-error class="error_msg"
+                                                *ngIf="companyForm.controls.pincode.errors?.invalidPincodeFormat">
+                                               <p class="error_text">Enter Correct PIN Code</p>
+                                            </mat-error>
+                                            <mat-error class="error_msg" *ngIf="companyForm.controls.pincode.errors?.startsWithZero">
+                                               <p class="error_text">First digit must not be 0</p>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </legend>
+                                <legend class="col-sm-12 col-md-6 col-lg-3">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>State</mat-label>
+                                            <mat-select placeholder="Select State" formControlName="state">
+                                                <mat-option
+                                                    *ngFor="let state of companyForm.controls['stateList'].value"
+                                                    [value]="state.stateId">
+                                                    {{ state.stateName }}
+                                                </mat-option>
+                                            </mat-select>
+
+                                            <mat-error class="error_msg" *ngIf="companyForm.controls.state.errors?.required">
+                                               <p class="error_text">Select state</p>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </legend>
+
+                                <legend class="col-sm-12 col-md-6 col-lg-3">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>City</mat-label>
+                                            <mat-select placeholder="Select City" formControlName="city">
+                                                <mat-option
+                                                    *ngFor="let citys of companyForm.controls['cityList'].value ; let i = index"
+                                                    [value]="citys.cityId">
+                                                    {{ citys.cityName }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error class="error_msg" *ngIf="companyForm.controls.city.errors?.required">
+                                               <p class="error_text">Select city</p>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </legend>
+
+                            </div>
+                        </form>
+                        <div class="page_Actions text-right">
+                            <p class="msg_text">Please verify and fill in all details in the table. Remove special characters from the address field, if needed. Click on Fetch Details button once it gets highlighted.</p>
+                            <button type="button" mat-flat-button color="primary" class="" (click)="submit()"
+                                [disabled]="isCallCibilHitted || !this.companyForm.valid"
+                                >Fetch Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="isHistoryDataFetched">
+                <div class="page_Title_sec">
+                    <div class="page_Title_left">
+
+                        @if (!isExistingPanFound && !isFromPRDashboard) {
+                        <h4>
+                            Commercial Bureau History
+                        </h4>
+                        }@else if(isExistingPanFound) {
+                        <h4 class="cursor_pointer" (click)="navigateToViewComponent(panNumber)">
+                            <em class="fa fa-arrow-left mr-2"></em>
+                            Commercial Bureau History
+                        </h4>
+                        }@else if(isFromPRDashboard) {
+                        <h4 class="cursor_pointer" (click)="navigateToPRDashboard()">
+                            <em class="fa fa-arrow-left mr-2"></em>
+                            Commercial Bureau History
+                        </h4>
+                        }
+                    </div>
+                    <div class="page_Title_Right pagewrap_right">
+                        <button mat-flat-button color="primary" class="btn_design" (click)="callRefresh()"
+                            [disabled]="isCallCibilHitted || !panInput.valid">
+                            {{bureueHistoryDataList?.length>0?"Refresh":"Fetch Details"}}</button>
+                        <!-- <button mat-flat-button color="primary" class="btn_design" (click)="callSignzy()" [disabled]="!panInput.valid">Refresh</button> -->
+                        <p class="msg_text">Please click for a fresh commercial (entity) bureau pull</p>
+                    </div>
+                </div>
+                <div class="box_design">
+                    <div class="box_design_details p-0">
+                        <div class="tableResponsive">
+                            <table class="CommonTable_NP design_Main_listTable CommonTable_Scroll table_wrap no_sticky_table">
+                                <thead>
+                                    <tr>
+                                        <th width="5%" class="text-center">Sr.No</th>
+                                        <th>Name Of Company</th>
+                                        <th>Reference Id</th>
+                                        <th>RM Name</th>
+                                        <th>Commercial Bureau History</th>
+                                        <th>Bureau Fetched Date</th>
+                                        <th>Date Of Report</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="Mobile_View_Filter_Hide_NP filter_tr ">
+                                        <td></td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter Name Of Company"
+                                                        [(ngModel)]="nameOfCompany" (keyup)="onNameInput($event)"
+                                                        name="nameOfCompany">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter Reference Id"
+                                                        [(ngModel)]="cibilId" (keyup)="onNameInput($event)"
+                                                        name="cibilId">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter RM Name" [(ngModel)]="rmName"
+                                                        (keyup)="onNameInput($event)" name="rmName">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter Bureau Type"
+                                                        [(ngModel)]="bureauType" (keyup)="onNameInput($event)"
+                                                        name="bureauType">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Select Date" [(ngModel)]="createdDate"
+                                                        [matDatepicker]="picker1" [max]="today" readonly>
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="picker1"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker1
+                                                        (closed)="onNameInput($event)"></mat-datepicker>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Select Date" [(ngModel)]="dateOfReport"
+                                                        [matDatepicker]="picker2" [max]="today" readonly>
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="picker2"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker2
+                                                        (closed)="onNameInput($event)"></mat-datepicker>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                        </td>
+                                         <td class="text-center">
+                                                <button type="button" mat-icon-button matTooltip="Clear Filter"
+                                                    matTooltipPosition="left" matTooltipClass="mat-tooltip-left-arrow"
+                                                    class="matIcon red_icn" color="primary" (click)="resetFilter()"><em
+                                                        class="fas fa-eraser"></em></button>
+                                            </td>
+                                    </tr>
+                                    <ng-container *ngIf="bureueHistoryDataList?.length>0; else elseTemplate">
+                                        <tr *ngFor="let bureueHstry of bureueHistoryDataList;let i = index">
+                                            <td data-label="Sr.No" class="text-center">{{(page-1)*pageSize+(i+1)}}</td>
+                                            <td data-label="Name Of Company">
+                                                {{bureueHstry.nameOfCompany?bureueHstry.nameOfCompany:'-' }}</td>
+                                            <td data-label="Reference Id">{{bureueHstry.cibilId?bureueHstry.cibilId:'-'
+                                                }}
+                                            </td>
+                                            <td data-label="RM Name">{{bureueHstry.rmName?bureueHstry.rmName:'-' }}</td>
+                                            <td data-label="Commercial Bureau History">
+                                                {{bureueHstry.bureauType?bureueHstry.bureauType:'-' }}</td>
+                                            <td data-label="Bureau Fetched Date">
+                                                {{ bureueHstry?.createdDate | date: 'dd-MM-yyyy H:mm:ss' }}
+                                            </td>
+                                            <td data-label="Date Of Report">
+                                                {{ bureueHstry?.dateOfReport | date: 'dd-MM-yyyy H:mm:ss' }}
+                                            </td>
+                                            <td data-label="Is cibil process completed">
+                                                <span *ngIf="bureueHstry?.isCibilProcessCompleted === 1" class="skyblue_badge no_wrap">Success</span>
+                                                <span class="lightred_badge no_wrap" *ngIf="bureueHstry?.isCibilProcessCompleted === 0">
+                                                    Failed
+                                                 </span>
+                                                  <i *ngIf="bureueHstry?.isCibilProcessCompleted === 0"  [matTooltip]="'ERR: Bureau Analysis failed due to technical reasons. Kindly retrigger analysis by clicking on the view button.'" class="fas fa-info-circle ml-1 red_text"></i>
+                                            <span class="orange_badge no_wrap" *ngIf="bureueHstry?.isCibilProcessCompleted !== 1 && bureueHstry?.isCibilProcessCompleted !== 0">
+                                                 Pending
+                                            </span>
+                                            </td>
+                                            <td data-label="Action" class="no_wrap">
+                                                <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View"
+                                                    (click)="viewCommercialDetailPage(bureueHstry.cibilId,bureueHstry?.isCibilProcessCompleted,bureueHstry?.bureauType)">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <!-- <button mat-icon-button class="matIcon orange_text" ngbTooltip="Pending" *ngIf="bureueHstry?.isCibilProcessCompleted != 1">
+                                                    <i class="fas fa-hourglass-half orange_text"></i>
+                                                </button> -->
+                                                <button mat-icon-button class="matIcon grey_icn"
+                                                    ngbTooltip="Cibil Audit" *ngIf="isActionAvail(constants.PageActions.AUDIT)"
+                                                    (click)="viewAuditPage(bureueHstry.cibilId)">
+                                                    <mat-icon [svgIcon]="'fileSearch_Icon'"></mat-icon>
+                                                </button>
+                                                <!-- [placement]="['top']" ngbTooltip="View" -->
+                                                <!-- <a mat-icon-button class="matIcon">
+                                        <mat-icon [svgIcon]="'fileSearch_Icon'"></mat-icon>
+                                    </a> -->
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                                        <tr>
+                                            <td colspan="10">
+                                                <app-no-data-found message="No previous history found" />
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-table NP_LeftPagintion">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(startIndex+1)}} to
+                                {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                {{totalSize}} rows
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [panelClass]="'pagination_select'" [(ngModel)]="pageSize"
+                                                (ngModelChange)="onPageChange(page)">
+                                                <mat-option *ngFor="let pages of PageSelectNumber"
+                                                    [value]="pages.value">
+                                                    {{pages.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <span>row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                        [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                        (pageChange)="onPageChange($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>List Of Associated Legal Entities</h3>
+        </div>
+        <mat-dialog-content class="px-0">
+            <div class="popup_body">
+                <div class="table_sec">
+                    <div class="tableResponsive max-h-100">
+                        <table
+                            class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table ">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th>Sr No.</th>
+                                    <th>Name</th>
+                                    <th>Entity ID</th>
+                                    <th>Customer Type</th>
+                                 </tr>
+                            </thead>
+                            <tbody *ngIf="listOfAssociatedEntitiesDetails.length > 0; else noAssociatedEntities">
+                                <tr *ngFor="let associatedDetails of listOfAssociatedEntitiesDetails; let i = index">
+                                    <td data-label="Sr No.">{{(((tracxnAssociatedEntitiesPage.page()-1) * tracxnAssociatedEntitiesPage.pageSize()) + (i+1))}}</td>
+                                    <td data-label="Name Of Round">{{associatedDetails?.name || '-'}}</td>
+                                    <td data-label="Entity ID">{{associatedDetails?.entityId || '-'}}</td>
+                                    <td data-label="Customer Type">{{associatedDetails?.customerType || '-'}}</td>                                     
+                                </tr> 
+                            </tbody>
+                        </table> 
+                        <ng-template #noAssociatedEntities>
+                            <tr>
+                              <td colspan="6" class="text-center text-danger">
+                                <app-no-data-found message="No Associated Entities Details found." />
+                             </td>
+                            </tr>
+                       </ng-template>
+                    </div>
+                     <div class="pagination-table NP_LeftPagintion">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{(tracxnAssociatedEntitiesPage.startIndex()+1)}} to
+                            {{(tracxnAssociatedEntitiesPage.pageSize()*tracxnAssociatedEntitiesPage.page()) >
+                            (tracxnAssociatedEntitiesPage.totalSize) ? (tracxnAssociatedEntitiesPage.totalSize) :
+                            (tracxnAssociatedEntitiesPage.pageSize()*tracxnAssociatedEntitiesPage.page())}} of
+                            {{tracxnAssociatedEntitiesPage.totalSize}} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="tracxnAssociatedEntitiesPage.pageSize"
+                                            (selectionChange)="getAllAssociatedEntities()" [panelClass]="'pagination_select'">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span class="grey_text"> row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="tracxnAssociatedEntitiesPage.totalSize" [maxSize]="3"
+                                    [(page)]="tracxnAssociatedEntitiesPage.page" [rotate]="true" [boundaryLinks]="true"
+                                    [pageSize]="tracxnAssociatedEntitiesPage.pageSize()" (pageChange)="getAllAssociatedEntities()">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

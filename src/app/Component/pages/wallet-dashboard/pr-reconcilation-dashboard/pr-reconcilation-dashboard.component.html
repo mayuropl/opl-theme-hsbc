@@ -1,0 +1,421 @@
+<div class="container-fluid HSBC_Common_Pages ">
+    <div class="__main_Container">
+        <div class="page_Details">
+            <div class="page_Title_sec">
+                <!-- <div class="page_Title_left">
+                                <h4 class="cursor_pointer">
+                                    Existing Portfolio
+                                </h4>
+                            </div> -->
+                <div class="page_Title_left with_sle">
+                    <h4 class="cursor_pointer" (click)="goBack()">
+                        <em class="fmdi fmdi-arrow-left mr-2"></em>
+                        PR Reconciliation Dashboard
+                    </h4>
+                </div>
+                <div class="page_Title_Right">
+                    <!-- <button type="button" mat-flat-button class="btn_design with_right_icn mr-2 br_8" color="secondary">
+                        Download <i class="fas fa-arrow-down mr-2"></i>
+                    </button> -->
+                    <!-- <div class="custom_month_picker">
+                        <div class="form_box">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date"
+                                bsDatepicker [maxDate]="maxDate"
+                                [bsConfig]="{ dateInputFormat: 'MMM YYYY', adaptivePosition: true, maxDate: maxDate }"
+                                (ngModelChange)="getAlertsSubTabData(0)" (onShown)="onOpenCalendar($event)"
+                                onkeydown="return false">
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                    </div> -->
+                    <div class="">
+
+                    </div>
+                      <div ngbDropdown class="dropdown d-inline">
+                    <button type="submit"  mat-stroked-button class="btn_design greay_text ln_40 ml-1 br_8" color="grey" ngbDropdownToggle>
+                        Download Report <i class="fas fa-caret-down ml-2"></i>
+                    </button>
+                    <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover download_template">
+                        <a *ngFor="let option of downloadOptions" ngbDropdownItem
+                            (click)="downloadCommercialReconsilationData(option)">
+                            {{option.label}}
+                        </a>
+                    </div>
+                </div>
+                    <button mat-stroked-button class="btn_design white_bg br_8 ml-2" color="primary" [matMenuTriggerFor]="prFilterTopBar" #searchByTrigger="matMenuTrigger">
+                        <i class="fi fi-rr-settings-sliders mr-1"></i> Filter</button>
+                </div>
+                <mat-menu #prFilterTopBar="matMenu" class="filter_option_menu filter_option_menu_new">
+
+                    <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()"
+                        (keydown)="$event.stopPropagation()">
+                        <h3 class="title_menu">
+                            Filter
+                        </h3>
+                        <div class="filter_inp_box">
+                            <div class="input_fieldNew">
+                                <mat-form-field appearance="outline">
+                                     <mat-select placeholder="Select Source">
+                                        <mat-option value="1">Bureau<i class="fas fa-arrows-alt-h ml-1 mr-1"></i>Bank</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_fieldNew">
+                                <mat-form-field appearance="outline">
+                                     <mat-select placeholder="Select Comparison Type" [(ngModel)]="selectedComparisonType">
+                                        <mat-option [value]="true">Within 6 Months Vs Within 6 Months</mat-option>
+                                        <mat-option [value]="false">Total Vs Total</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="filter_actions">
+                            <button mat-flat-button color="primary" class="no_wrap br_8 ln_40" (click)="applyFilter(); searchByTrigger.closeMenu()">Apply</button>
+                            <button mat-stroked-button class="btn_design white_bg no_wrap br_8 ln_40 ml-2" color="primary" (click)="resetFilter()">
+                                <i class="fi fi-br-refresh mr-1"></i> Reset
+                            </button>
+                        </div>
+                    </div> 
+
+            </mat-menu>
+        </div>
+        <div class="pipeline-flow-container">
+            <!-- -->
+            <div class="pipeline-flow-cards">
+                <div class="pipeline-card grey_card">
+                    <div class="pipeline-card__icon">
+                        <i class="fi fi-rr-users"></i>
+                    </div>
+                    <div class="pipeline-card__content">
+                        <span class="pipeline-card__label">Total Customers Reported</span>
+                        <h4 class="pipeline-card__value">{{commercialReconsilationSummary?.totalCustomersReported}}
+                            <!-- <span>70%</span> -->
+                        </h4>
+                    </div>
+                </div>
+                <div class="pipeline-card green_card">
+                    <div class="pipeline-card__icon">
+                        <i class="fi fi-rr-thumbs-up-trust"></i>
+                    </div>
+                    <div class="pipeline-card__content">
+                        <span class="pipeline-card__label">Perfect Match</span>
+                        <h4 class="pipeline-card__value">{{commercialReconsilationSummary?.perfectMatchCount}}
+                            <span>{{commercialReconsilationSummary?.perfectMatchPercentage}}%</span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="pipeline-card blue_card">
+                    <div class="pipeline-card__icon">
+                        <i class="fi fi-rr-restock"></i>
+                    </div>
+                    <div class="pipeline-card__content">
+                        <span class="pipeline-card__label">Discrepancies Found</span>
+                        <h4 class="pipeline-card__value">{{commercialReconsilationSummary?.discrepanciesFoundCount}}
+                            <span>{{commercialReconsilationSummary?.discrepanciesFoundPercentage}}%</span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="pipeline-card yellow_card">
+                    <div class="pipeline-card__icon">
+                        <i class="fi fi-rr-chart-histogram"></i>
+                    </div>
+                    <div class="pipeline-card__content">
+                        <span class="pipeline-card__label">Only in Report</span>
+                        <h4 class="pipeline-card__value">{{commercialReconsilationSummary?.onlyInReportCount}}
+                            <span>{{commercialReconsilationSummary?.onlyInReportPercentage}}%</span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="pipeline-card red_card">
+                    <div class="pipeline-card__icon">
+                        <i class="fi fi-rr-file-chart-line"></i>
+                    </div>
+                    <div class="pipeline-card__content">
+                        <span class="pipeline-card__label">Only in Bureau</span>
+                        <h4 class="pipeline-card__value">{{commercialReconsilationSummary?.onlyInBureauCount}}
+                            <span>{{commercialReconsilationSummary?.onlyInBureauPercentage}}%</span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box_design mb-4">
+            <h5 class="pipeline-flow-title">Detailed Stage Breakdown</h5>
+            <div class="slide_box mb-4">
+                <div class="scroll-controls">
+                    <button #leftBtn class="control_btn left_btn" (click)="scroll.scrollLeft()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button #rightBtn class="control_btn right_btn" (click)="scroll.scrollRight()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="wallet_tabing_main" appScrollButtons #scroll="appScrollButtons" [leftButton]="leftBtn"
+                    [rightButton]="rightBtn">
+                    <ul>
+                        <li class="recon_card_teal"  [ngClass]="activeCard === '100% Match' ? 'active' : ''" (click)="getCommercialReconsilationData('100% Match',true)">
+                            <div class="tab_wrp recon_card">
+                                <div class="left_side align_side">
+                                    <div class="box_icon teal_text">
+                                        <i class="fi fi-rr-memo-circle-check"></i>
+                                    </div>
+                                    <h5 class="short_desc ml-2">100% Match</h5>
+                                </div>
+                                <div class="btm_desc">
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Customers</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.perfectMatchCount}}</h2>
+                                    </div>
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Rate</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.perfectMatchPercentage}}%</h2>
+                                    </div>
+                                </div>
+                                <p class="recon_desc">Sanction & Outstanding match perfectly.</p>
+                            </div>
+                        </li>
+                        <li class="recon_card_blue" [ngClass]="activeCard === 'Sanction Mismatch' ? 'active' : ''" (click)="getCommercialReconsilationData('Sanction Mismatch',true)">
+                            <div class="tab_wrp recon_card">
+                                <div class="left_side align_side">
+                                    <div class="box_icon blue_text">
+                                        <i class="fi fi-rr-document-circle-wrong"></i>
+                                    </div>
+                                    <h5 class="short_desc ml-2">Sanction Mismatch</h5>
+                                </div>
+                                <div class="btm_desc">
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Customers</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.sanctionMismatchCount}}</h2>
+                                    </div>
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Rate</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.sanctionMismatchPercentage}}%</h2>
+                                    </div>
+                                </div>
+                                <p class="recon_desc">Outstanding matches but Sanction differs.</p>
+                            </div>
+                        </li>
+                        <li class="recon_card_blue" [ngClass]="activeCard === 'Outstanding Mismatch' ? 'active' : ''" (click)="getCommercialReconsilationData('Outstanding Mismatch',true)">
+                            <div class="tab_wrp recon_card">
+                                <div class="left_side align_side">
+                                    <div class="box_icon blue_text">
+                                        <i class="fi fi-rr-document-circle-wrong"></i>
+                                    </div>
+                                    <h5 class="short_desc ml-2">Outstanding Mismatch</h5>
+                                </div>
+                                <div class="btm_desc">
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Customers</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.outstandingMismatchCount}}</h2>
+                                    </div>
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Rate</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.outstandingMismatchPercentage}}%</h2>
+                                    </div>
+                                </div>
+                                <p class="recon_desc">Sanction matches but Outstanding differs.</p>
+                            </div>
+                        </li>
+                        <li class="recon_card_blue" [ngClass]="activeCard === 'Both Mismatch' ? 'active' : ''" (click)="getCommercialReconsilationData('Both Mismatch',true)">
+                            <div class="tab_wrp recon_card">
+                                <div class="left_side align_side">
+                                    <div class="box_icon blue_text">
+                                        <i class="fi fi-rr-delete-document"></i>
+                                    </div>
+                                    <h5 class="short_desc ml-2">Both Mismatch</h5>
+                                </div>
+                                <div class="btm_desc">
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Customers</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.bothMismatchCount}}</h2>
+                                    </div>
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Rate</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.bothMismatchPercentage}}%</h2>
+                                    </div>
+                                </div>
+                                <p class="recon_desc">Both Sanction & Outstanding differ.</p>
+                            </div>
+                        </li>
+                        <li class="recon_card_yellow" [ngClass]="activeCard === 'Reported But No Bureau Data' ? 'active' : ''" (click)="getCommercialReconsilationData('Reported But No Bureau Data',true)">
+                            <div class="tab_wrp recon_card">
+                                <div class="left_side align_side">
+                                    <div class="box_icon yellow_text">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <h5 class="short_desc ml-2">Reported but no bureau data</h5>
+                                </div>
+                                <div class="btm_desc">
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Customers</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.reportedNoBureauCount}}</h2>
+                                    </div>
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Rate</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.reportedNoBureauPercentage}}%</h2>
+                                    </div>
+                                </div>
+                                <p class="recon_desc">Customer data exists in report only.</p>
+                            </div>
+                        </li>
+                        <li class="recon_card_red" [ngClass]="activeCard === 'Bureau Data But Not Reported' ? 'active' : ''"  (click)="getCommercialReconsilationData('Bureau Data But Not Reported',true)">
+                            <div class="tab_wrp recon_card">
+                                <div class="left_side align_side">
+                                    <div class="box_icon red_text">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <h5 class="short_desc ml-2">Bureau data but not reported</h5>
+                                </div>
+                                <div class="btm_desc">
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Customers</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.bureauNotReportedCount}}</h2>
+                                    </div>
+                                    <div class="left_side">
+                                        <h5 class="short_desc">Rate</h5>
+                                        <h2 class="number_title">{{commercialReconsilationSummary?.bureauNotReportedPercentage}}%</h2>
+                                    </div>
+                                </div>
+                                <p class="recon_desc">Customer data exists in bureau only.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="inner_box_design">
+                <div class="bottom_table_design">
+                    <div class="box_design_ttl_bar">
+                        <div class="box_design_ttl_bar_left">
+                            <h4>Customer Product Insights</h4>
+                        </div>
+                    </div>
+                    <div class="tableResponsive">
+                        <table class="CommonTable_Scroll NonBG_Table no_sticky_table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th>Sr.No</th>
+                                    <ng-container *ngFor="let col of tableColumns">
+                                        <th>
+                                            {{col.label}}
+                                            <span class="sort-container" *ngIf="col.sortable">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === col.sortField && sortDirection === 'ASC'"
+                                                    (click)="toggleSort(col.sortField, 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort(col.sortField, 'ASC')" (keydown.space)="toggleSort(col.sortField, 'ASC')"
+                                                    [attr.aria-label]="'Sort by ' + col.label + ' ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === col.sortField && sortDirection === 'DESC'"
+                                                    (click)="toggleSort(col.sortField, 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort(col.sortField, 'DESC')" (keydown.space)="toggleSort(col.sortField, 'DESC')"
+                                                    [attr.aria-label]="'Sort by ' + col.label + ' descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                    </ng-container>
+                                </tr>
+                            </thead>
+
+                            <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoading}">
+                                <div class="table_sep_loader" *ngIf="isLoading">
+                                    <div class="loaderoverlay loader_screen">
+                                        <div class="loader_screen_center">
+                                            <div class="loader_screen_lottie">
+                                                <span class="logo_loader">
+                                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                        alt="">
+                                                </span>
+                                            </div>
+                                            <h3>Please wait data is loading</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                    <td></td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput placeholder="Enter Customer ID" [(ngModel)]="searchCustomerId" (input)="onSearchCustomerId($event)">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                     <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput placeholder="Enter Pan No" [(ngModel)]="searchPan" (input)="onSearchPan($event)">
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td *ngFor="let col of tableColumns.slice(2)"></td>
+                                </tr>
+                                <ng-container *ngFor="let row of commercialReconsilationData; let i = index">
+                                <tr>
+                                    <td>{{(page - 1) * pageSize + i + 1}}</td>
+                                    <td><span class="skyblue_badge no_wrap">{{row?.customerId}}</span></td>
+                                    <ng-container *ngFor="let col of tableColumns.slice(1)">
+                                        <td>
+                                            <ng-container *ngIf="row?.[col.field] != null; else empty">
+                                                <span *ngIf="col.field.includes('sanction') || col.field.includes('outstanding') ; else normal">
+                                                    {{ row[col.field] | number:'1.2-2' }}
+                                                </span>
+                                                <ng-template #normal>
+                                                    {{ row[col.field] }}
+                                                </ng-template>
+                                            </ng-container>
+                                    
+                                            <ng-template #empty>
+                                                {{ col.field.includes('sanction') || col.field.includes('outstanding') ? '-' : 'NA' }}
+                                            </ng-template>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                                </ng-container>
+                                <tr *ngIf="commercialReconsilationData?.length === 0">
+                                    <td colspan="13" class="text-center">
+                                        <app-no-data-found message="No data available"></app-no-data-found>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="totalElements > 0">
+                        <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                            <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing {{ (page - 1) * pageSize + 1 }} to {{ page * pageSize > totalElements ?
+                                totalElements : page * pageSize }} of {{ totalElements }} rows
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [panelClass]="'pagination_select'" [(ngModel)]="pageSize"
+                                                (selectionChange)="onPageSizeChange()">
+                                                <mat-option [value]="5">5</mat-option>
+                                                <mat-option [value]="10">10</mat-option>
+                                                <mat-option [value]="20">20</mat-option>
+                                                <mat-option [value]="50">50</mat-option>
+                                                <mat-option [value]="100">100</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <span class="grey_text">row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="totalElements" [(page)]="page" [pageSize]="pageSize"
+                                        [maxSize]="3" [rotate]="true" (pageChange)="onPageChange($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>

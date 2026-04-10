@@ -1,0 +1,15 @@
+.left_box{
+    display: flex;
+    align-items: center;
+    margin: -10px 0 20px 0;
+}
+
+
+
+.__Btn_Group{
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    .upload_note{
+        font-style: italic;
+    }
+}

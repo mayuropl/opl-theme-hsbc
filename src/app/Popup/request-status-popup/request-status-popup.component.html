@@ -1,0 +1,26 @@
+<div class="popup_design max-500 HSBC_Common_Pages pb-0 min-500 min_w400">
+    <a class="modal_closeicn_btn" href="javascript:void(0)" (click)="dialogRef.close()">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+<div class="modal-header ">
+    <h4 class="modal-title">Request Status</h4>
+  </div>
+  <div class="modal-body">
+    <mat-radio-group *ngIf="showFields" [(ngModel)]="selectedStatus">
+        <mat-radio-button value="Approved" id="option1">Approve</mat-radio-button>
+        <mat-radio-button class="ml-2" value="Rejected" id="option2">Reject</mat-radio-button>
+      </mat-radio-group>
+      <fieldset class="NP_HSBC_ComInput mt-2 mb-2">
+          <mat-label class="outside_label">Remarks *</mat-label>
+          <mat-form-field appearance="outline" floatLabel="never">
+            <input matInput placeholder="Enter Remarks" [(ngModel)]="remarks">
+        </mat-form-field>
+    </fieldset> 
+  </div>
+  <div class="modal-footer d-flex jc-center border-0">
+    <button type="submit" class="ln_40" mat-flat-button color="primary" (click)="submitRemarks()">Submit</button>
+  </div>
+  </div>
+
+
+      <!-- <button [disabled]="!remarks || remarks.trim().length < 0" type="submit" -->

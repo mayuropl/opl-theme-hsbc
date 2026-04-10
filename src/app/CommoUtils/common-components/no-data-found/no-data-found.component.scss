@@ -1,0 +1,25 @@
+.HSBC_No_Data_Found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.data_file{
+    position: relative;
+    &::after{
+        position: absolute;
+        content: '';
+        background-image: url(../../../../assets/images/no_data_anim.gif);
+        background-size: cover;
+        height: 80px;
+        width: 80px;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+    img{
+        max-width: 50px;
+    }
+}

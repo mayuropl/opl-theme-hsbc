@@ -1,0 +1,28 @@
+<div class="modal-header d-block">
+  <h4 class="modal-title">File upload status</h4>
+  <span class="text-muted">Your file has been uploaded successfully.</span>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+
+      <div class="common-FileCount-View Total-Entries">
+        <span class="green-entry">{{data.successfullEntry}}</span>
+        <span class="Total-sr">Successfull Entries</span>
+      </div>
+      <div class="common-FileCount-View Total-Entries">
+        <span class="red-entry">{{data.failEntry}}</span>
+        <span class="Total-sr">Fail Entries</span>
+      </div>
+      <div class="common-FileCount-View Total-Entries">
+        <span class="grey-entry">{{data.totalEntry}}</span>
+        <span class="Total-sr">Total Entries</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-psb btn-psbpurple" mat-dialog-close (click)="reload()">Okay <i
+      class="zmdi zmdi-caret-right"></i></button>
+</div>
+

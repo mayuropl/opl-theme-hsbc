@@ -1,0 +1,261 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page">
+    <div class="__main_Container">
+        <form class="NP_Form ">
+            <div class="page_Title_sec">
+                <div class="page_Title_left">
+                    <h4 class="cursor_pointer" (click)="navBack();">
+                        <em class="fa fa-arrow-left mr-2"></em>
+                        Upload Bank Statement
+                    </h4>
+                </div>
+            </div>
+            <div class="page_Details">
+                <mat-card class="box_design with_padding">
+                    <div class="__HCBC_Card Common_Cards" [formGroup]="uploadForm">
+                        <div class="Common_Cards_Grp noborder">
+                            <div class="Common_Card_Cgrp">
+                                <div class="_gst_Slider_Grp">
+                                    @if(fileData.length > 0){
+                                    <div class="_View_gst_Slider _fullSlider">
+                                        <!-- #slickModal="slick-carousel" -->
+                                        <ngx-slick-carousel class="carousel" #slickModal="" [config]="slideConfig"
+                                            (init)="slickInit($event)" (breakpoint)="breakpoint($event)"
+                                            (afterChange)="afterChange($event)" (beforeChange)="beforeChange($event)">
+                                            @for (file of fileData; track $index) {
+                                                <mat-card ngxSlickItem class="GstCards " id="bsCard"
+                                                    [ngClass]="file.accountNo == this.selectedbsDetails?.accountNo ? 'acitve':''"
+                                                    (click)="activeClick($index+1,file)">
+                                                    <div class="gst_txt_grp">
+                                                        <span class="Gst_State">{{file?.bankName}}</span>
+                                                        <span class="Gst_Number">{{file?.accountNo}}</span>
+                                                    </div>
+                                                    <!-- <div class="overlay_viewCount Completed"> -->
+                                                        <!-- *ngIf="profileVersionData?.bsCompleted == null" -->
+                                                        <!-- <div class="txt_count">
+                                                        <a href="javascript:Void(0);"
+                                                            class="linkView">{{$index+1}}/{{fileData?.length}}</a>
+                                                    </div> -->
+                                                        <!-- <mat-icon>check_circle</mat-icon> -->
+                                                    <!-- </div> -->
+                                                </mat-card>
+                                            <!-- <div ngxSlickItem>
+                                            <mat-card
+                                                class="GstCards "
+                                                id="bsCard" [ngClass]="activatebs == 2 ? 'acitve':''"
+                                                (click)="activeClick(2,2)">
+                                                <div class="gst_txt_grp">
+                                                    <span class="Gst_State">State Bank Of India</span>
+                                                    <span class="Gst_Number">50200007656628</span>
+                                                </div>
+                                                <div class="overlay_viewCount Completed">
+                                                    <div class="txt_count">
+                                                        <a href="javascript:Void(0);"
+                                                            class="linkView">1/1</a>
+                                                    </div>
+                                                    <mat-icon>check_circle</mat-icon>
+                                                </div>
+                                            </mat-card>
+                                          </div> -->
+                                            }
+                                        </ngx-slick-carousel>
+                                    </div>
+                                    }
+                                    <div class="_add_New_BtnGrp">
+                                        <button mat-button color="primary" class="Common_add_btn bsBtn"
+                                            (click)="uichangeForaddBank();" [disabled]="!bsUploaded">+ Add Another
+                                            Account</button>
+                                    </div>
+                                </div>
+                                @if (bsUploaded==false) {
+                                <div class="_BankStatement_details_Grp mt-4 form_design">
+
+                                    <div class="_Form_Cont_Grp bsNewForm">
+                                        <!-- <div class="Heading_grp">
+                                            <h5 class="Heading__H5">Select Bank</h5>
+                                        </div> -->
+                                        <div class="Form_BS ">
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select Bank name</mat-label>
+                                                    <input type="text" placeholder="" aria-label="Bank" matInput
+                                                        formControlName="bankId" [matAutocomplete]="auto">
+                                                    <mat-autocomplete #auto="matAutocomplete"
+                                                        (optionSelected)="onBankSelected($event)">
+                                                        @for ( bank of filteredOptions | async; track $index) {
+                                                        <mat-option [value]="bank.bankName">
+                                                            {{bank.bankName}}
+                                                        </mat-option>
+                                                        }
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                            </fieldset>
+                                            <!-- <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select Duration</mat-label>
+                                                    <mat-select placeholder="" formControlName="sinceMonth"
+                                                        [panelClass]="'Select_gstDetails'">
+                                                        @for ( bankStatementDuration of bankStatementDurations ;track
+                                                        $index){
+                                                        <mat-option [value]="bankStatementDuration.value">
+                                                            <span>{{bankStatementDuration.name}}</span>
+                                                        </mat-option>
+                                                        }
+
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset> -->
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select Duration From</mat-label>
+                                                    <input matInput placeholder="From - dd-mm-yyyy" [matDatepicker]="picker1"
+                                                    readonly formControlName="fromDate" [max]="maxDate" (dateChange)="updateMessage();">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker1></mat-datepicker>
+                                                </mat-form-field>
+                                            </fieldset>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select Duration To</mat-label>
+                                                    <input matInput placeholder="To - dd-mm-yyyy"  [matDatepicker]="picker2" readonly
+                                                    formControlName="toDate" [max]="maxDate" (dateChange)="updateMessage();">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker2></mat-datepicker>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="__FileUpload_Form_Grp {{files.length > 0 ? 'Common_List_drag':''}}">
+                                    <div class="Common_Drge_Drop mt-3 mb-3" appDragDrop>
+                                        <div class="Input_txtFill_Cutome">
+                                            <input class="File_input_Common" type="file" accept=".pdf"
+                                                (change)="fileBrowseHandler($event.target.files)" #fileDropRef multiple
+                                                id="fileDropRef" />
+                                            <div class="Input_txt_File">
+                                                <span class="fileUpload_Icon"><img
+                                                        src="assets/images/hsbc/FileUpload_Icon.svg"
+                                                        alt="Upload Files Here">Upload Files Here</span>
+                                                <span class="OR_Common ORFS16 primary">OR</span>
+                                                <p class="Drop_txt" for="fileDropRef">Drag and drop file or
+                                                    click here </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (files.length > 0) {
+                                    <!-- <div class="files-list">
+                                        <h2 class="file_list">Fedral Bank Uploaded File <span class="bedge">4</span></h2>
+                                        <button mat-flat-button class="btn_design green_btn ln_40">Fetch</button>
+                                    </div> -->
+                                   
+                                    <div class="files_list_Grp tableResponsive">
+                                        <div class="singlefile_View" *ngFor="let file of files; let i = index">
+                                            <div class="fileProgress">
+                                                <div class="FileName_IconUpload">
+                                                    <!-- <span class="number_list">{{i+1}}</span> -->
+                                                    <div class="file_Icon green_text">
+                                                        <mat-icon>description</mat-icon>
+                                                     </div>
+                                                    <div class="info">
+                                                        <h4 class="fileName mb-1">
+                                                            {{ file.name }}
+                                                        </h4>
+                                                        <div class="Progreebar">
+                                                            <mat-progress-bar [mode]="mode" value="{{file.progress}}"
+                                                                [bufferValue]="bufferValue"></mat-progress-bar>
+                                                        </div>
+                                                        <!-- <p class="file_status red_text">Error uploading</p> -->
+                                                    </div>
+                                                    <!-- @if (file.progress != 100) {
+                                                        <p class="file_status">uploading...</p>
+                                                    } -->
+                                                    @if (file.progress == 100) {
+                                                    <div class="password_View">
+                                                        <mat-form-field>
+                                                            <input matInput type="password" placeholder="Password"
+                                                                name="filePassword{{i}}">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    }
+                                                    <!-- @else if(file.progress != 100) {
+                                                        <div class="Progreebar">
+                                                            <mat-progress-bar [mode]="mode" value="{{file.progress}}"
+                                                                [bufferValue]="bufferValue"></mat-progress-bar>
+                                                        </div>
+                                                    } -->
+                                                    <div class="delete_Icon">
+                                                        <mat-icon class="primary" class="lightGreentxt">check_circle</mat-icon>
+                                                        <mat-icon class="blckTxt" (click)="deleteFile(i)">cancel</mat-icon>
+                                                        <!-- <button mat-flat-button class="btn_design green_btn ml-1">Fetch</button> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                                } @else {
+                                <div class="acc_detail_no">
+                                    <h4>Account Details for "{{(selectedbsDetails?.accountNo) || '-'}}"</h4>
+                                </div>
+                                <div class="acc_detail_desp">
+                                    <div class="CommonFiled_detailView">
+                                        <div class="CommonFiledview_detail">
+                                            <img src="assets/images/hsbc/View_Icon/timeUpdate.svg" alt="" />
+                                            <div class="txt_grp">
+                                                <p>Update on</p>
+                                                <p>{{(selectedbsDetails?.createDate | date: 'MMMM d, y')|| '-'}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="CommonFiledview_detail">
+                                            <img src="assets/images/hsbc/View_Icon/user_Icon.svg" alt="" />
+                                            <div class="txt_grp">
+                                                <p>Account Holder Name</p>
+                                                <p>{{selectedbsDetails?.accholderName|| '-'}}</p>
+
+                                            </div>
+                                        </div>
+                                        <div class="CommonFiledview_detail">
+                                            <img src="assets/images/hsbc/View_Icon/transactionsrd.svg" alt="" />
+                                            <div class="txt_grp">
+                                                <p>Volume Of Transactions Recorded</p>
+                                                <p>₹ {{(selectedbsDetails?.calVaue | indianCurrency ) || 0 }}</p>
+                                            </div>
+
+                                        </div>
+                                        <div class="CommonFiledview_detail">
+                                            <img src="assets/images/hsbc/View_Icon/sinces.svg" alt="" />
+                                            <div class="txt_grp">
+                                                <p>Account Duration</p>
+                                                <p>{{selectedbsDetails?.duration || '-'}}</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                }
+                                <div class="Common_Card_info mt-1">
+                                    <div class="Common_Info_grp oneInfo">
+                                        <div class="Common_Info_view">
+                                            <mat-icon>info</mat-icon>
+                                            <span>{{bankStmtUploadMsg$| async }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </mat-card>
+                <div class="Btn_Common_Grp __Btn_Group mt-4">
+                    @if (bsUploaded==false) {
+                    <button type="button" mat-flat-button color="primary" (click)="onSubmit()"
+                        [disabled]="!(uploadForm.valid && files && files.length > 0)">Submit</button>
+                    } @else{
+                    <button type="button" mat-flat-button color="primary" (click)="navForw();">Proceed</button>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>

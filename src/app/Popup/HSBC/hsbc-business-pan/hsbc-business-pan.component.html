@@ -1,0 +1,44 @@
+<main class="HSBC_Common_popup __Pad0PX">
+    <div class="__HSBC_Popup__header _Icon_TopRight">
+        <p class="HSBC__title">
+            <img src="assets/images/Dashabord/hsbc_Logo.png" alt="HSBC Bank Logo">
+        </p>
+        <button mat-icon-button (click)="closePopup()" class="HSBC__Btn_Icon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="HSBC__Popup_Body">
+        <div class="__HSBC_Common_Cont_Popup Flex_Wrap ConfirmationTxt">
+            <div class="__Common_texts _Img_Text_Pop _pd0px">
+                <p class="__ptext">Your Business PAN</p>
+                <span class="Text_span_ML">We Will Use Your PAN To Verify Your Entity Details</span>
+            </div>
+            <div class="NP_Com_Group Form_Cont_Grp NP_M_16_15px">
+                <legend class="col-md-12">
+                    <fieldset class="NP_HSBC_ComInput">
+                        <mat-form-field appearance="outline" floatLabel="never">
+                            <input matInput placeholder="Enter Pan">
+                        </mat-form-field>
+                    </fieldset>
+                </legend>
+            </div>
+            <div class="__Common_Data_GroupView">
+                <div class="__Common_texts">
+                    <h3 class="Text_h3">AHHYT3201F</h3>
+                    <span class="Text_span">Larsen & Toubro Ltd.</span>
+                </div>
+                <div class="__Common_texts">
+                    <h3 class="Text_h3">GYSRK3014H</h3>
+                    <span class="Text_span">Indian Oil Corporation Ltd. </span>
+                </div>
+                <div class="__Common_texts">
+                    <h3 class="Text_h3">BGFRS7701L</h3> 
+                    <span class="Text_span">Bharti Airtel Ltd. </span>                    
+                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="HSBC_Popup_btn_Grp JC_Center">
+        <button mat-raised-button color="primary" class="Btn__Common __Primary" (click)="rmAddCustomer()">Proceed <mat-icon>arrow_right_alt</mat-icon></button>
+    </div>
+</main>

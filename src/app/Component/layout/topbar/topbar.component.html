@@ -1,0 +1,409 @@
+<!-- Topbar Start -->
+<div class="navbar-custom  d-flex header" [ngClass]="{ fixedHeader: scrolled }" (click)="onTopbarAreaClick()">
+  <div class="__main_Container">
+    <div class="menu-toggle-btn">
+      <button type="button" mat-icon-button class="matIcon" (click)="toggleLeftMen($event)">
+        <mat-icon class="material-icons-round" *ngIf="iscloseLeftmenu">menu</mat-icon>
+        <mat-icon class="material-icons-round" *ngIf="!iscloseLeftmenu">format_indent_decrease</mat-icon>
+      </button>
+    </div>
+    <!-- LOGO -->
+    <div class="logo-box">
+      <div class="logo text-left">
+        <span class="logo-lg">
+          <img src="assets/images/Dashabord/bank_Logo.png" alt="HSBC Bank Logo">
+          <!-- <img [src]="lender | headerImages"  alt="Online PSB Loans logo" height="40"> -->
+          <!-- <span class="logo-lg-text-light">Xeria</span> -->
+        </span>
+        <span class="logo-sm">
+          <!-- <span class="logo-sm-text-dark">X</span> -->
+          <img src="assets/images/Dashabord/bank_small.png" alt="HSBC Bank Logo" height="24">
+          <!-- <img [src]="lender | headerImagesmall" alt="Online PSB Loans logo" height="40"> -->
+        </span>
+      </div>
+    </div>
+    <button class="button-menu-mobile waves-effect waves-light md-hide" (click)="toggleMobileMenu($event)">
+      <i class="fe-menu"></i>
+    </button>
+    <span class="menu-spacer"></span>
+
+
+    <!-- <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+      <ng-container>
+        <li class="dropdown d-none d-lg-block">
+          <div class="dropdownBtn6">
+            <a mat-flat-button class="header_link BtnHoverView nav-link " *ngIf="portfolioAnalysis">Portfolio Analysis
+              <i class="fas fa-caret-down"></i> </a>
+            <div class="customDropdown normal_list_Dropdown" id="portfolioAnalysis_dropdown">
+              <div class="mainUl">
+                <div class="btn_list">
+                  <a *ngFor="let link of portfolioAnalysisLinks" mat-flat-button class="header_link"
+                    routerLinkActive="active" [routerLink]="[link.routeLink]" (click)="resetActiveFlags(link);">{{
+                    link.subpageName }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ng-container>
+      <ng-container *ngFor="let pgd of pageData">
+        <li class="dropdown d-none d-lg-block"
+          *ngIf="pgd.pageName!=null && pgd.pageName!=undefined &&
+        pgd.pageId !== constants.pageMaster.ANALYTICS2 && pgd.pageId !== constants.pageMaster.USER_MANAGEMENT
+            && pgd.pageId !== constants.pageMaster.BULK_UPLOAD  && pgd.pageId !== constants.pageMaster.CONFIGURATIONS
+            && pgd.pageId !== constants.pageMaster.PORTFOLIO && pgd.pageId !== constants.pageMaster.PORTFOLIO_ANALYSIS
+            && pgd.pageId !== constants.pageMaster.MONITORING
+            && pgd.pageId !== constants.pageMaster.PRODUCT_APPROVAL_JOURNEY && pgd.pageId !== constants.pageMaster.CAMPAIGN_DASHBOARD && pgd.pageId !== constants.pageMaster.NOTIFICATION_POPUP">
+          <a class="nav-link dropdown-toggle waves-effect waves-light" (click)="resetActiveFlags(pgd)"
+            [routerLink]="[pgd.routeLink]" routerLinkActive="active" role="button" aria-haspopup="false"
+            aria-expanded="false">
+            {{pgd.pageName}}
+          </a>
+        </li>
+      </ng-container> -->
+
+      <!-- <li class="dropdown d-none d-lg-block">
+      <div class="dropdownBtn2">
+        <a mat-flat-button class="header_link BtnHoverView nav-link">Configuration
+          <i class="fas fa-caret-down"></i> </a>
+        <div class="customDropdown normal_list_Dropdown" id="admin_dropdown">
+          <div class="mainUl">
+            <div class="btn_list">
+                  <a mat-flat-button routerLink="hsbc/bureauConfig" class="header_link" routerLinkActive="active">
+                    Bureau Confriguration
+                  </a>
+                  <a mat-flat-button routerLink="hsbc/api-monitoring" class="header_link" routerLinkActive="active">
+                    API Monitoring
+                  </a>
+                  <a mat-flat-button routerLink="hsbc/api-status" class="header_link" routerLinkActive="active">
+                    API Status
+                  </a>
+                  <a mat-flat-button routerLink="hsbc/user-tracking" class="header_link" routerLinkActive="active">
+                    User Tracking
+                  </a>
+             </div>
+          </div>
+        </div>
+      </div>
+    </li> -->
+      <!--
+      <li class="dropdown d-none d-lg-block">
+        <div class="dropdownBtn5">
+          <a mat-flat-button class="header_link BtnHoverView nav-link" *ngIf="portfolio">Portfolio
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown normal_list_Dropdown" id="portfolio_dropdown">
+            <div class="mainUl">
+              <div class="btn_list">
+                <a *ngFor="let link of portfolioLink" mat-flat-button class="header_link"
+                routerLinkActive="active" [routerLink]="[link.routeLink]" (click)="resetActiveFlags(link);">{{ link.subpageName }}</a>
+               </div>
+            </div>
+          </div>
+        </div>
+      </li> -->
+      <!-- <li class="dropdown d-none d-lg-block" *ngIf="analytics">
+        <div class="dropdownBtn">
+          <a mat-flat-button class="header_link BtnHoverView nav-link " (click)="onChange()">Analytics
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown" id="analysis_dropdown">
+            <div class="mainUl">
+              <div class="Dropdown_grp">
+                <div class="leftSide">
+                  <div class="Heading_txt">
+                    <h5>Analysis</h5>
+                  </div>
+                  <div class="btn_list">
+                    <a *ngFor="let link of analysisLinks" mat-flat-button class="header_link"
+                      routerLinkActive="'active'" [routerLink]="[link.routeLink]"
+                      [class.active]="activeTab === link.tabKey" (click)="resetActiveFlags(link);">
+                      <em class="{{link.icon}}"></em>
+                      {{link.subpageName}}
+                    </a>
+                  </div>
+                </div>
+                <div class="RightSide">
+                  <div class="Heading_txt">
+                    <h5>Bureau</h5>
+                  </div>
+                  <div class="btn_list">
+                    <a *ngFor="let link of bureauLinks" mat-flat-button class="header_link" routerLinkActive="active"
+                      [routerLink]="[link.routeLink]" [class.active]="activeTab === link.tabKey"
+                      (click)="resetActiveFlags(link);">
+                      <em class="{{link.icon}}"></em>
+                      {{link.subpageName}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li> -->
+      <!-- <li class="dropdown d-none d-lg-block"  *ngIf="bulkUp">
+        <div class="dropdownBtn3">
+          <a mat-flat-button class="header_link BtnHoverView nav-link ">Bulk Upload
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown normal_list_Dropdown" id="bulkUpload_dropdown">
+            <div class="mainUl">
+              <div class="btn_list">
+                <a *ngFor="let link of bulkUploadLinks" mat-flat-button class="header_link"
+                routerLinkActive="active" [routerLink]="[link.routeLink]" (click)="resetActiveFlags(link);">{{ link.subpageName }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li> -->
+
+      <!-- <div style="display: none;"> -->
+      <!-- <li class="dropdown d-none d-lg-block" *ngIf="bulkUp">
+        <div class="dropdownBtn3">
+          <a mat-flat-button class="header_link BtnHoverView nav-link ">Bulk Upload
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown normal_list_Dropdown submenu_dropdown" id="bulkUpload_dropdown">
+            <div class="mainUl">
+              <div class="btn_list">
+                <div class="submenu_item" *ngFor="let link of bulkUploadLinks; let i = index"
+                  (mouseenter)="showSubmenu($event, i)" (mouseleave)="hideSubmenu(i)">
+                  <a mat-flat-button class="header_link submenu_trigger" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }" [routerLink]="[link.routeLink]"
+                    (click)="resetActiveFlags(link);">
+                    {{ link.subpageName }}
+                    <i *ngIf="link.subSubpages.length > 0 && checkSubSubPagesListShow(link.subpageName)"
+                      class="fas fa-chevron-right submenu_arrow"></i>
+                  </a>
+                  <div *ngIf="link.subSubpages.length > 0 && checkSubSubPagesListShow(link.subpageName)"
+                    class="submenu_list" #submenuList [style.top.px]="submenuPositions[i]?.top"
+                    [style.left.px]="submenuPositions[i]?.left" [class.show]="activeSubmenuIndex === i"
+                    (mouseenter)="keepSubmenuOpen(i)" (mouseleave)="hideSubmenu(i)">
+                    <div *ngFor="let subpageLink of link.subSubpages">
+                      <a mat-flat-button routerLinkActive="active" [routerLink]="[subpageLink.routeLink]"
+                        class="header_link">{{subpageLink.subpageName}}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li> -->
+      <!-- </div> -->
+
+
+      <!-- <li class="dropdown d-none d-lg-block" *ngIf="muser">
+        <div class="dropdownBtn2">
+          <a mat-flat-button class="header_link BtnHoverView nav-link">User Management
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown normal_list_Dropdown" id="admin_dropdown">
+            <div class="mainUl">
+              <div class="btn_list">
+                <a *ngFor="let link of muserSubPage" mat-flat-button class="header_link" routerLinkActive="active"
+                  [routerLink]="[link.routeLink]" (click)="resetActiveFlags(link)">
+                  {{ link.subpageName }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="dropdown d-none d-lg-block" *ngIf="monitoring">
+        <div class="dropdownBtn7">
+          <a mat-flat-button class="header_link BtnHoverView nav-link">Monitoring
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown normal_list_Dropdown" id="monitoring_dropdown">
+            <div class="mainUl">
+              <div class="btn_list">
+                <a *ngFor="let link of monitoringLinks" mat-flat-button class="header_link" routerLinkActive="active"
+                  [routerLink]="[link.routeLink]" (click)="resetActiveFlags(link);">{{ link.subpageName }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="dropdown d-none d-lg-block" *ngIf="productAprlJrny">
+        <div class="dropdownBtn8">
+          <a mat-flat-button class="header_link BtnHoverView nav-link ">Product Approval Journeys
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown normal_list_Dropdown" id="productAprlJrny_dropdown">
+            <div class="mainUl">
+              <div class="btn_list">
+                <a *ngFor="let link of productAprlJrnyLinks" mat-flat-button class="header_link"
+                  routerLinkActive="active" [routerLink]="[link.routeLink]" (click)="resetActiveFlags(link);">{{
+                  link.subpageName }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+
+      <li class="dropdown d-none d-lg-block">
+        <div class="dropdownBtn9">
+          <a mat-flat-button class="header_link BtnHoverView nav-link " *ngIf="campaigndashboard">Campaign Dashboard
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown normal_list_Dropdown" id="campaign_dropdown">
+            <div class="mainUl">
+              <div class="btn_list">
+                <a *ngFor="let link of campaigndashboardSubPage" mat-flat-button class="header_link"
+                  routerLinkActive="active" [routerLink]="[link.routeLink]" (click)="resetActiveFlags(link);">{{
+                  link.subpageName }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li> -->
+
+      <!-- <li class="dropdown d-none d-lg-block">
+        <div class="dropdownBtn4">
+          <a mat-flat-button class="header_link BtnHoverView nav-link">Target and prospects
+            <i class="fas fa-caret-down"></i> </a>
+          <div class="customDropdown normal_list_Dropdown" id="target_dropdown">
+            <div class="mainUl">
+              <div class="btn_list">
+                  <a  mat-flat-button class="header_link" routerLinkActive="active">
+                        Target
+                  </a>
+                  <a  mat-flat-button class="header_link" routerLinkActive="active">
+                    Reject
+              </a>
+               </div>
+            </div>
+          </div>
+        </div>
+      </li> -->
+      <!-- <li class="md-hide">
+        <button class="button-menu-mobile waves-effect waves-light" (click)="toggleMobileMenu($event)">
+          <i class="fe-menu"></i>
+        </button>
+      </li> -->
+      <!-- <li class="dropdown d-none d-lg-block">
+      <a class="nav-link dropdown-toggle waves-effect waves-light" href="javascript: void(0);" role="button"
+        aria-haspopup="false" aria-expanded="false">
+        <img src="assets/images/Dashabord/Change-dashabord.svg" alt="Change dashboard" /> Change Dashboard
+      </a>
+    </li> -->
+
+    <!-- </ul> -->
+
+    <span class="menu-spacer"></span>
+
+    <ul class="list-unstyled topnav-menu float-right mb-0">
+      <li class="mr-2">
+        <a mat-flat-button class="btn_design white_btn br_8" href="javascript: void(0);" routerLink="/hsbc/help-and-support" *ngIf="hasPagePermission(constants.pageMaster.HELP_AND_SUPPORT_SUBPAGE, constants.PageActions.VIEW)">
+          <i class="fas fa-hands-helping red_text mr-1"></i> Help & Support
+        </a>
+      </li>
+      <li class="mr-2">
+        <a class="notification_btn" href="javascript: void(0);" (click)="notificationPopup()">
+          <span class="red_badge" *ngIf="unreadCount > 0">{{ unreadCount > 9 ? '9+' : unreadCount }}</span>
+          <i class="fas fa-bell"></i>
+        </a>
+      </li>
+      <!-- <li class="d-none d-sm-block appdetails">
+     <span>Application Code : <strong>35952151421522</strong> </span>
+    </li> -->
+
+      <!-- <li class="dropdown notification-list" ngbDropdown>
+      <a class="nav-link dropdown-toggle  waves-effect waves-light" href="javascript: void(0);" role="button"
+        aria-haspopup="false" aria-expanded="false" ngbDropdownToggle id="notificationDropdown">
+        <i class="fe-bell noti-icon"></i>
+        <span class="badge badge-danger rounded-circle noti-icon-badge">4</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg"
+        aria-labelledby="notificationDropdown" ngbDropdownMenu>
+
+        item
+        <div class="dropdown-item noti-title" ngbDropdownItem>
+          <h5 class="m-0">
+            <span class="float-right">
+              <a href="javascript: void(0);" class="text-dark">
+                <small>Clear All</small>
+              </a>
+            </span>Notification
+          </h5>
+        </div>
+
+        <div id="notification-items" class="slimscroll noti-scroll" appSlimScroll>
+          item
+          <a *ngFor="let notification of notificationItems;" href="{{ notification.redirectTo }}"
+            class="dropdown-item notify-item" ngbDropdownItem>
+            <div class="notify-icon bg-soft-{{ notification.bgColor }} text-{{ notification.bgColor }}">
+              <i class="{{ notification.icon }}"></i>
+            </div>
+            <p class="notify-details">{{ notification.text }}
+              <small class="text-muted">{{ notification.subText }}</small>
+            </p>
+          </a>
+        </div>
+
+        All
+        <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+          View All
+        </a>
+      </div>
+    </li> -->
+
+
+      <li class="dropdown notification-list" ngbDropdown>
+        <a class="nav-link dropdown-toggle nav-user user-icon mr-0 waves-effect waves-light" ngbDropdownToggle
+          id="profileDropdown" href="javascript: void(0);" role="button" aria-haspopup="false" aria-expanded="false">
+          <!-- <img src="assets/images/cwDefault.png" alt="user-image" class="rounded-circle"> -->
+          <span class="UserName_Profile_View">{{userName | shortName}}</span>
+          <span class="pro-user-name ml-1">
+            <span class="ovreflow-text-lender">{{userName}}</span>
+            <i class="mdi mdi-chevron-down"></i>
+          </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right profile-dropdown NPArrowBefore" aria-labelledby="profileDropdown"
+          ngbDropdownMenu>
+          <div class="dropdown-header noti-title">
+            <h6 class="text-overflow m-0">Welcome !</h6>
+          </div>
+
+          <!-- item-->
+          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
+          <i class="fe-user"></i>
+          <span>My Account</span>
+        </a> -->
+
+          <!-- item-->
+          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
+          <i class="fe-settings"></i>
+          <span>Settings</span>
+        </a> -->
+
+          <!-- item-->
+          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
+          <i class="fe-lock"></i>
+          <span>Lock Screen</span>
+        </a> -->
+
+          <!-- <div class="dropdown-divider"></div> -->
+
+          <!-- item-->
+          <!-- <a href="javascript:void(0);" class="dropdown-item" routerLink="/hsbc/login-img-upload">
+            <i class="fas fa-upload mr-1"></i>
+            <span>Image Upload</span>
+          </a> -->
+          <a href="javascript:void(0);" class="dropdown-item logOut" (click)="logout()">
+            <i class="fe-log-out"></i>
+            <span>Logout</span>
+          </a>
+
+        </div>
+      </li>
+
+
+      <!-- <li class="dropdown notification-list">
+      <a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect waves-light"
+        (click)="toggleRightSidebar()">
+        <i class="fe-settings noti-icon"></i>
+      </a>
+    </li> -->
+
+
+    </ul>
+  </div>
+</div>
+<!-- end Topbar -->

@@ -1,0 +1,304 @@
+<div class="advanced_filter_wrapper">
+    <!-- Header -->
+    <div class="advanced_filter_header">
+        <h2>Advanced Filters</h2>
+        <button mat-icon-button class="close_btn" (click)="closeFilter()">
+            <i class="fi fi-rr-cross-small"></i>
+        </button>
+    </div>
+
+    <!-- Body -->
+    <div class="advanced_filter_body">
+        <!-- Left Panel - All Filters -->
+        <div class="filter_left_panel">
+            <div class="panel_header">
+                <h4>All Filter</h4>
+                <span class="select_count darkgreen_text">{{selectedCategoryCount}} Select</span>
+            </div>
+            <button type="button" mat-stroked-button="" color="grey" class="btn_design greay_text c_type_btn br_8">
+                Customer Type
+                <span class="ml-1 c_type_text"  [ngClass]="isActive ? 'darkgreen_text' : 'red_text'">
+                    {{ !customerTypeInActive ? 'ACTIVE' : 'INACTIVE' }}
+                  </span>
+                <mat-slide-toggle
+                  class="sliderToggle_design2 sliderToggle_enable_grey ml-2"
+                  [(ngModel)]="isActive" 
+                  (change)="onCustomerTypeToggle($event)"
+                  (click)="$event.stopPropagation()">
+                </mat-slide-toggle>
+              </button>
+            <ul class="filter_category_list">
+                <li *ngFor="let category of filterCategories; let i = index" 
+                        [class.active]="selectedCategoryIndex === i"
+                        [class.highlight-edit]="highlightedCategoryIndex === i"
+                        (click)="selectCategory(i)">
+                        {{category.name}}
+                        <span class="filter_count_right">
+                            <span class="filter_count" *ngIf="category.count > 0">{{category.count}}x</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                    </li>    
+            </ul>
+        </div>
+
+        <!-- Middle Panel - Active Filters -->
+        <div class="filter_middle_panel" [ngClass]="{'filter_content_width': selectedCategoryIndex < 0}">
+            <div class="panel_header" *ngIf="selectedCategoryIndex >= 0">
+                <h4>Active Filters</h4>
+                <button class="clear_all_btn darkgreen_text" (click)="clearAllFilters(selectedCategoryIndex)" *ngIf="selectedCategoryIndex >= 0">Reset</button>
+            </div>
+            <!-- Show placeholder when no category is selected -->
+            <div class="select_category_placeholder" *ngIf="selectedCategoryIndex < 0">
+                <div class="pattern_bg" style="background-image: url('assets/images/filter_pattern_bg.png');"></div>
+                <div class="placeholder_content">
+                    <div class="logo_box">
+                        <div class="logo_img">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                        </div>
+                    </div>
+                    <h2>Select Filters</h2>
+                    <p>Select a filter in the left panel to see it.</p>
+                </div>
+            </div>
+            <!-- Show active filters when category is selected -->
+            <div class="active_filters_content filter_content_width" *ngIf="selectedCategoryIndex >= 0 && filterListMaster && filterListMaster[selectedCategoryIndex]">
+                
+                <!-- Render filters based on filterListMaster data -->
+                <ng-container *ngFor="let filter2 of filterListMaster[selectedCategoryIndex].insightTwoFilter; let i = index">
+                    <!-- Checkbox Type Filter -->
+                    <div class="filter_section_box" *ngIf="filter2.type === 'checkbox'">
+                        <div class="filter_section_header">
+                            <span class="section_title expanded">{{filter2.filterTwoName}}</span>
+                            <div class="section_actions ml-2">
+                                <!-- Dual Filter Radio Buttons (if applicable) -->
+                                <div class="radio_select_box" *ngIf="filter2?.json?.isDualFIlter">
+                                    <mat-radio-group class="small_radio small_w_radio" aria-label="Select an option" name="{{filter2.json.listName}}"
+                                        [(ngModel)]="filter2.json.value" (change)="onKeysDualChange(filterListMaster[selectedCategoryIndex], filter2)">
+                                        <mat-radio-button *ngFor="let checkBox of filter2.json?.keysDual" [value]="checkBox.value"
+                                            name="{{checkBox.name}}">{{checkBox.name}}</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                <!-- Search Box -->
+                                <div class="filter_select_search" *ngIf="filter2?.json?.isAllowSearch && !filter2?.json?.isFetchFromAPi">
+                                    <input type="text" placeholder="Search" class="searchbox_input"
+                                        [(ngModel)]="filter2.searchValue" (ngModelChange)="filterCheckBox(filter2)">
+                                    <i class="fas fa-search searchbox_Icn"></i>
+                                </div>
+                                <div class="filter_select_search" *ngIf="filter2?.json?.isAllowSearch && filter2?.json?.isFetchFromAPi">
+                                    <input type="text" placeholder="Search" class="searchbox_input"
+                                        [(ngModel)]="filter2.searchValue" (ngModelChange)="onSearchChange(filterListMaster[selectedCategoryIndex], filter2)">
+                                    <i class="fas fa-search searchbox_Icn"></i>
+                                </div>
+                                <button class="collapse_btn" (click)="filter2.isCollapsed = !filter2.isCollapsed">
+                                    <i class="fi" [ngClass]="filter2.isCollapsed ? 'fi-rr-plus' : 'fi-rr-minus'"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filter_section_body" *ngIf="!filter2.isCollapsed">
+                            <app-no-data-found *ngIf="filter2.noResultsFound && filter2.searchValue"></app-no-data-found>
+                            <!-- <div class="no-results-msg" *ngIf="filter2.noResultsFound && filter2.searchValue">No results found</div> -->
+                            <div class="checkbox_grid checkbox_lists accordion_design1">
+                                <!-- Business Line with Sub-items (Expansion Panel) -->
+                                <ng-container *ngIf="filter2.keyName === 'AvailingProducts' || filter2.keyName === 'businessLine'">
+                                    <mat-accordion [multi]="false">
+                                    <ng-container *ngFor="let checkBox of filter2.json?.keys; let k = index">
+                                        <mat-expansion-panel class="sub_expansion" *ngIf="checkBox.isVisible == null || checkBox.isVisible">
+                                            <mat-expansion-panel-header class="p-0">
+                                                <mat-checkbox (click)="$event.stopPropagation()"
+                                                    name="{{checkBox.name}}+{{k}}"
+                                                    (change)="checkCountCheckBox($event, filterListMaster[selectedCategoryIndex], filter2, checkBox.sNo, true)"
+                                                    [(ngModel)]="checkBox.selected" [value]="checkBox.value"
+                                                    [checked]="checkBox.selected"
+                                                    (keydown)="$event.stopPropagation()">{{checkBox.name}}</mat-checkbox>
+                                            </mat-expansion-panel-header>
+                                            <div class="insidecheck_box">
+                                                <mat-checkbox *ngFor="let subCheckBox of checkBox.subKeys; let k = index"
+                                                    (change)="checkCountCheckBox($event, filterListMaster[selectedCategoryIndex], filter2, subCheckBox.sNo, true)"
+                                                    name="{{subCheckBox.name}}+{{k}}" [(ngModel)]="subCheckBox.selected"
+                                                    [value]="subCheckBox.value" [checked]="subCheckBox.selected">
+                                                    {{subCheckBox.name}}
+                                                </mat-checkbox>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </ng-container>
+                                    
+                                    </mat-accordion>
+                                </ng-container>
+                                
+                                <!-- Regular Checkboxes -->
+                                <ng-container *ngIf="filter2.keyName !== 'AvailingProducts' && filter2.keyName !== 'businessLine'">
+                                    <ng-container *ngFor="let checkBox of filter2.json?.keys; let k = index">
+                                        <mat-checkbox *ngIf="checkBox.isVisible == null || checkBox.isVisible"
+                                            (change)="checkCountCheckBox($event, filterListMaster[selectedCategoryIndex], filter2, checkBox.sNo)"
+                                            name="{{checkBox.name}}+{{k}}" [(ngModel)]="checkBox.selected"
+                                            [value]="checkBox.value" [checked]="checkBox.selected">
+                                            {{checkBox.name}}
+                                            <i class="fas fa-info-circle ml-1"
+                                                *ngIf="checkBox.description && filter2.json.listName === 'PRODUCT_HSN'"
+                                                matTooltipPosition="below" matTooltip="{{checkBox.description}}"
+                                                placement="bottom"></i>
+                                        </mat-checkbox>
+                                    </ng-container>
+                                    
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Radio Button Type Filter -->
+                    <div class="filter_section_box" *ngIf="filter2.type === 'radioButton'">
+                        <div class="filter_section_header">
+                            <span class="section_title expanded">{{filter2.filterTwoName}}</span>
+                            <div class="section_actions">
+                                <button class="collapse_btn" (click)="filter2.isCollapsed = !filter2.isCollapsed">
+                                    <i class="fi" [ngClass]="filter2.isCollapsed ? 'fi-rr-plus' : 'fi-rr-minus'"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filter_section_body" *ngIf="!filter2.isCollapsed">
+                            <div class="radio_grid radio_lists">
+                                <mat-radio-group aria-label="Select an option"
+                                    [(ngModel)]="filter2.json.value"
+                                    (change)="onRadioChange($event, filterListMaster[selectedCategoryIndex], filter2)">
+                                    <mat-radio-button *ngFor="let checkBox of filter2.json?.keys; let i = index"  [value]="checkBox.value">
+                                        {{checkBox.name}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Min/Max Type Filter -->
+                    <div class="filter_section_box" *ngIf="filter2.type === 'minMax'" [class.panel-error]="hasSubFilterError(filter2)">
+                        <div class="filter_section_header" [ngClass]="{ 'error_header': filter2.json.validationError }">
+                            <span class="section_title expanded">
+                                {{filter2.filterTwoName}}
+                                <em class="fas fa-exclamation-circle error-icon" *ngIf="hasSubFilterError(filter2)"></em>
+                            </span>
+                            <div class="section_actions">
+                                <button class="collapse_btn" (click)="filter2.isCollapsed = !filter2.isCollapsed">
+                                    <i class="fi" [ngClass]="filter2.isCollapsed ? 'fi-rr-plus' : 'fi-rr-minus'"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="min_max_box" *ngIf="!filter2.isCollapsed">
+                            <div class="min_max_row">
+                                <div class="input_fieldNew">
+                                    <mat-label class="black_text">Min Value:</mat-label>
+                                    <mat-form-field appearance="outline" class="small_input">
+                                        <input matInput type="text" placeholder="" 
+                                            [class.input-error]="filter2.json.validationError"
+                                            [(ngModel)]="filter2.json.min"
+                                            (input)="onMinInput(filter2, $event)"
+                                            (blur)="onMinBlur(filterListMaster[selectedCategoryIndex], filter2)"
+                                            (focus)="onMinFocus(filter2)">
+                                    </mat-form-field>
+                                </div>
+                                <div class="input_fieldNew">
+                                    <mat-label class="black_text">Max Value:</mat-label>
+                                    <mat-form-field appearance="outline" class="small_input">
+                                        <input matInput type="text" placeholder=""
+                                            [class.input-error]="filter2.json.validationError"
+                                            [(ngModel)]="filter2.json.max"
+                                            (input)="onMaxInput(filter2, $event)"
+                                            (blur)="onMaxBlur(filterListMaster[selectedCategoryIndex], filter2)"
+                                            (focus)="onMaxFocus(filter2)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="validation-error red_text" *ngIf="filter2.json.validationError">{{filter2.json.validationError}}</div>
+                        </div>
+                    </div>
+
+                    <!-- Date Type Filter -->
+                    <div class="filter_section_box" *ngIf="filter2.type === 'date'">
+                        <div class="filter_section_header">
+                            <span class="section_title expanded">{{filter2.filterTwoName}}</span>
+                            <div class="section_actions">
+                                <button class="collapse_btn" (click)="filter2.isCollapsed = !filter2.isCollapsed">
+                                    <i class="fi" [ngClass]="filter2.isCollapsed ? 'fi-rr-plus' : 'fi-rr-minus'"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="min_max_box" *ngIf="!filter2.isCollapsed">
+                            <div class="min_max_row date_box_filter">
+                                <div class="input_fieldNew">
+                                    <mat-label class="black_text">From:</mat-label>
+                                    <mat-form-field appearance="outline" class="small_input">
+                                        <input matInput [matDatepicker]="fromDatePicker" [max]="maxDate"
+                                            [min]="minDate" [(ngModel)]="filter2.json.fromDate"
+                                            [value]="filter2.json.fromDate" placeholder="From Date"
+                                            (ngModelChange)="onModelChanged('from', fromDatePicker, $event)"
+                                            (dateChange)="onDateChanged('from', filterListMaster[selectedCategoryIndex], filter2, $event)"
+                                            (focus)="onFocus('from', filterListMaster[selectedCategoryIndex], filter2)"
+                                            (click)="fromDatePicker.open()"
+                                            (keydown.backspace)="filter2.json.fromDate=null"
+                                            (keydown.delete)="filter2.json.fromDate=null" />
+                                        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #fromDatePicker
+                                            (opened)="onDatepickerOpened('from', filterListMaster[selectedCategoryIndex], filter2)"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="input_fieldNew">
+                                    <mat-label class="black_text">To:</mat-label>
+                                    <mat-form-field appearance="outline" class="small_input">
+                                        <input matInput [matDatepicker]="ToDatePicker" [max]="maxDate"
+                                            [min]="minDate" [(ngModel)]="filter2.json.toDate"
+                                            [value]="filter2.json.toDate" placeholder="To Date"
+                                            (ngModelChange)="onModelChanged('to', ToDatePicker, $event)"
+                                            (dateChange)="onDateChanged('to', filterListMaster[selectedCategoryIndex], filter2, $event)"
+                                            (focus)="onFocus('to', filterListMaster[selectedCategoryIndex], filter2)"
+                                            (click)="ToDatePicker.open()"
+                                            (keydown.backspace)="filter2.json.toDate=null"
+                                            (keydown.delete)="filter2.json.toDate=null" />
+                                        <mat-datepicker-toggle matSuffix [for]="ToDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #ToDatePicker
+                                            (opened)="onDatepickerOpened('to', filterListMaster[selectedCategoryIndex], filter2)"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-container>
+
+            </div>
+        </div>
+
+        <!-- Right Panel - Selected Filters-->
+        <div class="filter_right_panel" *ngIf="getTotalSelectedCount() > 0">
+            <div class="panel_header">
+                <h4>Selected Filters <span class="count darkgreen_text">({{getTotalSelectedCount()}})</span></h4>
+            </div>
+            <div class="selected_filters_content">
+                <div class="selected_filter_group" *ngFor="let group of selectedFilterGroups">
+                    <div class="group_header">
+                        <span class="group_title">{{group.title}}</span>
+                        <div class="group_actions">
+                            <button class="edit_btn" (click)="editGroup(group)">
+                                <i class="fi fi-rr-pencil"></i>
+                            </button>
+                            <button class="delete_btn" (click)="deleteGroup(group)">
+                                <i class="fi fi-rr-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="selected_items">
+                        <span class="selected_item" *ngFor="let item of group.items">
+                            {{item.label}} <span class="item_count" *ngIf="item.count">({{item.count}})</span>
+                            <button class="remove_item_btn" (click)="removeItem(group, item)">
+                                <i class="fi fi-rr-cross-small"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="advanced_filter_footer">
+        <button mat-stroked-button class="cancel_btn" (click)="onCancel()">Cancel</button>
+        <button mat-flat-button class="apply_btn" color="primary" (click)="onApplyFilters()" [disabled]="(isProcessing || getTotalSelectedCount() == 0) && !isCustomerTypeChange">{{!isFromSaveFilterPopup?"Apply Filters" : "Save & Apply Filters"}}</button>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<!-- ========== Left Sidebar Start ========== -->
+<ng-template #contentTemplate>
+  <!--- Sidemenu -->
+  <div id="sidebar-menu">
+    <ul class="metismenu" id="side-menu" #sideMenu>
+
+      <!-- <li class="menu-title">ADMIN CONTROLS</li> -->
+      <div class="Group-Sidebar">
+        <li>
+          <a class="nav-link dropdown-toggle waves-effect waves-light" routerLink="/hsbc//rmExisitingPortfolio"
+            routerLinkActive="active" role="button" aria-haspopup="false" aria-expanded="false">
+            <em class="fmdi fmdi-view-dashboard"></em> Existing Portfolio
+          </a>
+        </li>
+        <li>
+          <a class="nav-link dropdown-toggle waves-effect waves-light" routerLink="/hsbc//rmTargetsProspects"
+            routerLinkActive="active" role="button" aria-haspopup="false" aria-expanded="false">
+            <em class="fmdi fmdi-view-dashboard"></em> Targets & Prospects
+          </a>
+        </li>
+        <li>
+          <a class="nav-link dropdown-toggle waves-effect waves-light" routerLink="/hsbc/rmDashboard"
+            routerLinkActive="active" role="button" aria-haspopup="false" aria-expanded="false" *ngIf="roleId==7">
+            <em class="fmdi fmdi-view-dashboard"></em>
+            RM Dashboard
+          </a>
+          <a class="nav-link dropdown-toggle waves-effect waves-light" routerLink="/hsbc/rmDashboard"
+            routerLinkActive="active" role="button" aria-haspopup="false" aria-expanded="false" *ngIf="roleId==5">
+            <em class="fmdi fmdi-view-dashboard"></em>
+            HO Dashboard
+          </a>
+        </li>
+        <li *ngIf="roleId==11 || roleId==5">
+          <a href="javascript: void(0);" routerLink="/hsbc/bureauConfig" class="waves-effect" aria-expanded="false">
+            <em class="fmdi fmdi-view-dashboard"></em>
+            Configuration
+          </a>
+        </li>
+
+        <li class="menu-title">Analytics</li>
+        <!-- <li>
+          <a href="javascript: void(0);" (click)="redirectToAnalysis()" class="waves-effect" aria-expanded="false">
+            <em class="fmdi fmdi-view-dashboard"></em>
+            <span> Analytics </span>
+          </a>
+        </li> -->
+        <li>
+          <a href="javascript: void(0);" routerLink="hsbc/rmGSTAnalysis" routerLinkActive="isGstTabActive"
+            [class.active]="isGstTabActive"
+            (click)="removeValue();isGstTabActive = true;isBsTabActive=false;isEximTabActive = false; isCommercialActive = false; isConsumerActive = false"
+            class="waves-effect" aria-expanded="false">
+            <em class="fas fa-percent"></em>
+            GST Analysis
+          </a>
+        </li>
+        <li>
+          <a href="javascript: void(0);" routerLink="hsbc/rmBankStatementAnalysis" routerLinkActive="isBsTabActive"
+            [class.active]="isBsTabActive"
+            (click)="removeValue();isBsTabActive = true;isEximTabActive = false;isGstTabActive = false; isCommercialActive = false; isConsumerActive = false"
+            class="waves-effect" aria-expanded="false">
+            <em class="fas fa-university"></em>
+            Bank Statement Analysis
+          </a>
+        </li>
+        <li>
+          <a href="javascript: void(0);" routerLink="hsbc/rmEXIMAnalysis" routerLinkActive="isEximTabActive"
+            [class.active]="isEximTabActive"
+            (click)="removeValue();isEximTabActive = true;isBsTabActive = false;isGstTabActive = false; isCommercialActive = false; isConsumerActive = false"
+            class="waves-effect" aria-expanded="false">
+            <em class="fas fa-boxes"></em>
+            EXIM Analysis
+          </a>
+        </li>
+        <li>
+          <a href="javascript: void(0);" routerLink="hsbc/rmCommercialBureau" routerLinkActive="isCommercialActive"
+            [class.active]="isCommercialActive"
+            (click)="removeValue();isCommercialActive = true;isBsTabActive=false;isEximTabActive = false; isConsumerActive = false; isGstTabActive = false"
+            class="waves-effect" aria-expanded="false">
+            <em class="fas fa-building"></em>
+            Commercial Bureau
+          </a>
+        </li>
+        <li>
+          <a href="javascript: void(0);" routerLink="hsbc/rmConsumerBureau" routerLinkActive="isConsumerActive"
+            [class.active]="isConsumerActive"
+            (click)="removeValue();isConsumerActive = true;isBsTabActive=false;isEximTabActive = false; isCommercialActive = false; isGstTabActive = false"
+            class="waves-effect" aria-expanded="false">
+            <em class="fas fa-shopping-basket"></em>
+            Consumer Bureau
+          </a>
+        </li>
+        <li class="menu-title">Bulk Upload </li>
+        <li *ngIf="roleId==5">
+          <a class="nav-link " routerLink="/hsbc/Customer-Bulk-Upload" routerLinkActive="active" role="button"
+            aria-haspopup="false" aria-expanded="false">
+            <em class="fmdi fmdi-view-dashboard"></em> EXIM Data
+          </a>
+        </li>
+        <li *ngIf="roleId==5">
+          <a class="nav-link " routerLink="/hsbc/Customer-Master-Bulk-Upload" routerLinkActive="active" role="button"
+            aria-haspopup="false" aria-expanded="false">
+            <em class="fmdi fmdi-view-dashboard"></em> Customer Master
+          </a>
+        </li>
+      </div>
+    </ul>
+
+  </div>
+  <!-- End Sidebar -->
+
+  <div class="clearfix"></div>
+</ng-template>
+
+
+<div class="left-side-menu">
+  <div class="slimscroll-menu" appSlimScroll *ngIf="isCondensed">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </div>
+
+  <div class="slimscroll-menu" *ngIf="!isCondensed">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </div>
+</div>
+<!-- Left Sidebar End -->

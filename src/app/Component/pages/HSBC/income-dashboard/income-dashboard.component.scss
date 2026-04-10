@@ -1,0 +1,58 @@
+
+.intable_td{
+    padding: 10px 30px;
+  }
+
+  .inside_table {
+    overflow-x: auto;
+    display: block;
+     
+    table {
+      width: max-content;
+    }
+  }
+
+   
+
+  .filte_btn_select{
+    display: flex;
+    align-items: center;
+    h4{
+      margin: 0 10px 0 0;
+      font-size: 14px;
+    }
+    .id_filter_menu_btn{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      border: 1px solid #E5E7EB;
+      color: #333;
+      min-width: 250px;
+      padding: 10px 11px;
+      font-size: 13px;
+      border-radius: 5px;
+      text-align: left;
+      font-weight: 400;
+    }
+  }
+
+  .filter_section_title{
+    font-size: 16px;
+    color: #000;
+    font-weight: 600;
+  }
+
+
+  .box_design_ttl_bar{
+    border-bottom: 1px solid #DCDFE0;
+  }
+
+
+  .nowrap_th{
+    white-space: nowrap !important;
+  }
+
+  .padl_50{
+    padding-left: 50px;
+  }

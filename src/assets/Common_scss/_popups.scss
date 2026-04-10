@@ -1,0 +1,708 @@
+.w-400px {
+  width: 400px !important;
+}
+
+.w-500px {
+  width: 500px !important;
+}
+
+.w-600px {
+  width: 600px !important;
+}
+
+.w-700px {
+  width: 700px !important;
+}
+
+.w-800px {
+  width: 800px !important;
+}
+
+.w-930px {
+  width: 930px !important;
+}
+
+.w-950px {
+  width: 950px !important;
+}
+
+.w-1000px {
+  width: 1000px !important;
+}
+
+.mat-mdc-dialog-container {
+  .mdc-dialog__surface {
+    // border-radius: 4px !important;
+    padding: 24px !important;
+  }
+}
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-icon-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  @include stevieSans;
+  font-weight: 400;
+}
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button {
+  line-height: 50px;
+  min-width: 130px;
+  font-size: 16px;
+  // padding: 26px;
+  height: auto;
+
+  &.removeBtn {
+    line-height: 40px;
+    min-width: 100px;
+    font-size: 16px;
+    // padding: 16px;
+    height: auto;
+
+    .mat-icon {
+      font-size: 20px;
+      margin: 0;
+      height: 24px;
+      width: 24px;
+      @include Cjc-center-ai;
+    }
+  }
+
+  &.__btn_Icon {
+    flex-direction: row-reverse;
+
+    .mat-icon {
+      font-size: 24px;
+      margin: 0;
+      @include Cjc-center-ai;
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  &.Btn_Filter {
+    line-height: 54px;
+    margin-right: 15px;
+    // padding: 26px;
+    height: auto;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+
+  &[disabled],
+  &.mat-mdc-button-disabled {
+    color: rgba($color: $HsbcColor, $alpha: .7);
+    border-color: rgba($color: $HsbcColor, $alpha: 0.5);
+    background: rgba($color: $HsbcColor, $alpha: 0.09);
+    ;
+
+  }
+
+  @media screen and (max-width: $large) {
+    line-height: 40px;
+    min-width: auto;
+
+    &.Btn_Filter {
+      line-height: 40px;
+    }
+
+    &.__btn_Icon {
+      .mat-icon {
+        font-size: 18px;
+        height: 18px;
+        width: 18px;
+      }
+    }
+  }
+
+  @media screen and (max-width: $medium) {
+    line-height: 45px;
+    font-size: 14px;
+
+    &.Btn_Filter {
+      line-height: 45px;
+    }
+
+    &.__btn_Icon {
+      .mat-icon {
+        font-size: 18px;
+        height: 18px;
+        width: 18px;
+      }
+    }
+  }
+}
+
+
+/* Nikul Started Boostrap popup Modal Modify */
+.modal-content {
+  box-shadow: 4px 22px 54px #695f971a;
+  border-radius: 30px;
+}
+
+.HSBC_Common_popup {
+  flex-direction: column;
+  @include Com-ain-fw;
+  display: flex;
+  padding: 30px 35px;
+
+  * {
+    font-family: $ff-stevie;
+  }
+
+  .material-icons {
+    font-family: "Material Icons";
+  }
+
+  .__HSBC_Popup__header {
+    @include Com-sp;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ebebeb;
+
+    .HSBC__title {
+      font-size: 18px;
+      color: #000000;
+      font-weight: 700;
+      margin-bottom: 0;
+
+      &.FS_14 {
+        font-size: 14px;
+      }
+    }
+
+    .HSBC__subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    .HSBC__Btn_Icon {
+      border: 1px solid #ebebeb;
+      border-radius: 19px;
+      padding: 12px 12px 6px 12px;
+      background-color: #fff;
+    }
+
+    &._Icon_TopRight {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      float: left;
+      width: 100%;
+      border: 0;
+      position: relative;
+
+      &.__Jcfend {
+        justify-content: flex-end;
+      }
+
+      .HSBC__Btn_Icon {
+        border-radius: 19px;
+        background: rgba($color: #70757a, $alpha: 0.55);
+        padding: 0;
+        height: 20px;
+        width: 20px;
+        color: #fff;
+        position: absolute;
+        // top: -30px;
+        // right: -35px;
+        top: -15px;
+        right: -15px;
+
+        &.mat-mdc-icon-button {
+          @include Cjc-center-ai;
+
+          .mat-icon {
+            font-size: 14px;
+            height: 14px;
+            width: 14px;
+            line-height: 15px;
+          }
+
+          .mat-mdc-button-touch-target {
+            height: 24px;
+            width: 24px;
+          }
+        }
+
+      }
+    }
+  }
+
+  .HSBC__Popup_Body {
+    @include Com-aic-fw;
+    flex-direction: column;
+    padding: 25px 0;
+
+    .HSBC_PB__Contain {
+      @include Com-fw;
+    }
+
+    .Login_terms_Cont {
+      padding-right: 15px;
+
+      .desc_heading {
+        color: #000000;
+        font-size: 13px;
+        text-align: left;
+      }
+
+      .desc {
+        text-align: justify;
+        display: list-item;
+        list-style: lower-roman;
+        padding-left: 10px;
+        margin-left: 20px;
+      }
+    }
+
+    &.terms_content {
+      font-size: $fs-14;
+      line-height: 21px;
+      font-weight: $f-w500;
+      padding-bottom: 20px;
+      min-height: 120px;
+      position: relative;
+      text-align: justify;
+
+      p {
+        font-size: $fs-14;
+        line-height: 21px;
+        font-weight: $f-w500;
+        padding-bottom: 16px;
+        margin: 0;
+
+        a {
+          color: $HsbcColor;
+        }
+      }
+
+      ul {
+        >li {
+          font-weight: $f-w500;
+        }
+      }
+    }
+
+    &.HSBC_Scroll {
+      max-height: 350px;
+    }
+  }
+
+  .HSBC_Popup_btn_Grp {
+    padding-top: 30px;
+    @include Com-fe;
+    // border-top: 1px solid #EBEBEB;
+    gap: 20px;
+
+    &.JC_Center {
+      justify-content: center;
+    }
+
+    &.NP_Popup_PT {
+      padding-top: 15px;
+    }
+
+    &.Flexwrap {
+      flex-wrap: wrap;
+    }
+
+    &.FlexColumn {
+      flex-direction: column;
+    }
+
+    button {
+      margin: 0;
+      line-height: 50px;
+      min-width: 130px;
+      font-size: 16px;
+      height: auto;
+    }
+  }
+
+  &.HSBC_Common_popup {
+    padding: 15px 24px;
+
+    .HSBC__Popup_Body {
+      padding: 10px 0;
+    }
+
+    .HSBC_Popup_btn_Grp {
+      padding-top: 15px;
+    }
+  }
+
+  &.HSBC_Common_PD0X {
+    padding: 0;
+
+    .__HSBC_Popup__header {
+      padding: 15px 20px;
+    }
+
+    .HSBC__Popup_Body {
+      padding: 10px 0;
+    }
+
+    .HSBC_Popup_btn_Grp {
+      padding: 16px 20px;
+    }
+  }
+
+  &.__Pad0PX {
+    padding: 0;
+  }
+}
+
+.__HSBC_OTP_Verify,
+.otp_verify_popup {
+
+  // .OTP_H3{
+  //     font-weight: 700;
+  //     font-size: $fs-16;
+  //     text-align: center;
+  //     padding-bottom: 15px;
+  //     margin-bottom: 15px;
+  //     border-bottom: 1px solid $opl-bc;
+  // }
+  .OTP_textView {
+    font-weight: 600;
+
+    span {
+      font-weight: 700;
+    }
+  }
+
+  .OTP_verify_Input {
+    @include Com-fw;
+
+    .OTP_Input_GRP {
+      @include Com-fw;
+
+      .wrapper {
+        // @include Cjc-sp-ai;
+
+        .otp-input {
+          font-size: 16px;
+          // height: 40px;
+          border-radius: 6px;
+          // width: 45px;
+          font-weight: 700;
+          border: solid 1px $opl-bc;
+
+          // &:not(:last-child) {
+          //   margin-right: 0;
+          // }
+
+          &:focus-visible {
+            outline: -webkit-focus-ring-color auto 1px;
+            outline-color: $HsbcColor;
+            outline-style: solid;
+            outline-width: 2px;
+          }
+        }
+      }
+    }
+  }
+
+  .resend_otp_sec,
+  .HSBC_ShowTimer {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+
+    a {
+      color: $HsbcColor;
+      cursor: pointer;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+  }
+
+  .verified-success,
+  .verified_success {
+    margin-bottom: 0;
+    text-align: center;
+    display: flex;
+    color: #88c941;
+
+    @media (max-width: 767px) {
+      font-size: 13px;
+    }
+
+    mat-icon {
+      font-size: 21px;
+      margin-right: 4px;
+    }
+  }
+}
+
+.__HSBC_Common_Cont_Popup {
+  @include Com-aic-fw;
+  margin-bottom: 15px;
+
+  &.Flex_Wrap {
+    flex-wrap: wrap;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .__Common_texts {
+    @include Com-fw;
+
+    .__ptext {
+      color: #fd3a69;
+      margin-bottom: 5px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .Text_span_ML {
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 5px;
+      @include Com-fw;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      &.OTP_H3 {
+        font-weight: 700;
+        font-size: $fs-16;
+        text-align: center;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid $opl-bc;
+      }
+    }
+
+    ._HSBC_Checkbox {
+      max-width: unset;
+    }
+
+    &._Img_Text_Pop {
+      text-align: center;
+      padding: 25px 0;
+      @include Cai-center;
+      flex-direction: column;
+
+      &._pd0px {
+        padding: 0;
+      }
+
+      img {
+        margin-bottom: 12px;
+      }
+
+      .__HSBC_lotties_Not {
+        height: 100px;
+        width: 100px;
+      }
+
+      .__ptext {
+        margin-bottom: 12px;
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+        color: #000000;
+
+        @media (max-width: 575px) {
+          font-size: 15px;
+          text-align: center;
+        }
+      }
+
+      .Text_span_ML {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 5px;
+        @include Com-fw;
+        color: #7a86a1;
+
+        &.desc_danger {
+          color: #ff0000;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &._Upload_CountView {
+    gap: 0 15px;
+
+    .__Common_txt_Count {
+      flex: calc(100% / 3 - 15px);
+      padding: 25px 15px;
+      border-radius: 30px;
+      text-align: center;
+      border: 1px solid #d6dcea;
+
+      .__JUPTxt_Count {
+        @include fsw-87;
+        color: #000000;
+        padding-bottom: 7px;
+      }
+
+      .__JUPTxt_Name {
+        @include fsw-45;
+        @include Cjc-center-ai;
+
+        .__Dot_circle {
+          height: 10px;
+          width: 10px;
+          border-radius: 50px;
+          margin-right: 7px;
+
+          &:last-of-type {
+            margin-right: 0;
+          }
+
+          &.__total {
+            background: transparent linear-gradient(180deg, #468cc2 0%, #23699e 100%) 0% 0% no-repeat padding-box;
+          }
+
+          &.__successfully {
+            background: transparent linear-gradient(180deg, #f7bc38 0%, #fbdd9a 100%) 0% 0% no-repeat padding-box;
+          }
+
+          &.__Failed {
+            background: transparent linear-gradient(180deg, #f96767 0%, #f3a2a2 100%) 0% 0% no-repeat padding-box;
+          }
+        }
+      }
+    }
+  }
+
+  &.ConfirmationTxt {
+    .__Common_texts {
+      .Text_span_ML {
+        font-weight: 600;
+      }
+    }
+  }
+
+  &.PR_PL_24px {
+    padding: 0 24px;
+  }
+}
+
+.__Common_Data_GroupView {
+  @include Com-sp;
+  flex-wrap: wrap;
+  //   gap: 15px 15px;
+  align-items: normal;
+
+  .__Common_texts {
+    flex-wrap: wrap;
+    @include Com-sp;
+    border-bottom: 1px solid $opl-bc;
+    padding: 16px 0;
+
+    &:first-of-type {
+      padding-top: 0;
+    }
+
+    &.tx_left {
+      text-align: left;
+    }
+
+    &.tx_Right {
+      text-align: right;
+    }
+
+    .Text_span {
+      @include fsw-46;
+      color: #7a86a1;
+    }
+
+    .Text_h3 {
+      @include fsw-66;
+      color: #000000;
+      margin: 0;
+    }
+  }
+  &.ReadInstructions {
+    row-gap: 10px;
+
+    .__Common_texts {
+      align-items: normal;
+      border-bottom: 0;
+      padding: 0;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba($color: #000000, $alpha: 1);
+
+      span {
+        &:first-of-type {
+          float: left;
+          height: 25px;
+          width: 25px;
+          border: 1px solid transparent;
+          @include Cjc-center-ai;
+          background: #0000000D;
+          border-radius: 16px;
+        }
+
+        &.Text_span {
+          line-height: 24px;
+          width: calc(100% - 40px);
+          color: rgba($color: #000000, $alpha: 1);
+          font-size: 13px;
+          font-weight: 400;
+        }
+
+      }
+
+    }
+  }
+
+}
+
+.modal-open .modal,
+.modal-backdrop.show {
+  z-index: 999 !important;
+}
+
+.TimeLineView {
+  .timeline-sm {
+    &.timeline-scroll {
+      width: 100%;
+      max-height: 250px;
+    }
+
+    .timeline-add-item {
+      min-height: 3rem;
+    }
+  }
+}
+
+.NP_Mobile_Table {
+  vertical-align: top;
+
+  .title_None {
+    display: none;
+  }
+
+  tbody {
+    tr {
+      td {
+        vertical-align: top;
+      }
+    }
+  }
+}
+
+

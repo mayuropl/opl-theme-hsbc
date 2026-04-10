@@ -1,0 +1,115 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4 class="cursor_pointer" (click)="backBUtton();">
+                    <em class="fa fa-arrow-left mr-2"></em>
+                    API Audit Log
+                </h4>
+            </div>
+        </div>
+        <div class="page_Details">
+            <mat-card class="box_design">
+                <div class="table-responsive">
+                    <table class="CommonTable_NP Mobile_table_View_NP design_Main_listTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Sr.No</th>
+                                <th>Reference Id (Ref Value)</th>
+                                <th>API Name</th>
+                                <th>Request Time</th>
+                                <th>Request Type</th>
+                                <th>Status Code</th>
+                                <th>Server IP</th>
+                                <th>HTTP Code</th>
+                                <th class="text-center">View Request</th>
+                                <th class="text-center">View Response</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="refType != 'CIBIL_AUDIT'">
+                            <tr *ngFor="let auditData of auditDataList;let i = index">
+                                <td data-label="Sr.No" class="text-center">{{(page-1)*pageSize+(i+1)}}</td>
+                                <td data-label="Reference Id (Ref Value)">{{auditData.refId?auditData.refId:'-' }}
+                                    ({{auditData.refValue?auditData.refValue:'-' }})</td>
+                                <td data-label="API Name">{{auditData.apiName?auditData.apiName:'-' }}</td>
+                                <td data-label="Request Time">{{auditData.refTime?auditData.refTime:'-' }}</td>
+                                <td data-label="Request Type">{{auditData.refType?auditData.refType:'-' }}</td>
+                                <td data-label="Status Code">{{auditData.statusCode?auditData.statusCode:'-' }}</td>
+                                <td data-label="Server IP">{{auditData.serverIp?auditData.serverIp:'-' }}</td>
+                                <td data-label="HTTP Code">{{auditData.httpCode?auditData.httpCode:'-' }}</td>
+                                <td data-label="View Request" class="text-center">
+                                    <button mat-icon-button class="matIcon skyblue_icn"
+                                        (click)="showPopupForReqRes('Request',auditData.request)">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td data-label="View Response" class="text-center">
+                                    <button mat-icon-button class="matIcon skyblue_icn"
+                                        (click)="showPopupForReqRes('Response',auditData.response)">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="refType == 'CIBIL_AUDIT'">
+                            <tr *ngFor="let stageAudit of auditDataList;let i = index">
+                                <td data-label="Sr. No." class="text-center">{{(page-1)*pageSize+(i+1)}}</td>
+                                <td data-label="Audit Id">{{stageAudit.applicationId || stageAudit.cibilId}} </td>
+                                <td data-label="Api Name">{{stageAudit.name || stageAudit.apiName}} <em
+                                        class="fmdi fmdi-info ml-1" ngbTooltip="{{stageAudit.description}}"
+                                        placement="right"></em></td>
+                                <td data-label="Request Time">{{stageAudit.createdDate || stageAudit.refTime}}
+                                </td>
+                                <td data-label="Response Type">{{stageAudit.status}}</td>
+                                <td data-label="Status Code">{{stageAudit.statusCode}} </td>
+                                <td data-label="Server IP">{{stageAudit.serverIp}}</td>
+                                <td data-label="HTTP Code">{{stageAudit.httpCode}}</td>
+                                <td data-label="View Request" class="text-center">
+                                    <a mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View Request"
+                                        (click)="showPopupForReqRes('Request',stageAudit.request)"><i
+                                            class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td data-label="View Response" class="text-center">
+                                    <a mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View Response"
+                                        (click)="showPopupForReqRes('Request',stageAudit.response)">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-table NP_LeftPagintion">
+                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(startIndex+1)}} to
+                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                        {{totalSize}} rows
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="pageSize" [panelClass]="'pagination_select'"
+                                        (ngModelChange)="onPageChange(page)">
+                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                            {{pages.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <span>row per page</span>
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

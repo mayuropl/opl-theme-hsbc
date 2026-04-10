@@ -1,0 +1,186 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <form class="NP_Form" [formGroup]="uploadDetailsForm" autocomplete="off">
+            <div class="page_Title_sec">
+                <div class="page_Title_left">
+                    <h4 class="cursor_pointer">
+                        Income Data Upload
+                    </h4>
+                    <!-- <a   mat-flat-button class="btn_design with_right_icn ml-2" color="secondary"  download >Unique ACC + IFSC</a> -->
+
+                </div>
+
+                <div class="page_Title_Right" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.DOWNLOAD_TEMPLATE)">
+                    <div ngbDropdown class="dropdown d-inline">
+                        <button type="submit"  mat-flat-button color="primary" ngbDropdownToggle>
+                            Download Template <i class="fas fa-caret-down ml-2"></i>
+                        </button>
+                        <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover download_template">
+                            <a ngbDropdownItem href="assets/files/incomeUploads/template_gid_gc_region_master.xlsx">
+                              GID–GC Region Mapper
+                            </a>
+                            <a ngbDropdownItem href="assets/files/incomeUploads/template_non_gid_gc_mapper_master.xlsx">
+                              Non-GID–GC Region Mapper
+                            </a>
+                          <a ngbDropdownItem href="assets/files/incomeUploads/template_master_group_customer_region.xlsx">
+                            Mastergroup–Customer Mapper
+                          </a>
+                          <a ngbDropdownItem href="assets/files/incomeUploads/template_mothly_income.xlsx">
+                            Income Uploader
+                          </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page_Details">
+                <div class="box_design mb-3 p-3">
+                    <div class="left_box">
+                        <!--                         <fieldset>-->
+                        <!--                            <div class="custom_month_picker" [ngClass]="{ disabled: disableOtherOptions }">-->
+                        <!--                                <div class="form_box">-->
+                        <!--                                    <i class="fas fa-calendar-alt"></i>-->
+                        <!--                                    <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date"-->
+                        <!--                                        bsDatepicker [disabled]="disableOtherOptions" [bsConfig]="bsConfig" readonly-->
+                        <!--                                        onkeydown="return false;">-->
+                        <!--                                    <i class="fas fa-caret-down"></i>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </fieldset>-->
+                        <mat-radio-group formControlName="option" class="radio_top">
+                            <mat-radio-button [value]="incomeMap['1']">Income Uploader</mat-radio-button>
+                            <mat-radio-button [value]="incomeMap['2']"> Master group–Customer Mapper</mat-radio-button>
+                            <mat-radio-button [value]="incomeMap['3']"> GID–GC Region Mapper</mat-radio-button>
+                            <mat-radio-button [value]="incomeMap['4']"> Non-GID–GC Region
+                                Mapper</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="NP_Com_Group">
+                        <div class="dragDrop-Common" appDragDrop>
+                            <div class="Input-text-Fill-Cutome">
+
+                                <input  class="File-input-common" type="file" multiple
+                                        accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                       #fileDropRef id="fileUpload" name="fileUpload" formControlName="fileUpload"
+                                       (change)="fileBrowseHandler($event.target.files)" required />
+<!--                                <input  class="File-input-common" type="file" multiple-->
+<!--                                       accept=".xlsx"-->
+<!--                                       #fileDropRef id="fileUpload" name="fileUpload" formControlName="fileUpload"-->
+<!--                                       (change)="fileBrowseHandler($event.target.files)" required />-->
+                                <div class="Input-text-File">
+                                    <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+<!--                                    <p  class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop <br />CSV-->
+<!--                                    </p>-->
+                                  <p class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop <br />CSV or
+                                    XLS or XLSX
+                                  </p>
+                                </div>
+                            </div>
+                        </div>
+<!--                        <div class="__Btn_Group __MT15px __JcEnd">-->
+<!--                            <button mat-stroked-button color="primary" class="btn_design"-->
+<!--                                    (click)='submit()'><mat-icon>arrow_upward_alt</mat-icon> Upload File</button>-->
+<!--                        </div>-->
+                        <div class="files-list" *ngIf="files.length > 0">
+                            <h2 class="file_list">Upload File <Span class="bedge">{{files.length}}</Span></h2>
+                            <div class="single-file" *ngFor="let file of files; let i = index">
+                                <div class="File-Progress">
+                                    <div class="file-icon">
+                                        <img src="assets/images/hsbc/FileUpload_Icon.svg" alt="File Icon">
+                                    </div>
+                                    <div class="info">
+                                        <h4 class="name">
+                                            {{ file?.name }}
+                                        </h4>
+                                    </div>
+                                    <div class="delete" (click)="deleteFile(i)">
+                                        <em class="fmdi fmdi-delete IC-red mr-2"></em> Remove
+                                    </div>
+                                </div>
+                                <mat-progress-bar class="Progreebar-File" mode="determinate" value="{{file.progress}}" [max]="100">
+                                </mat-progress-bar>
+                            </div>
+                            <button *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.UPLOAD)" type="submit" mat-flat-button color="primary" (click)='submit()' class="d-flex ml-auto">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box_design">
+                    <div class="box_design_ttl_bar">
+                        <div class="box_design_ttl_bar_left">
+                            <h4>File Uploads History</h4>
+                        </div>
+                    </div>
+                    <div class="box_design_details p-0">
+                        <div class="tableResponsive" appTableScroll>
+                            <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap no_sticky_table">
+                                <thead>
+                                    <tr class="tr_lightred_bg">
+                                        <th width="5%">Sr. No.</th>
+                                        <th>File Name</th>
+                                        <th>Uploaded On</th>
+                                        <th>File Type</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Successful Entries</th>
+                                        <th class="text-right">Failed Entries</th>
+                                        <th class="text-right pr-3">Total Entries</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr  *ngFor="let data of bulkUploadHistory ;  let i=index">
+                                            <td> {{ startIndex + i + 1 }}</td>
+                                            <td>{{ data?.fileName || '-' }} <span> <i *ngIf="data?.uploadStatus === 'FAILED'" class="fas fa-info-circle red_text mr-1" matTooltip="{{data.fileUploadFailureReason}}"></i></span> </td>
+                                            <td>{{ data?.createdDate ? (data?.createdDate | date:'dd MMM yyyy hh:mm:ss') : '-' }}</td>
+                                            <td>{{data?.incomeExcelCategory || '-'}}</td>
+                                            <td><span [ngClass]="{
+                                            'orange_badge': data?.uploadStatus === 'PENDING' || data?.uploadStatus === 'CALCULATION_PENDING',
+                                            'green_badge':data?.uploadStatus === 'COMPLETED',
+                                            'lightred_badge': data?.uploadStatus === 'FAILED' || data?.uploadStatus === 'CALCULATION_FAILED',
+                                             }">{{ data?.uploadStatus || '-' }}</span>
+                                            </td>
+                                            <td class="text-right">{{ data?.success ?? '-' }} <i *ngIf="data?.success && commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.DOWNLOAD_SUCCESS_ENTRY)" (click)="getData('isSuccess' , data?.id)" class="fas fa-download green_text cursor_pointer ml-1"></i></td>
+                                            <td class="text-right">{{ data?.fail ?? '-' }} <i *ngIf="data?.fail && commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.DOWNLOAD_FAIL_ENTRY)" (click)="getData('isFailed' , data?.id)" class="fas fa-download red_text cursor_pointer ml-1"></i></td>
+                                            <td class="text-right pr-3" >{{ data?.totalRows ?? '-' }} <i *ngIf="data?.totalRows && commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.DOWNLOAD_TOTAL_ENTRY)" (click)="getData('isTotal' , data?.id)" class="fas fa-download black_text cursor_pointer ml-1"></i></td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(startIndex+1)}} to
+                                {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                {{totalSize}}
+                                row
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                                                        (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                                                <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                    {{pages.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-5">
+                            <div class="text-md-right float-md-right pagination-rounded">
+
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                                    [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

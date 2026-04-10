@@ -1,0 +1,438 @@
+<section class="popup_design max-1200 HSBC_Common_Pages pb-0">
+  <a class="modal_closeicn_btn" href="javascript:void(0)">
+    <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+  </a>
+
+  <div class="pop_up_container">
+    <div class="popup_header" mat-dialog-title>
+      <h3>Open Facilities From Lenders Beyond 6 Months</h3>
+    </div>
+    <mat-dialog-content class="px-0 pb-0">
+      <div class="popup_body">
+        <div class="table_sec">
+          <div class="table-responsive">
+            <table class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table">
+              <thead>
+                <tr class="tr_lightred_bg">
+                <th>Sr.no</th>
+                <th>Product
+                  <span class="shorting" (click)="toggleSort('product', true)">
+                    <mat-icon *ngIf="currentSortField !== 'product'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'product' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'product' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>No. of Credit Facility
+                  <span class="shorting" (click)="toggleSort('noOfCreditFacility',true)">
+                    <mat-icon *ngIf="currentSortField !== 'noOfCreditFacility'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'noOfCreditFacility' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'noOfCreditFacility' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Other Sanction
+                  <span class="shorting" (click)="toggleSort('sanctionedAmountOther',true)">
+                    <mat-icon *ngIf="currentSortField !== 'sanctionedAmountOther'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionedAmountOther' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionedAmountOther' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Other Utilization
+                  <span class="shorting" (click)="toggleSort('utilizationOther',true)">
+                    <mat-icon *ngIf="currentSortField !== 'utilizationOther'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationOther' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationOther' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Hsbc Sanction
+                  <span class="shorting" (click)="toggleSort('sanctionedAmountHsbc',true)">
+                    <mat-icon *ngIf="currentSortField !== 'sanctionedAmountHsbc'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionedAmountHsbc' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionedAmountHsbc' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Hsbc Utilization
+                  <span class="shorting" (click)="toggleSort('utilizationHsbc',true)">
+                    <mat-icon *ngIf="currentSortField !== 'utilizationHsbc'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationHsbc' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationHsbc' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Sanctioned By
+                  <span class="shorting" (click)="toggleSort('sanctionBy', true)">
+                    <mat-icon *ngIf="currentSortField !== 'sanctionBy'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionBy' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionBy' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Utilization By
+                  <span class="shorting" (click)="toggleSort('utilizationBy', true)">
+                    <mat-icon *ngIf="currentSortField !== 'utilizationBy'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationBy' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationBy' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of productWisePaginationData; track $index) {
+                <tr>
+                  <td data-label="Sr.no">
+                    <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapsedList1.toggle()"
+                      [ngClass]="{'rotate_icon': collapsedList1}"><i class="fas fa-chevron-down"></i></button>
+                    {{(productWisePagination.page-1)*productWisePagination.pageSize+($index+1)}}
+                  </td>
+                  <td data-label="Product">{{!this.commonService.isObjectNullOrEmpty(item?.product) ?
+                    item?.product : '-'}}</td>
+                  <td data-label="No. of Credit Facility">
+                    {{!this.commonService.isObjectNullOrEmpty(item?.noOfCreditFacility) ?
+                    item?.noOfCreditFacility : '-'}}</td>
+                  <td data-label="Other Sanction">
+                    ₹{{commonMethod.currencyMaskForObject(item?.sanctionedAmountOther+"")}}</td>
+                  <td data-label="Other Utilization">{{!this.commonService.isObjectNullOrEmpty(item.utilizationOther) ?
+                    item.utilizationOther.toFixed(2) + '%' : '-'}}</td>
+                  <td data-label="Hsbc Sanction">₹{{commonMethod.currencyMaskForObject(item?.sanctionedAmountHsbc+"")}}
+                  </td>
+                  <td data-label="Hsbc Utilization">{{!this.commonService.isObjectNullOrEmpty(item.utilizationHsbc) ?
+                    item.utilizationHsbc.toFixed(2) + '%' : '-'}}</td>
+                  <td data-label="Sanctioned By">{{!this.commonService.isObjectNullOrEmpty(item?.sanctionBy) ?
+                    item?.sanctionBy : '-'}}</td>
+                  <td data-label="Utilization By">{{!this.commonService.isObjectNullOrEmpty(item?.utilizationBy) ?
+                    item?.utilizationBy : '-'}}</td>
+                </tr>
+                <tr class="collapsing_tr" #collapsedList1="ngbCollapse" [(ngbCollapse)]="collapsedList1">
+                  <td colspan="15">
+                    <div class="box_design">
+                      <div class="tableResponsive inside_table">
+                        <table class="bordered_table w-100">
+                          <thead>
+                            <tr>
+                              <th>Sr. No.</th>
+                              <th>Product</th>
+                              <th>No.Of Credit Facility</th>
+                              <th>Other Sanction</th>
+                              <th>Other Utilization</th>
+                              <th>Sanction</th>
+                              <th>Utilization</th>
+                              <th>Sanctioned By</th>
+                              <th>Utilization By</th>
+                            </tr>
+                          </thead>
+
+                          <tbody class="subtable-container">
+                            @for (subItem of item.subTypeOfProductDetails |
+                            slice:
+                            (item?.internalPagination.page()-1) *
+                            item?.internalPagination.pageSize() :
+                            (item?.internalPagination.page()-1) *
+                            item?.internalPagination.pageSize() +
+                            item?.internalPagination.pageSize() ; track $index) {
+                            <tr>
+                              <td data-label="Sr.no">
+                                {{(item?.internalPagination.page()-1)*item?.internalPagination.pageSize()+($index+1)}}
+                              </td>
+                              <td data-label="Product">{{!this.commonService.isObjectNullOrEmpty(subItem?.subProduct) ?
+                                subItem?.subProduct : '-'}}</td>
+                              <td data-label="No. of Credit Facility">
+                                {{!this.commonService.isObjectNullOrEmpty(subItem?.subNoOfCreditFacility) ?
+                                subItem?.subNoOfCreditFacility : '-'}}</td>
+                              <td data-label="Other Sanction">
+                                ₹{{commonMethod.currencyMaskForObject(subItem?.subSanctionedAmountOther+"")}}</td>
+                              <td data-label="Other Utilization">
+                                {{!this.commonService.isObjectNullOrEmpty(subItem.subUtilizationOther) ?
+                                subItem.subUtilizationOther.toFixed(2) + '%' : '-'}}</td>
+                              <td data-label="Hsbc Sanction">
+                                ₹{{commonMethod.currencyMaskForObject(subItem?.subSanctionedAmountHsbc+"")}}</td>
+                              <td data-label="Hsbc Utilization">
+                                {{!this.commonService.isObjectNullOrEmpty(subItem.subUtilizationHsbc) ?
+                                subItem.subUtilizationHsbc.toFixed(2) + '%' : '-'}}</td>
+                              <td data-label="Sanctioned By">
+                                {{!this.commonService.isObjectNullOrEmpty(subItem?.subSanctionBy) ?
+                                subItem?.subSanctionBy : '-'}}</td>
+                              <td data-label="Utilization By">
+                                {{!this.commonService.isObjectNullOrEmpty(subItem?.subUtilizationBy) ?
+                                subItem?.subUtilizationBy : '-'}}</td>
+                            </tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="pagination-table NP_LeftPagintion py-0 ">
+                        <div class="dataTables_info my-2" id="tickets-table_info" role="status" aria-live="polite">
+                          Showing
+                          {{(item?.internalPagination.startIndex()+1)}} to
+                          {{(item?.internalPagination.pageSize()*item?.internalPagination.page())
+                          >
+                          (item?.internalPagination.totalSize) ?
+                          (item?.internalPagination.totalSize) :
+                          (item?.internalPagination.pageSize()*item?.internalPagination.page())}}
+                          of
+                          {{item?.internalPagination.totalSize}} rows
+                          <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                              <mat-form-field appearance="outline">
+                                <mat-select [(ngModel)]="item?.internalPagination.pageSize"
+                                  [panelClass]="'pagination_select'">
+                                  <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                    {{pages.value}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <span>row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                          <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="item?.internalPagination.totalSize" [maxSize]="2"
+                              [(page)]="item?.internalPagination.page" [rotate]="true" [boundaryLinks]="true"
+                              [pageSize]="item?.internalPagination.pageSize()">
+                            </ngb-pagination>
+                          </ul>
+                        </div>
+                      </div>
+
+                    </div>
+                  </td>
+                </tr>
+                } @empty {
+                <tr>
+                  <td colspan="10">
+                    <app-no-data-found message="No data found" />
+                  </td>
+                </tr>
+                }
+                <tr>
+                  <td data-label="-">-</td>
+                  <td data-label="Total">Total</td>
+                  <td data-label="No. of Credit Facility">
+                    {{commonMethod.currencyMaskForObject(totalnoOfCreditFacility+"")}}</td>
+                  <td data-label="Other Sanction Total">
+                    {{commonMethod.currencyMaskForObject(totalsanctionedAmountOther+"")}}</td>
+                  <td data-label="Other Utilization Percentage">{{ totalOtherUtiPercentage != null ?
+                    totalOtherUtiPercentage.toFixed(2) : '-' }} %</td>
+                  <td data-label="Hsbc Sanction Total">
+                    {{commonMethod.currencyMaskForObject(totalsanctionedAmountHsbc+"")}}</td>
+                  <td data-label="Hsbc Utilization Percentage">{{ totalHsbcUtiPercentage != null ?
+                    totalHsbcUtiPercentage.toFixed(2) : '-' }} %</td>
+                  <td data-label="Sanctioned By Total">-</td>
+                  <td data-label="Utilization By Total">-</td>
+                </tr>
+                </tbody>
+            </table>
+                                </div>
+                    <div class="pagination-table NP_LeftPagintion mt-2">
+                      <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(productWisePagination?.startIndex+1)}} to
+                        {{(productWisePagination?.pageSize*productWisePagination?.page) >
+                        (productWisePagination?.totalSize) ? (productWisePagination?.totalSize) :
+                        (productWisePagination?.pageSize*productWisePagination?.page)}} of
+                        {{productWisePagination?.totalSize}}
+                        <div class="dataTables_length" id="tickets-table_length">
+                          <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                              <mat-select [(ngModel)]="productWisePagination.pageSize"
+                                          [panelClass]="'pagination_select'"
+                                          (ngModelChange)="producWiseChangePage(productWisePagination.page)">
+                                <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                  {{pages.value}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        row per page
+                      </div>
+                      <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                          <ngb-pagination [collectionSize]="productWisePagination?.totalSize" [maxSize]="3"
+                                          [(productWisePagination.page)]="page" [rotate]="true" [boundaryLinks]="true"
+                                          [pageSize]="productWisePagination.pageSize"
+                                          (pageChange)="producWiseChangePage($event)">
+                          </ngb-pagination>
+                        </ul>
+                      </div>
+                    </div>
+
+
+                        <!-- <table class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table" style="display: none;">
+                          <thead>
+                            <tr class="tr_lightred_bg">
+                              <th>Sr.no</th>
+                              <th>Product
+                                <span class="shorting" (click)="toggleSort('product', true)">
+                                    <mat-icon *ngIf="currentSortField !== 'product'">unfold_more</mat-icon>
+                                    <mat-icon *ngIf="currentSortField === 'product' && sortDirection === 'ASC'">north</mat-icon>
+                                    <mat-icon *ngIf="currentSortField === 'product' && sortDirection === 'DESC'">south</mat-icon>
+                                </span>
+                              </th>
+                              <th>No. of Credit Facility
+                                <span class="shorting" (click)="toggleSort('noOfCreditFacility',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'noOfCreditFacility'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'noOfCreditFacility' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'noOfCreditFacility' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                              </th>
+                              <th>Other Sanction
+                                <span class="shorting" (click)="toggleSort('sanctionedAmountOther',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'sanctionedAmountOther'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'sanctionedAmountOther' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'sanctionedAmountOther' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                              </th>
+                              <th>Other Utilization
+                                <span class="shorting" (click)="toggleSort('utilizationOther',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'utilizationOther'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'utilizationOther' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'utilizationOther' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                              </th>
+                              <th>Hsbc Sanction
+                                <span class="shorting" (click)="toggleSort('sanctionedAmountHsbc',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'sanctionedAmountHsbc'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'sanctionedAmountHsbc' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'sanctionedAmountHsbc' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                              </th>
+                              <th>Hsbc Utilization
+                                <span class="shorting" (click)="toggleSort('utilizationHsbc',true)">
+                                                        <mat-icon
+                                                          *ngIf="currentSortField !== 'utilizationHsbc'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'utilizationHsbc' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                          *ngIf="currentSortField === 'utilizationHsbc' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span>
+                              </th>
+                              <th>Sanctioned By
+                                <span class="shorting" (click)="toggleSort('sanctionBy', true)">
+                                    <mat-icon *ngIf="currentSortField !== 'sanctionBy'">unfold_more</mat-icon>
+                                    <mat-icon *ngIf="currentSortField === 'sanctionBy' && sortDirection === 'ASC'">north</mat-icon>
+                                    <mat-icon *ngIf="currentSortField === 'sanctionBy' && sortDirection === 'DESC'">south</mat-icon>
+                                </span>
+                              </th>
+                              <th>Utilization By
+                                <span class="shorting" (click)="toggleSort('utilizationBy', true)">
+                                    <mat-icon *ngIf="currentSortField !== 'utilizationBy'">unfold_more</mat-icon>
+                                    <mat-icon *ngIf="currentSortField === 'utilizationBy' && sortDirection === 'ASC'">north</mat-icon>
+                                    <mat-icon *ngIf="currentSortField === 'utilizationBy' && sortDirection === 'DESC'">south</mat-icon>
+                                </span>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          @if(productWisePaginationData?.length>0){
+                          @for (item of productWisePaginationData; track $index) {
+                          <tr>
+                            <td data-label="Sr.no">
+                              {{(productWisePagination.page-1)*productWisePagination.pageSize+($index+1)}}
+                            </td>
+                            <td data-label="Product">{{!this.commonService.isObjectNullOrEmpty(item?.product) ?
+                              item?.product : '-'}}
+                            </td>
+                            <td data-label="No. of Credit Facility">
+                              {{!this.commonService.isObjectNullOrEmpty(item?.noOfCreditFacility) ?
+                              item?.noOfCreditFacility : '-'}}
+                            </td>
+                            <td data-label="Other Sanction">
+                              ₹{{commonMethod.currencyMaskForObject(item?.sanctionedAmountOther+"")}}
+                            </td>
+                            <td data-label="Other Utilization">
+                              {{!this.commonService.isObjectNullOrEmpty(item.utilizationOther) ?
+                              item.utilizationOther.toFixed(2) + '%' : '-'}}
+                            </td>
+                            <td data-label="Hsbc Sanction">
+                              ₹{{commonMethod.currencyMaskForObject(item?.sanctionedAmountHsbc+"")}}
+                            </td>
+                            <td data-label="Hsbc Utilization">
+                              {{!this.commonService.isObjectNullOrEmpty(item.utilizationHsbc) ?
+                              item.utilizationHsbc.toFixed(2) + '%' : '-'}}
+                            </td>
+                            <td data-label="Sanctioned By">
+                              {{!this.commonService.isObjectNullOrEmpty(item?.sanctionBy) ?
+                              item?.sanctionBy : '-'}}
+                            </td>
+                            <td data-label="Utilization By">
+                              {{!this.commonService.isObjectNullOrEmpty(item?.utilizationBy) ?
+                              item?.utilizationBy : '-'}}
+                            </td>
+                          </tr>
+                         
+                          }
+                          } @else {
+                          <tr>
+                            <td colspan="10">
+                              <app-no-data-found />
+                            </td>
+                          </tr>
+                          }
+                          <tr>
+                            <td data-label="-">-</td>
+                            <td data-label="Total">Total</td>
+                            <td data-label="No. of Credit Facility">
+                              {{commonMethod.currencyMaskForObject(totalnoOfCreditFacility+"")}}</td>
+                            <td data-label="Other Sanction Total">
+                              {{commonMethod.currencyMaskForObject(totalsanctionedAmountOther+"")}}</td>
+                            <td data-label="Other Utilization Percentage">{{ totalOtherUtiPercentage != null ?
+                              totalOtherUtiPercentage.toFixed(2) : '-' }} %</td>
+                            <td data-label="Hsbc Sanction Total">
+                              {{commonMethod.currencyMaskForObject(totalsanctionedAmountHsbc+"")}}</td>
+                            <td data-label="Hsbc Utilization Percentage">{{ totalHsbcUtiPercentage != null ?
+                              totalHsbcUtiPercentage.toFixed(2) : '-' }} %</td>
+                            <td data-label="Sanctioned By Total">-</td>
+                            <td data-label="Utilization By Total">-</td>
+                          </tr>
+                          </tbody>
+                        </table> -->
+
+              
+                    <!-- <div class="pagination-table NP_LeftPagintion" *ngIf="columnsData.length != 0">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing {{(opportunityDataPeg.startIndex()+1)}} to
+                            {{(opportunityDataPeg.pageSize()*opportunityDataPeg.page()) >
+                            (opportunityDataPeg.totalSize) ? (opportunityDataPeg.totalSize) :
+                            (opportunityDataPeg.pageSize()*opportunityDataPeg.page())}} of
+                            {{opportunityDataPeg.totalSize}} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="opportunityDataPeg.pageSize"
+                                            [panelClass]="'pagination_select'">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages">
+                                                {{pages}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span class="grey_text"> row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="opportunityDataPeg.totalSize" [maxSize]="3"
+                                    [(page)]="opportunityDataPeg.page" [rotate]="true" [boundaryLinks]="true"
+                                    [pageSize]="opportunityDataPeg.pageSize()">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

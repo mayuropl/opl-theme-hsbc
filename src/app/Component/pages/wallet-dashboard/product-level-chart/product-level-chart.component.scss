@@ -1,0 +1,121 @@
+
+.large_box{
+    width: 65% !important; 
+}
+
+.pie_chart_box{
+    width: 35% !important;
+}
+
+
+.chart_lagend_box{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    &.legend-disabled li {
+        pointer-events: none;
+        opacity: 0.65;
+    }
+    li{
+        display: flex;
+        justify-content: space-between;
+        background: #F3F5F7;
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 5px;
+        padding: 10px 15px 10px 30px;
+        position: relative;
+        border: 2px solid transparent;
+        &::before{
+            position: absolute;
+            content: '';
+            left: 12px;
+            top: 28px;
+            height: 8px;
+            width: 8px;
+            border-radius: 100%;
+            background: var(--dot-color, #94A3B8);
+        }
+        &.active{
+            border-color: var(--dot-color, #94A3B8);
+            background: #F5F8FA; // fallback
+            background: color-mix(in srgb, var(--dot-color, #94A3B8) 10%, white);
+        }
+        .legend_text{
+            display: flex;
+                flex-direction: column;
+                color: #333333;
+                font-size: 14px;
+                font-weight: 600;
+            span{
+                color: #333333;
+                opacity: 0.5;
+                font-size: 12px;
+                font-weight: 400;
+             }
+            &+.legend_text{
+                text-align: right;
+            }
+        }
+
+    }
+} 
+
+.subloaderShowing{
+  height: 50vh;
+  overflow: hidden;
+}
+.table_sep_loader .loaderoverlay{
+    z-index: 999999;
+}
+
+.parent_table_loader{
+  height: 60vh;
+  overflow: hidden;
+}
+ 
+.btn_text_td{
+    display: flex;
+    align-items: center;
+}
+
+
+// Clickable customer name styling
+.clickable-customer {
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+        b {
+            text-decoration: underline;
+        }
+
+    }
+}
+
+
+.reset_chartBtn{
+    font-size: 12px;
+    padding: 5px !important;
+    height: 30px !important;
+    width: 30px !important;
+    line-height: 25px;
+    color: red !important;
+}
+
+// Same highlight for axis labels and chart points (bars)
+.chart_box {
+    ::ng-deep .highcharts-axis-labels.highcharts-xaxis-labels .product-label.highlight,
+    ::ng-deep .highcharts-point.highlight,
+    ::ng-deep .highlight.highcharts-point {
+        cursor: pointer;
+    } 
+}
+
+
+::ng-deep {
+    .highcharts-data-labels{
+        opacity: 1;
+    }
+}
+ 

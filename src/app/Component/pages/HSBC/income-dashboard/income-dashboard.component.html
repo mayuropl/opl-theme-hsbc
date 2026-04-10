@@ -1,0 +1,649 @@
+<div class="container-fluid HSBC_Common_Pages ">
+    <div class="__main_Container">
+
+        <div class="page_Details ">
+
+            <div class="page_Title_sec">
+                <div class="page_Title_left">
+                    <h4 class="cursor_pointer">
+                        Income dashboard
+                    </h4>
+                </div>
+                <div class="page_Title_Right">
+                    <div class="filte_btn_select">
+                        <h4>Select View:</h4>
+                        <button type="button" class="id_filter_menu_btn" [matMenuTriggerFor]="IdfilterMenu"
+                            #menuTrigger="matMenuTrigger">
+                            {{selectedDurationLabel}}
+                            <i class="fi fi-rr-caret-down"></i>
+                        </button>
+                    </div>
+                    <mat-menu #IdfilterMenu="matMenu" xPosition="before" class="idfiltermenu"
+                        (click)="$event.stopPropagation()">
+                        <div class="filter_content">
+                            <div class="radio-group-wrapper small_radio" (click)="$event.stopPropagation()">
+                                <mat-radio-group [(ngModel)]="viewType" (change)="onViewTypeChange($event.value)">
+                                    <mat-radio-button value="month" class="mr-3">Month</mat-radio-button>
+                                    <mat-radio-button value="quarter">Quarter</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+
+                            <div class="filter_section" (click)="$event.stopPropagation()">
+                                <h5 class="filter_section_title">Criteria 1</h5>
+                                <div class="filter_row">
+                                    <div class="input_fieldNew labelinput">
+                                        <mat-label class="filter_label">Calendar Year</mat-label>
+                                        <mat-form-field appearance="outline" floatLabel="never" class="w-100">
+                                            <mat-select placeholder="Select Year" panelClass="select_radio"
+                                                [(ngModel)]="criteria1.year">
+                                                <mat-option *ngFor="let year of years" [value]="year">
+                                                    <mat-icon class="checked"
+                                                        *ngIf="criteria1.year === year">radio_button_checked</mat-icon>
+                                                    <mat-icon class="unchecked"
+                                                        *ngIf="criteria1.year !== year">radio_button_unchecked</mat-icon>
+                                                    {{year}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="input_fieldNew labelinput" (click)="$event.stopPropagation()">
+                                        <mat-label class="filter_label">{{ viewType === 'month' ? 'Month' : 'Quarter'
+                                            }}</mat-label>
+                                        <mat-form-field appearance="outline" floatLabel="never" class="w-100">
+                                            <!-- Month Select -->
+                                            <mat-select *ngIf="viewType === 'month'" placeholder="Select Month" multiple
+                                                [(ngModel)]="criteria1.months"
+                                                (selectionChange)="onMonthChange('criteria1')">
+                                                <mat-option *ngFor="let month of months"
+                                                    [value]="month">{{month}}</mat-option>
+                                            </mat-select>
+                                            <!-- Quarter Select -->
+                                            <mat-select *ngIf="viewType === 'quarter'" placeholder="Select Quarter"
+                                                multiple [(ngModel)]="criteria1.quarter"
+                                                (selectionChange)="onQuarterChange('criteria1')">
+                                                <mat-option *ngFor="let q of quarters" [value]="q">{{q}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter_section">
+                                <h5 class="filter_section_title">Criteria 2</h5>
+                                <div class="filter_row">
+                                    <div class="input_fieldNew labelinput" (click)="$event.stopPropagation()">
+                                        <mat-label class="filter_label">Calendar Year</mat-label>
+                                        <mat-form-field appearance="outline" floatLabel="never" class="w-100">
+                                            <mat-select placeholder="Select Year" panelClass="select_radio"
+                                                [(ngModel)]="criteria2.year">
+                                                <mat-option *ngFor="let year of years" [value]="year">
+                                                    <mat-icon class="checked"
+                                                        *ngIf="criteria2.year === year">radio_button_checked</mat-icon>
+                                                    <mat-icon class="unchecked"
+                                                        *ngIf="criteria2.year !== year">radio_button_unchecked</mat-icon>
+                                                    {{year}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="input_fieldNew labelinput" (click)="$event.stopPropagation()">
+                                        <mat-label class="filter_label">{{ viewType === 'month' ? 'Month' : 'Quarter'
+                                            }}</mat-label>
+                                        <mat-form-field appearance="outline" floatLabel="never" class="w-100">
+                                            <!-- Month Select -->
+                                            <mat-select *ngIf="viewType === 'month'" placeholder="Select Month" multiple
+                                                [(ngModel)]="criteria2.months"
+                                                (selectionChange)="onMonthChange('criteria2')">
+                                                <mat-option *ngFor="let month of months"
+                                                    [value]="month">{{month}}</mat-option>
+                                            </mat-select>
+                                            <!-- Quarter Select -->
+                                            <mat-select *ngIf="viewType === 'quarter'" placeholder="Select Quarter"
+                                                multiple [(ngModel)]="criteria2.quarter"
+                                                (selectionChange)="onQuarterChange('criteria2')">
+                                                <mat-option *ngFor="let q of quarters" [value]="q">{{q}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="filter_actions mt-3 text-right">
+                                <button mat-stroked-button color="primary" class="btn_design white_bg ln_40"
+                                    (click)="resetSelections()">
+                                    <i class="fi fi-sr-refresh mr-1"></i> Reset
+                                </button>
+                                <button mat-flat-button color="primary" class="apply_btn ln_40 ml-2"
+                                    (click)="applyFilter()">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+                    </mat-menu>
+                </div>
+            </div>
+
+            <div class="box_design mb-4" *ngIf="hasData">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Income Distribution by Customer Segment (in million dollars)</h4>
+                    </div>
+                </div>
+
+                <div class="tableResponsive">
+                    <table id="myTable"
+                        class="CommonTable_Scroll CommonTable_NP no_stripe_borderX_table bordered_table_thead">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th rowspan="2" width="10%" class="nowrap_th">Segment</th>
+                                <th class="text-center" colspan="4">Range 1</th>
+                                <th class="text-center" colspan="4">Range 2</th>
+                                <th rowspan="2">Growth (Post LP) <br> Incountry</th>
+                                <th rowspan="2">Growth (Post LP) <br> Inbound</th>
+                                <th rowspan="2">Growth (Post LP) <br> Outound</th>
+                                <th rowspan="2" class="no_sticky">Growth (Post LP) - <br> Total</th>
+                            </tr>
+                            <tr class="tr_lightred_bg">
+                                <th>{{tableHeaderText1}} <br> In-Country</th>
+                                <th>{{tableHeaderText1}} <br> In-Bound</th>
+                                <th>{{tableHeaderText1}} <br> Outbound</th>
+                                <th>{{tableHeaderText1}} <br> Total</th>
+                                <th>{{tableHeaderText2}} <br> In-Country</th>
+                                <th>{{tableHeaderText2}} <br> In-Bound</th>
+                                <th>{{tableHeaderText2}} <br> Outbound</th>
+                                <th>{{tableHeaderText2}} <br> Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoading.segment}"
+                            *ngIf="segmentData?.length > 0 || isLoading.segment; else noDataFoundTemplate">
+                            <div class="table_sep_loader" *ngIf="isLoading.segment">
+                                <div class="loaderoverlay loader_screen">
+                                    <div class="loader_screen_center">
+                                        <div class="loader_screen_lottie">
+                                            <span class="logo_loader">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                    alt="">
+                                            </span>
+                                        </div>
+                                        <h3>Please wait data is loading</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngFor="let item of segmentData">
+                                <tr>
+                                    <td class="d-flex al-center">
+                                        <button mat-icon-button class="matIcon red_icn mr-2" (click)="toggleRow(item)"
+                                            [ngClass]="{'rotate_icon': item.isExpanded}">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button> <span class="nowrap_th">{{ item.name }}</span>
+                                    </td>
+                                    <td>{{item.inCountry1 || '-'}}</td>
+                                    <td>{{item.inBound1 || '-'}}</td>
+                                    <td>{{item.outBound1 || '-'}}</td>
+                                    <td>{{item.total1 || '-'}}</td>
+                                    <td>{{item.inCountry2 || '-'}}</td>
+                                    <td>{{item.inBound2 || '-'}}</td>
+                                    <td>{{item.outBound2 || '-'}}</td>
+                                    <td>{{item.total2 || '-'}}</td>
+                                    <td>{{ item.growthInCountry != null ? item.growthInCountry + '%' : '-' }}</td>
+                                    <td>{{ item.growthInBound != null ? item.growthInBound + '%' : '-' }}</td>
+                                    <td>{{ item.growthOutBound != null ? item.growthOutBound + '%' : '-' }}</td>
+                                    <td class="no_sticky">{{ item.growthTotal != null ? item.growthTotal + '%' : '-' }}
+                                    </td>
+
+                                </tr>
+
+                                <tr class="collapsing_tr" [ngbCollapse]="!item.isExpanded">
+                                    <td colspan="15" class="intable_td pos_rel" *ngIf="item.isExpanded">
+                                        <div class="table_sep_loader" *ngIf="item.isLoading">
+                                            <div class="loaderoverlay loader_screen">
+                                                <div class="loader_screen_center">
+                                                    <div class="loader_screen_lottie">
+                                                        <span class="logo_loader">
+                                                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                                alt="">
+                                                        </span>
+                                                    </div>
+                                                    <h3>Please wait data is loading</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box_design mb-2">
+                                            <div class="tableResponsive inside_table secondCols lastCols">
+                                                <table class="bordered_table w-100 after_cont_none firstCols lastCols">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="firstColsticky">Sr No.</th>
+                                                            <th class="secondColsticky"
+                                                                *ngIf="item.name.toUpperCase() === 'GLOBAL CORPORATES'">
+                                                                Region</th>
+                                                            <th class="secondColsticky"
+                                                                *ngIf="item.name.toUpperCase() != 'GLOBAL CORPORATES'">
+                                                                RM
+                                                            </th>
+                                                            <th>{{tableHeaderText1}} <br> In-country</th>
+                                                            <th>{{tableHeaderText1}} <br> Inbound</th>
+                                                            <th>{{tableHeaderText1}} <br> Outbound</th>
+                                                            <th>{{tableHeaderText1}} <br> Total</th>
+                                                            <th>{{tableHeaderText2}} <br> In-country</th>
+                                                            <th>{{tableHeaderText2}} <br> Inbound</th>
+                                                            <th>{{tableHeaderText2}} <br> Outbound</th>
+                                                            <th>{{tableHeaderText2}} <br> Total</th>
+                                                            <th>Growth (post LP) <br> In-country</th>
+                                                            <th>Growth (post LP) <br> Inbound</th>
+                                                            <th>Growth (post LP) <br> Outbound</th>
+                                                            <th>Growth (post LP) <br> Total</th>
+                                                            <th class="text-center lastColsticky">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let child of item.childData; let i = index">
+                                                            <td class="firstColsticky">{{ (item.childPage - 1) *
+                                                                item.childPageSize + i + 1 }}.
+                                                            </td>
+                                                            <td class="secondColsticky">{{child.rmName}}</td>
+                                                            <td>{{child.inCountry1 || '-'}}</td>
+                                                            <td>{{child.inBound1 || '-'}}</td>
+                                                            <td>{{child.outBound1 || '-'}}</td>
+                                                            <td>{{child.total1 || '-'}}</td>
+                                                            <td>{{child.inCountry2 || '-'}}</td>
+                                                            <td>{{child.inBound2 || '-'}}</td>
+                                                            <td>{{child.outBound2 || '-'}}</td>
+                                                            <td>{{child.total2 || '-'}}</td>
+                                                            <td>{{ child.growthInCountry != null ? child.growthInCountry
+                                                                + '%' : '-' }}</td>
+                                                            <td>{{ child.growthInBound != null ? child.growthInBound +
+                                                                '%' : '-' }}</td>
+                                                            <td>{{ child.growthOutBound != null ? child.growthOutBound +
+                                                                '%' : '-' }}</td>
+                                                            <td>{{ child.growthTotal != null ? child.growthTotal + '%' :
+                                                                '-' }}</td>
+                                                            <td class="text-center lastColsticky"><a
+                                                                    (click)="openDrillDownPopup(child)"
+                                                                    class="darkgreen_text cursor_pointer"><u>View</u></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngIf="!item.childData || item.childData.length === 0">
+                                                            <td colspan="15" class="text-center">
+                                                                <app-no-data-found
+                                                                    message="No child data found"></app-no-data-found>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="pagination-table NP_LeftPagintion" *ngIf="item.childTotal > 0">
+                                                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                                    <div class="dataTables_info" id="tickets-table_info" role="status"
+                                                        aria-live="polite">
+                                                        Showing {{ (item.childPage - 1) * item.childPageSize + 1 }} to
+                                                        {{
+                                                        item.childPage * item.childPageSize > item.childTotal ?
+                                                        item.childTotal : item.childPage * item.childPageSize }} of {{
+                                                        item.childTotal }} rows
+                                                        <div class="dataTables_length" id="tickets-table_length">
+                                                            <div class="NP_HSBC_ComInput select-field">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-select [panelClass]="'pagination_select'"
+                                                                        [(ngModel)]="item.childPageSize"
+                                                                        (selectionChange)="onChildPageChange(item, 1)">
+                                                                        <mat-option [value]="5">5</mat-option>
+                                                                        <mat-option [value]="10">10</mat-option>
+                                                                        <mat-option [value]="20">20</mat-option>
+                                                                        <mat-option [value]="50">50</mat-option>
+                                                                        <mat-option [value]="100">100</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                        <span class="grey_text">row per page</span>
+                                                    </div>
+                                                    <div class="text-md-right float-md-right pagination-rounded">
+                                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                            <ngb-pagination [collectionSize]="item.childTotal"
+                                                                [(page)]="item.childPage"
+                                                                [pageSize]="item.childPageSize" [maxSize]="3"
+                                                                [rotate]="true"
+                                                                (pageChange)="onChildPageChange(item, $event)">
+                                                            </ngb-pagination>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </ng-container>
+                        </tbody>
+                        <tfoot *ngIf="totalFooter1 && !isLoading.segment">
+                            <tr>
+                                <td class="padl_50"><b>{{ totalFooter1.label }}</b></td>
+
+                                <!-- Range 1 -->
+                                <td>{{ totalFooter1.range1Incountry }}</td>
+                                <td>{{ totalFooter1.range1Inbound }}</td>
+                                <td>{{ totalFooter1.range1Outbound }}</td>
+                                <td>{{ totalFooter1.range1Total }}</td>
+
+                                <!-- Range 2 -->
+                                <td>{{ totalFooter1.range2Incountry }}</td>
+                                <td>{{ totalFooter1.range2Inbound }}</td>
+                                <td>{{ totalFooter1.range2Outbound }}</td>
+                                <td>{{ totalFooter1.range2Total }}</td>
+
+                                <!-- Growth (%) -->
+                                <td>{{ totalFooter1.growthInCountry }}%</td>
+                                <td>{{ totalFooter1.growthInBound }}%</td>
+                                <td>{{ totalFooter1.growthOutBound }}%</td>
+                                <td>{{ totalFooter1.growthTotal }}%</td>
+
+                            </tr>
+                        </tfoot>
+
+                        <ng-template #noDataFoundTemplate>
+                            <tbody>
+                                <tr>
+                                    <td colspan="13">
+                                        <app-no-data-found message="No data found"></app-no-data-found>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+
+                    </table>
+                </div>
+
+                <!-- Parent Pagination -->
+                <div class="pagination-table NP_LeftPagintion" *ngIf="totalRecords1 > 0">
+                    <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing {{ (page1 - 1) * pageSize1 + 1 }} to {{ page1 * pageSize1 > totalRecords1 ?
+                            totalRecords1 : page1 * pageSize1 }} of {{ totalRecords1 }} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [panelClass]="'pagination_select'" [(ngModel)]="pageSize1"
+                                            (selectionChange)="onPageChange1(1)">
+                                            <mat-option [value]="5">5</mat-option>
+                                            <mat-option [value]="10">10</mat-option>
+                                            <mat-option [value]="20">20</mat-option>
+                                            <mat-option [value]="50">50</mat-option>
+                                            <mat-option [value]="100">100</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="totalRecords1" [(page)]="page1" [pageSize]="pageSize1"
+                                    [maxSize]="3" [rotate]="true" (pageChange)="onPageChange1($event)">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="box_design mb-4" *ngIf="hasData">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Income Distribution by Business Line (in million dollars)</h4>
+                    </div>
+                </div>
+
+                <div class="tableResponsive">
+                    <table id="myTable"
+                        class="CommonTable_Scroll CommonTable_NP no_stripe_borderX_table bordered_table_thead">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th rowspan="2" width="10%" class="nowrap_th">Business Line</th>
+                                <th class="text-center" colspan="4">Range 1</th>
+                                <th class="text-center" colspan="4">Range 2</th>
+                                <th rowspan="2">Growth (Post LP) <br> Incountry</th>
+                                <th rowspan="2">Growth (Post LP) <br> Inbound</th>
+                                <th rowspan="2">Growth (Post LP) <br> Outound</th>
+                                <th rowspan="2" class="no_sticky">Growth (Post LP) - <br> Total</th>
+                            </tr>
+                            <tr class="tr_lightred_bg">
+                                <th>{{tableHeaderText1}} <br> In-Country</th>
+                                <th>{{tableHeaderText1}} <br> In-Bound</th>
+                                <th>{{tableHeaderText1}} <br> Outbound</th>
+                                <th>{{tableHeaderText1}} <br> Total</th>
+                                <th>{{tableHeaderText2}} <br> In-Country</th>
+                                <th>{{tableHeaderText2}} <br> In-Bound</th>
+                                <th>{{tableHeaderText2}} <br> Outbound</th>
+                                <th>{{tableHeaderText2}} <br> Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoading.businessLine}"
+                            *ngIf="businessLineData?.length > 0 || isLoading.businessLine; else noDataFoundTemplate2">
+                            <div class="table_sep_loader" *ngIf="isLoading.businessLine">
+                                <div class="loaderoverlay loader_screen">
+                                    <div class="loader_screen_center">
+                                        <div class="loader_screen_lottie">
+                                            <span class="logo_loader">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                    alt="">
+                                            </span>
+                                        </div>
+                                        <h3>Please wait data is loading</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngFor="let item of businessLineData">
+                                <tr>
+                                    <td class="d-flex al-center">
+                                        <button mat-icon-button class="matIcon red_icn mr-2" (click)="toggleRow(item)"
+                                            [ngClass]="{'rotate_icon': item.isExpanded}">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button> <span class="nowrap_th">{{ item.name || 'Lending' }}</span>
+                                    </td>
+                                    <td>{{item.inCountry1 || '-'}}</td>
+                                    <td>{{item.inBound1 || '-'}}</td>
+                                    <td>{{item.outBound1 || '-'}}</td>
+                                    <td>{{item.total1 || '-'}}</td>
+                                    <td>{{item.inCountry2 || '-'}}</td>
+                                    <td>{{item.inBound2 || '-'}}</td>
+                                    <td>{{item.outBound2 || '-'}}</td>
+                                    <td>{{item.total2 || '-'}}</td>
+                                    <td>{{ item.growthInCountry != null ? item.growthInCountry + '%' : '-' }}</td>
+                                    <td>{{ item.growthInBound != null ? item.growthInBound + '%' : '-' }}</td>
+                                    <td>{{ item.growthOutBound != null ? item.growthOutBound + '%' : '-' }}</td>
+                                    <td class="no_sticky">{{ item.growthTotal != null ? item.growthTotal + '%' : '-' }}
+                                    </td>
+
+                                </tr>
+
+                                <tr class="collapsing_tr" [ngbCollapse]="!item.isExpanded">
+                                    <td colspan="15" class="intable_td pos_rel" *ngIf="item.isExpanded">
+                                        <div class="table_sep_loader" *ngIf="item.isLoading">
+                                            <div class="loaderoverlay loader_screen">
+                                                <div class="loader_screen_center">
+                                                    <div class="loader_screen_lottie">
+                                                        <span class="logo_loader">
+                                                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                                alt="">
+                                                        </span>
+                                                    </div>
+                                                    <h3>Please wait data is loading</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box_design mb-2">
+                                            <div class="tableResponsive inside_table secondCols lastCols">
+                                                <table class="bordered_table w-100 after_cont_none firstCols lastCols">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="firstColsticky">Sr No.</th>
+                                                            <th class="secondColsticky">RM</th>
+                                                            <th>{{tableHeaderText1}} <br> In-country</th>
+                                                            <th>{{tableHeaderText1}} <br> Inbound</th>
+                                                            <th>{{tableHeaderText1}} <br> Outbound</th>
+                                                            <th>{{tableHeaderText1}} <br> Total</th>
+                                                            <th>{{tableHeaderText2}} <br> In-country</th>
+                                                            <th>{{tableHeaderText2}} <br> Inbound</th>
+                                                            <th>{{tableHeaderText2}} <br> Outbound</th>
+                                                            <th>{{tableHeaderText2}} <br> Total</th>
+                                                            <th>Growth (post LP) <br> In-country</th>
+                                                            <th>Growth (post LP) <br> Inbound</th>
+                                                            <th>Growth (post LP) <br> Outbound</th>
+                                                            <th>Growth (post LP) <br> Total</th>
+                                                            <th class="text-center lastColsticky">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let child of item.childData; let i = index">
+                                                            <td class="firstColsticky">{{ (item.childPage - 1) *
+                                                                item.childPageSize + i + 1 }}.
+                                                            </td>
+                                                            <td class="secondColsticky">{{child.rmName}}</td>
+                                                            <td>{{child.inCountry1 || '-'}}</td>
+                                                            <td>{{child.inBound1 || '-'}}</td>
+                                                            <td>{{child.outBound1 || '-'}}</td>
+                                                            <td>{{child.total1 || '-'}}</td>
+                                                            <td>{{child.inCountry2 || '-'}}</td>
+                                                            <td>{{child.inBound2 || '-'}}</td>
+                                                            <td>{{child.outBound2 || '-'}}</td>
+                                                            <td>{{child.total2 || '-'}}</td>
+                                                            <td>{{ child.growthInCountry != null ? child.growthInCountry
+                                                                + '%' : '-' }}</td>
+                                                            <td>{{ child.growthInBound != null ? child.growthInBound +
+                                                                '%' : '-' }}</td>
+                                                            <td>{{ child.growthOutBound != null ? child.growthOutBound +
+                                                                '%' : '-' }}</td>
+                                                            <td>{{ child.growthTotal != null ? child.growthTotal + '%' :
+                                                                '-' }}</td>
+                                                            <td class="text-center lastColsticky"><a
+                                                                    class="darkgreen_text cursor_pointer"
+                                                                    (click)="openDrillDownPopup(child)"><u>View</u></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngIf="!item.childData || item.childData.length === 0">
+                                                            <td colspan="15" class="text-center">
+                                                                <app-no-data-found
+                                                                    message="No child data found"></app-no-data-found>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="pagination-table NP_LeftPagintion" *ngIf="item.childTotal > 0">
+                                                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                                    <div class="dataTables_info" id="tickets-table_info" role="status"
+                                                        aria-live="polite">
+                                                        Showing {{ (item.childPage - 1) * item.childPageSize + 1 }} to
+                                                        {{
+                                                        item.childPage * item.childPageSize > item.childTotal ?
+                                                        item.childTotal : item.childPage * item.childPageSize }} of {{
+                                                        item.childTotal }} rows
+                                                        <div class="dataTables_length" id="tickets-table_length">
+                                                            <div class="NP_HSBC_ComInput select-field">
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-select [panelClass]="'pagination_select'"
+                                                                        [(ngModel)]="item.childPageSize"
+                                                                        (selectionChange)="onChildPageChange(item, 1)">
+                                                                        <mat-option [value]="5">5</mat-option>
+                                                                        <mat-option [value]="10">10</mat-option>
+                                                                        <mat-option [value]="20">20</mat-option>
+                                                                        <mat-option [value]="50">50</mat-option>
+                                                                        <mat-option [value]="100">100</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                        <span class="grey_text">row per page</span>
+                                                    </div>
+                                                    <div class="text-md-right float-md-right pagination-rounded">
+                                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                            <ngb-pagination [collectionSize]="item.childTotal"
+                                                                [(page)]="item.childPage"
+                                                                [pageSize]="item.childPageSize" [maxSize]="3"
+                                                                [rotate]="true"
+                                                                (pageChange)="onChildPageChange(item, $event)">
+                                                            </ngb-pagination>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                        <tfoot *ngIf="totalFooter2 && !isLoading.businessLine">
+                            <tr>
+                                <td class="padl_50"><b>{{ totalFooter2.label }}</b></td>
+
+                                <!-- Range 1 -->
+                                <td>{{ totalFooter2.range1Incountry }}</td>
+                                <td>{{ totalFooter2.range1Inbound }}</td>
+                                <td>{{ totalFooter2.range1Outbound }}</td>
+                                <td>{{ totalFooter2.range1Total }}</td>
+
+                                <!-- Range 2 -->
+                                <td>{{ totalFooter2.range2Incountry }}</td>
+                                <td>{{ totalFooter2.range2Inbound }}</td>
+                                <td>{{ totalFooter2.range2Outbound }}</td>
+                                <td>{{ totalFooter2.range2Total }}</td>
+
+                                <!-- Growth (%) -->
+                                <td>{{ totalFooter2.growthInCountry }}%</td>
+                                <td>{{ totalFooter2.growthInBound }}%</td>
+                                <td>{{ totalFooter2.growthOutBound }}%</td>
+                                <td>{{ totalFooter2.growthTotal }}%</td>
+
+                            </tr>
+                        </tfoot>
+                        <ng-template #noDataFoundTemplate2>
+                            <tbody>
+                                <tr>
+                                    <td colspan="13">
+                                        <app-no-data-found message="No data found"></app-no-data-found>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+
+                    </table>
+                </div>
+
+                <!-- Parent Pagination -->
+                <div class="pagination-table NP_LeftPagintion" *ngIf="totalRecords2 > 0">
+                    <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing {{ (page2 - 1) * pageSize2 + 1 }} to {{ page2 * pageSize2 > totalRecords2 ?
+                            totalRecords2 : page2 * pageSize2 }} of {{ totalRecords2 }} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [panelClass]="'pagination_select'" [(ngModel)]="pageSize2"
+                                            (selectionChange)="onPageChange2(1)">
+                                            <mat-option [value]="5">5</mat-option>
+                                            <mat-option [value]="10">10</mat-option>
+                                            <mat-option [value]="20">20</mat-option>
+                                            <mat-option [value]="50">50</mat-option>
+                                            <mat-option [value]="100">100</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="totalRecords2" [(page)]="page2" [pageSize]="pageSize2"
+                                    [maxSize]="3" [rotate]="true" (pageChange)="onPageChange2($event)">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

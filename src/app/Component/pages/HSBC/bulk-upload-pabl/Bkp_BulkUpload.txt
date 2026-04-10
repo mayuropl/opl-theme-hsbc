@@ -1,0 +1,211 @@
+<div class="container-fluid">
+  <!-- main heding icon with title -->
+  <div class="icon-title-heading">
+    <i class="fmdi fmdi-arrow-left"></i>
+    <app-page-title title="Bulk Upload" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  </div>
+
+  <div class="row ">
+    <div class="col-lg-12">
+      <div class="card-box">
+        <form [formGroup]="bulkUploadDetailsForm" autocomplete="off">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="">
+              <h4 class="m-0 mb-2 d-print-none">Bulk Upload</h4>
+              <p class="txtsub-heading-card">Please match format with sample files to avoid any type of
+                mistake while adding users.</p>
+            </div>
+          </div><!-- end col -->
+          <div class="col-md-6 text-right">
+            <button class="btn btn-psb btn-outline-psbpurple" (click)="downloadTemplate()"><i
+                class="fmdi fmdi-download mr-1"></i>Download Template</button>
+          </div>
+        </div><!-- end col -->
+
+        <div class="row mt-3">
+          
+          <div class="col-12 float-left">
+            <div class="dragDrop-Common" appDragDrop (fileDropped)="onFileDropped($event)">
+              <div class="files-list">
+                <div class="single-file" *ngFor="let file of files; let i = index">
+                  <div class="File-Progress">
+                    <div class="file-icon">
+                      <em class="fmdi fmdi-file"></em>
+                    </div>
+                    <div class="info">
+                      <h4 class="name">
+                        {{ file?.name }}
+                      </h4>
+                    </div>
+                    <div class="delete" (click)="deleteFile(i)">
+                      <em class="fmdi fmdi-delete"></em>
+                    </div>
+                  </div>
+                  <ngb-progressbar class="Progreebar-File" value="{{file.progress}}" [max]="100" height="4px">
+                  </ngb-progressbar>
+                </div>
+              </div>
+              <div *ngIf="files.length==0" class="Input-text-Fill-Cutome" appDragDrop
+              (fileDropped)="onClick($event)"> 
+                <input class="File-input-common" type="file" accept=".csv" #fileDropRef 
+                id="fileUpload" name="fileUpload"
+                formControlName="fileUpload"
+                  (change)="fileBrowseHandler($event.target.files)" required />
+                <div class="Input-text-File">
+                  <span class="file-upload-icon"><em class="fmdi fmdi-upload"></em></span>
+                  <p class="Drop-text-common" for="fileDropRef">Drag and drop files or click here
+                    choose
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <div class="text-right d-print-none">
+            <a href="javascript:vloid(0)" class="btn btn-psb btn-outline-psbpurple" (click)="Read_Instruction_BulkUpload_popup()"><i class="fmdi fmdi-info"></i> Read
+              Instructions</a>
+            <button (click)="submit()" [disabled]="btnDisabled" class="btn btn-psb btn-psbpurple ml-2"><i class="fmdi fmdi-upload mr-1"></i>
+              Upload File</button>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card-box">
+        <div class="row al-center pb-1-5">
+          <div class="col-xl-12">
+            <div class="text-heading-cards">
+              <h4 class="main-text-heading">Added File History</h4>
+              <span class="text-muted">Following is the history of your bulk uploads.</span>
+            </div>
+          </div>
+          <!-- <div class="col-xl-5">
+                <div class="psb-flex-end">
+                  <div class="Add-new-btn-all">
+                    <a href="javascript:void(0);" class="btn btn-outline-psbpurple"><i class="zmdi zmdi-format-align-justify pd-lt-rt"></i>Filters <i class="zmdi zmdi-chevron-down pd-lt-rt"></i></a>
+                  </div>
+                </div>
+              </div> -->
+          <!-- end col-->
+        </div>
+        <div class="table-responsive">
+          <div class="table-responsive">
+            <table class="Common-tsv-NPtable bulk-upload-new-page-KP" summary="All Proposal list View Details">
+              <!-- Comon-nine-dataTSV -->
+              <thead>
+                <tr>
+                  <th>
+                    #
+                  </th>
+                  <th>File Name</th>
+                  <th>Uploaded On</th>
+                  <th>Successful Entries</th>
+                  <th>Failed Entries</th>
+                  <th>Total Entries</th>
+                  <!-- <th class="NP_Action">Action</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    &nbsp;
+                  </td>
+
+                  <!-- <td>
+                    <input type="text" class="form-control w-50">
+                  </td>
+
+                  <td>
+                    <div class="table-cell-right-box">
+                      <input type="text" class="form-control w-50">
+                    </div>
+                  </td> -->
+
+                  <td class="NP_Action">
+                    &nbsp;
+                  </td>
+                </tr>
+                <ng-container *ngIf="bulkUploadHistory">
+                  <ng-container *ngFor="let historyData of bulkUploadHistory; let i=index">
+                <tr>
+                  <td>
+                    {{ startIndex + i + 1 }}
+                  </td>
+                  <td>{{historyData?.fileName}}</td>
+                  <td>{{historyData?.createdDate |
+                    date:'dd MMM yyyy hh:mm:ss'}}</td>
+                    <td>{{historyData?.successEntryCount}}<i class="fmdi fmdi-download ml-1" (click)="downloadFiles(1,historyData.dmsFileId,historyData.successEntryCount)"></i></td>
+                  <td>{{historyData?.failedEntryCount}}<i class="fmdi fmdi-download ml-1" (click)="downloadFiles(2,historyData.dmsFileId,historyData.failedEntryCount)"></i></td>
+                  <td>{{historyData?.totalEntryCount}}<i class="fmdi fmdi-download ml-1" (click)="downloadFiles(3,historyData.dmsFileId,historyData.totalEntryCount)"></i></td>             
+              
+
+                  <!-- <td class="NP_Action">
+                    <div class="icon-tsv-loan">
+                      <a href="javascript:void(0);" (click)="Com_SendLinkTo_Borrower_popup();" ngbTooltip="Send Link"><i
+                          class="fmdi fmdi-mail-send fmdi-gray"></i></a>
+                    </div>
+                  </td> -->
+                </tr>
+              </ng-container>
+            </ng-container>
+
+              </tbody>
+
+
+              <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <div class="table_pagination">
+                            <span class="left_text_pagination" *ngIf="counts == 0">
+                                Showing
+                                0 to
+                                {{(pageSize*page) > (counts) ? (counts) :
+                                (pageSize*page)}} of
+                                {{totalCount[0]}}
+                                Files
+                            </span>
+
+                            <span class="left_text_pagination" *ngIf="counts > 0">
+                                Showing
+                                {{((pageSize*(page-1))+1)}} to
+                                {{(pageSize*page) > (counts) ? (counts) :
+                                (pageSize*page)}} of
+                                {{totalCount[0]}}
+                                Files
+                            </span>
+                            <div class="right_num_pagination">
+                                <nav aria-label="Page navigation example">
+                                    <ngb-pagination [collectionSize]="counts"
+                                        (pageChange)="onChangePage($event)" [(page)]="page"
+                                        [maxSize]="3" [pageSize]="pageSize">
+                                    </ngb-pagination>
+                                </nav>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+            </table>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+    <!-- end col-->
+  </div>
+
+
+
+</div>

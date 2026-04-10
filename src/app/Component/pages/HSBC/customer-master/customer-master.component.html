@@ -1,0 +1,200 @@
+<div class="container-fluid HSBC_Common_Pages">
+  <div class="__main_Container">
+    <form class="NP_Form" [formGroup]="bulkUploadDetailsForm" autocomplete="off">
+      <div class="page_Title_sec">
+        <div class="page_Title_left">
+          <h4 class="cursor_pointer">
+            <!-- <em class="fmdi fmdi-arrow-left mr-2"></em> -->
+            <!-- Customer Master Bulk Upload 3 -->
+            <mat-radio-group formControlName="fileType" class="d-flex gap-3" (change)="onFileTypeChange()">
+            <mat-radio-button value="CUSTOMER">Customer Master Bulk Upload</mat-radio-button>
+            <mat-radio-button value="CUSTOMER_CHILD" *ngIf="isActionAvail(constants.PageActions.CUSTOMER_CHILD_BULK_UPLOAD)" >Customer Child Bulk Upload</mat-radio-button>
+          </mat-radio-group>
+          </h4>
+        </div>
+        <div class="page_Title_Right">
+          <!-- <mat-radio-group [(ngModel)]="customerStatus" (change)="onStatusChange($event)" name="customerStatus">
+            <mat-radio-button value="active" id="option1" [checked]="requestPayloadStatus">Active Customer</mat-radio-button>
+            <mat-radio-button class="ml-2" value="inactive" id="option2">Inactive Customer</mat-radio-button>
+            <mat-radio-button class="ml-2" value="all" id="option3">All Customers</mat-radio-button>
+          </mat-radio-group> -->
+          <div class="input_field">
+                <mat-form-field appearance="outline" class="w-200px mr-2" *ngIf="fileType === 'CUSTOMER'" >
+                  <mat-label>Download Customers</mat-label>
+                  <mat-select panelClass="radioSelect" placeholder="Active Customer" [(value)]="customerStatus" (selectionChange)="onStatusChange($event)">
+                      <mat-option value="active">Active</mat-option>
+                      <mat-option value="inactive">Inactive</mat-option>
+                      <mat-option value="all">All</mat-option>
+                  </mat-select>
+              </mat-form-field>
+              <a type="button" mat-flat-button class="btn_design with_right_icn" color="secondary" download *ngIf="fileType === 'CUSTOMER' && isActionAvail(constants.PageActions.DOWNLOAD_ALL_CUSTOMERS)" (click)="getAllCustomers()" [disabled] = "isDownloading"><span *ngIf="!isDownloading">Download All Customers</span>
+               <mat-icon class="ml-2 mr-0" [ngClass]="{'arro_up_down': isDownloading}">arrow_downward_alt</mat-icon>
+                 <div class="animated_download" *ngIf="isDownloading">
+                        Downloading File <div class="dot-pulse"></div>
+                    </div>
+                </a>
+             <a type="button" mat-flat-button class="btn_design with_right_icn ml-2" color="secondary"
+               href="assets\files\Customer_master_bulk upload_template_V1.3_new.xlsx" download *ngIf="fileType === 'CUSTOMER' && isActionAvail(constants.PageActions.DOWNLOAD_TEMPLATE)">Download Template<mat-icon
+                 class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+             <a type="button" mat-flat-button class="btn_design with_right_icn ml-2" color="secondary" download *ngIf="fileType === 'CUSTOMER_CHILD' && isActionAvail(constants.PageActions.DOWNLOAD_ALL_CHILD_CUSTOMERS)" (click)="getAllChildCustomers()" [disabled]="isChildDownloading"><span *ngIf="!isChildDownloading">Download All Child Customers</span>
+               <mat-icon class="ml-2 mr-0" [ngClass]="{'arro_up_down': isChildDownloading}">arrow_downward_alt</mat-icon>
+                 <div class="animated_download" *ngIf="isChildDownloading">
+                        Downloading File <div class="dot-pulse"></div>
+                    </div>
+                </a>
+                <a type="button" mat-flat-button class="btn_design with_right_icn ml-2" color="secondary"
+                  href="assets\files\customer\Upload_Template_Parent_and_Child_Cust_ID.xlsx" download *ngIf="fileType === 'CUSTOMER_CHILD' && isActionAvail(constants.PageActions.DOWNLOAD_TEMPLATE)">Download Child Template<mat-icon
+                    class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+          </div>
+        </div>
+      </div>
+      <div class="page_Details">
+        <div class="box_design mb-3 p-3">
+          <div class="NP_Com_Group">
+            <div class="dragDrop-Common" appDragDrop>
+              <div class="files-list" *ngIf="files.length > 0">
+                <div class="single-file" *ngFor="let file of files; let i = index">
+                  <div class="File-Progress">
+                    <div class="file-icon">
+                      <img src="assets/images/hsbc/FileUpload_Icon.svg" alt="File Icon">
+                    </div>
+                    <div class="info">
+                      <h4 class="name">
+                        {{ file?.name }}
+                      </h4>
+                    </div>
+                    <div class="delete" (click)="deleteFile(i)">
+                      <em class="fmdi fmdi-delete IC-red mr-2"></em> Remove
+                    </div>
+                  </div>
+                  <mat-progress-bar class="Progreebar-File" mode="determinate" value="{{file.progress}}" [max]="100">
+                  </mat-progress-bar>
+                </div>
+              </div>
+              <div class="Input-text-Fill-Cutome" *ngIf="files.length == 0">
+                <input class="File-input-common" type="file"
+                  accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  #fileDropRef id="fileUpload" name="fileUpload" formControlName="fileUpload"
+                  (change)="fileBrowseHandler($event.target.files)" required />
+                <div class="Input-text-File">
+                  <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                  <p class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop <br />XLS or
+                    XLSX
+                  </p>
+                </div>
+              </div>
+
+            </div>
+            <div class="__Btn_Group __MT15px __JcEnd">
+              <!-- <button mat-stroked-button color="primary" class="Btn__Common __NonPrimary" (click)="Read_Instruction_BulkUpload_popup()" disabled><mat-icon>info</mat-icon> Read
+                  Instructions </button> -->
+              <!-- (click)="Read_Instruction_BulkUpload_popup()" -->
+              <button mat-stroked-button color="primary" class="btn_design" *ngIf="isActionAvail(constants.PageActions.UPLOAD)"
+                (click)='submit()'><mat-icon>arrow_upward_alt</mat-icon> Upload File</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="box_design">
+          <div class="box_design_ttl_bar">
+            <div class="box_design_ttl_bar_left">
+              <h4>File Uploads History</h4>
+            </div>
+            <!-- <div class="box_design_ttl_bar_right">
+                <button class="btn_design" mat-stroked-button color="primary">Filter<i
+                    class="fa fa-sort-amount-down ml-2"></i></button>
+              </div> -->
+          </div>
+          <div class="box_design_details p-0">
+            <div class="tableResponsive" appTableScroll>
+              <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap no_sticky_table">
+                <thead>
+                  <tr class="tr_lightred_bg">
+                    <th width="5%">Sr. No.</th>
+                    <th>File Name</th>
+                    <th>Status</th>
+                    <th>Name</th>
+                    <th>Uploaded On</th>
+                    <th class="text-right">Successful Entries</th>
+                    <th class="text-right">Failed Entries</th>
+                    <th class="text-right pr-3">Total Entries</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="custMastBulkUploadHistory">
+
+                    <tr *ngFor="let custMastUploadhistoryData of custMastBulkUploadHistory; let i=index">
+                      <td data-label="Sr. No."> {{ startIndex + i + 1 }}</td>
+                      <td data-label="File Name">{{custMastUploadhistoryData?.fileName}}<span> <i *ngIf="custMastUploadhistoryData?.status === 'Failed'" class="fas fa-info-circle red_text mr-1" matTooltip="{{custMastUploadhistoryData?.fileUploadFailureReason}}"></i></span></td>
+                      <td><span [ngClass]="{'orange_badge': custMastUploadhistoryData?.status === 'Pending',
+                        'green_badge': custMastUploadhistoryData?.status === 'Complete' || custMastUploadhistoryData?.status === null,
+                        'lightred_badge': custMastUploadhistoryData?.status === 'Failed'}">{{custMastUploadhistoryData?.status ?? "Complete"}}</span></td>
+                      <td data-label="File Name">{{custMastUploadhistoryData?.fileForPersonName}}</td>
+
+                    <td data-label="Uploaded On">{{custMastUploadhistoryData?.createdDate |
+                        date:'dd MMM yyyy hh:mm:ss'}}</td>
+                      <td data-label="Successful Entries" class="text-right">{{custMastUploadhistoryData?.success}} <a
+                          href="javscript:void(0)" (click)="getData(1,custMastUploadhistoryData?.id)" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_SUCCESS_ENTRY)"
+                          [class.disabled-link]="isDownloadActive(custMastUploadhistoryData?.id, 1)"
+                          [style.pointer-events]="isDownloadActive(custMastUploadhistoryData?.id, 1) ? 'none' : 'auto'"
+                          [style.opacity]="isDownloadActive(custMastUploadhistoryData?.id, 1) ? '0.4' : '1'"><img
+                            src="assets/images/hsbc/S_Download_Icon.svg" alt="Successful Entries"></a></td>
+                      <td data-label="Failed Entries" class="text-right">{{custMastUploadhistoryData?.fail}} <a
+                          href="javscript:void(0)" (click)="getData(2,custMastUploadhistoryData?.id)"  *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)"
+                          [class.disabled-link]="isDownloadActive(custMastUploadhistoryData?.id, 2)"
+                          [style.pointer-events]="isDownloadActive(custMastUploadhistoryData?.id, 2) ? 'none' : 'auto'"
+                          [style.opacity]="isDownloadActive(custMastUploadhistoryData?.id, 2) ? '0.4' : '1'"><img
+                            src="assets/images/hsbc/F_Download_Icon.svg" alt="Failed Entries"></a></td>
+                      <td data-label="Total Entries" class="text-right pr-3">{{custMastUploadhistoryData?.totalRows}} <a
+                          href="javscript:void(0)" (click)="getData(3,custMastUploadhistoryData?.id)"  *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_TOTAL_ENTRY)"
+                          [class.disabled-link]="isDownloadActive(custMastUploadhistoryData?.id, 3)"
+                          [style.pointer-events]="isDownloadActive(custMastUploadhistoryData?.id, 3) ? 'none' : 'auto'"
+                          [style.opacity]="isDownloadActive(custMastUploadhistoryData?.id, 3) ? '0.4' : '1'"><img
+                            src="assets/images/hsbc/T_Download_Icon.svg" alt="Total Entries"></a></td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+
+              <div class="pagination-table NP_LeftPagintion">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{(startIndex+1)}} to
+                    {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                    {{totalSize}}
+                    row
+
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                          <mat-select [(ngModel)]="pageSize" #pagesizee [panelClass]="'pagination_select'"
+                          (ngModelChange)="pageSizeChange(pagesizee.value,page)" [ngModelOptions]="{standalone: true}">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                              {{pages.value}}
+                          </mat-option>
+                      </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-5">
+                  <div class="text-md-right float-md-right pagination-rounded">
+
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                      <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                        [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                      </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

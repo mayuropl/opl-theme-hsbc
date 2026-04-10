@@ -1,0 +1,42 @@
+.form_content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .NP_HSBC_ComInput{
+        max-width: 210px;
+    }
+    .mn_select{
+        max-width: 150px;
+    }
+}
+
+.lottie_icn {
+    width: 80px;
+    margin: 0 auto;
+}
+
+.popup_body{
+    padding: 10px 0;
+}
+
+.popup_body{
+    padding: 10px 15px;
+}
+
+.text-danger {
+    color: red;
+  }
+  
+
+  .text_box{
+    max-width: 315px;
+    width: 100%;
+    margin: 15px auto;
+  }
+
+  .radio_group{
+    margin-top: -10px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(112, 112, 112, .2);
+  }

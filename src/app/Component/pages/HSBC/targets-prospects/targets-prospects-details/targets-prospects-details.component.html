@@ -1,0 +1,1885 @@
+<div class="container-fluid HSBC_Common_Pages rmExisitingPortfolioView_page pb-0">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <mat-icon svgIcon="chevron_left" class="primary" matRipple routerLink="/rmTargetsProspects"></mat-icon>
+                <h4>
+                    Prospect Details
+                </h4>
+            </div>
+            <div class="page_Title_Right">
+                <button type="button" mat-flat-button class="btn_design with_icn" color="secondary">Download Report<em
+                        class="fa fa-arrow-down ml-3"></em></button>
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="NP_Com_Group MT_MB_15px">
+                <mat-tab-group mat-align-tabs="start" class="tabs-design " [@.disabled]="true"
+                    [selectedIndex]="selectedTabIndex" (selectedIndexChange)="selectedTabIndex=$event;">
+                    <mat-tab label="Firm Profile">
+                        <mat-card-content>
+                            <div class="DetailsCard_teaserView ">
+                                <div class="LH_NP_Com">
+                                    <div class="NP_Group_Heading cp_headingbar">
+                                        <div class="_Heading_grp">
+                                            <h4 class="Heading_Title">Customer Profile</h4>
+                                        </div>
+                                        <div class="_Heading_grp_right_dtls">
+                                            <div class="input_field mr-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Trading Name and Previous Name Source</mat-label>
+                                                    <mat-select>
+                                                        <mat-option value="GST">GST</mat-option>
+                                                        <mat-option value="GSTtwo">GST option</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="customername_text">
+                                                <span>Trading and previous name</span>
+                                                <p>G M KNITTING INDUSTRIES PVT LTD</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="customer_profile_dtls">
+                                        <div class="teaserView_Details">
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>CIN</span>
+                                                <span>U99999PB1987PTC007281</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>Date of Incorporation</span>
+                                                <span>09/02/1987</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>Constitution</span>
+                                                <span>Non-government company</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>Persona</span>
+                                                <span>Start-up</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>No. of Employees</span>
+                                                <span>500</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>PAN Number</span>
+                                                <span>AAACG3873C</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>LEI</span>
+                                                <span>984500AA48D05BF1BM49</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>LEI Expiry</span>
+                                                <span>11/29/2022</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>No. of Active GSTIN</span>
+                                                <span>5</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>No. of Inctive GSTIN & Cancelled</span>
+                                                <span>5</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>UDYAM No. & Certificate</span>
+                                                <span><a href="" class="view_link_btn">UDYAM-MH-26-0361164</a></span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>MSME</span>
+                                                <span>PSL</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>IEC Number</span>
+                                                <span>1254124510</span>
+                                            </div>
+                                            <div class="TeaserView_Details_CGRP">
+                                                <span>Existing Lenders + Open MCA Charges</span>
+                                                <span>NA</span>
+                                            </div>
+                                        </div>
+                                        <div class="customer_profile_dtls_right">
+                                            <div class="cp_row">
+                                                <div class="cp_row_ttlbar">
+                                                    <h3>Industry</h3>
+                                                    <span class="skyblue_badge">Infrastructure</span>
+                                                    <div class="radio_opt">
+                                                        <mat-radio-group aria-label="Select an option">
+                                                            <mat-radio-button value="iMCA">MCA</mat-radio-button>
+                                                            <mat-radio-button value="iEXIM">EXIM</mat-radio-button>
+                                                        </mat-radio-group>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cp_row">
+                                                <div class="cp_row_ttlbar">
+                                                    <h3>Sector</h3>
+                                                    <span class="skyblue_badge">Logistics</span>
+                                                    <div class="radio_opt">
+                                                        <mat-radio-group aria-label="Select an option">
+                                                            <mat-radio-button value="iMCA">MCA</mat-radio-button>
+                                                            <mat-radio-button value="iEXIM">EXIM</mat-radio-button>
+                                                        </mat-radio-group>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cp_row">
+                                                <div class="cp_row_ttlbar">
+                                                    <h3>Turnover</h3>
+                                                    <span class="skyblue_badge">₹ 2,50,00,000 (FY 2024 - 25)</span>
+                                                    <div class="radio_opt">
+                                                        <mat-radio-group aria-label="Select an option">
+                                                            <mat-radio-button value="iMCA">MCA</mat-radio-button>
+                                                            <mat-radio-button value="iGST">GST</mat-radio-button>
+                                                        </mat-radio-group>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cp_row">
+                                                <div class="cp_row_ttlbar">
+                                                    <h3>Latest Credit Rating</h3>
+                                                    <div class="radio_opt">
+                                                        <mat-radio-group aria-label="Select an option">
+                                                            <mat-radio-button value="iCRA">CRA</mat-radio-button>
+                                                            <mat-radio-button value="iBureau">Bureau</mat-radio-button>
+                                                        </mat-radio-group>
+                                                    </div>
+                                                </div>
+                                                <div class="cp_row_dtls">
+                                                    <span class="skyblue_badge"><span>Latest Credit Rating</span>
+                                                        AAA</span>
+                                                    <span class="skyblue_badge"><span>Rating Agency</span> Acuite
+                                                        Ratings & Research Ltd.</span>
+                                                    <span class="skyblue_badge"><span>Date of Rating</span>
+                                                        29/08/2024</span>
+                                                    <a class="view_link_btn float-right">View More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="DetailsCard_teaserView ">
+                                <div class="LH_NP_Com">
+                                    <div class="NP_Group_Heading">
+                                        <div class="_Heading_grp">
+                                            <h4 class="Heading_Title">Alerts Description</h4>
+                                        </div>
+                                        <div class="_Heading_grp_right_dtls">
+                                            <a href="" class="text-secondary">View More <i
+                                                    class="fa fa-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="teaserView_Details p-4">
+                                        <!-- <div class="comingSoon_div">
+                                            <div class="comingSoon_lottie">
+                                                <lottie-player class="__HSBC_lotties_Not"
+                                                    src="assets/images/Json/comingsoon_img.json"
+                                                    background="transparent" speed="1" loop autoplay></lottie-player>
+                                            </div>
+                                            <div class="comingSoon_text">
+                                                <h3>WE ARE</h3>
+                                                <h3 class="theme_text">COMING SOON!</h3>
+                                            </div>
+                                        </div> -->
+                                        <div class="export_details_cols cols_3 wihout_boxDesign without_lottie_cols ">
+                                            <div class="exp_col">
+                                                <div class="exp_col_dtl">
+                                                    <p>Open Alerts</p>
+                                                    <h3>5</h3>
+                                                </div>
+                                            </div>
+                                            <div class="exp_col">
+                                                <div class="exp_col_dtl">
+                                                    <p>Actioned & Closed</p>
+                                                    <h3>10</h3>
+                                                </div>
+                                            </div>
+                                            <div class="exp_col">
+                                                <div class="exp_col_dtl">
+                                                    <p>No Action Required</p>
+                                                    <h3>1</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="DetailsCard_teaserView">
+                                <div class="LH_NP_Com">
+                                    <div class="NP_Group_Heading">
+                                        <div class="_Heading_grp">
+                                            <h4 class="Heading_Title">Contact details</h4>
+                                        </div>
+                                        <div class="_Heading_grp_right_dtls">
+                                            <a href="" class="text-secondary">View More <i
+                                                    class="fa fa-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class=" cd_box_details">
+                                        <div class="border_box">
+                                            <div class="border_box_ttl">
+                                                <h3>Address Details</h3>
+                                                <div class="input_field">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Address Source</mat-label>
+                                                        <mat-select>
+                                                            <mat-option value="GST">GST</mat-option>
+                                                            <mat-option value="GSTtwo">GST option</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="border_box_dtl">
+                                                <h4 class="theme_text">Business Address</h4>
+                                                <p>GALA NO. 48, 1ST FLOOR, MISTRY INDUSTRIAL COMPLEX,MIDC CROSS ROAD A,
+                                                    ANDHERI EAST,Chakala Midc, Mumbai, Mumbai, Maharashtra,
+                                                    400093,India, , Mumbai</p>
+                                            </div>
+                                        </div>
+                                        <div class="border_box">
+                                            <div class="border_box_ttl">
+                                                <h3>Contact Person</h3>
+                                                <div class="input_field">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Contact Details Source</mat-label>
+                                                        <mat-select>
+                                                            <mat-option value="GST">GST</mat-option>
+                                                            <mat-option value="GSTtwo">GST option</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="border_box_dtl">
+                                                <span class="skyblue_badge"><span>Name & Title</span>
+                                                    Mr. Amit Trivedi</span>
+                                                <span class="skyblue_badge"><span>Email ID</span>
+                                                    amit.trivedi123&#64;gmail.com</span>
+                                                <span class="skyblue_badge"><span>Mobile</span>9510777718</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Opportunity">
+                        <mat-card-content>
+                            <mat-tab-group class="tabbing_design tabs_4" [@.disabled]="true" mat-stretch-tabs>
+                                <mat-tab label="Assets & Liabilities">
+                                    <mat-card-content class="px-0">
+                                        <div class="DetailsCard_teaserView single_cols">
+                                            <div class="LH_NP_Com">
+                                                <div class="NP_Group_Heading">
+                                                    <div class="_Heading_grp">
+                                                        <h4 class="Heading_Title">Assets</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="teaserView_Details pt-0 mb-4">
+                                                    <div class=" teaserView_Details_inttl light_red_bg"> Existing
+                                                        lending details</div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Total outstanding</span>
+                                                        <span>₹ 20,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Your Institution</span>
+                                                        <span>₹ 15,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Other institution</span>
+                                                        <span>₹ 5,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>% of HSBC</span>
+                                                        <span>75 %</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span class="text-secondary">View Detailed information</span>
+                                                        <span><a href="#" class="view_link_btn">View More</a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="teaserView_Details_inttl mt-5"> Average Cost of Financing
+                                                </div>
+                                                <div class="teaserView_Details withdot_list">
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Avg utilisation Fund base limit</span>
+                                                        <span>₹ 25,00,000 </span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Interest expense</span>
+                                                        <span>₹ 5,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Derived Interest rate</span>
+                                                        <span>8%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="LH_NP_Com">
+                                                <div class="NP_Group_Heading">
+                                                    <div class="_Heading_grp">
+                                                        <h4 class="Heading_Title">Liabilities</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="teaserView_Details">
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Current account balance</span>
+                                                        <span>₹ 45,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Export Income</span>
+                                                        <span>₹ 6,54,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Travel expense</span>
+                                                        <span>₹ 15,20,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Annual tax</span>
+                                                        <span>₹ 1,25,454</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Annual salary</span>
+                                                        <span>₹ 12,50,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>ITES Export</span>
+                                                        <span>₹ 4,25,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>ITES Import</span>
+                                                        <span>₹ 12,50,000</span>
+                                                    </div>
+                                                </div>
+                                                <div class="teaserView_Details_inttl"> Deposit Opportunity</div>
+                                                <div class="teaserView_Details withdot_list">
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Fixed Deposits & Short term Investments</span>
+                                                        <span>₹ 45,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Interest Income</span>
+                                                        <span>₹ 6,54,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Yearly Deposit Opportunity</span>
+                                                        <span>₹ 15,20,000</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="DetailsCard_teaserView single_cols">
+                                            <div class="LH_NP_Com">
+                                                <div class="NP_Group_Heading">
+                                                    <div class="_Heading_grp">
+                                                        <h4 class="Heading_Title">Financials & Key Ratios (FY 2024-25)
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <div class="teaserView_Details">
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>PAT</span>
+                                                        <span>25.6</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Networth</span>
+                                                        <span>1.56</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Current ratio</span>
+                                                        <span>2.01</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Leverage</span>
+                                                        <span>0.15</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>DSO</span>
+                                                        <span>35 days</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>DPO</span>
+                                                        <span>35 days</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>DIO</span>
+                                                        <span>35 days</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Working capital cycle</span>
+                                                        <span>35 days</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Total borrowing</span>
+                                                        <span>₹ 15,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Expected Monthly churn credit</span>
+                                                        <span>₹ 15,02,555</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Expected monthly churn debit</span>
+                                                        <span>₹ 12,01,111</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-tab>
+                                <mat-tab label="Other Details">
+                                    <mat-card-content class="px-0">
+                                        <div class="DetailsCard_teaserView ">
+                                            <div class="LH_NP_Com">
+                                                <div class="NP_Group_Heading">
+                                                    <div class="_Heading_grp">
+                                                        <h4 class="Heading_Title">Export</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="teaserView_Details">
+                                                    <div class="export_details mb-3">
+                                                        <div class="export_details_cols red_boxes">
+                                                            <div class="exp_col">
+                                                                <div class="lottie_icn">
+                                                                    <lottie-player class="__HSBC_lotties_Not"
+                                                                        src="assets/images/Json/receipt.json"
+                                                                        background="transparent" speed="1" loop
+                                                                        autoplay></lottie-player>
+                                                                </div>
+                                                                <div class="exp_col_dtl">
+                                                                    <p>Total Number of Export Bills</p>
+                                                                    <h3>10,000</h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="exp_col">
+                                                                <div class="lottie_icn">
+                                                                    <lottie-player class="__HSBC_lotties_Not"
+                                                                        src="assets/images/Json/airplane.json"
+                                                                        background="transparent" speed="1" loop
+                                                                        autoplay></lottie-player>
+                                                                </div>
+                                                                <div class="exp_col_dtl">
+                                                                    <p>Total Export</p>
+                                                                    <h3>$ 25,50,000</h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="exp_col">
+                                                                <div class="lottie_icn">
+                                                                    <lottie-player class="__HSBC_lotties_Not"
+                                                                        src="assets/images/Json/file-info.json"
+                                                                        background="transparent" speed="1" loop
+                                                                        autoplay></lottie-player>
+                                                                </div>
+                                                                <div class="exp_col_dtl">
+                                                                    <p>Total Number of Import Bills</p>
+                                                                    <h3>8,521</h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="exp_col">
+                                                                <div class="lottie_icn">
+                                                                    <lottie-player class="__HSBC_lotties_Not"
+                                                                        src="assets/images/Json/packing.json"
+                                                                        background="transparent" speed="1" loop
+                                                                        autoplay></lottie-player>
+                                                                </div>
+                                                                <div class="exp_col_dtl">
+                                                                    <p>Total Import</p>
+                                                                    <h3>$ 20,00,000</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="DetailsCard_teaserView single_cols">
+                                            <div class="LH_NP_Com">
+                                                <div class="box_design border-0">
+                                                    <div class="box_design_ttl_bar">
+                                                        <div class="box_design_ttl_bar_left">
+                                                            <h4>TOP 5 Export counter parties</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tableResponsive  mb-2">
+                                                        <table
+                                                            class="CommonTable_FixedScroll firstSrCols no_stripe_table compressed_table">
+                                                            <thead>
+                                                                <tr class="tr_lightred_bg">
+                                                                    <th width="40%">Name</th>
+                                                                    <th class="text-right">Country</th>
+                                                                    <th class="text-center">HSBC %</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td data-label="Name">Umbrella Corporation</td>
+                                                                    <td data-label="Country" class="text-right">India
+                                                                    </td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">20 %</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name">Massive Dynamic</td>
+                                                                    <td data-label="Country" class="text-right">India
+                                                                    </td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">25 %</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name">Vehement Capital</td>
+                                                                    <td data-label="Country" class="text-right">USA</td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">15 %</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name">Stark Industries</td>
+                                                                    <td data-label="Country" class="text-right">USA</td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">15 %</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name">Massive Dynamic</td>
+                                                                    <td data-label="Country" class="text-right">Canada
+                                                                    </td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">50 %</span></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="LH_NP_Com">
+                                                <div class="box_design border-0">
+                                                    <div class="box_design_ttl_bar">
+                                                        <div class="box_design_ttl_bar_left">
+                                                            <h4>TOP 5 Import counter parties</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tableResponsive mb-2">
+                                                        <table
+                                                            class="CommonTable_FixedScroll firstSrCols no_stripe_table compressed_table">
+                                                            <thead>
+                                                                <tr class="tr_lightred_bg">
+                                                                    <th width="40%">Name</th>
+                                                                    <th class="text-right">Country</th>
+                                                                    <th class="text-center">HSBC %</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td data-label="Name">Globex Corporation</td>
+                                                                    <td data-label="Country" class="text-right">China
+                                                                    </td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">20 %</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name">Acme Corporation</td>
+                                                                    <td data-label="Country" class="text-right">China
+                                                                    </td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">25 %</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name">Soylent Corp</td>
+                                                                    <td data-label="Country" class="text-right">Canada
+                                                                    </td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">15 %</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name">Wayne Enterprises</td>
+                                                                    <td data-label="Country" class="text-right">Canada
+                                                                    </td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">15 %</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name">Cyberdyne Systems</td>
+                                                                    <td data-label="Country" class="text-right">China
+                                                                    </td>
+                                                                    <td data-label="HSBC %" class="text-center"><span
+                                                                            class="skyblue_badge">50 %</span></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="DetailsCard_teaserView single_cols">
+                                            <div class="LH_NP_Com">
+                                                <div class="NP_Group_Heading">
+                                                    <div class="_Heading_grp">
+                                                        <h4 class="Heading_Title">WPB Referral</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="teaserView_Details">
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>No. of Employees</span>
+                                                        <span>150</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Director Remuneration</span>
+                                                        <span>₹ 15,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Home loans</span>
+                                                        <span>₹ 5,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Loan against property</span>
+                                                        <span>₹ 25,00,000</span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Cards</span>
+                                                        <span>₹ 15,00,000</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="LH_NP_Com">
+                                                <div class="NP_Group_Heading">
+                                                    <div class="_Heading_grp">
+                                                        <h4 class="Heading_Title">Network</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="teaserView_Details">
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Domestic Network</span>
+                                                        <span><a href="" class="view_link_btn not_underline">View<em
+                                                                    class="fa fa-angle-right ml-2"></em></a></span>
+                                                    </div>
+                                                    <div class="TeaserView_Details_CGRP">
+                                                        <span>Cross-Border Engagement & Referrals</span>
+                                                        <span><a href="" class="view_link_btn not_underline">View<em
+                                                                    class="fa fa-angle-right ml-2"></em></a></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="DetailsCard_teaserView ">
+                                            <div class="LH_NP_Com">
+                                                <div class="box_design border-0">
+                                                    <div class="box_design_ttl_bar">
+                                                        <div class="box_design_ttl_bar_left">
+                                                            <h4>HSBC Pre-Qualified Products</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tableResponsive  mb-2">
+                                                        <table
+                                                            class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table ">
+                                                            <thead>
+                                                                <tr class="tr_lightred_bg">
+                                                                    <th width="40%">Name</th>
+                                                                    <th class="text-right">Amount</th>
+                                                                    <th class="text-right">Date Of Approval</th>
+                                                                    <th class="text-right">Link To CAM Report</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td data-label="Name"><span
+                                                                            class="skyblue_badge">HSBC 1.0</span></td>
+                                                                    <td data-label="Amount" class="text-right">₹
+                                                                        15,00,000</td>
+                                                                    <td data-label="Date Of Approval"
+                                                                        class="text-right">30/08/2024</td>
+                                                                    <td data-label="Link To CAM Report"
+                                                                        class="text-right">
+                                                                        <a href=""
+                                                                            class="view_link_btn not_underline">View<em
+                                                                                class="fa fa-angle-right ml-2"></em></a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Name"><span
+                                                                            class="skyblue_badge">HSBC 2.0</span></td>
+                                                                    <td data-label="Amount" class="text-right">₹
+                                                                        15,00,000</td>
+                                                                    <td data-label="Date Of Approval"
+                                                                        class="text-right">30/08/2024</td>
+                                                                    <td data-label="Link To CAM Report"
+                                                                        class="text-right">
+                                                                        <a href=""
+                                                                            class="view_link_btn not_underline">View<em
+                                                                                class="fa fa-angle-right ml-2"></em></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="MCA-Financial">
+                        <mat-card-content>
+                            <div class="export_details_cols cols_3  without_lottie_cols red_boxes">
+                                <div class="exp_col">
+                                    <div class="exp_col_dtl">
+                                        <p>Date of Balance Sheet</p>
+                                        <h3>31 March, 2024</h3>
+                                    </div>
+                                </div>
+                                <div class="exp_col">
+                                    <div class="exp_col_dtl">
+                                        <p>Name of Auditor</p>
+                                        <h3>M P Singh & Associates</h3>
+                                    </div>
+                                </div>
+                                <div class="exp_col">
+                                    <div class="exp_col_dtl">
+                                        <p>GST Turnover Bucket</p>
+                                        <h3>₹5,60,45,100</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row_div mt-4">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+                                        <div class="box_design">
+                                            <div class="box_design_ttl_bar">
+                                                <div class="box_design_ttl_bar_left">
+                                                    <h4>Profit & Loss</h4>
+                                                </div>
+                                            </div>
+                                            <div class="tableResponsive ">
+                                                <table
+                                                    class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table mca_Financial_table">
+                                                    <thead>
+                                                        <tr class="tr_lightred_bg">
+                                                            <th>Particulars</th>
+                                                            <th>FY 2020-21</th>
+                                                            <th>FY 2021-22</th>
+                                                            <th>FY 2022-23</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td data-label="Particulars">Sales Revenue</td>
+                                                            <td data-label="FY 2020-21">₹ 1,50,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 1,50,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 1,50,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Gross Profit Margin %</td>
+                                                            <td data-label="FY 2020-21"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                            <td data-label="FY 2021-22"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                            <td data-label="FY 2022-23"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">EBITDA</td>
+                                                            <td data-label="FY 2020-21">₹ 1,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 1,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 1,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">EBITDA Margin %</td>
+                                                            <td data-label="FY 2020-21"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                            <td data-label="FY 2021-22"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                            <td data-label="FY 2022-23"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Operating Profit Margin %</td>
+                                                            <td data-label="FY 2020-21"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                            <td data-label="FY 2021-22"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                            <td data-label="FY 2022-23"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Finance Cost</td>
+                                                            <td data-label="FY 2020-21">₹ 50,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 50,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 50,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Depreciation</td>
+                                                            <td data-label="FY 2020-21"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                            <td data-label="FY 2021-22"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                            <td data-label="FY 2022-23"><span class="skyblue_badge">20
+                                                                    %</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Profit Before Tax</td>
+                                                            <td data-label="FY 2020-21">₹ 65,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 65,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 65,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Net Profit</td>
+                                                            <td data-label="FY 2020-21">₹ 25,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 25,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 25,00,000</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+                                        <div class="box_design">
+                                            <div class="box_design_ttl_bar">
+                                                <div class="box_design_ttl_bar_left">
+                                                    <h4>Balance Sheet</h4>
+                                                </div>
+                                            </div>
+                                            <div class="tableResponsive ">
+                                                <table
+                                                    class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table mca_Financial_table">
+                                                    <thead>
+                                                        <tr class="tr_lightred_bg">
+                                                            <th>Particulars</th>
+                                                            <th>FY 2020-21</th>
+                                                            <th>FY 2021-22</th>
+                                                            <th>FY 2022-23</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td data-label="Particulars">Net Worth</td>
+                                                            <td data-label="FY 2020-21">₹ 1,00,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 1,00,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 1,00,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Total Current Liabilities</td>
+                                                            <td data-label="FY 2020-21">₹ 25,00,000</td>
+                                                            <td data-label="FY 2021-22"><span class="lightred_badge">
+                                                                    NA</span></td>
+                                                            <td data-label="FY 2022-23"><span class="lightred_badge">
+                                                                    NA</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Long Term Borrowings</td>
+                                                            <td data-label="FY 2020-21">₹ 20,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 20,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 20,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Total Non-Current Laiblities
+                                                            </td>
+                                                            <td data-label="FY 2020-21">₹ 10,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 10,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 10,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Short Term Borrowings</td>
+                                                            <td data-label="FY 2020-21">₹ 5,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 5,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 5,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Trade Payables</td>
+                                                            <td data-label="FY 2020-21">₹ 45,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 45,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 45,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Total Non-Current Assets</td>
+                                                            <td data-label="FY 2020-21">₹ 1,00,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 1,00,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 1,00,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Total Current Assets</td>
+                                                            <td data-label="FY 2020-21">₹ 2,00,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 2,00,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 2,00,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Current Investments</td>
+                                                            <td data-label="FY 2020-21">₹ 80,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 80,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 80,00,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Inventories</td>
+                                                            <td data-label="FY 2020-21">-</td>
+                                                            <td data-label="FY 2021-22">-</td>
+                                                            <td data-label="FY 2022-23">-</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Trade Receivables</td>
+                                                            <td data-label="FY 2020-21">-</td>
+                                                            <td data-label="FY 2021-22">-</td>
+                                                            <td data-label="FY 2022-23">-</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Cash & Bank Balances</td>
+                                                            <td data-label="FY 2020-21">₹ 20,00,000</td>
+                                                            <td data-label="FY 2021-22">₹ 20,00,000</td>
+                                                            <td data-label="FY 2022-23">₹ 20,00,000</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row_div ">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12  col-sm-12 mb-4">
+                                        <div class="box_design">
+                                            <div class="box_design_ttl_bar">
+                                                <div class="box_design_ttl_bar_left">
+                                                    <h4>Ratios</h4>
+                                                </div>
+                                            </div>
+                                            <div class="tableResponsive ">
+                                                <table
+                                                    class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table mca_Financial_table">
+                                                    <thead>
+                                                        <tr class="tr_lightred_bg">
+                                                            <th>Particulars</th>
+                                                            <th>FY 2020-21</th>
+                                                            <th>FY 2021-22</th>
+                                                            <th>FY 2022-23</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td data-label="Particulars">Debt Equity Ratio</td>
+                                                            <td data-label="FY 2020-21">5</td>
+                                                            <td data-label="FY 2021-22">7</td>
+                                                            <td data-label="FY 2022-23">16</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Net Debt/EBIDTA</td>
+                                                            <td data-label="FY 2020-21">25 days</td>
+                                                            <td data-label="FY 2021-22">25 days</td>
+                                                            <td data-label="FY 2022-23">25 days</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Net Debt/EBIDTA</td>
+                                                            <td data-label="FY 2020-21"><span class="skyblue_badge">
+                                                                    B+</span></td>
+                                                            <td data-label="FY 2021-22"><span class="lightred_badge">
+                                                                    NA</span></td>
+                                                            <td data-label="FY 2022-23"><span class="lightred_badge">
+                                                                    NA</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">DSCR</td>
+                                                            <td data-label="FY 2020-21">-</td>
+                                                            <td data-label="FY 2021-22">-</td>
+                                                            <td data-label="FY 2022-23">-</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Current Ratio</td>
+                                                            <td data-label="FY 2020-21">457444100</td>
+                                                            <td data-label="FY 2021-22">56320000</td>
+                                                            <td data-label="FY 2022-23">12055444</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Particulars">Cash Conversion Cycle</td>
+                                                            <td data-label="FY 2020-21">27</td>
+                                                            <td data-label="FY 2021-22">30</td>
+                                                            <td data-label="FY 2022-23">15</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Network" [panelClass]="'p-0'">
+                        <mat-card-content>
+                            <div class="box_design ">
+                                <div class="box_design_ttl_bar">
+                                    <div class="box_design_ttl_bar_left">
+                                        <h4>Director Details</h4>
+                                    </div>
+                                </div>
+                                <div class="tableResponsive">
+                                    <table
+                                        class="CommonTable_FixedScroll no_stripe_borderX_table firstSrCols table_wrap">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th class="text-right">Sr.No</th>
+                                                <th>Name</th>
+                                                <th>PAN Number</th>
+                                                <th>DIN</th>
+                                                <th>Designation</th>
+                                                <th>Date of Appointment</th>
+                                                <th>Age</th>
+                                                <th>Contact No</th>
+                                                <th>Stake (%)</th>
+                                                <th>Resident</th>
+                                                <th>No. of Directorships</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr (click)="collapse1.toggle()">
+                                                <td data-label="Sr.No"><button mat-icon-button class="matIcon mr-2">
+                                                        <span *ngIf="isCollapsed1">
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </span>
+                                                        <span *ngIf="!isCollapsed1">
+                                                            <i class="fa fa-angle-up"></i>
+                                                        </span>
+                                                    </button> 1</td>
+                                                <td data-label="Name">Harbanskaur Gurcharansingh Chugha</td>
+                                                <td data-label="PAN Number"><span
+                                                        class="skyblue_badge">HKYRN5002P</span></td>
+                                                <td data-label="DIN">520120</td>
+                                                <td data-label="Designation">Director</td>
+                                                <td data-label="Date of Appointment">11 Jan, 2013</td>
+                                                <td data-label="Age">56</td>
+                                                <td data-label="Contact No">9352523012</td>
+                                                <td data-label="Stake (%)">9.32</td>
+                                                <td data-label="Resident">315 Main St, Worcester, MA 01608,
+                                                    United States</td>
+                                                <td data-label="No. of Directorships">8</td>
+                                            </tr>
+                                            <tr class="collapsing_tr" #collapse1="ngbCollapse"
+                                                [(ngbCollapse)]="isCollapsed1">
+                                                <td colspan="12">
+                                                    <div class="tableResponsive inside_table">
+                                                        <table class=" bordered_table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70%">
+                                                                        Other Directorship</th>
+                                                                    <th width="15%">Designation</th>
+                                                                    <th width="15%">
+                                                                        Date of Appointment</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">CEO
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Chief
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr (click)="collapse2.toggle()">
+                                                <td data-label="Sr.No"><button mat-icon-button class="matIcon mr-2">
+                                                        <span *ngIf="isCollapsed2">
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </span>
+                                                        <span *ngIf="!isCollapsed2">
+                                                            <i class="fa fa-angle-up"></i>
+                                                        </span>
+                                                    </button> 2</td>
+                                                <td data-label="Name">Pooran Chand Sharma</td>
+                                                <td data-label="PAN Number"><span
+                                                        class="skyblue_badge">BHBPG5110L</span></td>
+                                                <td data-label="DIN">562010</td>
+                                                <td data-label="Designation">Director</td>
+                                                <td data-label="Date of Appointment">19 Jul, 2011</td>
+                                                <td data-label="Age">41</td>
+                                                <td data-label="Contact No">7521521010</td>
+                                                <td data-label="Stake (%)">11.51</td>
+                                                <td data-label="Resident">315 Main St, Worcester, MA 01608,
+                                                    United States</td>
+                                                <td data-label="No. of Directorships">5</td>
+                                            </tr>
+                                            <tr class="collapsing_tr" #collapse2="ngbCollapse"
+                                                [(ngbCollapse)]="isCollapsed2">
+                                                <td colspan="12">
+                                                    <div class="tableResponsive inside_table">
+                                                        <table class=" bordered_table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70%">
+                                                                        Other Directorship</th>
+                                                                    <th width="15%">Designation</th>
+                                                                    <th width="15%">
+                                                                        Date of Appointment</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">CEO
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Chief
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr (click)="collapse3.toggle()">
+                                                <td data-label="Sr.No"><button mat-icon-button class="matIcon mr-2">
+                                                        <span *ngIf="isCollapsed3">
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </span>
+                                                        <span *ngIf="!isCollapsed3">
+                                                            <i class="fa fa-angle-up"></i>
+                                                        </span>
+                                                    </button> 3</td>
+                                                <td data-label="Name">Surender Singh Chauhan</td>
+                                                <td data-label="PAN Number"><span
+                                                        class="skyblue_badge">BHBPG5110L</span></td>
+                                                <td data-label="DIN">562010</td>
+                                                <td data-label="Designation">Director</td>
+                                                <td data-label="Date of Appointment">19 Jul, 2011</td>
+                                                <td data-label="Age">41</td>
+                                                <td data-label="Contact No">7521521010</td>
+                                                <td data-label="Stake (%)">11.51</td>
+                                                <td data-label="Resident">315 Main St, Worcester, MA 01608,
+                                                    United States</td>
+                                                <td data-label="No. of Directorships">9</td>
+                                            </tr>
+                                            <tr class="collapsing_tr" #collapse3="ngbCollapse"
+                                                [(ngbCollapse)]="isCollapsed3">
+                                                <td colspan="12">
+                                                    <div class="tableResponsive inside_table">
+                                                        <table class=" bordered_table ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70%">
+                                                                        Other Directorship</th>
+                                                                    <th width="15%">Designation</th>
+                                                                    <th width="15%">
+                                                                        Date of Appointment</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">CEO
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Chief
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr (click)="collapse4.toggle()">
+                                                <td data-label="Sr.No"><button mat-icon-button class="matIcon mr-2">
+                                                        <span *ngIf="isCollapsed4">
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </span>
+                                                        <span *ngIf="!isCollapsed4">
+                                                            <i class="fa fa-angle-up"></i>
+                                                        </span>
+                                                    </button> 4</td>
+                                                <td data-label="Name">Subhash Chand Bhatia</td>
+                                                <td data-label="PAN Number"><span
+                                                        class="skyblue_badge">BHBPG5110L</span></td>
+                                                <td data-label="DIN">562010</td>
+                                                <td data-label="Designation">Director</td>
+                                                <td data-label="Date of Appointment">19 Jul, 2011</td>
+                                                <td data-label="Age">41</td>
+                                                <td data-label="Contact No">7521521010</td>
+                                                <td data-label="Stake (%)">11.51</td>
+                                                <td data-label="Resident">315 Main St, Worcester, MA 01608,
+                                                    United States</td>
+                                                <td data-label="No. of Directorships">4</td>
+                                            </tr>
+                                            <tr class="collapsing_tr" #collapse4="ngbCollapse"
+                                                [(ngbCollapse)]="isCollapsed4">
+                                                <td colspan="12">
+                                                    <div class="tableResponsive inside_table">
+                                                        <table class=" bordered_table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70%">
+                                                                        Other Directorship</th>
+                                                                    <th width="15%">Designation</th>
+                                                                    <th width="15%">
+                                                                        Date of Appointment</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">CEO
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Chief
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr (click)="collapse5.toggle()">
+                                                <td data-label="Sr.No"><button mat-icon-button class="matIcon mr-2">
+                                                        <span *ngIf="isCollapsed5">
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </span>
+                                                        <span *ngIf="!isCollapsed5">
+                                                            <i class="fa fa-angle-up"></i>
+                                                        </span>
+                                                    </button> 5</td>
+                                                <td data-label="Name">Sarvesh Kumar Pandey</td>
+                                                <td data-label="PAN Number"><span
+                                                        class="skyblue_badge">BHBPG5110L</span></td>
+                                                <td data-label="DIN">562010</td>
+                                                <td data-label="Designation">Director</td>
+                                                <td data-label="Date of Appointment">19 Jul, 2011</td>
+                                                <td data-label="Age">41</td>
+                                                <td data-label="Contact No">7521521010</td>
+                                                <td data-label="Stake (%)">11.51</td>
+                                                <td data-label="Resident">315 Main St, Worcester, MA 01608,
+                                                    United States</td>
+                                                <td data-label="No. of Directorships">7</td>
+                                            </tr>
+                                            <tr class="collapsing_tr" #collapse5="ngbCollapse"
+                                                [(ngbCollapse)]="isCollapsed5">
+                                                <td colspan="12">
+                                                    <div class="tableResponsive inside_table">
+                                                        <table class=" bordered_table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="70%">
+                                                                        Other Directorship</th>
+                                                                    <th width="15%">Designation</th>
+                                                                    <th width="15%">
+                                                                        Date of Appointment</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">CEO
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Chief
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">Axis
+                                                                        Bank
+                                                                        Limited</td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td data-label="Other Directorship">
+                                                                        Equitas Small Finance Bank Limited
+                                                                    </td>
+                                                                    <td data-label="Designation">Nominee
+                                                                        Director
+                                                                    </td>
+                                                                    <td data-label="Date of Appointment">
+                                                                        10-02-2010</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box_design mt-5">
+                                <div class="box_design_ttl_bar">
+                                    <div class="box_design_ttl_bar_left">
+                                        <h4>Related Entities</h4>
+                                    </div>
+                                    <div class="box_design_ttl_bar_right">
+                                        <div class="input_field">
+                                            <mat-form-field appearance="outline" class=" mr-3">
+                                                <mat-label>Country</mat-label>
+                                                <mat-select>
+                                                    <mat-option value="Domestic">Domestic</mat-option>
+                                                    <mat-option value="International">International</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Relation Type</mat-label>
+                                                <mat-select>
+                                                    <mat-option value="Parent/Holding">Parent/Holding</mat-option>
+                                                    <mat-option value="Holding">Holding</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tableResponsive">
+                                    <table
+                                        class="CommonTable_FixedScroll no_stripe_borderX_table firstSrCols table_wrap">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th width="2%">Sr No.</th>
+                                                <th>Name Of Entity</th>
+                                                <th>Relation Type</th>
+                                                <th>Credit Rating</th>
+                                                <th>Agency</th>
+                                                <th>Country</th>
+                                                <th>FY</th>
+                                                <th>Turnnover</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Sr No.">1</td>
+                                                <td data-label="Name Of Entity">Reliance Industries</td>
+                                                <td data-label="Relation Type">Parent/Holding</td>
+                                                <td data-label="Credit Rating">AAA</td>
+                                                <td data-label="Agency">CRISIL</td>
+                                                <td data-label="Country">India</td>
+                                                <td data-label="FY">2023-2024</td>
+                                                <td data-label="Turnnover">₹ 69,85,00,000</td>
+                                                <td data-label="Address">BKC, Bandra , Mumbai</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr No.">2</td>
+                                                <td data-label="Name Of Entity">Malhotra & Corporates</td>
+                                                <td data-label="Relation Type">Subsidiary</td>
+                                                <td data-label="Credit Rating">AB</td>
+                                                <td data-label="Agency">ICRA</td>
+                                                <td data-label="Country">India</td>
+                                                <td data-label="FY">2022-2023</td>
+                                                <td data-label="Turnnover">₹ 15,40,00,152</td>
+                                                <td data-label="Address">Chakala, Jb nagar, Andheri, Mumbai
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box_design mt-5">
+                                <div class="box_design_ttl_bar">
+                                    <div class="box_design_ttl_bar_left">
+                                        <h4>Shareholding Pattern</h4>
+                                    </div>
+                                </div>
+                                <div class="tableResponsive">
+                                    <table
+                                        class="CommonTable_FixedScroll bordered_table no_stripe_table firstSrCols share_pattern_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th rowspan="2" width="30%">Particular</th>
+                                                <th colspan="3">No. Of Shares</th>
+                                                <th colspan="3">Holding (%)</th>
+                                            </tr>
+                                            <tr class="tr_lightskyblue_bg">
+                                                <th class="text-center">Promoter</th>
+                                                <th>Public</th>
+                                                <th class="total_th">Total</th>
+                                                <th>Promoter</th>
+                                                <th>Public</th>
+                                                <th class="total_th">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Particular">Wellcome fisheries ltd</td>
+                                                <td data-label="No. Of Shares - Promoter">₹6,83,13,400</td>
+                                                <td data-label="No. Of Shares - Public">₹5,12,51,600</td>
+                                                <td data-label="No. Of Shares - Total" class="total_td">
+                                                    ₹11,95,65,000</td>
+                                                <td data-label="Holding (%) - Promoter">58</td>
+                                                <td data-label="Holding (%) - Public">42</td>
+                                                <td data-label="Holding (%) - Total" class="total_td">100
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Particular">We OSB Overseas Pvt Ltd</td>
+                                                <td data-label="No. Of Shares - Promoter">₹6,83,13,400</td>
+                                                <td data-label="No. Of Shares - Public">₹5,12,51,600</td>
+                                                <td data-label="No. Of Shares - Total" class="total_td">
+                                                    ₹11,95,65,000</td>
+                                                <td data-label="Holding (%) - Promoter">58</td>
+                                                <td data-label="Holding (%) - Public">42</td>
+                                                <td data-label="Holding (%) - Total" class="total_td">100
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Particular">We OSB Overseas Pvt Ltd</td>
+                                                <td data-label="No. Of Shares - Promoter">₹6,83,13,400</td>
+                                                <td data-label="No. Of Shares - Public">₹5,12,51,600</td>
+                                                <td data-label="No. Of Shares - Total" class="total_td">
+                                                    ₹11,95,65,000</td>
+                                                <td data-label="Holding (%) - Promoter">58</td>
+                                                <td data-label="Holding (%) - Public">42</td>
+                                                <td data-label="Holding (%) - Total" class="total_td">100
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Particular">Dentech A S</td>
+                                                <td data-label="No. Of Shares - Promoter">₹6,83,13,400</td>
+                                                <td data-label="No. Of Shares - Public">₹5,12,51,600</td>
+                                                <td data-label="No. Of Shares - Total" class="total_td">
+                                                    ₹11,95,65,000</td>
+                                                <td data-label="Holding (%) - Promoter">58</td>
+                                                <td data-label="Holding (%) - Public">42</td>
+                                                <td data-label="Holding (%) - Total" class="total_td">100
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Particular">Om Shankar Bhijgariha</td>
+                                                <td data-label="No. Of Shares - Promoter">₹6,83,13,400</td>
+                                                <td data-label="No. Of Shares - Public">₹5,12,51,600</td>
+                                                <td data-label="No. Of Shares - Total" class="total_td">
+                                                    ₹11,95,65,000</td>
+                                                <td data-label="Holding (%) - Promoter">58</td>
+                                                <td data-label="Holding (%) - Public">42</td>
+                                                <td data-label="Holding (%) - Total" class="total_td">100
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box_design mt-5">
+                                <div class="box_design_ttl_bar">
+                                    <div class="box_design_ttl_bar_left">
+                                        <h4>Connected entity details</h4>
+                                    </div>
+                                </div>
+                                <div class="tableResponsive">
+                                    <table
+                                        class="CommonTable_FixedScroll no_stripe_borderX_table firstSrCols table_wrap">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Connected entity</th>
+                                                <th>Entity Type</th>
+                                                <th class="text-center">Related through</th>
+                                                <th class="text-center">Date of appointment</th>
+                                                <th class="text-center">Relationship (Years)</th>
+                                                <th>Linkage details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Connected entity">AXIS BANK LIMITED</td>
+                                                <td data-label="Entity Type">Bank Associate, Private Sector
+                                                    Bank</td>
+                                                <td data-label="Related through" class="text-center">AMITABH
+                                                    CHAUDHRY</td>
+                                                <td data-label="Date of appointment" class="text-center">
+                                                    1-Jan-19</td>
+                                                <td data-label="Relationship (Years)" class="text-center">6
+                                                </td>
+                                                <td data-label="Linkage details">AMITABH CHAUDHRY is common
+                                                    director with AXIS BANK LIMITED</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Connected entity">EQUITAS SMALL FINANCE BANK
+                                                    LIMITED</td>
+                                                <td data-label="Entity Type">Bank Associate, Private Sector
+                                                    Bank</td>
+                                                <td data-label="Related through" class="text-center">AMITABH
+                                                    CHAUDHRY</td>
+                                                <td data-label="Date of appointment" class="text-center">
+                                                    1-Jan-19</td>
+                                                <td data-label="Relationship (Years)" class="text-center">6
+                                                </td>
+                                                <td data-label="Linkage details">AMITABH CHAUDHRY is common
+                                                    director with AXIS BANK LIMITED</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(startIndex+1)}} to
+                                        {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                        {{totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (ngModelChange)="onPageChange(page)">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                                [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                                (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box_design mt-5">
+                                <div class="box_design_ttl_bar">
+                                    <div class="box_design_ttl_bar_left">
+                                        <h4>Peer Analysis</h4>
+                                    </div>
+                                </div>
+                                <div class="tableResponsive ">
+                                    <table
+                                        class="CommonTable_FixedScroll firstSrCols table_wrap no_stripe_borderX_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Financials as at FY 2024</th>
+                                                <th class="text-right">Company A</th>
+                                                <th class="text-right">Company B</th>
+                                                <th class="text-right">Company C</th>
+                                                <th class="text-right">Company D</th>
+                                                <th class="text-right">Company E</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Financials as at FY 2024">External
+                                                    Ratings
+                                                </td>
+                                                <td data-label="Company A" class="text-right">2</td>
+                                                <td data-label="Company B" class="text-right">10</td>
+                                                <td data-label="Company C" class="text-right">5</td>
+                                                <td data-label="Company D" class="text-right">7</td>
+                                                <td data-label="Company E" class="text-right">16</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Financials as at FY 2024">Sales Revenue
+                                                </td>
+                                                <td data-label="Company A" class="text-right">₹ 1,56,40,000
+                                                </td>
+                                                <td data-label="Company B" class="text-right">₹ 1,56,40,000
+                                                </td>
+                                                <td data-label="Company C" class="text-right">₹ 1,56,40,000
+                                                </td>
+                                                <td data-label="Company D" class="text-right">₹ 1,56,40,000
+                                                </td>
+                                                <td data-label="Company E" class="text-right">₹ 1,56,40,000
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Financials as at FY 2024">EBITDA</td>
+                                                <td data-label="Company A" class="text-right">₹ 5,00,000
+                                                </td>
+                                                <td data-label="Company B" class="text-right">₹ 5,00,000
+                                                </td>
+                                                <td data-label="Company C" class="text-right">₹ 5,00,000
+                                                </td>
+                                                <td data-label="Company D" class="text-right">₹ 5,00,000
+                                                </td>
+                                                <td data-label="Company E" class="text-right">₹ 5,00,000
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Financials as at FY 2024">Profit After Tax
+                                                </td>
+                                                <td data-label="Company A" class="text-right">12055444</td>
+                                                <td data-label="Company B" class="text-right">12055444</td>
+                                                <td data-label="Company C" class="text-right">12055444</td>
+                                                <td data-label="Company D" class="text-right">12055444</td>
+                                                <td data-label="Company E" class="text-right">12055444</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Financials as at FY 2024">Net Worth</td>
+                                                <td data-label="Company A" class="text-right">₹ 20,00,000
+                                                </td>
+                                                <td data-label="Company B" class="text-right">₹ 20,00,000
+                                                </td>
+                                                <td data-label="Company C" class="text-right">₹ 20,00,000
+                                                </td>
+                                                <td data-label="Company D" class="text-right">₹ 20,00,000
+                                                </td>
+                                                <td data-label="Company E" class="text-right">₹ 20,00,000
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Financials as at FY 2024">Total Debt</td>
+                                                <td data-label="Company A" class="text-right">₹ 50,00,000
+                                                </td>
+                                                <td data-label="Company B" class="text-right">₹ 50,00,000
+                                                </td>
+                                                <td data-label="Company C" class="text-right">₹ 50,00,000
+                                                </td>
+                                                <td data-label="Company D" class="text-right">₹ 50,00,000
+                                                </td>
+                                                <td data-label="Company E" class="text-right">₹ 50,00,000
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

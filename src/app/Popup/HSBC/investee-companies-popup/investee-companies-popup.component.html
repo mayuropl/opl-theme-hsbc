@@ -1,0 +1,16 @@
+<section class="popup_design max-500 HSBC_Common_Pages pb-0 profile-detail-popup">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial (click)="closeDialog()">close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="profile-detail-body">
+            <div class="sub_popup_header investee-header">
+                <h3>The action will return all of its investee companies in India, and we will be charged per company. Are you sure to proceed?</h3>
+            </div>
+            <div class="btn-group">
+                <button type="submit" class="ln_40" mat-flat-button color="primary cancle-btn" (click)="closeDialog()">Cancel</button>
+                <button type="submit" class="ln_40" mat-flat-button color="primary" (click)="redirectGetDetails()">OK</button>
+            </div>
+        </div>
+    </div>
+</section>

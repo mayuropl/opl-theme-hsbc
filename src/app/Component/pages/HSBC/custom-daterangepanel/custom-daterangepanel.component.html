@@ -1,0 +1,19 @@
+<!-- <mat-card class="mat-elevation-z3">
+    <button
+      *ngFor="let item of customPresets"
+      mat-button
+      color="primary"
+      (click)="selectRange(item)"
+    >
+      {{ item }}
+    </button>
+  </mat-card> -->
+
+     <fieldset class="NP_HSBC_ComInput custom_date_select" [formGroup]="headerForm">
+      <mat-form-field appearance="fill">
+          <mat-select formControlName="dateFilter" placeholder="Select custom range">
+              <mat-option [value]="item" (click)="selectRange(item)" *ngFor="let item of customPresets">{{item}}</mat-option>
+          </mat-select>
+      </mat-form-field>
+  </fieldset>
+   

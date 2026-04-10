@@ -1,0 +1,78 @@
+// 
+// page-title.scss
+//
+
+.page-title-box {
+  .page-title {
+    font-size: 1.25rem;
+    margin: 0;
+    line-height: 75px;
+    color: $gray-900;
+  }
+
+  .page-title-right {
+    float: right;
+    margin-top: 22px;
+  }
+
+  .breadcrumb {
+    padding-top: 5px;
+  }
+}
+
+
+@include media-breakpoint-down(sm) {
+  .page-title-box {
+    .page-title {
+      display: block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      line-height: 70px;
+    }
+
+    .breadcrumb {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 1366px) {
+  .page-title-box{
+    .page-title-right{
+      margin: 0;
+    }
+    .page-title{
+      line-height: 50px;
+      font-size: 1rem;
+    }
+    .breadcrumb{
+      padding: 0;
+      line-height: 50px;
+      font-size: .875rem;
+      .breadcrumb-item{
+      >{
+        a{
+          font-size: .8125rem;
+        }
+      }
+    }
+    } 
+  }
+ 
+}
+
+
+@media (max-width: 640px) {
+  .page-title-box {
+    .page-title-right {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 419px) {
+  .page-title-box .breadcrumb {
+    display: none;
+  }
+}

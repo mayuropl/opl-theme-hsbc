@@ -1,0 +1,21 @@
+<div class="popup_design max-500 warning_popup">
+    <!-- <a class="modal_closeicn_btn" href="javascript:void(0)"><mat-icon class="material-symbols-outlined"
+            matDialogClose="" cdkFocusInitial>close</mat-icon></a> -->
+    <div class="pop_up_container">
+        <mat-dialog-content>
+            <div class="popup_body text-center ">
+                <div class="lottie_icn">
+                    <lottie-player class="__HSBC_lotties_Not" src="../assets/images/Json/warning_lottie.json"
+                        background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <h3>Important Instructions !</h3>
+                <p class="max-w-100">There is a significant cost to the bank for spreading feature. Pls use this only for cases where CRR is required, and lending is beyond USD 1 M</p>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+            <button mat-flat-button color="secondary" matDialogClose="">Cancel</button>
+            <button mat-flat-button color="primary" matDialogClose="close" (click)="processForSpreadOrder()">Proceed <mat-icon
+                class="ml-1">arrow_forward</mat-icon></button>
+        </mat-dialog-actions>
+    </div>
+</div>

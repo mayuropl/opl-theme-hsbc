@@ -1,0 +1,253 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+      <form class="NP_Form" autocomplete="off">
+        <div class="page_Title_sec">
+          <div class="page_Title_left">
+            <h4 class="cursor_pointer">
+             {{ selectedModule }}
+            </h4>
+          </div>
+  
+          <div class="page_Title_Right d-flex">
+            <!-- <a type="button" 
+                     mat-flat-button class="btn_design with_right_icn" ><span >Module</span><mat-icon
+                      class="ml-2 mr-0" >arrow_drop_down</mat-icon>
+                      <div class="animated_download" >
+                        Downloading File <div class="dot-pulse"></div>
+                    </div>
+                    </a> -->
+                  <div class="input_field serch_refresh">
+                    <!-- <mat-form-field *ngIf="dropdown?.length > 0" appearance="outline" class="w-auto ln_40">
+                      <mat-label>Module</mat-label>
+                      <mat-select  [(ngModel)]="selectedModuleId" name= "selectedModuleId" (selectionChange)="onModuleChange($event)">
+                        <mat-option *ngFor="let selectOption of dropdown" [value]="selectOption.value">
+                          {{selectOption.name}}
+                        </mat-option>
+                    </mat-select>
+                      </mat-form-field> -->
+
+                      <fieldset class="NP_HSBC_ComInput">
+                        <mat-form-field appearance="outline"  class="w-auto">
+                          <mat-label>Module</mat-label>
+                            <mat-select #select [(ngModel)]="selectedModuleId" name="selectedModuleId" (selectionChange)="onModuleChange($event)"
+                                [panelClass]="'design_multiselect'" >
+                                @for(option of dropdown; track option?.value){
+                                <mat-option [value]="option?.value">
+                                    {{ option?.name }}
+                                </mat-option>
+                                }
+
+                            </mat-select>
+                        </mat-form-field>
+                    </fieldset>
+
+                  </div>
+                    
+            <a type="button" mat-flat-button class="btn_design with_right_icn ml-2" color="secondary" (click)="handleDownloadClick()" [disabled]="isDownloadingHsbc">
+              <span *ngIf="!isDownloadingHsbc">Download All 
+                {{ selectedModuleId == 1 ? 'Banking Status' : 'Country Presence Status' }}</span><mat-icon
+                class="ml-2 mr-0" >arrow_downward_alt</mat-icon>
+                <div class="animated_download" *ngIf="isDownloadingHsbc">
+                  Downloading File <div class="dot-pulse"></div>
+              </div>
+              </a>
+            <a type="button" mat-flat-button class="btn_design with_right_icn ml-2" color="secondary" *ngIf="selectedModuleId == 1"
+               href="assets/files/HSBC_BANKING_BULK_UPLOAD.xlsx" download  >Download Template<mat-icon
+              class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+
+              <a type="button" mat-flat-button class="btn_design with_right_icn ml-2" color="secondary" *ngIf="selectedModuleId == 2"
+               href="assets/files/HSBC_COUNTRY_PRESENCE_BULK_UPLOAD.xlsx" download  >Download Template<mat-icon
+              class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+          </div>
+        </div>
+        <div class="page_Details">
+          <div class="box_design mb-3 p-3">
+  
+            <div class="NP_Com_Group">
+              <!-- <div *ngIf="!isUploading"> -->
+              <div class="dragDrop-Common" appDragDrop>
+                <div class="files-list" *ngIf="files.length > 0">
+                  <div class="single-file" *ngFor="let file of files; let i = index">
+                    <div class="File-Progress">
+                      <div class="file-icon">
+                        <img src="assets/images/hsbc/FileUpload_Icon.svg" alt="File Icon">
+                      </div>
+                      <div class="info">
+                        <h4 class="name">
+                           {{file?.name}} 
+                        </h4>
+                      </div>
+                      <div class="delete" (click)="deleteFile(i)">
+                        <em class="fmdi fmdi-delete IC-red mr-2"></em> Remove
+                      </div>
+                    </div>
+                    <mat-progress-bar class="Progreebar-File" value="{{file.progress}}" mode="determinate" [max]="100">
+                    </mat-progress-bar>
+                  </div>
+                </div>
+                <div class="Input-text-Fill-Cutome" *ngIf="files.length == 0">
+                  <input class="File-input-common" type="file"
+                         accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                         #fileDropRef id="fileUpload" name="fileUpload" 
+                         (change)="fileBrowseHandler($event.target.files)" required />
+                  <div class="Input-text-File">
+                    <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                    <p class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop <br />CSV or
+                      XLS or XLSX
+                    </p>
+                  </div>
+                </div>
+  
+              </div>
+              <div class="__Btn_Group __MT15px __JcEnd">
+                <button mat-stroked-button color="secondary" class="btn_design"
+                disabled><mat-icon>info</mat-icon> Read
+                  Instructions </button>
+                <!-- (click)="Read_Instruction_BulkUpload_popup()" -->
+                <button mat-stroked-button color="primary" class="btn_design"
+                (click)='uploadFile()' ><mat-icon>arrow_upward_alt</mat-icon> Upload File</button>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+  
+          <div class="box_design">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>File Uploads History</h4>
+              </div>
+              <!-- <div class="box_design_ttl_bar_right">
+                <button class="btn_design" mat-stroked-button color="primary">Filter<i
+                    class="fa fa-sort-amount-down ml-2"></i></button>
+              </div> -->
+            </div>
+            <div class="box_design_details p-0">
+              <div class="tableResponsive" appTableScroll>
+                <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap no_sticky_table">
+                  <thead>
+                  <tr class="tr_lightred_bg">
+                    <th width="5%">Sr. No.</th>
+                    <th>File Name</th>
+                    <th>Uploaded On</th>
+                    <!-- <th>Uploaded By</th> -->
+                    <th class="text-right">Successful Entries</th>
+                    <th class="text-right">Failed Entries</th>
+                    <th class="text-right pr-3">Total Entries</th>
+                    <!-- <th class="text-right pr-3">Total Inactive User</th> -->
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <ng-container *ngIf="hsbcHistoryData">
+                    <tr *ngFor="let historyData of hsbcHistoryData; let i=index">
+                      <td data-label="Sr. No.">{{ startIndex + i + 1 }}</td>
+                      <td data-label="File Name">{{historyData?.fileName}}</td>
+                      <td data-label="Uploaded On">{{historyData?.createdDate |
+                        date:'dd MMM yyyy hh:mm:ss'}}</td>
+                        <td data-label="Successful Entries" class="text-right">{{historyData?.success}} <a
+                          href="javscript:void(0)" (click)="getData(1,historyData?.id)"><img
+                          src="assets/images/hsbc/S_Download_Icon.svg" alt="Successful Entries" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_SUCCESS_ENTRY)"></a></td>
+                        <td data-label="Failed Entries" class="text-right">{{historyData?.fail}} <a
+                          href="javscript:void(0)" (click)="getData(2,historyData?.id)"  *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)"><img
+                          src="assets/images/hsbc/F_Download_Icon.svg" alt="Failed Entries"></a></td>
+                        <td data-label="Total Entries" class="text-right pr-3">{{historyData?.success + historyData?.fail}} <a
+                          href="javscript:void(0)" (click)="getData(3,historyData?.id)" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_TOTAL_ENTRY)"><img
+                          src="assets/images/hsbc/T_Download_Icon.svg" alt="Total Entries"></a></td>
+                    </tr>
+                  </ng-container>
+  
+                  <!-- </ng-container> -->
+                  <!-- <tr>
+                      <td colspan="10">
+                          <div class="HSBC_No_Data_Found">
+                              <lottie-player class="__HSBC_lotties_Not"
+                                  src="../../../../assets/images/Json/No_data_Found.json"
+                                  background="transparent" speed="1" loop autoplay></lottie-player>
+                          </div>
+                      </td>
+                  </tr> -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+  
+  
+            <!-- <div class="pagination-table NP_LeftPagintion">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                          <ng-container *ngIf="counts == 0">
+                          Showing
+                          0 to
+                          {{(pageSize*page) > (counts) ? (counts) :
+                          (pageSize*page)}} of
+                          {{totalCount[0]}}
+                          </ng-container>
+                          <ng-container *ngIf="counts > 0">
+                          Showing
+                          {{((pageSize*(page-1))+1)}} to
+                          {{(pageSize*page) > (counts) ? (counts) :
+                          (pageSize*page)}} of
+                          {{totalCount[0]}}
+                          </ng-container>
+                            row
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <label class="d-inline-flex align-items-center"> <ng-select [clearable]="false"
+                                        name="tickets-table_length" class="hide-clear" aria-controls="tickets-table"
+                                        name="pageSize" [(ngModel)]="pageSize" bindLabel="name" bindValue="value"
+                                        [items]="PageSelectNumber" (ngModelChange)="onChangePage(page)"></ng-select>
+                                    row per page</label>
+                            </div>
+                        </div>
+                    </div>
+  
+                    <div class="col-sm-12 col-md-5">
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination (pageChange)="onChangePage(page)" [maxSize]="3" [pageSize]="pageSize"
+                                    [(page)]="page" [collectionSize]="counts" [rotate]="true"></ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>  -->
+
+
+            <div class="pagination-table NP_LeftPagintion">
+              <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{(startIndex+1)}} to
+                  {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                  {{totalSize}}
+                  row
+  
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'" name="pagesizee"
+                                    (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-sm-12 col-md-5">
+                <div class="text-md-right float-md-right pagination-rounded">
+  
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                    [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

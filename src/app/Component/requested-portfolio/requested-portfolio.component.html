@@ -1,0 +1,2127 @@
+<div class="container-fluid HSBC_Common_Pages rmExisitingPortfolioView_page">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4>
+                    Requested Portfolio
+                </h4>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!-- Prospect Customer List -->
+        <mat-tab-group #tabGroup class="tabbing_design tab_auto" (selectedTabChange)="onTabChange($event)">
+            <mat-tab label="Total Companies">
+                <mat-card-content class="px-0 mt-4">
+                    <div class="page_Title_sec">
+                        <div class="page_Title_left">
+                            <h4>
+                                Total Companies
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="box_design">
+                        <div class="tableResponsive">
+                            <!-- <div *ngIf="!approvedStatusListForSender || approvedStatusListForSender?.length === 0">
+                                <app-no-data-found message="No details found" />
+                            </div> -->
+
+                            <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                <thead>
+                                    <tr class="tr_lightred_bg">
+                                        <th class="text-center">Sr.No</th>
+                                        <th>Name of Customer
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('customerName', 'ASC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'ASC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('customerName', 'ASC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Name of Customer ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('customerName', 'DESC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'DESC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('customerName', 'DESC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Name of Customer descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Persona
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'persona' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('persona', 'ASC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('persona', 'ASC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('persona', 'ASC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Persona ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'persona' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('persona', 'DESC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('persona', 'DESC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('persona', 'DESC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Persona descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>HSBC Wallet
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'hsbcWallet' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('hsbcWallet', 'ASC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('hsbcWallet', 'ASC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('hsbcWallet', 'ASC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by HSBC Wallet ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'hsbcWallet' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('hsbcWallet', 'DESC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('hsbcWallet', 'DESC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('hsbcWallet', 'DESC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by HSBC Wallet descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Total Opportunity
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'totalOpportunity' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('totalOpportunity', 'ASC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('totalOpportunity', 'ASC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('totalOpportunity', 'ASC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Total Opportunity ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'totalOpportunity' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('totalOpportunity', 'DESC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('totalOpportunity', 'DESC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('totalOpportunity', 'DESC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Total Opportunity descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Share
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'share' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('share', 'ASC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('share', 'ASC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('share', 'ASC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Share ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'share' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('share', 'DESC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('share', 'DESC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('share', 'DESC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Share descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Status</th>
+                                        <th>Pending Time
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'approvedTimeDuration' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('approvedTimeDuration', 'ASC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('approvedTimeDuration', 'ASC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('approvedTimeDuration', 'ASC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Pending Time ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'approvedTimeDuration' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('approvedTimeDuration', 'DESC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('approvedTimeDuration', 'DESC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('approvedTimeDuration', 'DESC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by Pending Time descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>RM Name
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'receiverRmName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('receiverRmName', 'ASC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('receiverRmName', 'ASC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('receiverRmName', 'ASC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by RM Name ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'receiverRmName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('receiverRmName', 'DESC', { targetArray: 'approvedStatusListForSender' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('receiverRmName', 'DESC', { targetArray: 'approvedStatusListForSender' })" (keydown.space)="toggleSort('receiverRmName', 'DESC', { targetArray: 'approvedStatusListForSender' })"
+                                                    [attr.aria-label]="'Sort by RM Name descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Approver Remarks</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="requestSenderForApprovedStatus">
+                                        <td></td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter customer name" formControlName ="customerName">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <!-- <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName ="persona" >
+                                                    <mat-select placeholder="Select" [panelClass]="'design_select'"
+                                                        formControlName="persona">
+                                                        <mat-option *ngFor="let data of allPersona"
+                                                            [value]="data.value">
+                                                            {{data.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset> -->
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select #select placeholder="Select"
+                                                        [panelClass]="'design_multiselect'" formControlName="persona">
+                                                        @for(option of allPersona; track option.value){
+                                                        <mat-option [value]="option.value"
+                                                            [ngClass]="(option.value == 'FOREIGN_MNC' ||  option.value == 'FOREIGN_DOMESTIC' || option.value == 'DOMESTIC' )? 'option_heading' : ''">
+                                                            {{ option.label }}
+                                                        </mat-option>
+                                                        }
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput" *ngIf="requestSenderForApprovedStatus && isHsbcWalletAndShareShow(requestSenderForApprovedStatus)">
+                                                <mat-form-field appearance="outline" (click)="$event.stopPropagation()">
+                                                    <!-- <input matInput formControlName="hsbcWallet"> -->
+                                                    <mat-select  disableRipple panelClass="filter_input design_multiselect" placeholder="Please Select range">
+                                                        <mat-option>
+                                                            <div class="input_field"  (click)="$event.stopPropagation()">
+                                                            <label>Min. Range</label>
+                                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                                <input type="text" matInput formControlName="minHsbcWallet" (input)="onNumberInput('minHsbcWallet', requestSenderForApprovedStatus)">
+                                                            </mat-form-field>
+                                                            </div>
+                                                        </mat-option>
+                                                        <mat-option>
+                                                            <div class="input_field"  (click)="$event.stopPropagation()">
+                                                            <label>Max. Range</label>
+                                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                                <input type="text" matInput formControlName="maxHsbcWallet" (input)="onNumberInput('maxHsbcWallet', requestSenderForApprovedStatus)">
+                                                            </mat-form-field>
+                                                            </div>
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select placeholder="Select" [panelClass]="'design_select'"
+                                                        formControlName="totalOpportunity">
+                                                        <mat-option *ngFor="let data of totalOpportunities"
+                                                            [value]="data.value">
+                                                            {{data.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput" *ngIf="requestSenderForApprovedStatus && isHsbcWalletAndShareShow(requestSenderForApprovedStatus)">
+                                                <mat-form-field appearance="outline" (click)="$event.stopPropagation()">
+                                                    <!-- <input matInput formControlName="share"> -->
+                                                    <mat-select disableRipple panelClass="filter_input design_multiselect" placeholder="Please Select range">
+                                                        <mat-option>
+                                                            <div class="input_field"  (click)="$event.stopPropagation()">
+                                                            <label>Min. Range</label>
+                                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                                <input type="text" matInput formControlName="minShare" (input)="onNumberInput('minShare', requestSenderForApprovedStatus)">
+                                                            </mat-form-field>
+                                                            </div>
+                                                        </mat-option>
+                                                        <mat-option >
+                                                            <div class="input_field"  (click)="$event.stopPropagation()">
+                                                            <label>Max. Range</label>
+                                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                                <input type="text" matInput formControlName="maxShare" (input)="onNumberInput('maxShare', requestSenderForApprovedStatus)">
+                                                            </mat-form-field>
+                                                            </div>
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td></td>
+                                        <!-- <td>
+                                            <fieldset class="NP_HSBC_ComInput" disabled="true">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName="status">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td> -->
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter pending time" formControlName="pendingTime">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter rm name" formControlName="requestedRmName">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <ng-container *ngIf="approvedStatusListForSender && approvedStatusListForSender.length > 0; else noData">
+                                    <tr *ngFor="let item of approvedStatusListForSender; let i = index">
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td>{{ item.customerName || '-' }}</td>
+                                        <td>{{ item.persona || '-' }}</td>
+                                        <!-- <td>{{ item.hsbcWallet || '-' }}</td> -->
+                                        <td>{{!this.commonService.isObjectNullOrEmpty(item?.hsbcWallet) ? '₹' + (sanitizeAndConvertToNumber(item?.hsbcWallet) | number:'1.2-2') : '-'}}</td>
+                                        <!-- <td>{{ item.totalOpportunity || '-' }}</td> -->
+                                        @if (requestSenderForApprovedStatus.get("totalOpportunity")?.value == 'NO_OF_PRODUCTS_NOT_WITH_HSBC') {
+                                        <td data-label="Total Opportunity">{{sanitizeAndConvertToNumber(item?.totalOpportunity) | number:'1.2-2'}}</td>
+                                        } @else {<td data-label="Total Opportunity">{{(this.requestSenderForApprovedStatus.get("totalOpportunity")?.value == "EXPORT" ||
+                                                this.requestSenderForApprovedStatus.get("totalOpportunity")?.value == "IMPORT")? "$ " : "₹ "}}{{sanitizeAndConvertToNumber(item?.totalOpportunity) | number:'1.2-2'}}</td>}
+                                        <td>{{ (item?.share | number:'1.2-2') || '-' }}</td>
+                                        <td>{{ item.status || '-' }}</td>
+                                        <td>{{item.approvedTimeDuration === -1 || item.approvedTimeDuration === '-1' ? "Unlimited": item.approvedTimeDuration || '-'}}
+                                            <!-- {{
+                                              isTimeDurationSort
+                                                ? (item.approvedTimeDuration && item.approvedTimeDuration !== 'null' && item.status !== 'Pending' && item.status !== 'Rejected' ? item.approvedTimeDuration : '-')
+                                                : (item.pendingTime && item.pendingTime !== 'null' && item.status !== 'Pending' && item.status !== 'Rejected' ? item.pendingTime : '-')
+
+                                            }} -->
+                                          </td>
+                                        <td>{{ item.receiverRmName || '-' }}</td>
+                                        <td matTooltip={{item.approverRemarks}} matTooltipClass="order_tooltip white_bg"><span class="ellips_txt">{{(item.approverRemarks && item.approverRemarks != null) ? item.approverRemarks : '-'}}</span></td>
+                                        <td class="nowrap_td" data-label="Action">
+                                            <!-- <ng-container *ngIf="item.status === 'Approved'"> -->
+                                              <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View" (click)="navigateToView(item.pan)">
+                                                <em class="fa fa-eye"></em>
+                                              </button>
+
+                                              <!-- <button *ngIf="item.pendingTime !== 0" mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeRequestCustomerPortfolio(item.id)">
+                                                <em class="fas fa-undo-alt"></em>
+                                              </button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="item.status === 'Pending'">
+                                              <button *ngIf="item.pendingTime !== 0" mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeRequestCustomerPortfolio(item.id)">
+                                                <em class="fas fa-undo-alt"></em>
+                                              </button>
+                                            </ng-container> -->
+                                          </td>
+                                    </tr>
+                                    </ng-container>
+                                    <ng-template #noData>
+                                        <tr>
+                                           <td colspan="11" class="text-center"><app-no-data-found message="No details found" /></td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-tab>
+            <mat-tab label="Request Sent">
+                <mat-card-content class="px-0">
+                    <div class="box_design mb-4">
+                        <div class="box_design_ttl_bar">
+                          <div class="box_design_ttl_bar_left">
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
+                                <mat-radio-button value="1">Company</mat-radio-button>
+                                <mat-radio-button value="2" class="ml-2" (change)="searchRmHistoryByRmId()">Portfolio</mat-radio-button>
+                            </mat-radio-group>
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <!-- <p  class="red_text pl-4 pt-2">** only business user allowed **</p> -->
+                      <div class="searchBox_design">
+                        <div class="searchBox_input">
+                         <ng-container *ngIf="selectedOption === '1'">
+                            <div class="input_field serch_refresh">
+                              <mat-form-field appearance="outline">
+                                  <input  type="text" placeholder="Company Name" matInput [(ngModel)]="companySearch" (keydown)="debounceEventForFilter($event)" (paste)="debounceEventForFilter($event)"
+                                  [ngModelOptions]="{standalone: true}" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  @for (option of companyNameList; track option) {
+                                  <mat-option [value]="option">{{option}}</mat-option>
+                                  }
+                                </mat-autocomplete>
+                                <span matSuffix *ngIf="searchCompanyFound" class="fas fa-sync-alt fa-spin"></span>
+                              </mat-form-field>
+                            </div>
+                          </ng-container>
+                        </div>
+                          <ng-container *ngIf="selectedOption === '2'">
+                            <div class="input_field serch_refresh">
+                              <mat-form-field appearance="outline">
+                                <input type="text" placeholder="Enter RM Name" matInput [(ngModel)]="rmName" (keydown)="debounceRmSearch($event)" (paste)="debounceRmSearch($event)"
+                                 [ngModelOptions]="{standalone: true}" [matAutocomplete]="auto">
+                                 <mat-autocomplete #auto="matAutocomplete">
+                                    @for (option of searchResults; track option) {
+                                    <mat-option [value]="option">{{option}}</mat-option>
+                                    }
+                                  </mat-autocomplete>
+                                <span matSuffix *ngIf="searching" class="fas fa-sync-alt fa-spin"></span>
+                              </mat-form-field>
+                            </div>
+                          </ng-container>
+                        <div class="searchBox_btn ml-2">
+                          <button  type="submit" class="ln_40" mat-flat-button color="primary" (click)="onSearchClick()">Search</button>
+                        </div>
+                      </div>
+                    </div>
+                </mat-card-content>
+                <ng-container *ngIf="selectedOption === '1'">
+                <mat-card-content class="px-0">
+                    <div class="page_Title_sec">
+                        <div class="page_Title_left">
+                            <h4>
+                                Company Details
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="box_design">
+                        <div class="tableResponsive">
+                            <div *ngIf="allSearchCustomerData && allSearchCustomerData.length === 0">
+                                <app-no-data-found message="No details found" />
+                            </div>
+
+                            <table *ngIf="allSearchCustomerData && allSearchCustomerData.length > 0"
+                                class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                <thead>
+                                    <tr class="tr_lightred_bg">
+                                        <th class="text-center">Sr.No</th>
+                                        <th>Company Name
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('customerName', 'ASC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'ASC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('customerName', 'ASC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by Company Name ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('customerName', 'DESC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'DESC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('customerName', 'DESC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by Company Name descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Company Type
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'companyType' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('companyType', 'ASC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('companyType', 'ASC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('companyType', 'ASC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by Company Type ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'companyType' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('companyType', 'DESC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('companyType', 'DESC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('companyType', 'DESC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by Company Type descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>RM PS ID
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'rmId' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('rmId', 'ASC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmId', 'ASC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('rmId', 'ASC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by RM PS ID ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'rmId' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('rmId', 'DESC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmId', 'DESC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('rmId', 'DESC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by RM PS ID descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>RM Name
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'rmName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('rmName', 'ASC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmName', 'ASC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('rmName', 'ASC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by RM Name ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'rmName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('rmName', 'DESC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmName', 'DESC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('rmName', 'DESC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by RM Name descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>RM Email ID
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'rmEmailId' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('rmEmailId', 'ASC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmEmailId', 'ASC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('rmEmailId', 'ASC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by RM Email ID ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'rmEmailId' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('rmEmailId', 'DESC', { targetArray: 'allSearchCustomerData' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmEmailId', 'DESC', { targetArray: 'allSearchCustomerData' })" (keydown.space)="toggleSort('rmEmailId', 'DESC', { targetArray: 'allSearchCustomerData' })"
+                                                    [attr.aria-label]="'Sort by RM Email ID descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Time Frame (In Days)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of   allSearchCustomerData; let i = index">
+                                        <td class="text-center">{{i+1}}</td>
+                                        <td>{{item?.customerName || '-'}}</td>
+                                        <td>{{item?.companyType || '-'}}</td>
+                                        <td>{{item?.rmId || '-'}}</td>
+                                        <td>{{item?.rmName || '-'}}</td>
+                                        <td>{{item?.rmEmailId || '-'}}</td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput w-auto">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="item.requestedTimeDuration" placeholder="Select"[panelClass]="'design_multiselect'">
+                                                        <mat-option value="15">15</mat-option>
+                                                        <mat-option value="30">30</mat-option>
+                                                        <mat-option value="45">45</mat-option>
+                                                         <mat-option value="-1">Unlimited</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td class="green_text" >
+                                            <a class="d-flex ai-center green_text"   (click)="RequestStatus_popup(false, item)">
+                                                Submit   <mat-icon>chevron_right</mat-icon>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-content class="px-0 mt-4">
+                    <div class="page_Title_sec">
+                        <div class="page_Title_left">
+                            <h4>
+                                Requested Company History
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="box_design">
+                        <div class="tableResponsive">
+                            <!-- <div *ngIf="!historyCompanyListForSender">
+                                <app-no-data-found message="No details found" />
+                            </div> -->
+
+                            <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                <thead>
+                                    <tr class="tr_lightred_bg">
+                                        <th class="text-center">Sr.No</th>
+                                        <th>Name of Customer
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('customerName', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'ASC')" (keydown.space)="toggleSort('customerName', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Name of Customer ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('customerName', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'DESC')" (keydown.space)="toggleSort('customerName', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Name of Customer descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Persona
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'persona' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('persona', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('persona', 'ASC')" (keydown.space)="toggleSort('persona', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Persona ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'persona' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('persona', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('persona', 'DESC')" (keydown.space)="toggleSort('persona', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Persona descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>HSBC Wallet
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'hsbcWallet' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('hsbcWallet', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('hsbcWallet', 'ASC')" (keydown.space)="toggleSort('hsbcWallet', 'ASC')"
+                                                    [attr.aria-label]="'Sort by HSBC Wallet ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'hsbcWallet' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('hsbcWallet', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('hsbcWallet', 'DESC')" (keydown.space)="toggleSort('hsbcWallet', 'DESC')"
+                                                    [attr.aria-label]="'Sort by HSBC Wallet descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Total Opportunity
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'totalOpportunity' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('totalOpportunity', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('totalOpportunity', 'ASC')" (keydown.space)="toggleSort('totalOpportunity', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Total Opportunity ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'totalOpportunity' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('totalOpportunity', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('totalOpportunity', 'DESC')" (keydown.space)="toggleSort('totalOpportunity', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Total Opportunity descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Share
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'share' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('share', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('share', 'ASC')" (keydown.space)="toggleSort('share', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Share ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'share' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('share', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('share', 'DESC')" (keydown.space)="toggleSort('share', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Share descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Status
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'status' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('status', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('status', 'ASC')" (keydown.space)="toggleSort('status', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Status ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'status' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('status', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('status', 'DESC')" (keydown.space)="toggleSort('status', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Status descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Pending Time
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'pendingTime' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('pendingTime', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('pendingTime', 'ASC')" (keydown.space)="toggleSort('pendingTime', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Pending Time ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'pendingTime' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('pendingTime', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('pendingTime', 'DESC')" (keydown.space)="toggleSort('pendingTime', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Pending Time descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>RM Name
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'rmName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('rmName', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmName', 'ASC')" (keydown.space)="toggleSort('rmName', 'ASC')"
+                                                    [attr.aria-label]="'Sort by RM Name ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'rmName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('rmName', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmName', 'DESC')" (keydown.space)="toggleSort('rmName', 'DESC')"
+                                                    [attr.aria-label]="'Sort by RM Name descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>RM ID
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'rmId' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('rmId', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmId', 'ASC')" (keydown.space)="toggleSort('rmId', 'ASC')"
+                                                    [attr.aria-label]="'Sort by RM ID ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'rmId' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('rmId', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('rmId', 'DESC')" (keydown.space)="toggleSort('rmId', 'DESC')"
+                                                    [attr.aria-label]="'Sort by RM ID descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Approver Remarks</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="requestSender">
+                                        <td></td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter customer name" formControlName ="customerName">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <!-- <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName ="persona" >
+                                                    <mat-select placeholder="Select" [panelClass]="'design_select'"
+                                                        formControlName="persona">
+                                                        <mat-option *ngFor="let data of allPersona"
+                                                            [value]="data.value">
+                                                            {{data.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset> -->
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select #select placeholder="Select"
+                                                        [panelClass]="'design_multiselect'" formControlName="persona">
+                                                        @for(option of allPersona; track option.value){
+                                                        <mat-option [value]="option.value"
+                                                            [ngClass]="(option.value == 'FOREIGN_MNC' ||  option.value == 'FOREIGN_DOMESTIC' || option.value == 'DOMESTIC' )? 'option_heading' : ''">
+                                                            {{ option.label }}
+                                                        </mat-option>
+                                                        }
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput" *ngIf="requestSender && isHsbcWalletAndShareShow(requestSender)">
+                                                <mat-form-field appearance="outline" (click)="$event.stopPropagation()">
+                                                    <!-- <input matInput formControlName="hsbcWallet"> -->
+                                                    <mat-select  disableRipple panelClass="filter_input design_multiselect" placeholder="Please Select range">
+                                                        <mat-option>
+                                                            <div class="input_field"  (click)="$event.stopPropagation()">
+                                                            <label>Min. Range</label>
+                                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                                <input type="text" matInput formControlName="minHsbcWallet" (input)="onNumberInput('minHsbcWallet', requestSender)">
+                                                            </mat-form-field>
+                                                            </div>
+                                                        </mat-option>
+                                                        <mat-option>
+                                                            <div class="input_field"  (click)="$event.stopPropagation()">
+                                                            <label>Max. Range</label>
+                                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                                <input type="text" matInput formControlName="maxHsbcWallet" (input)="onNumberInput('maxHsbcWallet', requestSender)">
+                                                            </mat-form-field>
+                                                            </div>
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select placeholder="Select" [panelClass]="'design_select'"
+                                                        formControlName="totalOpportunity">
+                                                        <mat-option *ngFor="let data of totalOpportunities"
+                                                            [value]="data.value">
+                                                            {{data.label}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput" *ngIf="requestSender && isHsbcWalletAndShareShow(requestSender)">
+                                                <mat-form-field appearance="outline" (click)="$event.stopPropagation()">
+                                                    <!-- <input matInput formControlName="share"> -->
+                                                    <mat-select disableRipple panelClass="filter_input design_multiselect" placeholder="Please Select range">
+                                                        <mat-option>
+                                                            <div class="input_field"  (click)="$event.stopPropagation()">
+                                                            <label>Min. Range</label>
+                                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                                <input type="text" matInput formControlName="minShare" (input)="onNumberInput('minShare', requestSender)">
+                                                            </mat-form-field>
+                                                            </div>
+                                                        </mat-option>
+                                                        <mat-option >
+                                                            <div class="input_field"  (click)="$event.stopPropagation()">
+                                                            <label>Max. Range</label>
+                                                            <mat-form-field appearance="outline" floatLabel="never">
+                                                                <input type="text" matInput formControlName="maxShare" (input)="onNumberInput('maxShare', requestSender)">
+                                                            </mat-form-field>
+                                                            </div>
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter status" formControlName="status">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter pending time" formControlName="pendingTime">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <ng-container *ngIf="historyCompanyListForSender && historyCompanyListForSender.length > 0; else noData">
+                                    <tr *ngFor="let item of historyCompanyListForSender; let i = index">
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td>{{ item.customerName || '-' }}</td>
+                                        <td>{{ item.persona || '-' }}</td>
+                                        <!-- <td>{{ item.hsbcWallet || '-' }}</td> -->
+                                        <td>{{!this.commonService.isObjectNullOrEmpty(item?.hsbcWallet) ? '₹' + (sanitizeAndConvertToNumber(item?.hsbcWallet) | number:'1.2-2') : '-'}}</td>
+                                        <!-- <td>{{ item.totalOpportunity || '-' }}</td> -->
+                                        @if (requestSender.get("totalOpportunity")?.value == 'NO_OF_PRODUCTS_NOT_WITH_HSBC') {
+                                        <td data-label="Total Opportunity">{{sanitizeAndConvertToNumber(item?.totalOpportunity) | number:'1.2-2'}}</td>
+                                        } @else {<td data-label="Total Opportunity">{{(this.requestSender.get("totalOpportunity")?.value == "EXPORT" ||
+                                                this.requestSender.get("totalOpportunity")?.value == "IMPORT")? "$ " : "₹ "}}{{sanitizeAndConvertToNumber(item?.totalOpportunity) | number:'1.2-2'}}</td>}
+                                        <td>{{ (item?.share | number:'1.2-2') || '-' }}</td>
+                                        <td>{{ item.status || '-' }}</td>
+                                        <td>
+                                            {{
+                                              isTimeDurationSort
+                                                ? (item.approvedTimeDuration && item.approvedTimeDuration !== 'null' && item.status !== 'Pending' && item.status !== 'Rejected' ? item.approvedTimeDuration : '-')
+                                                :  (item.pendingTime && item.pendingTime !== 'null' && item.status !== 'Pending' && item.status !== 'Rejected'? (item.pendingTime === -1 || item.pendingTime === '-1' ? 'Unlimited' : item.pendingTime): '-')
+
+                                            }}
+                                          </td>
+                                        <td>{{ item.rmName || '-' }}</td>
+                                        <td>{{ item.requestedRmPsId || '-' }}</td>
+                                        <td matTooltip={{item.approverRemarks}} matTooltipClass="order_tooltip white_bg"><span class="ellips_txt">{{(item.approverRemarks && item.approverRemarks != null) ? item.approverRemarks : '-'}}</span></td>
+                                        <td class="nowrap_td" data-label="Action">
+                                            <ng-container *ngIf="item.status === 'Approved'">
+                                              <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View" (click)="navigateToView(item.pan)">
+                                                <em class="fa fa-eye"></em>
+                                              </button>
+
+                                              <button *ngIf="item.pendingTime !== 0" mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeRequestCustomerPortfolio(item.id)">
+                                                <em class="fas fa-undo-alt"></em>
+                                              </button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="item.status === 'Pending'">
+                                              <button *ngIf="item.pendingTime !== 0" mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeRequestCustomerPortfolio(item.id)">
+                                                <em class="fas fa-undo-alt"></em>
+                                              </button>
+                                            </ng-container>
+                                          </td>
+                                    </tr>
+                                    </ng-container>
+                                    <ng-template #noData>
+                                        <tr>
+                                           <td colspan="11" class="text-center"><app-no-data-found message="No details found" /></td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-card-content>
+                </ng-container>
+                <ng-container *ngIf="selectedOption === '2'">
+                    <mat-card-content class="px-0">
+                        <div class="page_Title_sec">
+                            <div class="page_Title_left">
+                                <h4>
+                                    Portfolio Details
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="box_design">
+
+                            <div *ngIf="!portfolioResults || portfolioResults.length === 0">
+                                <app-no-data-found message="No details found" />
+                            </div>
+
+                            <div class="tableResponsive" *ngIf="portfolioResults.length !==0">
+                                <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                    <thead>
+                                        <tr class="tr_lightred_bg">
+                                            <th width="8%"></th>
+                                            <th width="50%">RM Name</th>
+                                            <th width="15%">No. Of Companies
+                                                <span class="shorting">
+                                                    <!-- <mat-icon>arrow_upward</mat-icon> -->
+                                                </span>
+                                            </th>
+                                            <th width="15%">Time Frame (In Days)
+                                                <span class="shorting">
+                                                    <!-- <mat-icon>arrow_upward</mat-icon> -->
+                                                </span>
+                                            </th>
+                                            <th width="12%" class="text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center table_check_box">
+                                        <mat-checkbox  [(ngModel)]="masterSelected" (change)="checkUncheckAll()"></mat-checkbox>
+                                                <button mat-icon-button class="matIcon red_icn ml-2" (click)="collapsedList1.toggle(); isCollapsed1 = !isCollapsed1"
+                                                    [ngClass]="{'rotate_icon': isCollapsed1}"><i class="fas fa-chevron-down"></i>
+                                                </button>
+                                            </td>
+                                            <td>{{  userNameAndEmailidList?.requestedRmName ?? '-' }}</td>
+                                            <td>{{ userNameAndEmailidList?.count ?? '-' }}</td>
+                                                <td>
+                                                <fieldset class="NP_HSBC_ComInput w-auto">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select  placeholder="15" [(ngModel)]="masterTimeDuration" (selectionChange)="onMasterChange($event.value)" [panelClass]="'design_multiselect'">
+                                                            <mat-option value="15">15</mat-option>
+                                                            <mat-option value="30">30</mat-option>
+                                                            <mat-option value="45">45</mat-option>
+                                                            <mat-option value="-1">Unlimited</mat-option>
+                                                            <mat-option *ngIf="masterTimeDuration === '-'"  value="-" disabled>-</mat-option>
+
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                             <td class="text-right">
+                                                <a class="d-flex al-center darkgreen_text jc-end" (click)="Remarks_popup(false)" >
+                                                    Submit   <mat-icon>chevron_right</mat-icon>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr class="collapsing_tr" #collapsedList1="ngbCollapse" [(ngbCollapse)]="collapsedList1">
+                                            <td colspan="15" class="intable_td">
+                                              <div class="box_design box-shadow-0">
+                                                <div class="tableResponsive inside_table">
+                                                  <table class="bordered_table w-100">
+                                                    <thead>
+                                                    <tr>
+                                                      <th class="text-right" width="5%">Sr. No.</th>
+                                                      <th width="75%">
+                                                        <div class="d-flex al-center">
+                                                            Customer Name
+                                                            <span class="sort-container ml-2">
+                                                                <mat-icon class="sort-icon sort-icon-up"
+                                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'asc'"
+                                                                    (click)="toggleSort('customerName', 'ASC', { targetArray: 'filteredResults' })" role="button" tabindex="0"
+                                                                    (keydown.enter)="toggleSort('customerName', 'ASC', { targetArray: 'filteredResults' })" (keydown.space)="toggleSort('customerName', 'ASC', { targetArray: 'filteredResults' })"
+                                                                    [attr.aria-label]="'Sort by Customer Name ascending'">
+                                                                    arrow_drop_up
+                                                                </mat-icon>
+                                                                <mat-icon class="sort-icon sort-icon-down"
+                                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'desc'"
+                                                                    (click)="toggleSort('customerName', 'DESC', { targetArray: 'filteredResults' })" role="button" tabindex="0"
+                                                                    (keydown.enter)="toggleSort('customerName', 'DESC', { targetArray: 'filteredResults' })" (keydown.space)="toggleSort('customerName', 'DESC', { targetArray: 'filteredResults' })"
+                                                                    [attr.aria-label]="'Sort by Customer Name descending'">
+                                                                    arrow_drop_down
+                                                                </mat-icon>
+                                                            </span>
+                                                            <fieldset class="NP_HSBC_ComInput white_bg max-200 ml-2">
+                                                                <mat-form-field appearance="outline">
+
+                                                                    <input matInput  placeholder="Search"  [(ngModel)]="searchText" (ngModelChange)="onSearchChange()"/>
+
+                                                                    <span matSuffix class="mr-2"><i class="fi fi-br-search"></i></span>
+                                                                </mat-form-field>
+                                                            </fieldset>
+                                                        </div>
+                                                      </th>
+                                                       <th>Time Frame (In Days)</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <ng-container *ngIf="filteredResults && filteredResults.length > 0; else noData">
+                                                    <tr *ngFor="let item of filteredResults.slice(startIndex, endIndex); let i = index">
+                                                      <td class="table_check_box text-right"><mat-checkbox class="mr-2" [(ngModel)]="item.selected" (change)="isAllSelected()"></mat-checkbox> {{ startIndex + i + 1 }}</td>
+                                                      <td>{{item.customerName}}</td>
+                                                      <td>
+                                                        <fieldset class="NP_HSBC_ComInput w-auto">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-select  placeholder="15" [(ngModel)]="item.timeDuration"  (selectionChange)="onChildChanges()" [panelClass]="'design_multiselect'">                                                                    <mat-option value="15">15</mat-option>
+                                                                    <mat-option value="30">30</mat-option>
+                                                                    <mat-option value="45">45</mat-option>
+                                                                    <mat-option value="-1">Unlimited</mat-option>
+
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </fieldset>
+                                                      </td>
+                                                    </tr>
+                                                    </ng-container>
+                                                    <ng-template #noData>
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">No records found.</td>
+                                                    </tr>
+                                                    </ng-template>
+                                                    <!-- <tr>
+                                                        <td class="table_check_box text-right"><mat-checkbox class="mr-2"></mat-checkbox> 2.</td>
+                                                        <td>Tata Sons Private Limited</td>
+                                                        <td>
+                                                          <fieldset class="NP_HSBC_ComInput w-auto">
+                                                              <mat-form-field appearance="outline">
+                                                                  <mat-select  placeholder="90" [panelClass]="'design_multiselect'">
+                                                                      <mat-option value="15">15</mat-option>
+                                                                      <mat-option value="30">30</mat-option>
+                                                                      <mat-option value="45">45</mat-option>
+                                                                  </mat-select>
+                                                              </mat-form-field>
+                                                          </fieldset>
+                                                        </td>
+                                                      </tr>  -->
+                                                    </tbody>
+                                                  </table>
+                                                </div>
+
+                                                <!-- Child Pagination -->
+
+                                                <div class="pagination-table NP_LeftPagintion">
+                                                    <div class="col-sm-12 col-md-5">
+                                                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                                            Showing
+                                                            {{(startIndex+1)}} to
+                                                            {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                                            {{totalSize}}
+                                                            row
+                                                            <div class="dataTables_length" id="tickets-table_length">
+                                                                <div class="NP_HSBC_ComInput select-field">
+                                                                    <mat-form-field appearance="outline">
+                                                                        <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                                                                        (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                                                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                                                {{pages.value}}
+                                                                            </mat-option>
+                                                                        </mat-select>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-md-5">
+                                                        <div class="text-md-right float-md-right pagination-rounded">
+                                                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                                <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                                                [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                                                                </ngb-pagination>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                              </div>
+                                            </td>
+                                          </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-content class="px-0 mt-4">
+                        <div class="page_Title_sec">
+                            <div class="page_Title_left">
+                                <h4>
+                                    Requested Portfolio History
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="box_design">
+                            <div class="tableResponsive"  >
+                                <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                    <thead>
+                                        <tr class="tr_lightred_bg">
+                                            <th width="5%" class="text-center">Sr.No</th>
+                                            <th>RM Name
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortFieldForHistory === 'rmName' && sortDirectionForHistory === 'asc'"
+                                                        (click)="toggleSort('rmName', 'ASC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('rmName', 'ASC', { useApplyFilters: true })" (keydown.space)="toggleSort('rmName', 'ASC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by RM Name ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortFieldForHistory === 'rmName' && sortDirectionForHistory === 'desc'"
+                                                        (click)="toggleSort('rmName', 'DESC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('rmName', 'DESC', { useApplyFilters: true })" (keydown.space)="toggleSort('rmName', 'DESC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by RM Name descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>No. Of Companies
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortFieldForHistory === 'noOfCompany' && sortDirectionForHistory === 'asc'"
+                                                        (click)="toggleSort('noOfCompany', 'ASC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('noOfCompany', 'ASC', { useApplyFilters: true })" (keydown.space)="toggleSort('noOfCompany', 'ASC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by No. Of Companies ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortFieldForHistory === 'noOfCompany' && sortDirectionForHistory === 'desc'"
+                                                        (click)="toggleSort('noOfCompany', 'DESC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('noOfCompany', 'DESC', { useApplyFilters: true })" (keydown.space)="toggleSort('noOfCompany', 'DESC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by No. Of Companies descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Status
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortFieldForHistory === 'status' && sortDirectionForHistory === 'asc'"
+                                                        (click)="toggleSort('status', 'ASC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('status', 'ASC', { useApplyFilters: true })" (keydown.space)="toggleSort('status', 'ASC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by Status ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortFieldForHistory === 'status' && sortDirectionForHistory === 'desc'"
+                                                        (click)="toggleSort('status', 'DESC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('status', 'DESC', { useApplyFilters: true })" (keydown.space)="toggleSort('status', 'DESC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by Status descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Pending Time
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortFieldForHistory === 'pendingTime' && sortDirectionForHistory === 'asc'"
+                                                        (click)="toggleSort('pendingTime', 'ASC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('pendingTime', 'ASC', { useApplyFilters: true })" (keydown.space)="toggleSort('pendingTime', 'ASC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by Pending Time ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortFieldForHistory === 'pendingTime' && sortDirectionForHistory === 'desc'"
+                                                        (click)="toggleSort('pendingTime', 'DESC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('pendingTime', 'DESC', { useApplyFilters: true })" (keydown.space)="toggleSort('pendingTime', 'DESC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by Pending Time descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Approver Remarks </th>
+                                             <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                            <td></td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput placeholder="Enter rm name" [(ngModel)]="filters.rmName" (input)="applyFilters()">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput placeholder="Enter no. of companies" type="number" [(ngModel)]="filters.noOfCompany" (input)="applyFilters()">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline" placeholder="Enter rm name">
+                                                        <input matInput placeholder="Enter status" [(ngModel)]="filters.status" (input)="applyFilters()">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput placeholder="Enter pending time" [(ngModel)]="filters.pendingTime" (input)="applyFilters()">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <ng-container *ngIf="filteredDataRmHistoryData && filteredDataRmHistoryData.length > 0; else noData">
+                                        <tr *ngFor="let item of filteredDataRmHistoryData; let i = index">
+                                            <td class="text-center">{{ i +1 }}</td>
+                                            <td>{{item.rmName}}</td>
+                                            <td>{{item.noOfCompany}}</td>
+                                            <td>{{item.status}}</td>
+                                            <td>{{item.pendingTime === -1 || item.pendingTime === '-1' ? 'Unlimited' : item.pendingTime}}</td>
+                                            <td class="ellips_txt" matTooltip={{item.approverRemarks}} matTooltipClass="order_tooltip white_bg">{{item.approverRemarks || '-'}}</td>
+                                            <td class="nowrap_td text-center" data-label="Action">
+                                                <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View" (click)="ListCustomer_popup(item.responseDtos)">
+                                                    <em class="fa fa-eye"></em>
+                                                </button>
+                                                <!-- <button mat-icon-button class="matIcon grey_icn" ngbTooltip="Revoke" >
+                                                    <em class="fas fa-file-excel"></em>
+
+                                                </button> -->
+
+                                            <!-- <ng-container *ngIf="item.status === 'Approved'">
+                                              <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View" (click)="navigateToView(item.pan)">
+                                                <em class="fa fa-eye"></em>
+                                              </button> -->
+
+                                              <!-- <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeToRequestedRm(item)">
+                                                <em class="fas fa-undo-alt"></em>
+                                              </button> -->
+                                            <!-- </ng-container> -->
+
+                                            <!-- <ng-container *ngIf="item.status === 'Pending'"> -->
+                                              <button *ngIf="item.status === 'Pending' || item.status === 'Approved'" mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeToRequestedRm(item)">
+                                                <em class="fas fa-undo-alt"></em>
+                                              </button>
+                                            <!-- </ng-container> -->
+                                            </td>
+                                        </tr>
+                                        </ng-container>
+                                        <ng-template #noData>
+                                        <tr>
+                                           <td colspan="7" class="text-center"><app-no-data-found message="No details found" /></td>
+                                        </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    </ng-container>
+            </mat-tab>
+
+            <mat-tab label="Request Received">
+                <mat-card-content class="px-0">
+                    <div class="box_design mb-4">
+                        <div class="box_design_ttl_bar">
+                          <div class="box_design_ttl_bar_left">
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
+                                <mat-radio-button value="1">Company</mat-radio-button>
+                                <mat-radio-button value="2" class="ml-2" (change)="searchRecevierRmHistoryByRmId()">Portfolio</mat-radio-button>
+                            </mat-radio-group>
+                          </div>
+                      </div>
+                      <!-- <div class="clearfix"></div>
+                       <div class="searchBox_design">
+                        <div class="searchBox_input">
+                          <ng-container *ngIf="selectedOption === '1'">
+                            <div class="input_field serch_refresh">
+                              <mat-form-field appearance="outline">
+                                  <input  type="text" placeholder="Company Name" matInput [(ngModel)]="companySearch" (keydown)="debounceEventForFilter($event)" (paste)="debounceEventForFilter($event)"
+                                  [ngModelOptions]="{standalone: true}" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  @for (option of companyNameList; track option) {
+                                  <mat-option [value]="option">{{option}}</mat-option>
+                                  }
+                                </mat-autocomplete>
+                                <span matSuffix *ngIf="searchCompanyFound" class="fas fa-sync-alt fa-spin"></span>
+                              </mat-form-field>
+                            </div>
+                          </ng-container>
+                        </div>
+                          <ng-container *ngIf="selectedOption === '2'">
+                            <div class="input_field serch_refresh">
+                              <mat-form-field appearance="outline">
+                                <input type="text" placeholder="Enter RM Name" matInput [(ngModel)]="rmSearchRmName"
+                                 [ngModelOptions]="{standalone: true}">
+                                 <mat-autocomplete #auto="matAutocomplete">
+                                    @for (option of searchResults; track option) {
+                                    <mat-option [value]="option">{{option}}</mat-option>
+                                    }
+                                  </mat-autocomplete>
+                                <span matSuffix *ngIf="searching" class="fas fa-sync-alt fa-spin"></span>
+                              </mat-form-field>
+                            </div>
+                          </ng-container>
+                        <div class="searchBox_btn ml-2">
+                          <button  type="submit" class="ln_40" mat-flat-button color="primary" >Search</button>
+                        </div>
+                      </div> -->
+                    </div>
+                </mat-card-content>
+                <ng-container *ngIf="selectedOption === '1'">
+                <mat-card-content class="px-0">
+                    <div class="page_Title_sec">
+                        <div class="page_Title_left">
+                            <h4>
+                                Company Details
+                            </h4>
+                        </div>
+
+                        <div class="page_Title_right">
+                            <button *ngIf="selectedIds?.length > 0" type="submit" class="ln_40" (click)="RequestStatus_popup_for_checkbox(true)" mat-flat-button color="primary">Submit</button>
+                        </div>
+                    </div>
+                    <div class="box_design">
+                        <div class="tableResponsive">
+                            <div *ngIf="!pending_companylist || pending_companylist.length === 0">
+                                <app-no-data-found message="No details found" />
+                            </div>
+
+                            <table *ngIf="pending_companylist && pending_companylist.length > 0"
+                                class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                <thead>
+                                    <tr class="tr_lightred_bg">
+                                        <th>Select All</th>
+                                        <th class="text-center">Sr.No</th>
+                                        <th>Company Name
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('customerName', 'ASC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'ASC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('customerName', 'ASC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Company Name ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('customerName', 'DESC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'DESC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('customerName', 'DESC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Company Name descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Company Type
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'companyType' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('companyType', 'ASC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('companyType', 'ASC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('companyType', 'ASC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Company Type ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'companyType' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('companyType', 'DESC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('companyType', 'DESC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('companyType', 'DESC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Company Type descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Requested RM PS ID
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'requestedRmPsId' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('requestedRmPsId', 'ASC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmPsId', 'ASC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('requestedRmPsId', 'ASC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Requested RM PS ID ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'requestedRmPsId' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('requestedRmPsId', 'DESC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmPsId', 'DESC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('requestedRmPsId', 'DESC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Requested RM PS ID descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Requested RM Name
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'requestedRmName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('requestedRmName', 'ASC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmName', 'ASC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('requestedRmName', 'ASC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Requested RM Name ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'requestedRmName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('requestedRmName', 'DESC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmName', 'DESC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('requestedRmName', 'DESC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Requested RM Name descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Requested RM Email ID
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'requestedRmEmailId' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('requestedRmEmailId', 'ASC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmEmailId', 'ASC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('requestedRmEmailId', 'ASC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Requested RM Email ID ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'requestedRmEmailId' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('requestedRmEmailId', 'DESC', { targetArray: 'pending_companylist' })" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmEmailId', 'DESC', { targetArray: 'pending_companylist' })" (keydown.space)="toggleSort('requestedRmEmailId', 'DESC', { targetArray: 'pending_companylist' })"
+                                                    [attr.aria-label]="'Sort by Requested RM Email ID descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Time Frame (In Days)</th>
+                                        <th>Requester Remarks</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="pendingRecevierRequestFilter">
+                                        <td><mat-checkbox (change)="toggleSelectAll($event)"
+                                            [checked]="isMasterChecked" [indeterminate]="isIndeterminate"></mat-checkbox></td>
+                                        <td></td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName="customerName">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName="companyType">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName="requestedRmPsId">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName="requestedRmName">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName="requestedRmEmailId">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr *ngFor="let item of pending_companylist; let i = index">
+                                        <td><mat-checkbox (change)="toggleSelection(item.id)" [checked]="selectedIds.includes(item.id)"></mat-checkbox></td>
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td>{{ item.customerName || '-' }}</td>
+                                        <td>{{ item.companyType || '-' }}</td>
+                                        <td>{{ item.requestedRmPsId || '-' }}</td>
+                                        <td>{{ item.requestedRmName || '-' }}</td>
+                                        <td>{{ item.requestedRmEmailId || '-' }}</td>
+                                        <!-- <td>{{ item.timeDuration || '-' }}</td> -->
+                                        <!-- <td>{{ item.requestorRemarks || '-' }}</td> -->
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput w-auto">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="item.requestedTimeDuration" [placeholder]="item.requestedTimeDuration === -1 ? 'Unlimited' : (item.requestedTimeDuration || 'Select')" [panelClass]="'design_multiselect'" >
+                                                        <mat-option value="15">15</mat-option>
+                                                        <mat-option value="30">30</mat-option>
+                                                        <mat-option value="45">45</mat-option>
+                                                        <mat-option value="-1">Unlimited</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>{{ item.requestorRemarks || '-' }}</td>
+                                        <td class="green_text" >
+                                            <a class="d-flex ai-center green_text" (click)="RequestStatus_popup(true, item)">
+                                                Submit  <mat-icon>chevron_right</mat-icon>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-content class="px-0 mt-4">
+                    <div class="page_Title_sec">
+                        <div class="page_Title_left">
+                            <h4>
+                                Company History
+                            </h4>
+                        </div>
+
+                    </div>
+                    <div class="box_design">
+                        <div class="tableResponsive">
+                            <!-- <div *ngIf="!approve_reject_companaylist">
+                                <app-no-data-found message="No details found" />
+                            </div> -->
+
+                            <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                <thead>
+                                    <tr class="tr_lightred_bg">
+                                        <th class="text-center">Sr.No</th>
+                                        <th>Name of Customer
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('customerName', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'ASC')" (keydown.space)="toggleSort('customerName', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Name of Customer ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('customerName', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('customerName', 'DESC')" (keydown.space)="toggleSort('customerName', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Name of Customer descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Company Type
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'companyType' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('companyType', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('companyType', 'ASC')" (keydown.space)="toggleSort('companyType', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Company Type ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'companyType' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('companyType', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('companyType', 'DESC')" (keydown.space)="toggleSort('companyType', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Company Type descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Requested RM PS ID
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'requestedRmPsId' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('requestedRmPsId', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmPsId', 'ASC')" (keydown.space)="toggleSort('requestedRmPsId', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Requested RM PS ID ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'requestedRmPsId' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('requestedRmPsId', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmPsId', 'DESC')" (keydown.space)="toggleSort('requestedRmPsId', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Requested RM PS ID descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Requested RM Name
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'requestedRmName' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('requestedRmName', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmName', 'ASC')" (keydown.space)="toggleSort('requestedRmName', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Requested RM Name ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'requestedRmName' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('requestedRmName', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmName', 'DESC')" (keydown.space)="toggleSort('requestedRmName', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Requested RM Name descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Requested RM Email ID
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'requestedRmEmailId' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('requestedRmEmailId', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmEmailId', 'ASC')" (keydown.space)="toggleSort('requestedRmEmailId', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Requested RM Email ID ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'requestedRmEmailId' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('requestedRmEmailId', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('requestedRmEmailId', 'DESC')" (keydown.space)="toggleSort('requestedRmEmailId', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Requested RM Email ID descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Time Frame (In Days)
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'timeDuration' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('timeDuration', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('timeDuration', 'ASC')" (keydown.space)="toggleSort('timeDuration', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Time Frame ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'timeDuration' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('timeDuration', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('timeDuration', 'DESC')" (keydown.space)="toggleSort('timeDuration', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Time Frame descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Status
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'status' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('status', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('status', 'ASC')" (keydown.space)="toggleSort('status', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Status ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'status' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('status', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('status', 'DESC')" (keydown.space)="toggleSort('status', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Status descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Pending Time
+                                            <span class="sort-container">
+                                                <mat-icon class="sort-icon sort-icon-up"
+                                                    [class.active]="currentSortField === 'pendingTime' && sortDirection === 'asc'"
+                                                    (click)="toggleSort('pendingTime', 'ASC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('pendingTime', 'ASC')" (keydown.space)="toggleSort('pendingTime', 'ASC')"
+                                                    [attr.aria-label]="'Sort by Pending Time ascending'">
+                                                    arrow_drop_up
+                                                </mat-icon>
+                                                <mat-icon class="sort-icon sort-icon-down"
+                                                    [class.active]="currentSortField === 'pendingTime' && sortDirection === 'desc'"
+                                                    (click)="toggleSort('pendingTime', 'DESC')" role="button" tabindex="0"
+                                                    (keydown.enter)="toggleSort('pendingTime', 'DESC')" (keydown.space)="toggleSort('pendingTime', 'DESC')"
+                                                    [attr.aria-label]="'Sort by Pending Time descending'">
+                                                    arrow_drop_down
+                                                </mat-icon>
+                                            </span>
+                                        </th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
+                                     </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="approveRejectRequestRecevier">
+                                        <td></td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter customer name" formControlName="customerName">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter company type" formControlName="companyType">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter requested rm ps id" formControlName="requestedRmPsId">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter requested rm name" formControlName="requestedRmName">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter requested rm email" formControlName="requestedRmEmailId">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter status" formControlName="status">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="Enter pending time" formControlName="pendingTime">
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </td>
+                                        <td>
+                                            <!-- <fieldset class="NP_HSBC_ComInput">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput formControlName="approverRemarks">
+
+                                                </mat-form-field>
+                                            </fieldset> -->
+                                        </td>
+                                        <td></td>
+                                      </tr>
+                                    <ng-container *ngIf="approve_reject_companaylist && approve_reject_companaylist.length > 0; else noData">
+                                    <tr *ngFor="let item of approve_reject_companaylist; let i = index">
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td>{{ item.customerName || '-' }}</td>
+                                        <td>{{ item.companyType || '-' }}</td>
+                                        <td>{{ item.requestedRmPsId || '-' }}</td>
+                                        <td>{{ item.requestedRmName || '-' }}</td>
+                                        <td>{{ item.requestedRmEmailId || '-' }}</td>
+                                        <td>{{ item.timeDuration === -1 || item.timeDuration === '-1' ? "Unlimited": item.timeDuration || '-' }}</td>
+                                        <td>{{ item.status || '-' }}</td>
+                                        <td>{{item.pendingTime === -1 || item.pendingTime === '-1' ? "Unlimited": item.pendingTime || '-' }}</td>
+                                        <td>{{ item.approverRemarks || '-' }}</td>
+                                        <td class="nowrap_td" data-label="Action">
+                                            <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View" (click)="navigateToView(item.pan)">
+                                                <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                            </button>
+
+                                            <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeRequestCustomerPortfolio(item.id)">
+                                                <em class="fas fa-undo-alt"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </ng-container>
+                                        <ng-template #noData>
+                                            <tr>
+                                                <td colspan="11" class="text-center"><app-no-data-found message="No details found" /></td>
+                                            </tr>
+                                    </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-card-content>
+                </ng-container>
+                <ng-container *ngIf="selectedOption === '2'">
+                    <mat-card-content class="px-0">
+                        <div class="page_Title_sec">
+                            <div class="page_Title_left">
+                                <h4>
+                                    Portfolio Details
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="box_design">
+                            <div *ngIf="!portfolioResults || portfolioResults.length === 0">
+                                <app-no-data-found message="No details found" />
+                            </div>
+                            <div class="tableResponsive" *ngIf="portfolioResults.length !==0">
+                                <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                    <thead>
+                                        <tr class="tr_lightred_bg">
+                                            <th width="8%" class="text-right">Sr.No</th>
+                                            <th width="50%">RM Name
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="currentSortField === 'rmName' && sortDirection === 'asc'"
+                                                        (click)="toggleSort('rmName', 'ASC', { targetArray: 'portfolioResults' })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('rmName', 'ASC', { targetArray: 'portfolioResults' })" (keydown.space)="toggleSort('rmName', 'ASC', { targetArray: 'portfolioResults' })"
+                                                        [attr.aria-label]="'Sort by RM Name ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="currentSortField === 'rmName' && sortDirection === 'desc'"
+                                                        (click)="toggleSort('rmName', 'DESC', { targetArray: 'portfolioResults' })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('rmName', 'DESC', { targetArray: 'portfolioResults' })" (keydown.space)="toggleSort('rmName', 'DESC', { targetArray: 'portfolioResults' })"
+                                                        [attr.aria-label]="'Sort by RM Name descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th width="15%">No. Of Companies</th>
+                                            <th width="15%">Time Frame (In Days)</th>
+                                            <th width="12%" class="text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of portfolioResults;let i=index">
+                                        <tr>
+                                            <td class="text-right table_check_box">
+                                                <mat-checkbox [(ngModel)]="item.selected" (change)="checkUncheckAll(i)"></mat-checkbox>
+                                                <button mat-icon-button class="matIcon red_icn mr-2"
+                                                        (click)="toggleRow(i)" [ngClass]="{'rotate_icon': expandedRowIndex === i}"><i class="fas fa-chevron-down"></i>
+                                                </button>
+                                            </td>
+                                            <td>{{  item?.rmName ?? '-' }}</td>
+                                            <td>{{ item?.noOfCompany }}</td>
+                                                <td>
+                                                <fieldset class="NP_HSBC_ComInput w-auto">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select  placeholder="15" [(ngModel)]="item.timeDuration" (selectionChange)="onMasterChange($event.value, i)" [panelClass]="'design_multiselect'">
+                                                            <mat-option value="15">15</mat-option>
+                                                            <mat-option value="30">30</mat-option>
+                                                            <mat-option value="45">45</mat-option>
+                                                            <mat-option value="-1">Unlimited</mat-option>
+                                                            <mat-option *ngIf="item.timeDuration === '-'"  value="-" disabled>-</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                             <td class="text-right">
+                                                <a class="d-flex al-center darkgreen_text jc-end" (click)="Remarks_popup(true,i)" >
+                                                    Submit   <mat-icon>chevron_right</mat-icon>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr class="collapsing_tr" *ngIf="expandedRowIndex === i">
+                                            <td colspan="15" class="intable_td">
+                                              <div class="box_design box-shadow-0">
+                                                <div class="tableResponsive inside_table">
+                                                  <table class="bordered_table w-100">
+                                                    <thead>
+                                                    <tr>
+                                                      <th class="text-right" width="5%">Sr. No.</th>
+                                                      <th width="75%">
+                                                        <div class="d-flex al-center">
+                                                            Customer Name
+                                                            <span class="sort-container ml-2">
+                                                                <mat-icon class="sort-icon sort-icon-up"
+                                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'asc'"
+                                                                    (click)="toggleSort('customerName', 'ASC', { nestedIndex: i, nestedPath: 'responseDtos' })" role="button" tabindex="0"
+                                                                    (keydown.enter)="toggleSort('customerName', 'ASC', { nestedIndex: i, nestedPath: 'responseDtos' })" (keydown.space)="toggleSort('customerName', 'ASC', { nestedIndex: i, nestedPath: 'responseDtos' })"
+                                                                    [attr.aria-label]="'Sort by Customer Name ascending'">
+                                                                    arrow_drop_up
+                                                                </mat-icon>
+                                                                <mat-icon class="sort-icon sort-icon-down"
+                                                                    [class.active]="currentSortField === 'customerName' && sortDirection === 'desc'"
+                                                                    (click)="toggleSort('customerName', 'DESC', { nestedIndex: i, nestedPath: 'responseDtos' })" role="button" tabindex="0"
+                                                                    (keydown.enter)="toggleSort('customerName', 'DESC', { nestedIndex: i, nestedPath: 'responseDtos' })" (keydown.space)="toggleSort('customerName', 'DESC', { nestedIndex: i, nestedPath: 'responseDtos' })"
+                                                                    [attr.aria-label]="'Sort by Customer Name descending'">
+                                                                    arrow_drop_down
+                                                                </mat-icon>
+                                                            </span>
+                                                            <fieldset class="NP_HSBC_ComInput white_bg max-200 ml-2">
+                                                                <mat-form-field appearance="outline">
+
+                                                                    <input matInput  placeholder="Search"  [(ngModel)]="searchText" (ngModelChange)="onSearchChange(i)"/>
+
+                                                                    <span matSuffix class="mr-2"><i class="fi fi-br-search"></i></span>
+                                                                </mat-form-field>
+                                                            </fieldset>
+                                                        </div>
+                                                      </th>
+                                                       <th>Time Frame (In Days)</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <ng-container *ngIf="getFilteredResponseDtos(item?.responseDtos) && getFilteredResponseDtos(item?.responseDtos).length > 0; else noData">
+                                                    <tr *ngFor="let item of getFilteredResponseDtos(item?.responseDtos).slice(startIndex, endIndex);let j=index">
+                                                      <td class="table_check_box text-right"><mat-checkbox class="mr-2" [(ngModel)]="item.selected" (change)="isAllSelected(i)"></mat-checkbox> {{ startIndex + j + 1 }}</td>
+                                                      <td>{{item.customerName}}</td>
+                                                      <td>
+                                                        <fieldset class="NP_HSBC_ComInput w-auto">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-select  placeholder="15" [panelClass]="'design_multiselect'" [(ngModel)]="item.timeDuration" >
+                                                                    <mat-option value="15">15</mat-option>
+                                                                    <mat-option value="30">30</mat-option>
+                                                                    <mat-option value="45">45</mat-option>
+                                                                    <mat-option value="-1">Unlimited</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </fieldset>
+                                                      </td>
+                                                    </tr>
+                                                    </ng-container>
+                                                    <ng-template #noData>
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">No records found.</td>
+                                                    </tr>
+                                                    </ng-template>
+                                                    <!-- <tr>
+                                                        <td class="table_check_box text-right"><mat-checkbox class="mr-2"></mat-checkbox> 2.</td>
+                                                        <td>Tata Sons Private Limited</td>
+                                                        <td>
+                                                          <fieldset class="NP_HSBC_ComInput w-auto">
+                                                              <mat-form-field appearance="outline">
+                                                                  <mat-select  placeholder="90" [panelClass]="'design_multiselect'">
+                                                                      <mat-option value="15">15</mat-option>
+                                                                      <mat-option value="30">30</mat-option>
+                                                                      <mat-option value="45">45</mat-option>
+                                                                  </mat-select>
+                                                              </mat-form-field>
+                                                          </fieldset>
+                                                        </td>
+                                                      </tr>  -->
+                                                    </tbody>
+                                                  </table>
+                                                </div>
+
+                                                <!-- Child Pagination -->
+
+                                                <div class="pagination-table NP_LeftPagintion">
+                                                    <div class="col-sm-12 col-md-5">
+                                                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                                            Showing
+                                                            {{(startIndex+1)}} to
+                                                            {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                                            {{totalSize}}
+                                                            row
+                                                            <div class="dataTables_length" id="tickets-table_length">
+                                                                <div class="NP_HSBC_ComInput select-field">
+                                                                    <mat-form-field appearance="outline">
+                                                                        <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                                                                        (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                                                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                                                {{pages.value}}
+                                                                            </mat-option>
+                                                                        </mat-select>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-md-5">
+                                                        <div class="text-md-right float-md-right pagination-rounded">
+                                                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                                                <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                                                [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                                                                </ngb-pagination>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-content class="px-0 mt-4">
+                        <div class="page_Title_sec">
+                            <div class="page_Title_left">
+                                <h4>
+                                    Requested Portfolio History
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="box_design">
+                            <div class="tableResponsive">
+                                <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+                                    <thead>
+                                        <tr class="tr_lightred_bg">
+                                            <th width="5%" class="text-center">Sr.No</th>
+                                            <th>RM Name
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortFieldForHistory === 'rmName' && sortDirectionForHistory === 'asc'"
+                                                        (click)="toggleSort('rmName', 'ASC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('rmName', 'ASC', { useApplyFilters: true })" (keydown.space)="toggleSort('rmName', 'ASC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by RM Name ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortFieldForHistory === 'rmName' && sortDirectionForHistory === 'desc'"
+                                                        (click)="toggleSort('rmName', 'DESC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('rmName', 'DESC', { useApplyFilters: true })" (keydown.space)="toggleSort('rmName', 'DESC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by RM Name descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>No. Of Companies
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortFieldForHistory === 'noOfCompany' && sortDirectionForHistory === 'asc'"
+                                                        (click)="toggleSort('noOfCompany', 'ASC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('noOfCompany', 'ASC', { useApplyFilters: true })" (keydown.space)="toggleSort('noOfCompany', 'ASC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by No. Of Companies ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortFieldForHistory === 'noOfCompany' && sortDirectionForHistory === 'desc'"
+                                                        (click)="toggleSort('noOfCompany', 'DESC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('noOfCompany', 'DESC', { useApplyFilters: true })" (keydown.space)="toggleSort('noOfCompany', 'DESC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by No. Of Companies descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Status
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortFieldForHistory === 'status' && sortDirectionForHistory === 'asc'"
+                                                        (click)="toggleSort('status', 'ASC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('status', 'ASC', { useApplyFilters: true })" (keydown.space)="toggleSort('status', 'ASC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by Status ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortFieldForHistory === 'status' && sortDirectionForHistory === 'desc'"
+                                                        (click)="toggleSort('status', 'DESC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('status', 'DESC', { useApplyFilters: true })" (keydown.space)="toggleSort('status', 'DESC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by Status descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Pending Time
+                                                <span class="sort-container">
+                                                    <mat-icon class="sort-icon sort-icon-up"
+                                                        [class.active]="sortFieldForHistory === 'pendingTime' && sortDirectionForHistory === 'asc'"
+                                                        (click)="toggleSort('pendingTime', 'ASC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('pendingTime', 'ASC', { useApplyFilters: true })" (keydown.space)="toggleSort('pendingTime', 'ASC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by Pending Time ascending'">
+                                                        arrow_drop_up
+                                                    </mat-icon>
+                                                    <mat-icon class="sort-icon sort-icon-down"
+                                                        [class.active]="sortFieldForHistory === 'pendingTime' && sortDirectionForHistory === 'desc'"
+                                                        (click)="toggleSort('pendingTime', 'DESC', { useApplyFilters: true })" role="button" tabindex="0"
+                                                        (keydown.enter)="toggleSort('pendingTime', 'DESC', { useApplyFilters: true })" (keydown.space)="toggleSort('pendingTime', 'DESC', { useApplyFilters: true })"
+                                                        [attr.aria-label]="'Sort by Pending Time descending'">
+                                                        arrow_drop_down
+                                                    </mat-icon>
+                                                </span>
+                                            </th>
+                                            <th>Requester Remarks </th>
+                                             <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                            <td></td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput placeholder="Enter rm name" [(ngModel)]="filters.rmName" (input)="applyFilters()">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput placeholder="Enter no. of companies" type="number" [(ngModel)]="filters.noOfCompany" (input)="applyFilters()">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput placeholder="Enter status" [(ngModel)]="filters.status" (input)="applyFilters()">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <fieldset class="NP_HSBC_ComInput">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput placeholder="Enter pending time" [(ngModel)]="filters.pendingTime" (input)="applyFilters()">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <ng-container *ngIf="filteredRmHistoryDataForReceiver && filteredRmHistoryDataForReceiver.length > 0; else noData">
+                                       <tr *ngFor="let item of filteredRmHistoryDataForReceiver; let i = index">
+                                            <td class="text-center">{{ i +1 }}</td>
+                                            <td>{{item.rmName}}</td>
+                                            <td>{{item.noOfCompany}}</td>
+                                            <td>{{item.status}}</td>
+                                            <td>{{item.pendingTime === -1 || item.pendingTime === '-1' ? 'Unlimited' : item.pendingTime}}</td>
+                                            <td class="ellips_txt" matTooltip={{item.requestorRemarks}} matTooltipClass="order_tooltip white_bg">{{item.requestorRemarks}}</td>
+                                            <td class="nowrap_td text-center" data-label="Action">
+                                                <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View" (click)="ListCustomer_popup(item.responseDtos)">
+                                                    <em class="fa fa-eye"></em>
+                                                </button>
+                                                <button *ngIf="item.status === 'Approved'" mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeToRequestedRm(item)">
+                                                    <em class="fas fa-undo-alt"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </ng-container>
+                                        <ng-template #noData>
+                                        <tr>
+                                           <td colspan="7" class="text-center"><app-no-data-found message="No details found" /></td>
+                                        </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    </ng-container>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+

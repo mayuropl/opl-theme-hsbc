@@ -1,0 +1,42 @@
+.page_Title_sec .page_Title_Right{
+ display: flex;
+ align-items: center;
+}
+
+.__Btn_Group{
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    .upload_note{
+        font-style: italic;
+    }
+}
+.loader_Circal {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: conic-gradient(#32327F99, #ffffff, #32327F78); /* unique gradient color */
+  animation: rotateLoader 1s linear infinite;
+  position: relative;
+  margin: auto; /* center if needed */
+  &::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    top: 0px;
+    left: 0px;
+  }
+}
+/* Animation */
+
+@keyframes rotateLoader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

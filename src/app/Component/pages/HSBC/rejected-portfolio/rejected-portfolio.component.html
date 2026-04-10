@@ -1,0 +1,159 @@
+<!-- <div class="container-fluid HSBC_Common_Pages "> -->
+    <!-- <div class="__main_Container"> -->
+
+        <!-- <div class="page_Details "> -->
+            <!-- <div class="page_Title_sec">
+                <div class="page_Title_left">
+                  <h4>
+                    Rejected Portfolio
+                  </h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="page_Title_Right with_filtertop jc-end">
+                    <div class="filter_top_bar d-flex">
+                        <button  *ngIf="isActionAvail(constants.PageActions.EXPORT)" mat-button (click)="downloadRejectedPorfolioData()"><i
+                            class="fas fa-file-export mr-1" ></i>Export</button>
+                      </div>
+                    </div>
+               </div> -->
+            <!-- <div class="box_design"> -->
+                <!-- <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap no_stripe_borderX_table">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                 <th>Sr.No</th>
+                                <th>Name Of Customer
+                                    <span  class="shorting" (click)="toggleSort('customerName', true)">
+                                        <mat-icon *ngIf="currentSortField !== 'customerName'">unfold_more</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'customerName' && sortDirection === 'ASC'">north</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'customerName' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+                                </th>
+                                <th>Persona</th>
+                                <th>Primary RM PS ID
+                                    <span class="shorting" (click)="toggleSort('primaryRmPsId', true)">
+                                        <mat-icon *ngIf="currentSortField !== 'primaryRmPsId'">unfold_more</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'primaryRmPsId' && sortDirection === 'ASC'">north</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'primaryRmPsId' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+                                </th>
+                                <th>Primary RM Email ID
+                                    <span class="shorting" (click)="toggleSort('primaryRmEmailId', true)">
+                                        <mat-icon *ngIf="currentSortField !== 'primaryRmEmailId'">unfold_more</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'primaryRmEmailId' && sortDirection === 'ASC'">north</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'primaryRmEmailId' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+                                </th>
+                                <th>Portfolio
+                                </th>
+                                <th>Remarks
+                                    <span class="shorting" (click)="toggleSort('remarks', true)">
+                                        <mat-icon *ngIf="currentSortField !== 'remarks'">unfold_more</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'remarks' && sortDirection === 'ASC'">north</mat-icon>
+                                            <mat-icon
+                                                *ngIf="currentSortField === 'remarks' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+                                </th>
+                                <th>Action</th> -->
+                            <!-- </tr> -->
+                        <!-- </thead> -->
+                        <!-- <tbody> -->
+                            <!-- <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="rejectedCustomer"> -->
+                                <!-- <td></td> -->
+                                <!-- <td> -->
+                                    <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput  placeholder ="Enter name"  formControlName ="customerName">
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                <!-- </td> -->
+                                <!-- <td> -->
+                                    <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder ="Enter Persona"  formControlName ="persona">
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                    <!-- <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select" [panelClass]="'design_multiselect'"
+                                            formControlName ="persona">
+                                            @for(option of personaAllOptions; track option.value){
+                                                <mat-option [value]="option.value"
+                                                    [ngClass]="(option.value == 'FOREIGN_MNC' ||  option.value == 'FOREIGN_DOMESTIC' || option.value == 'DOMESTIC' )? 'option_heading' : ''"
+                                                    >
+                                                    {{ option.label }}
+                                                </mat-option>
+                                                }
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset> -->
+                                <!-- </td> -->
+                                <!-- <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline" >
+                                            <input matInput placeholder="Enter ID"  formControlName ="primaryRmPsId">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter Email ID"  formControlName ="primaryRmEmailId">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter Portfolio"  formControlName ="portfolio">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter Remarks" formControlName ="remarks">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <button *ngIf="isActionAvail(constants.PageActions.CLEAR_FILTERS)" type="button" mat-icon-button ngbTooltip="Clear Filter" class="matIcon red_icn" (click)="clearFilter()" color="primary"><em class="fas fa-eraser"></em></button>
+                                  </td> -->
+                            <!-- </tr> -->
+                            <!-- @if(rejectedPorfolioDataHistory?.length>0){ -->
+                                <!-- @for(rejectedCustomer of rejectedPorfolioDataHistory; track $index){ -->
+                            <!-- <tr *ngFor="let rejectedCustomer of rejectedPorfolioDataHistory; let i = index">
+                                <td data-label="Sr.No" class="text-center">{{i+1}}</td>
+                                <td><b>{{rejectedCustomer.customerName || '-'}}</b></td>
+                                <td class="red_text">{{rejectedCustomer.displayPersona || '-'}}</td>
+                                <td>{{rejectedCustomer.primaryRmPsId || '-'}}</td>
+                                <td>{{rejectedCustomer.primaryRmEmailId || '-'}}</td>
+                                <td>{{rejectedCustomer.portfolio || '-'}}</td>
+                                <td><span class="ellips_txt" matTooltip={{rejectedCustomer.remarks}}>{{rejectedCustomer.remarks || '-'}}</span></td>
+                                <td data-label="Action" class="nowrap_td">
+                                    <button mat-icon-button class="matIcon skyblue_icn" *ngIf="isActionAvail(constants.PageActions.VIEW)" (click)="navigateToViewComponent(rejectedCustomer.pan,rejectedCustomer.cin)">
+                                        <em class="fa fa-eye" ></em>
+                                    </button>
+                                    <button  *ngIf="isActionAvail(constants.PageActions.AUDIT)" mat-icon-button class="matIcon grey_icn" (click)="viewAuditPage(rejectedCustomer,1)" >
+                                        <mat-icon [svgIcon]="'fileSearch_Icon'" ></mat-icon>
+                                    </button>
+                                    <button  *ngIf="isActionAvail(constants.PageActions.ASSIGN_USER) "mat-icon-button class="matIcon delete_icn" [disabled]="!disableAssignButton" (click)="assignCustomerToRm(rejectedCustomer)">
+                                        <i class="fe-user-plus"></i>
+                                    </button>
+                                </td>
+                            </tr> -->
+                        <!-- </tbody> -->
+                    <!-- </table> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    <!-- </div> -->
+<!-- </div> -->

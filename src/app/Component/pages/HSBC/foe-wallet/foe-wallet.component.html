@@ -1,0 +1,183 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+      <form class="NP_Form"  autocomplete="off">
+        <div class="page_Title_sec">
+          <div class="page_Title_left">
+            <h4>
+              <!-- <em class="fmdi fmdi-arrow-left mr-2"></em> -->
+              FDI,ODI & ECB Wallet
+            </h4>
+          </div>
+          <div class="page_Title_Right">
+            <a *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_TEMPLATE)" type="button" mat-flat-button class="btn_design with_right_icn" color="secondary" href="assets/files/FDI_ODI_ECB_Wallet_Uploader.xlsx" download   >Download Template<mat-icon class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+          </div>
+        </div>
+        <div class="page_Details">
+          <div class="box_design mb-3 p-3">
+            <div class="left_box"> 
+              <fieldset>
+                <div class="custom_month_picker">
+                  <div class="form_box">
+                    <i class="fas fa-calendar-alt"></i>
+                    
+                    <input  autocomplete="off" class="form-control" [(ngModel)]="date" name="date" bsDatepicker
+                            [bsConfig]="bsConfig"  readonly onkeydown="return false;" [maxDate]="today"  >
+                    <i class="fas fa-caret-down"></i>
+                  </div>
+                </div>
+              </fieldset>
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="type" name="type">
+              <mat-radio-button value="FDI">FDI</mat-radio-button>
+              <mat-radio-button value="ODI">ODI</mat-radio-button>
+              <mat-radio-button value="ECB" >ECB</mat-radio-button>
+          </mat-radio-group>
+            </div>
+
+            <div class="NP_Com_Group">
+              <div class="dragDrop-Common" appDragDrop *ngIf="files.length == 0">
+                <div class="Input-text-Fill-Cutome">
+                   <input class="File-input-common" type="file"
+                      accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
+                      #fileDropRef id="fileUpload" name="fileUpload"  (change)="fileBrowseHandler($event.target.files)" required />
+                  <div class="Input-text-File">
+                    <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                    <p class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop <br />
+                      XLS or XLSX
+                    </p>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="files-list mt-2" *ngIf="files.length > 0">
+                <h2 class="file_list">Uploaded File
+                  <!-- <Span class="bedge">20</Span> -->
+                </h2>
+                <div class="single-file" >
+                  <div class="File-Progress">
+                    <div class="file-icon">
+                      <img src="assets/images/hsbc/FileUpload_Icon.svg" alt="File Icon">
+                    </div>
+                    <div class="info">
+                      <h4 class="name">
+                        {{files[0]?.name}}
+                      </h4>
+                    </div>
+                    <div class="delete"  (click)="deleteFile(0)">
+                      <em class="fmdi fmdi-delete IC-red mr-2"></em> Remove
+                    </div>
+                  </div>
+                  <mat-progress-bar class="Progreebar-File" mode="determinate" value="{{files[0].progress}}" [max]="100"></mat-progress-bar>
+                </div>
+
+                <div class="__Btn_Group __MT15px __JcEnd">
+                  <button mat-stroked-button color="primary" class="btn_design" *ngIf="isActionAvail(constants.PageActions.UPLOAD)" (click)="proceedAndUploadFile()"><mat-icon>arrow_upward_alt</mat-icon> Upload File</button>
+                  <!-- <button mat-stroked-button color="primary" class="btn_design" *ngIf="!isActionAvail(constants.PageActions.UPLOAD)" disabled ><mat-icon>arrow_upward_alt</mat-icon> Upload File</button> -->
+                  <!-- <p class="upload_note">Upload Multiple Documents</p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="box_design">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>File Uploads History</h4>
+              </div>
+            </div>
+            <div class="box_design_details p-0">
+              <div class="tableResponsive" appTableScroll>
+                <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap no_sticky_table">
+                  <thead>
+                    <tr class="tr_lightred_bg">
+                      <th width="5%">Sr. No.</th>
+                      <th>File Name</th>
+                      <th>Name</th>
+                      <th>Uploaded On</th>
+                      <th>File Type</th> 
+                      <th>Month/Year</th>
+                      <th>Status</th>
+                      <th class="text-right">Successful Entries</th>
+                      <th class="text-right">Failed Entries</th>
+                      <th class="text-right pr-3">Total Entries</th>
+                    </tr>
+                  </thead>
+                  <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoading}">
+                    <app-sub-loader></app-sub-loader>
+
+
+                    @if(fileHistoryList?.length>0){
+                      @for(file of fileHistoryList; track $index){
+
+                        <tr>
+                          <td data-label="Sr.No" class="text-center">{{ ((walletPage-1)* walletPageSize)+($index+1) }}</td>
+                          <td>{{file?.fileName || '-'}}</td>
+                          <td>{{file?.createdByName || '-'}}</td>
+                          <td>{{(file?.createdDate || '-') | date:'dd MMM yyyy hh:mm:ss'}}</td>
+                          <td>{{file?.walletType || '-'}}</td>
+                          <td>{{(file?.month && file?.year) ? (file?.month > 9 ? file?.month : '0' + file?.month) +'-'+ (file?.year) : '-'}}</td>
+                          
+                          <td><span [ngClass]="{'orange_badge': file?.status === 'Pending', 'green_badge': file?.status === 'Success' || file?.status === null, 
+                          'lightred_badge': file?.status === 'Failed'}">{{file?.status ?? "Success"}}</span></td>
+
+                          <td class="text-right">{{file?.successFullEntries || 0}}
+                            <a href="javscript:void(0)"> <img *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_SUCCESS_ENTRY)" src="assets/images/hsbc/S_Download_Icon.svg" alt="Successful Entries"
+                               (click)="downloadByBucketRef(file?.successEntriesDocReference, file.successEntriesFileName, 'xlsx')"></a>
+                              </td>
+                          <td class="text-right">{{file?.failedEntries || 0}}
+                                <a href="javscript:void(0)"> <img *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)" src="assets/images/hsbc/F_Download_Icon.svg" alt="Failed Entries"
+                                   (click)="downloadByBucketRef(file?.failedEntriesDocReference, file.failedEntriesFileName, 'xlsx')"></a>
+                                  </td>
+                          <td class="text-right">{{file?.totalEntries || 0}}
+                            <a href="javscript:void(0)"> <img *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_TOTAL_ENTRY)" src="assets/images/hsbc/T_Download_Icon.svg" alt="Total Entries"
+                               (click)="downloadByBucketRef(file?.docReference, file.totalEntriesFileName, 'xlsx')"></a>
+                          </td>
+                      </tr>
+                      }
+                    }
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="pagination-table NP_LeftPagintion">
+              <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing 
+                  {{(walletPage-1)*walletPageSize+1}} 
+                  to
+                  {{walletStartIndex + walletPageSize > (walletTotalSize) ? (walletTotalSize) : ((walletPage-1) * walletPageSize + walletPageSize) }} 
+                  of 
+                  {{walletTotalSize}}
+                  
+                  <!-- {{((newGccUploadPage-1)*newGccUploadPageSize+1)}} to
+                    {{newGccUploadStartIndex+newGccUploadPageSize> (newGccUploadTotalSize) ? (newGccUploadTotalSize) : (newGccUploadPage-1)*newGccUploadPageSize+newGccUploadPageSize}} of
+                    {{newGccUploadTotalSize}} -->
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="walletPageSize" #pagesizee [panelClass]="'pagination_select'" (ngModelChange)="walletPageSizeChange(walletPageSize, walletPage)" [ngModelOptions]="{standalone: true}">
+                          <mat-option *ngFor="let page of PageSelectNumber" [value]="page">
+                            {{page}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-sm-12 col-md-5">
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination [collectionSize]="walletTotalSize" [maxSize]="3" [(page)]="walletPage"  [rotate]="true" [boundaryLinks]="true" [pageSize]="walletPageSize" (pageChange)="walletOnPageChange($event)" ></ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

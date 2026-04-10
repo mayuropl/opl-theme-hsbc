@@ -1,0 +1,86 @@
+ <section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Agri EXIM - Product wise Export</h3>
+        </div>
+        <mat-dialog-content class="px-0">
+            <div class="popup_body">
+                <div class="table_sec">
+                    <div class="tableResponsive max-h-100">
+                        <table
+                        class="CommonTable_NP Mobile_table_View_NP table_BG no_stripe_borderX_table bordered_table">
+                        <thead>
+                          <tr class="tr_lightred_bg">
+                            <th width="10%">HSN Code</th>
+                            <th width="70%">HSN Description</th>
+                            <th width="20%">Export value of last 24 months ($)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- <tr>
+                              <TD>482050</TD>
+                              <TD><B>ALBUMS FOR SAMPLES OR COLLECTIONS, OF PAPER OR PAPERBOARD PRODUCTS INCLUDE: PHOTO ALBUMS, NOTE BOOKS, PHOTO</B></TD>
+                              <TD><B>15,00,000</B></TD>
+                          </TR> -->
+                          @for (hsnCode of gstHsnCodePagData; track $index) {
+                             <tr>
+                                <td>{{hsnCode.code || '-'}}</td>
+                                <td>{{hsnCode.description || '-'}}</td>
+                                <td style="text-align: right;">{{ hsnCode.value ? (hsnCode.value | number:'1.2-2') : '-' }}</td>
+                            </tr>
+                          } @empty {
+                            <tr>
+                              <td colspan="3">
+                                  <app-no-data-found message="No record found" />
+                              </td>
+                            </tr>
+                          }
+
+                        </tbody>
+                        <tfoot>
+                           <tr>
+                            <td colspan="2"><b>Total</b></td>
+                            <td style="text-align: right;"><b>{{totalValue | number:'1.2-2'}}</b></td>
+                          </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" >
+                        <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                            <div class="dataTables_info" role="status" aria-live="polite">
+                               {{(agriHsnPage.startIndex()+1)}} to
+                                        {{(agriHsnPage.pageSize()*agriHsnPage.page()) >
+                                        (agriHsnPage.totalSize) ? (agriHsnPage.totalSize) :
+                                        (agriHsnPage.pageSize()*agriHsnPage.page())}} of
+                                        {{agriHsnPage.totalSize}} rows
+                                <div class="dataTables_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(ngModel)]="agriHsnPage.pageSize" (selectionChange)="updateAgriHsnPaginatedData()" [panelClass]="'pagination_select'">
+                                                <mat-option *ngFor="let pages of PageSelectNumber"  [value]="pages.value">
+                                                        {{pages.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <span class="grey_text">row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagination pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="agriHsnPage.totalSize" [maxSize]="3" [(page)]="agriHsnPage.page" [rotate]="true" [boundaryLinks]="true"   [pageSize]="agriHsnPage.pageSize()" (pageChange)="updateAgriHsnPaginatedData()"></ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

@@ -1,0 +1,29 @@
+<div class="popup_design max-500 otp_verify_popup">
+    <a class="modal_closeicn_btn" href="javascript:void(0)"><mat-icon class="material-symbols-outlined"
+            (click)="closePopup()" cdkFocusInitial>close</mat-icon></a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>GST OTP Verify</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body text-center">
+                <div class="__Common_texts OTP_textView">
+                    <h3>Enter OTP To Verify Your GST Account</h3>
+                    <p class="Text_span_ML">We've Sent An OTP For "<b class="skyblue_text">{{gstin}}</b>" GST
+                        Number On Registered Mobile
+                        Number.</p>
+                </div>
+                <div class="OTP_verify_Input py-3">
+                    <ng-otp-input class="OTP_Input_GRP" (onInputChange)="onOtpChange($event)"
+                        [config]="{length:6, allowNumbersOnly: true}"></ng-otp-input>
+                </div>
+                <p class="resend_otp_sec">
+                    Didn't Receive OTP Yet? <a (click)="resendOtp();">Resend OTP</a>
+                </p>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+            <button mat-flat-button color="primary" [disabled]="!otpCorrect" (click)="verifyOTP();">Verify</button>
+        </mat-dialog-actions>
+    </div>
+</div>

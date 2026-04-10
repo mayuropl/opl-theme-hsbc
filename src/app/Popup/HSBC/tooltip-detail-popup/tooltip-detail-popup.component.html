@@ -1,0 +1,320 @@
+<div class="popup_design min_w700 prtoolttip_popup" *ngIf="isProductType()">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Bifurcation of Product Category</h3>
+        </div>
+        <mat-dialog-content class="px-0">
+            <div class="table-responsive max-h-400" appTableScroll>
+                <table class="CommonTable_NP design_Main_listTable CommonTable_Scroll table_wrap">
+                    <thead>
+                        <tr>
+                            <th width="30%">Product Category</th>
+                            <th width="70%">Product sub type</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bank Line</td>
+                            <td>Inland Bills Discounted <br> Inland Bills Purchased</td> 
+                        </tr>                   
+                        <tr>
+                            <td>Commercial Paper</td>
+                            <td>Commercial Paper</td>
+                        </tr>
+                        <tr>
+                            <td>Corporate Card</td>
+                            <td>Corporate Card</td>
+                        </tr>
+                        <tr>
+                            <td>Exim Loans</td>
+                            <td>
+                                Advances against export cash incentives and duty draw-back claims <br>
+                                Advances against import bills <br>
+                                Export bills advanced against <br>
+                                Export bills discounted <br>
+                                Export bills purchased <br>
+                                Packing credit (all export pre-shipment finance) <br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Factoring</td>
+                            <td>
+                                Factoring with Recourse (Seller) <br>
+                                Factoring without Recourse (Buyer) <br>
+                                Seller Financing <br>
+                                Seller Financing Soft
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fund Based</td>
+                            <td>
+                                Aggregation of all fund based facilities <br>
+                                Facilities interchange between fund & non fund based <br>
+                                Cash credit <br>
+                                Demand loan <br>
+                                Loan extended through credit cards <br>
+                                Overdraft <br>
+                                Temporary Overdraft
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Non Fund based</td>
+                            <td>
+                                Aggregation of all non fund based facilities <br>
+                                Bank guarantee <br>
+                                Deferred payment guarantee <br>
+                                Letters of credit
+                            </td>
+                        </tr>
+                         <tr>
+                             <td>Others</td>
+                             <td>
+                                 <span class="darkgreen_text cursor_pointer" (click)="toggleOthersTable()">
+                                     <u *ngIf="!showOthersTable">View More Details</u>
+                                     <u *ngIf="showOthersTable">View Less Details</u>
+                                 </span>
+                             </td>
+                         </tr>
+                         <tr *ngIf="showOthersTable">
+                             <td colspan="2" class="p-0">
+                                 <table class="inner_table w-100">
+                                     <tbody>
+                                         <tr>
+                                             <td width="32%"></td>
+                                             <td>ARC - secured loan</td>
+                                         </tr>
+                                         <tr>
+                                            <td width="32%"></td>
+                                            <td>ARC - unsecured loan</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>NCD - Non-Convertible Debentures</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Payment Account (Point of Sale & Payment gateways)</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Aggregate of all borrowings due to filing of suit</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Equipment financing (construction office medical)</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Foreign currency cheques TCS/DDS/TTS/MTS purchased</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Auto Loan</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Commercial vehicle loan</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Current Loan</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>GECL Loan</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Gold Loan</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>HealthCare Finance</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Hire purchase</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Infrastructure Finance</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Lease finance</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Mudra Term Loan</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Mudra Working Capital</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Others</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="32%"></td>
+                                            <td>Unsecured business loan</td>
+                                        </tr>
+                                     </tbody>
+                                 </table>
+                             </td>
+                         </tr>
+                        <tr>
+                            <td>Secured</td>
+                            <td>
+                                Loan Against Shares/Securities <br>
+                                Property Loan
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Term Loan</td>
+                            <td>
+                                Long term loan (period above 3 years) <br>
+                                Medium term loan (period above 1 year and up to 3 years)<br>
+                                Short term loan (less than 1 year)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Treasury</td>
+                            <td>
+                                Contracts on past performance – exports
+                                Plain vanilla int rate swap (all including INR as coupon)
+                                Any complex derivative loan involving <br>
+                                foreign currency with option <br>
+                                Complex int rate derv with optionalities <br>
+                                Contracts on past performance – imports <br>
+                                Derivatives <br>
+                                Plain vanila foreign currency option <br>
+                                (including INR cross currency) <br>
+                                Plain vanilla forex forward contracts <br>
+                                Unhedged Foreign Currency Exposure
+                            </td>
+                        </tr> 
+
+                    </tbody>
+                </table>
+            </div>
+        </mat-dialog-content>
+        <!-- <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-stroked-button color="primary" class="btn_design" matDialogClose="">No</button>
+            <button mat-flat-button color="primary">Yes</button>
+        </mat-dialog-actions> -->
+    </div>
+</div>
+
+
+<div class="popup_design min_w1000 prtoolttip_popup psl_tooltips" *ngIf="isPslStatus()">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Priority Sector Lending Classification Logic</h3>
+        </div>
+        <mat-dialog-content class="px-0">
+            <div class="table-responsive max-h-400" appTableScroll>
+                <table class="CommonTable_NP design_Main_listTable CommonTable_Scroll table_wrap">
+                    <thead>
+                        <tr>
+                            <th width="20%">PSL Type</th>
+                            <th width="80%">Description</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MSME PSL</td>
+                            <td>Entities with UDAYAM Registration</td> 
+                        </tr>                   
+                        <tr>
+                            <td>Potential MSME PSL</td>
+                            <td>Entities without UDAYAM, but GST Turnover Bucket is under INR 500 crores or Last Audited Turnover as per MCA net of Last 12 months exports value is under INR 500 crores</td>
+                        </tr>
+                        <tr>
+                            <td>Start-up PSL</td>
+                            <td>Entities with DPIIT Registration, incorporated for less than 10 years, with Latest Audited Turnover &lt; INR 100 crores, and Fund Based Limits as per the last Bureau Report available is less than INR 50 crores</td>
+                        </tr>
+                        <tr>
+                            <td>Potential Start-up PSL</td>
+                            <td>Entities with DPIIT Registration, incorporated for less than 10 years, with Latest Audited Turnover &lt; INR 100 crores, where either Bureau report is not available, or Fund Based Limits as per the last Bureau Report available is more than INR 50 crores</td>
+                        </tr>
+                        <tr>
+                            <td>Potential Agri PSL</td>
+                            <td>Entities with exports or domestic sale/ purchase of Agri products or services (i.e. positive product code matches with Exports or GST Agri HSN/ SAC List as defined in consultation with IBU Team)</td>
+                        </tr>
+                        <tr>
+                            <td>Potential Agri EXIM</td>
+                            <td>Entities with exports of Agri products or services in last 24 months with aggregate value above USD 500K (i.e. positive product code matches with Exports Agri HSN/ SAC List as defined in consultation with IBU Team)</td>
+                        </tr>
+                        <tr>
+                            <td>Data not Sufficient</td>
+                            <td>Entities which do not fall in any of the above categories and where GST Turnover or latest Audited Turnover is not available or ordered from MCA to assess MSME Potential</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-dialog-content>
+    </div>
+</div>
+
+<div class="popup_design max-700 date_report_popup" *ngIf="isDateReport()">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Date of report</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">             
+                <p class="text_para"><b>Info:</b> This is based on the Bureau pull conducted every 2 months for the entire CIB portfolio. These are soft pulls with no HSBC footprints in the Customer's Bureau record, and no HTML report is available. This is solely for Wallet & Opportunity tracking purposes. For review/enhancement purposes, please pull a fresh CIR from the Bureau Analytics Tab." </p>
+            </div> 
+        </mat-dialog-content> 
+    </div>
+</div>
+
+<div class="popup_design max-700 cmr_popup" *ngIf="isCmr()">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>CMR Score</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">             
+                <p class="text_para">
+                    Transunion CIBIL is a leading authorized bureau of India with more than 90% share of market. CIBIL Commercial Rank (CMR) score is a risk model built on their proprietary framework and considers 36 months of trended credit behavior patterns, which takes into account the Credit Demographics, Liquidity Profile, Periodicity and Repayment Behavior of the Borrower. CMR risk differentiates on a scale of CMR-1 to CMR-10, where CMR-1 has the least default probability and CMR-10 has the maximum.
+                </p>
+                <h4 class="content_title">Exclusions from Bureau CMR Score:</h4>
+                    <p class="text_para">(1) Borrowers having an aggregate credit exposure of greater than INR 50 crores in any of the last 36 months</p>
+                    <p class="text_para">(2) CMR is not applicable for Self Help Groups (SHG), Association of Persons (AOP) and Business entities created by a statute.</p>
+            </div> 
+        </mat-dialog-content> 
+    </div>
+</div>
+
+<div class="popup_design max-700 utilization_wallet_popup" *ngIf="isUtilizationWallet()">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Wallet %</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">             
+                <p class="text_para">Wallet % represents HSBC's share in a customer's total lending exposure reported to the Bureau.</p>
+                    <p class="text_para"><b>Utilization Wallet %</b> indicates HSBC's outstanding utilisation as a percentage of the customer's total utilised limits across all lenders.</p>
+                    <p class="text_para"><b>Sanction Wallet %</b>indicates HSBC's sanctioned limits as a percentage of the customer's total sanctioned limits across all lenders.</p>
+                    <p class="text_para">Please note that exposures to <b>Governments, Other Banks / Financial Institutions, and HSBC group entities</b> (available in E&T files) are not reported to the Bureau and therefore do not form part of this analysis.</p>
+            </div> 
+        </mat-dialog-content> 
+    </div>
+</div>

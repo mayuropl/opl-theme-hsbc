@@ -1,0 +1,126 @@
+::ng-deep {
+    .mat-mdc-form-field-subscript-wrapper {
+        display: block !important;
+    }
+}
+
+.bg_title{
+    background: #F1F7F9;
+    padding: 20px;
+    font-size: 16px;
+    color: #000000;
+    margin: 0 0 20px 0;
+}
+.input_box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 20px;
+    .input_field{
+        flex: 1;
+        margin-bottom: 10px;
+    }
+}
+
+textarea {
+    resize: none;
+  }
+
+
+  .btm_box_wrap{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding:20px 20px 0 20px;
+    border-top: 1px solid #C4CEDD;
+    margin-top: 20px;
+    flex-direction: column;
+    .btm_box_inner_wrap{
+        width: 100%;
+        
+    }
+    .btm_box_inner{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        .btm_box_left{
+            h2{
+                color: #000000;
+                font-size: 14px;
+                margin: 0;
+                font-weight: 500;
+            }
+        }
+    }
+    .border_box{
+        border: 1px solid #C4CEDD;
+        border-radius: 12px;
+        padding: 10px;
+        .border_box_inner{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h3{
+                font-size: 14px;
+                font-weight: 500;
+                color: #000000;
+                margin: 0;
+                width: auto;
+            }
+            .checkbox_wrap{
+                display: flex;
+                justify-content: flex-end;
+                ::ng-deep{
+                    .mat-mdc-checkbox{
+                        width: auto;
+                    }
+                }
+            }
+        }
+    }
+  }
+
+
+
+
+  .note_text{
+    margin-bottom: 10px;
+    p{
+        font-size: 14px;
+        color: #000000;
+        margin: 0;
+        font-weight: 400;
+    }
+  }
+
+
+.cir_info_box {
+    background: #f8f9fa;
+    border: 1px solid #C4CEDD;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 10px 0 20px 0;
+    p {
+        font-size: 14px;
+        color: #000000;
+        font-weight: 400;
+    }
+}
+
+.upload_file_wrap {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+    .uploaded_file_name {
+        font-size: 14px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        background: #f1f7f9;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1px solid #C4CEDD;
+    }
+}

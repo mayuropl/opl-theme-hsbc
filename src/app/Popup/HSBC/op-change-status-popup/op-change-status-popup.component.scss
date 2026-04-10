@@ -1,0 +1,107 @@
+
+.popup_header{
+    text-align: left !important;
+}
+ 
+.form_box_wrap{
+    display: flex;
+    align-items: center;
+    border: 1px solid #DBE6E9;
+    border-radius: 12px;
+    padding: 15px;
+}
+.radio-group-wrapper{
+    display: flex;
+    flex-direction: column;
+    mat-label{
+        color: #000;
+        font-size: 14px;
+    }
+}
+
+.max-640{
+    max-width: 640px;
+
+    .form_box_wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .checkbox-group-wrapper {
+        flex: 1 1 250px;
+        min-width: 0;
+        
+        & > mat-label {
+            display: block;
+            word-break: break-word;
+            white-space: normal;
+            margin-bottom: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 5px;
+            
+            ::ng-deep mat-checkbox {
+                margin-left: 0 !important;
+                margin-right: 15px;
+            }
+        }
+    }
+
+    .input_field2 {
+        flex: 1 1 150px;
+        max-width: 250px;
+        margin-left: 0 !important;
+        min-width: 120px;
+        
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}
+
+
+.new_form_box{ 
+    .title_bg{
+        background: #F1F7F9;
+        color: #7E8F9B;
+        font-size: 14px;
+        margin: 0;
+        border-radius: 12px 12px 0 0;
+        padding: 10px 20px;
+        width: 100%;
+        display: flex;
+    }
+    .inner_form_box{
+        display: flex;
+        width: 100%;
+        padding: 15px;
+        justify-content: space-between;
+        flex-direction: column;
+     }
+    .form_box_wrap{
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0;
+    }
+    ::ng-deep .mdc-label{
+        margin-bottom: 0;
+    }
+}
+
+
+.radio_group_wrap{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    ::ng-deep mat-label{
+        font-size: 14px;
+        color: #000;
+        font-weight: 500;
+    }
+}

@@ -1,0 +1,124 @@
+.subscribe_popup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .popup_header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .modal_closeicn_btn {
+            position: absolute;
+            right: -10px;
+            top: -10px;
+        }
+
+        h3 {
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .input_field {
+            margin-bottom: 0;
+        }
+
+        .right_fields {
+            .subscribe_toggle {
+                display: inline-flex;
+                background: #F1F7F9;
+                border-radius: 6px;
+                padding: 8px;
+                box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+
+                .toggle_btn {
+                    padding: 10px 16px;
+                    border: none;
+                    background: transparent;
+                    color: #333;
+                    font-size: 14px;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    transition: background 0.2s, color 0.2s;
+                    line-height: 100%;
+
+                    &.active {
+                        background: #fff;
+                        color: #c41e3a;
+                        font-weight: 500;
+                        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+                    }
+                }
+            }
+        }
+    }
+}
+
+ 
+
+.subscribe_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #F6F6F6;
+    padding: 10px 20px;
+    min-height: 60px;
+    h2 {
+        color: #000;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+
+.date_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px;
+    border-top: 1px solid #DCDFE0;
+    border-bottom: 1px solid #DCDFE0;
+
+    h2 {
+        color: #000;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .date_range_box {
+        display: flex;
+        align-items: center;
+    }
+}
+
+
+.box_wrap_list{
+    display: flex;
+    .sep_box{
+        width: 50%;
+    }
+    .bottom_sb_list{
+        padding: 10px 20px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+}
+
+.popup_actions_btns{
+    display: flex;
+    justify-content: space-between;
+   
+}
+
+.parent_category_label {
+    padding: 10px 20px;
+    .grey_badge {
+        background: #F1F7F9;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #333;
+    }
+}

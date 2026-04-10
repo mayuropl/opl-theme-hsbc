@@ -1,0 +1,94 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+  <a class="modal_closeicn_btn" href="javascript:void(0)">
+      <mat-icon matDialogClose="" cdkFocusInitial (click)="closeDialog()">close</mat-icon>
+  </a>
+
+  <mat-tab-group mat-align-tabs="start" class="tabs-design" animationDuration="0ms" #tabGroup>
+  <mat-tab label="Status" >
+    <mat-card-content>
+        <mat-dialog-content class="px-0 pt-0">
+        <div class="popup_body ">
+        <div class="tableResponsive">
+            <table
+                class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                <thead>
+                    <tr class="tr_lightred_bg">
+                        <th width="2%">Sr. No.</th>
+                        <th width="30%">Report Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Download Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let report of newIncorporationHistory; let i = index">
+                        <td>{{(currentPage-1)*pageSize+(i+1)}}</td>
+                        <td><b>{{ report.reportName }}</b></td>
+                        <td>{{ report.startDate | date:'MM/dd/yy h:mm a' }}</td>
+                        <td>{{ report.endDate ? (report.endDate | date:'MM/dd/yy h:mm a') : '-' }}</td>
+                        <td>
+                            <span [ngClass]="{
+                                'yellow_badge': report.status === 'PENDING',
+                                'red_badge': report.status == 'FAILED',
+                                'green_badge': report.status === 'COMPLETED'
+                            }">
+                                {{ report.status }}
+
+                            </span>
+                            <a *ngIf="report.status === 'COMPLETED'" class="green_text dwn_link cursor_pointer" (click)="downloadExportReport(report.bucketReferenceId,report.reportName)">
+                                <mat-icon class="ml-2 mr-0">arrow_downward_alt</mat-icon>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="newIncorporationHistory == null || newIncorporationHistory == undefined || newIncorporationHistory?.length == 0">
+                        <td colspan="5">
+                            <app-no-data-found message="No data found"/>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="pagination-table NP_LeftPagintion" >
+            <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                <div class="dataTables_info" role="status" aria-live="polite">
+                    <!-- Showing {{ paginatedReportStatuses?.length }} rows from {{ reportStatuses.length }} -->
+                    {{(startIndex+1)}} to
+                  {{(pageSize* currentPage) > (totalSize) ? (totalSize) : (pageSize* currentPage) }} of
+                  {{totalSize}} rows
+                    <div class="dataTables_length">
+                        <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                                <mat-select [(ngModel)]="pageSize" #inCorppagesizee (selectionChange)="changePageSize(inCorppagesizee.value, currentPage)" [panelClass]="'pagination_select'">
+                                    <mat-option *ngFor="let option of PageSelectNumber" [value]="option">
+                                        {{ option }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagination pagination-rounded psb-flex-end my-2">
+                        <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="currentPage" [rotate]="true" [boundaryLinks]="true"
+                        [pageSize]="pageSize" (pageChange)="inCorporationOnPageChange($event)"></ngb-pagination>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            @if (this.reportType=='NEW_GCC_STATUS') {
+                <button mat-flat-button color="primary" (click)="closeDialog()">OK</button>
+            }@else{
+                <button mat-flat-button color="primary" (click)="downloadExcelReport()">Download</button>
+            }
+        </mat-dialog-actions>
+    </mat-card-content>
+</mat-tab>
+</mat-tab-group>
+  </section>
+
+

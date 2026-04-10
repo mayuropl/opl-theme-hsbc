@@ -1,0 +1,470 @@
+<div class="container-fluid HSBC_Common_Pages rmExisitingPortfolioView_page  pb-0">
+    <div class="__main_Container">
+        <div class="page_Title_sec" [ngClass]="{ fixedtitle: scrolled }">
+            <div class="page_Title_left">
+                <!-- <mat-icon svgIcon="chevron_left" class="primary" matRipple></mat-icon> -->
+                <h4 class="cursor_pointer">
+                    Risk Dashboard
+                </h4>
+            </div>
+            <div class="page_Title_Right risk_dash_top_head">
+                <div class="input_field small_select_box">
+                    <mat-label>view:</mat-label>
+                    <mat-form-field appearance="outline" floatLabel="never">
+                        <mat-select placeholder="No added view yet">
+                            <mat-option>NFR View</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <a mat-icon-button class="matIcon grey_icn ml-1" (click)="Save_view_popup()">
+                    <i class="fi fi-sr-disk"></i>
+                </a>
+                <div class="custom_month_picker ml-1">
+                    <div class="form_box">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date" bsDatepicker
+                            [bsConfig]="{dateInputFormat: 'MMM YYYY'}" (onShown)="onOpenCalendar($event)">
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+                <div class="box_design_ttl_bar_right ml-1">
+                    <button class="btn_design green_b_btn ln_40" mat-flat-button [matMenuTriggerFor]="Filtermenu"
+                        #menuTrigger="matMenuTrigger">
+                        <i class="fa fa-sort-amount-down mr-2"></i> Filter</button>
+                    <mat-menu #Filtermenu="matMenu" xPosition="before" class="filtermenu risk_filter" (click)="$event.stopPropagation()">
+                        <h3>Filter Companies</h3>
+                        <div class="filter_row" (click)="$event.stopPropagation()">
+                            <div class="filter_l_box">Where</div>
+                            <div class="input_field">
+                                <mat-form-field appearance="outline" floatLabel="never" class="w-auto">
+                                    <mat-select placeholder="Select Filter" (click)="$event.stopPropagation()">
+                                        <mat-option>Risk Category</mat-option>
+                                        <mat-option>Risk Score</mat-option>
+                                        <mat-option>Risk Tags</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field">
+                                <mat-form-field appearance="outline" floatLabel="never" class="w-auto">
+                                    <mat-select placeholder="Select Filter" (click)="$event.stopPropagation()">
+                                        <mat-option>is any of</mat-option>
+                                        <mat-option>is none of</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field long_box">
+                                <mat-form-field appearance="outline" floatLabel="never" class="w-100" (click)="$event.stopPropagation()"> 
+                                    <mat-select [formControl]="toppingsControl" multiple panelClass="toppingSelectPanel"
+                                        placeholder="Select State">
+                                        <mat-select-trigger>
+                                            <mat-chip-list>
+                                                <ng-container *ngFor="let topping of toppingsControl.value, let i = index">
+                                                    <mat-chip [removable]="true" (removed)="onToppingRemoved(topping)"
+                                                        *ngIf="i<=0">
+                                                        {{ topping }}
+                                                        <button matChipRemove>
+                                                            <mat-icon class="material-symbols-outlined">clear</mat-icon>
+                                                        </button>
+                                                    </mat-chip>
+                                                </ng-container>
+                                                <ng-container *ngIf="toppingsControl.value">
+                                                    <mat-chip *ngIf="toppingsControl.value.length > 1">
+                                                        + {{toppingsControl.value.length -1 }}
+                                                    </mat-chip>
+                                                </ng-container>
+                                            </mat-chip-list>
+                                        </mat-select-trigger> 
+                                        <div class="select_drop_scroll stateListing_options">
+                                            <mat-option *ngFor="let topping of toppingList" [value]="topping"
+                                                ngbTooltip="{{topping}}">
+                                                {{topping}}
+                                            </mat-option>
+                                        </div> 
+                                    </mat-select>
+                                </mat-form-field> 
+                            </div>
+                            <a mat-icon-button class="icon-class cursor_pointer ml-2">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                        <div class="filter_row" (click)="$event.stopPropagation()">
+                            <div class="filter_l_box">AND</div>
+                            <button class="btn_design green_b_btn ln_40" mat-flat-button><i class="fas fa-plus-circle mr-2"></i> Add Filter</button>
+                        </div>
+                        <div class="seprate_filter_line">
+                            <Span>OR</Span>
+                        </div>
+                        <div class="filter_row" (click)="$event.stopPropagation()">
+                            <div class="filter_l_box">Where</div>
+                            <div class="input_field">
+                                <mat-form-field appearance="outline" floatLabel="never" class="w-auto">
+                                    <mat-select placeholder="Select Filter" (click)="$event.stopPropagation()">
+                                        <mat-option>Risk Category</mat-option>
+                                        <mat-option>Risk Score</mat-option>
+                                        <mat-option>Risk Tags</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field">
+                                <mat-form-field appearance="outline" floatLabel="never" class="w-auto" (click)="$event.stopPropagation()">
+                                    <mat-select placeholder="Select Filter" (click)="$event.stopPropagation()">
+                                        <mat-option>is any of</mat-option>
+                                        <mat-option>is none of</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field long_box">
+                                <mat-form-field appearance="outline" floatLabel="never" class="w-100" (click)="$event.stopPropagation()"> 
+                                    <mat-select [formControl]="toppingsControl" multiple panelClass="toppingSelectPanel"
+                                        placeholder="Select State">
+                                        <mat-select-trigger>
+                                            <mat-chip-list>
+                                                <ng-container *ngFor="let topping of toppingsControl.value, let i = index">
+                                                    <mat-chip [removable]="true" (removed)="onToppingRemoved(topping)"
+                                                        *ngIf="i<=0">
+                                                        {{ topping }}
+                                                        <button matChipRemove>
+                                                            <mat-icon class="material-symbols-outlined">clear</mat-icon>
+                                                        </button>
+                                                    </mat-chip>
+                                                </ng-container>
+                                                <ng-container *ngIf="toppingsControl.value">
+                                                    <mat-chip *ngIf="toppingsControl.value.length > 1">
+                                                        + {{toppingsControl.value.length -1 }}
+                                                    </mat-chip>
+                                                </ng-container>
+                                            </mat-chip-list>
+                                        </mat-select-trigger> 
+                                        <div class="select_drop_scroll stateListing_options">
+                                            <mat-option *ngFor="let topping of toppingList" [value]="topping"
+                                                ngbTooltip="{{topping}}">
+                                                {{topping}}
+                                            </mat-option>
+                                        </div> 
+                                    </mat-select>
+                                </mat-form-field> 
+                            </div>
+                            <a mat-icon-button class="icon-class cursor_pointer ml-2" (click)="$event.stopPropagation()">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                        <div class="filter_row" (click)="$event.stopPropagation()">
+                            <div class="filter_l_box">AND</div>
+                            <button class="btn_design green_b_btn ln_40" mat-flat-button><i class="fas fa-plus-circle mr-2"></i> Add Filter</button>
+                        </div>
+                        <div class="fil_ac_btn">
+                            <button class="btn_design green_btn ln_40" mat-flat-button>Apply Filter</button>
+                        </div>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="NP_Com_Group MT_MB_15px mt-0">
+                <mat-tab-group class="tabbing_design tab_auto">
+                    <mat-tab label="Dashboard">
+                        <mat-card-content class="px-0">
+                            <div class="box_design dashbord_wrap mt-1">
+                                <div class="left_box">
+                                    <h3 class="box_title">
+                                        Risk Score
+                                        <span>
+                                            Company’s risk score in <strong>Dec 2024</strong>
+                                        </span>
+                                    </h3>
+                                    <div class="chart_box high_box">
+                                        <div class="speedometer">
+                                            <div class="speedometerReading"
+                                                [style.transform]="'rotate(' + readingSpeed  + 'deg)'">
+                                            </div>
+                                            <div class="speedometerReadingBase"></div>
+                                            <div class="speedometerCentreCircle">
+                                                <span [style.transform]="'rotate(' + niddleSpeed  + 'deg)'"></span>
+                                            </div>
+                                        </div>
+                                        <div class="speedometerBase">High</div>
+                                    </div>
+                                </div>
+
+                                <div class="right_box">
+                                    <div class="chart_head">
+                                        <h3 class="box_title">
+                                            Overall Risk Score Timeline
+                                            <span>
+                                                Timeline of overall risk score from <strong>Jan 2025 till Dec
+                                                    2025</strong>
+                                            </span>
+                                        </h3>
+                                        <ul class="legend_list">
+                                            <li class="green_leg">No Risk</li>
+                                            <li class="lightgreen_leg">Low</li>
+                                            <li class="yellow_leg">Medium</li>
+                                            <li class="orange_leg">High</li>
+                                            <li class="dark_leg">Critical</li>
+                                        </ul>
+                                    </div>
+                                    <div class="chart_box">
+                                        <highcharts-chart class="highcharts_chart" [Highcharts]="Highcharts"
+                                            [options]="Overall_Risk_Score_Timeline">
+                                        </highcharts-chart>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box_design dashbord_wrap mt-4">
+                                <div class="left_box">
+                                    <h3 class="box_title">
+                                        Companies by Risk Score
+                                        <span>
+                                            Portfolio risk score distribution in <strong>Dec 2025</strong>
+                                        </span>
+                                    </h3>
+                                    <div class="chart_box">
+                                        <!-- <div class="norisk_shape"></div> -->
+                                        <highcharts-chart class="highcharts_chart" [Highcharts]="Highcharts"
+                                            [options]="Companies_RiskScore_Highcharts">
+                                        </highcharts-chart>
+                                    </div>
+                                </div>
+                                <div class="right_box">
+                                    <div class="chart_head">
+                                        <h3 class="box_title">
+                                            Companies by Risk Score - Timeline
+                                            <span>
+                                                Timeline of portfolio risk score distribution from <strong>Jan 2025 till
+                                                    Dec 2025 Jan 2025 till Dec 2025</strong>
+                                            </span>
+                                        </h3>
+                                        <ul class="legend_list">
+                                            <li class="lightgreen_leg">Low</li>
+                                            <li class="yellow_leg">Medium</li>
+                                            <li class="orange_leg">High</li>
+                                            <li class="dark_leg">Critical</li>
+                                        </ul>
+                                    </div>
+                                    <div class="chart_box">
+                                        <highcharts-chart class="highcharts_chart" [Highcharts]="Highcharts"
+                                            [options]="Companies_RiskScoreTimeline_Highcharts">
+                                        </highcharts-chart>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box_design dashbord_wrap mt-4">
+                                <div class="left_box">
+                                    <h3 class="box_title">
+                                        Companies by Risk Category
+                                        <span>
+                                            Portfolio risk category distribution in <strong>Dec 2025</strong>
+                                        </span>
+                                    </h3>
+                                    <div class="chart_box">
+                                        <!-- <div class="norisk_shape"></div> -->
+                                        <highcharts-chart class="highcharts_chart" [Highcharts]="Highcharts"
+                                            [options]="CompaniesRiskCategory_Highcharts">
+                                        </highcharts-chart>
+                                    </div>
+                                    <h3 class="chart_btm_title">No. of companies</h3>
+                                </div>
+                                <div class="right_box">
+                                    <div class="chart_head">
+                                        <h3 class="box_title">
+                                            Companies by Risk Category - Timeline
+                                            <span>
+                                                Timeline of portfolio risk category distribution from <strong>Jan 2025
+                                                    till Dec 2025</strong>
+                                            </span>
+                                        </h3>
+                                    </div>
+                                    <div class="chart_box">
+                                        <highcharts-chart class="highcharts_chart" [Highcharts]="Highcharts"
+                                            [options]="CompaniesRiskCategoryTimeline_Highcharts">
+                                        </highcharts-chart>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="DetailsCard_teaserView single_cols dashbord_wrap mt-4">
+
+                                <div class="LH_NP_Com">
+                                    <h3 class="box_title">
+                                        Critical and High Risk Companies
+                                        <span>
+                                            Companies with critical and high risk score in <strong>Dec 2025</strong>
+                                        </span>
+                                    </h3>
+                                    <div class="NP_Group_Heading">
+                                        <div class="_Heading_grp">
+                                            <h4 class="Heading_Title">Company Name</h4>
+                                        </div>
+                                        <div class="_Heading_grp_right_dtls ">
+                                            <h4 class="Heading_Title">Risk</h4>
+                                        </div>
+                                        <div class="_Heading_grp_right_dtls ">
+                                            <h4 class="Heading_Title">No. of Alerts</h4>
+                                        </div>
+                                    </div>
+                                    <div class="teaserView_Details">
+                                        <!-- <div class="no_data_chart">Nothing to see here</div> -->
+                                        <!-- Display the alertTag details -->
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>D-LINK LTD</span>
+                                            <span class="text-left"><i class="fas fa-circle mr-1 critical_text"></i>
+                                                Critical</span>
+                                            <span class="green_text"><u>20 Alerts</u></span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>NAYARA ENERY LIMITED</span>
+                                            <span class="text-left"><i class="fas fa-circle mr-1 critical_text"></i>
+                                                Critical</span>
+                                            <span class="green_text"><u>20 Alerts</u></span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>Healthassure Private Limited</span>
+                                            <span class="text-left"><i class="fas fa-circle mr-1 high_text"></i>
+                                                High</span>
+                                            <span class="green_text"><u>20 Alerts</u></span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>Healthassure Private Limited</span>
+                                            <span class="text-left"><i class="fas fa-circle mr-1 critical_text"></i>
+                                                Critical</span>
+                                            <span class="green_text"><u>20 Alerts</u></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="LH_NP_Com">
+                                    <h3 class="box_title">
+                                        Companies with Risk Tags
+                                        <span>
+                                            Number of companies for each risk tag in <strong>Dec 2025</strong>
+                                        </span>
+                                    </h3>
+                                    <div class="NP_Group_Heading">
+                                        <div class="_Heading_grp">
+                                            <h4 class="Heading_Title">Status</h4>
+                                        </div>
+                                        <div class="_Heading_grp_right_dtls ">
+                                            <h4 class="Heading_Title">No. of Alerts</h4>
+                                        </div>
+                                    </div>
+                                    <div class="teaserView_Details">
+                                        <!-- <div class="no_data_chart">Nothing to see here</div> -->
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span class="grey_badge">NCLT Cases</span>
+                                            <span class="green_text"><u>30 Alerts</u></span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span class="grey_badge">Defaulter List</span>
+                                            <span class="green_text"><u>30 Alerts</u></span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span class="grey_badge">AML Sanctions</span>
+                                            <span class="green_text"><u>30 Alerts</u></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Table">
+                        <mat-card-content class="px-0">
+                            <div class="box_design">
+                                <div class="tableResponsive max-h-100">
+                                    <table
+                                        class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap no_stripe_borderX_table no_minwidth">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th width="14%">Date</th>
+                                                <th width="8%">Category</th>
+                                                <th width="8%">Tags</th>
+                                                <th width="8%">Risk Severity</th>
+                                                <th width="30%">Alert</th>
+                                                <th width="8%">Remarks</th>
+                                                <th width="8%">Status</th>
+                                                <th width="5%">Link</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>28-10-2024</td>
+                                                <td>Regulatory</td>
+                                                <td><span class="grey_badge">Statutory Filing</span></td>
+                                                <td><i class="fas fa-circle red_text mr-1"></i> Critical</td>
+                                                <td>Delays observed in GSTR3 filing for Nov'24</td>
+                                                <td><a class="green_text cursor_pointer"><u>Add Remarks</u></a></td>
+                                                <td><span class="yellow_badge">Pending</span></td>
+                                                <td class="green_text cursor_pointer"><a><u>View</u></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>28-10-2024</td>
+                                                <td>Regulatory</td>
+                                                <td><span class="grey_badge">Statutory Filing</span></td>
+                                                <td><i class="fas fa-circle lightred_text mr-1"></i> High</td>
+                                                <td>Company is marked as a Shell company by the Income Tax Department,
+                                                    Central Bureau of Investigation, or the Serious Fraud Investigations
+                                                    Office, or through Karza's Shell Entity Identification Service</td>
+                                                <td><a class="green_text cursor_pointer"><u>Follow-up initiated with
+                                                            t..</u></a><br><span class="grey_text">By Sidharth at 9:45
+                                                        PM</span></td>
+                                                <td><span class="yellow_badge">Pending</span></td>
+                                                <td class="green_text cursor_pointer"><a><u>View</u></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>28-10-2024</td>
+                                                <td>Regulatory</td>
+                                                <td><span class="grey_badge">Statutory Filing</span></td>
+                                                <td><i class="fas fa-circle green_text mr-1"></i> Low</td>
+                                                <td>Delays observed in GSTR3 filing for Nov'24</td>
+                                                <td><a class="green_text cursor_pointer"><u>Follow-up initiated with
+                                                            t..</u></a><br><span class="grey_text">By Sidharth at 9:45
+                                                        PM</span></td>
+                                                <td><span class="yellow_badge">Pending</span></td>
+                                                <td class="green_text cursor_pointer"><a><u>View</u></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="pagination-table NP_LeftPagintion">
+                                       <div class="dataTables_info" id="tickets-table_info" role="status"
+                                           aria-live="polite">
+                                           Showing
+                                           {{(alerPag.startIndex()+1)}} to
+                                           {{(alerPag.pageSize()*alerPag.page()) >
+                                           (alerPag.totalSize) ? (alerPag.totalSize)
+                                           :
+                                           (alerPag.pageSize()*alerPag.page())}} of
+                                           {{alerPag.totalSize}} rows
+                                           <div class="dataTables_length" id="tickets-table_length">
+                                               <div class="NP_HSBC_ComInput select-field">
+                                                   <mat-form-field appearance="outline">
+                                                       <mat-select [(ngModel)]="alerPag.pageSize"
+                                                           [panelClass]="'pagination_select'">
+                                                           <mat-option *ngFor="let pages of PageSelectNumber"
+                                                               [value]="pages.value">
+                                                               {{pages.value}}
+                                                           </mat-option>
+                                                       </mat-select>
+                                                   </mat-form-field>
+                                               </div>
+                                           </div>
+                                           <span class="grey_text"> row per page</span>
+                                       </div>
+                                       <div class="text-md-right float-md-right pagination-rounded">
+                                           <ul class="pagiation pagination-rounded psb-flex-end m-0">
+                                               <ngb-pagination [collectionSize]="alerPag.totalSize"
+                                                   [maxSize]="3" [(page)]="alerPag.page" [rotate]="true"
+                                                   [boundaryLinks]="true" [pageSize]="alerPag.pageSize()">
+                                               </ngb-pagination>
+                                           </ul>
+                                       </div>
+                                   </div> -->
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

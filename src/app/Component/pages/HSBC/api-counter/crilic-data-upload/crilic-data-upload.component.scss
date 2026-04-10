@@ -1,0 +1,27 @@
+.page_Title_Right{
+  gap: 10px;
+  align-items: center;
+}
+.__Btn_Group{
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    .upload_note{
+        font-style: italic;
+    }
+}
+
+:host ::ng-deep .bs-datepicker-months span.disabled,
+:host ::ng-deep .bs-datepicker-months span.disabled:hover,
+:host ::ng-deep .bs-datepicker-months span.disabled:focus,
+:host ::ng-deep .bs-datepicker-months span.disabled:active {
+  pointer-events: none !important;
+  background: transparent !important;
+  color: #ccc !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
+/* Override default hover */
+:host ::ng-deep .bs-datepicker-months span.disabled:hover {
+  background: transparent !important;
+}

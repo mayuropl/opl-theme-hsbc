@@ -1,0 +1,415 @@
+<section class="popup_design HSBC_Common_Pages pb-0" *ngIf="!showDetails">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Comparison Analysis</h3>
+            <div class="right_side">
+                <div class="input_fieldNew labelinput">
+                    <mat-label class="mr-1">{{data?.firstLevelColumnName}}<span class="darkgreen_text ml-1">{{data?.firstLevelSelectName}}</span></mat-label> 
+                    <!-- <mat-label class="mr-1">{{data?.firstLevelSelectName}}</mat-label> -->
+                    <!-- <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="companyType" panelClass="select_radio">
+                            <mat-option *ngFor="let type of companyTypes" [value]="type.value">
+                              <mat-icon class="checked" *ngIf="companyType === type.value">radio_button_checked</mat-icon>
+                              <mat-icon class="unchecked" *ngIf="companyType !== type.value">radio_button_unchecked</mat-icon>
+                              {{ type.label }}
+                            </mat-option>
+                          </mat-select>
+                    </mat-form-field> -->
+
+                </div>
+                <div class="input_fieldNew labelinput">
+                    <mat-label class="mr-1">{{data?.nextLevel}}<span class="darkgreen_text ml-1">{{data?.secondLevelSelectName}}</span></mat-label>
+                    <!-- <mat-label class="mr-1">{{data?.secondLevelSelectName}}</mat-label> -->
+                    <!-- <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="companyType" panelClass="select_radio">
+                            <mat-option *ngFor="let type of companyTypes" [value]="type.value">
+                              <mat-icon class="checked" *ngIf="companyType === type.value">radio_button_checked</mat-icon>
+                              <mat-icon class="unchecked" *ngIf="companyType !== type.value">radio_button_unchecked</mat-icon>
+                              {{ type.label }}
+                            </mat-option>
+                          </mat-select>
+                    </mat-form-field> -->
+                </div>
+            </div>
+        </div>
+        <div class="tile_content">
+            <h3>{{data.currentView}}</h3>
+            <!-- <div class="white_search_box">
+                <div class="searchBox_input">
+                    <div class="input_field">
+                        <mat-form-field appearance="outline">
+                            <input type="text" matInput placeholder="Search">
+                            <i matSuffix class="fi fi-br-search"></i>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">
+                <div class="table_sec">
+                    <div class="tableResponsive ">
+                        <table class="CommonTable_Scroll NonBG_Table design_Main_listTable bordered_table table_wraps no_sticky_table">
+                            <thead *ngIf="!(isLoadingThirdLevel && !thirdLevelViewData)">
+                                <tr>
+                                    <th class="text-center" width="5%">#</th>
+                                    <th>{{data.currentView}}
+                                        <span class="sort-container">
+                                            <mat-icon class="sort-icon sort-icon-up"
+                                                [class.active]="thirdLevelSortOrderObj.order_by_column === columnMap[data.currentView] && thirdLevelSortOrderObj.order_by_type === 'ASC'"
+                                                (click)="toggleSort(columnMap[data.currentView], 'ASC', true)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(columnMap[data.currentView], 'ASC', true)" 
+                                                (keydown.space)="toggleSort(columnMap[data.currentView], 'ASC', true)"
+                                                [attr.aria-label]="'Sort by ' + data.currentView + ' ascending'">
+                                                arrow_drop_up
+                                            </mat-icon>
+                                            <mat-icon class="sort-icon sort-icon-down"
+                                                [class.active]="thirdLevelSortOrderObj.order_by_column === columnMap[data.currentView] && thirdLevelSortOrderObj.order_by_type === 'DESC'"
+                                                (click)="toggleSort(columnMap[data.currentView], 'DESC', true)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(columnMap[data.currentView], 'DESC', true)" 
+                                                (keydown.space)="toggleSort(columnMap[data.currentView], 'DESC', true)"
+                                                [attr.aria-label]="'Sort by ' + data.currentView + ' descending'">
+                                                arrow_drop_down
+                                            </mat-icon>
+                                        </span>
+                                    </th>
+                                    <th *ngFor="let header of tableHeaders">
+                                        {{ header.label }}
+                                        <span class="sort-container">
+                                            <mat-icon class="sort-icon sort-icon-up"
+                                                [class.active]="thirdLevelSortOrderObj.order_by_column === header.key && thirdLevelSortOrderObj.order_by_type === 'ASC'"
+                                                (click)="toggleSort(header.key, 'ASC', true)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(header.key, 'ASC', true)" 
+                                                (keydown.space)="toggleSort(header.key, 'ASC', true)"
+                                                [attr.aria-label]="'Sort by ' + header.label + ' ascending'">
+                                                arrow_drop_up
+                                            </mat-icon>
+                                            <mat-icon class="sort-icon sort-icon-down"
+                                                [class.active]="thirdLevelSortOrderObj.order_by_column === header.key && thirdLevelSortOrderObj.order_by_type === 'DESC'"
+                                                (click)="toggleSort(header.key, 'DESC', true)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(header.key, 'DESC', true)" 
+                                                (keydown.space)="toggleSort(header.key, 'DESC', true)"
+                                                [attr.aria-label]="'Sort by ' + header.label + ' descending'">
+                                                arrow_drop_down
+                                            </mat-icon>
+                                        </span>
+                                    </th>
+                                    </tr>
+                                    </thead>
+                            <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoadingThirdLevel && !thirdLevelViewData}">
+                                <div class="table_sep_loader" *ngIf="isLoadingThirdLevel && !thirdLevelViewData">
+                                    <div class="loaderoverlay loader_screen">
+                                        <div class="loader_screen_center">
+                                            <div class="loader_screen_lottie">
+                                                <span class="logo_loader">
+                                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                        alt="">
+                                                </span>
+                                            </div>
+                                            <h3>Please wait data is loading</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <tr class="Mobile_View_Filter_Hide_NP filter_tr" *ngIf="!(isLoadingThirdLevel && !thirdLevelViewData)">
+                                    <td></td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput type="text" placeholder="Search {{data.currentView}}"
+                                                       [value]="thirdLevelSearchFilters[data.currentView] ? thirdLevelSearchFilters[data.currentView] : ''"
+                                                       (keyup)="onThirdLevelSearch(data.currentView, $event)" />
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td *ngFor="let header of tableHeaders">
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput type="text" placeholder="Search {{header.label}}"
+                                                       [value]="thirdLevelSearchFilters[header.label] ? thirdLevelSearchFilters[header.label] : ''"
+                                                       (keyup)="onThirdLevelSearch(header.label, $event)" />
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="thirdLevelViewData?.length === 0">
+                                                        <td colspan="09">
+                                                            <app-no-data-found message="No data found"></app-no-data-found>
+                                                        </td>
+                                 </tr>
+                                <tr *ngFor="let item of thirdLevelViewData; index as i">
+                                    <td class="text-center">{{ (i+1) + ((page - 1) * pageSize) }}.</td>
+                                    <td>
+                                        <ng-container *ngIf="data.currentView !== 'Customer'; else customerLink">
+                                            <u class="cursor_pointer" (click)="onSelectFourthlevel(item?.group_by_column)">{{item?.group_by_column}}</u>
+                                        </ng-container>
+                                        <ng-template #customerLink>
+                                            <u class="cursor_pointer" (click)="onCustomerBureauClick(item)">{{ item?.group_by_column }}</u>
+                                        </ng-template>
+                                    </td>
+                                    <td *ngFor="let header of tableHeaders; let i = index" [ngClass]="{
+                                        'text-center': i === 0,
+                                        'text-right': i > 0
+                                    }"
+                                    >
+                                        <ng-container *ngIf="numericFields.includes(header.key); else normalText">
+                                            {{ (item[header.key] ?? 0)  | number: getColumnFormat(header.key):'en-US' }}
+                                        </ng-container>
+                                    
+                                        <ng-template #normalText>
+                                            {{ item[header.key] }}
+                                        </ng-template>
+                                    </td>
+                                    <!-- <td class="no_sticky">{{item?.group_by_column}}</td> -->
+                                </tr>
+                            </tbody>
+                            </table>
+                            </div>
+                            <div class="pagination-table NP_LeftPagintion" *ngIf="!(isLoadingThirdLevel && !thirdLevelViewData)">
+                                <div class="pagination-table NP_LeftPagintion mt-0 p-0 border-0">
+                                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                        Showing {{ startRow }} to {{ endRow }} of {{ totalRecordsThirdLevel }} rows
+                            
+                                        <div class="dataTables_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(value)]="pageSize" (selectionChange)="onPageSizeChange($event.value)">
+                                                        <mat-option *ngFor="let size of [5,10,20,50]" [value]="size">{{ size }}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text">row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="totalRecordsThirdLevel"
+                                                [(page)]="page" [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="onPageChange($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+        </mat-dialog-content>
+        <!-- <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions> -->
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+<section class="popup_design HSBC_Common_Pages pb-0" *ngIf="showDetails">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Comparison Analysis</h3>
+        </div>
+        <div class="tile_content">
+            <h3>{{data.currentView}} <span class="darkgreen_text ml-1">{{fourLevelSelectName}}</span></h3>
+            <!-- <div class="white_search_box">
+                <div class="searchBox_input">
+                    <div class="input_field">
+                        <mat-form-field appearance="outline">
+                            <input type="text" matInput placeholder="Search">
+                            <i matSuffix class="fi fi-br-search"></i>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">
+                <div class="table_sec">
+                    <div class="tableResponsive ">
+                        <table class="CommonTable_Scroll NonBG_Table design_Main_listTable bordered_table table_wraps">
+                            <thead *ngIf="!(isLoadingFourthLevel && !fourLevelViewData)">
+                                <tr>
+                                    <th class="text-center" width="5%">#</th>
+                                    <th>Company Name
+                                        <span class="sort-container">
+                                            <mat-icon class="sort-icon sort-icon-up"
+                                                [class.active]="fourthLevelSortOrderObj.order_by_column === columnMap['Company Name'] && fourthLevelSortOrderObj.order_by_type === 'ASC'"
+                                                (click)="toggleSort(columnMap['Company Name'], 'ASC', false)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(columnMap['Company Name'], 'ASC', false)" 
+                                                (keydown.space)="toggleSort(columnMap['Company Name'], 'ASC', false)"
+                                                [attr.aria-label]="'Sort by Company Name ascending'">
+                                                arrow_drop_up
+                                            </mat-icon>
+                                            <mat-icon class="sort-icon sort-icon-down"
+                                                [class.active]="fourthLevelSortOrderObj.order_by_column === columnMap['Company Name'] && fourthLevelSortOrderObj.order_by_type === 'DESC'"
+                                                (click)="toggleSort(columnMap['Company Name'], 'DESC', false)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(columnMap['Company Name'], 'DESC', false)" 
+                                                (keydown.space)="toggleSort(columnMap['Company Name'], 'DESC', false)"
+                                                [attr.aria-label]="'Sort by Company Name descending'">
+                                                arrow_drop_down
+                                            </mat-icon>
+                                        </span>
+                                    </th>
+                                    <th *ngFor="let header of tableHeadersF">
+                                        {{ header.label }}
+                                        <span class="sort-container">
+                                            <mat-icon class="sort-icon sort-icon-up"
+                                                [class.active]="fourthLevelSortOrderObj.order_by_column === header.key && fourthLevelSortOrderObj.order_by_type === 'ASC'"
+                                                (click)="toggleSort(header.key, 'ASC', false)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(header.key, 'ASC', false)" 
+                                                (keydown.space)="toggleSort(header.key, 'ASC', false)"
+                                                [attr.aria-label]="'Sort by ' + header.label + ' ascending'">
+                                                arrow_drop_up
+                                            </mat-icon>
+                                            <mat-icon class="sort-icon sort-icon-down"
+                                                [class.active]="fourthLevelSortOrderObj.order_by_column === header.key && fourthLevelSortOrderObj.order_by_type === 'DESC'"
+                                                (click)="toggleSort(header.key, 'DESC', false)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(header.key, 'DESC', false)" 
+                                                (keydown.space)="toggleSort(header.key, 'DESC', false)"
+                                                [attr.aria-label]="'Sort by ' + header.label + ' descending'">
+                                                arrow_drop_down
+                                            </mat-icon>
+                                        </span>
+                                    </th>
+                                    <th class="no_sticky text-right">Classification
+                                        <span class="sort-container">
+                                            <mat-icon class="sort-icon sort-icon-up"
+                                                [class.active]="fourthLevelSortOrderObj.order_by_column === columnMap['Classification'] && fourthLevelSortOrderObj.order_by_type === 'ASC'"
+                                                (click)="toggleSort(columnMap['Classification'], 'ASC', false)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(columnMap['Classification'], 'ASC', false)" 
+                                                (keydown.space)="toggleSort(columnMap['Classification'], 'ASC', false)"
+                                                [attr.aria-label]="'Sort by Classification ascending'">
+                                                arrow_drop_up
+                                            </mat-icon>
+                                            <mat-icon class="sort-icon sort-icon-down"
+                                                [class.active]="fourthLevelSortOrderObj.order_by_column === columnMap['Classification'] && fourthLevelSortOrderObj.order_by_type === 'DESC'"
+                                                (click)="toggleSort(columnMap['Classification'], 'DESC', false)" 
+                                                role="button" tabindex="0"
+                                                (keydown.enter)="toggleSort(columnMap['Classification'], 'DESC', false)" 
+                                                (keydown.space)="toggleSort(columnMap['Classification'], 'DESC', false)"
+                                                [attr.aria-label]="'Sort by Classification descending'">
+                                                arrow_drop_down
+                                            </mat-icon>
+                                        </span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="pos_rel" [ngClass]="{'subloaderShowing': isLoadingFourthLevel && !fourLevelViewData}">
+                                <div class="table_sep_loader" *ngIf="isLoadingFourthLevel && !fourLevelViewData">
+                                    <div class="loaderoverlay loader_screen">
+                                        <div class="loader_screen_center">
+                                            <div class="loader_screen_lottie">
+                                                <span class="logo_loader">
+                                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                        alt="">
+                                                </span>
+                                            </div>
+                                            <h3>Please wait data is loading</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <tr class="Mobile_View_Filter_Hide_NP filter_tr" *ngIf="!(isLoadingFourthLevel && !fourLevelViewData)">
+                                    <td></td>
+                                    <td>
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput type="text" placeholder="Search Company Name"
+                                                       [value]="fourthLevelSearchFilters['Company Name'] ? fourthLevelSearchFilters['Company Name'] : ''"
+                                                       (keyup)="onFourthLevelSearch('Company Name', $event)" />
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td *ngFor="let header of tableHeadersF">
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput type="text" placeholder="Search {{header.label}}"
+                                                       [value]="fourthLevelSearchFilters[header.label] ? fourthLevelSearchFilters[header.label] : ''"
+                                                       (keyup)="onFourthLevelSearch(header.label, $event)" />
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                    <td class="no_sticky">
+                                        <fieldset class="NP_HSBC_ComInput">
+                                            <mat-form-field appearance="outline">
+                                                <input matInput type="text" placeholder="Search Classification"
+                                                [value]="fourthLevelSearchFilters['Classification'] ? fourthLevelSearchFilters['Classification'] : ''"
+                                                       (keyup)="onFourthLevelSearch('Classification', $event)" />
+                                            </mat-form-field>
+                                        </fieldset>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="fourLevelViewData?.length === 0">
+                                    <td colspan="09">
+                                        <app-no-data-found message="No data found"></app-no-data-found>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let item of fourLevelViewData; index as i">
+                                    <td class="text-center">{{ (i+1) + ((pageF - 1) * pageSizeF) }}.</td>
+                                    <td><u class="cursor_pointer" (click)="onCustomerBureauClick(item)">{{item?.group_by_column}}</u></td>
+                                    <td *ngFor="let header of tableHeadersF; let i = index" [ngClass]="{
+                                        'text-right': i >= 0
+                                    }"
+                                    >
+                                        <ng-container *ngIf="numericFields.includes(header.key); else normalText">
+                                            {{ (item[header.key] ?? 0)  | number: getColumnFormat(header.key):'en-US' }}
+                                        </ng-container>
+                                    
+                                        <ng-template #normalText>
+                                            {{ item[header.key] }}
+                                        </ng-template>
+                                    </td>
+                                    <td class="no_sticky text-right">{{item?.classification || 'NA'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                            <div class="pagination-table NP_LeftPagintion" *ngIf="!(isLoadingFourthLevel && !fourLevelViewData)">
+                                <div class="pagination-table NP_LeftPagintion mt-0 p-0 border-0">
+                                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                        Showing {{ startRowF }} to {{ endRowF }} of {{ totalRecordsFourLevel }} rows
+                            
+                                        <div class="dataTables_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(value)]="pageSizeF" (selectionChange)="onPageSizeChangeF($event.value)">
+                                                        <mat-option *ngFor="let sizeF of [5,10,20,50]" [value]="sizeF">{{ sizeF }}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text">row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="totalRecordsFourLevel"
+                                                [(page)]="pageF" [pageSize]="pageSizeF" [boundaryLinks]="true" (pageChange)="onPageChangeF($event)">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0" *ngIf="!isLoadingFourthLevel">
+            <button mat-flat-button color="primary" (click)="goBack()">Back</button>
+        </mat-dialog-actions>
+    </div>
+</section>

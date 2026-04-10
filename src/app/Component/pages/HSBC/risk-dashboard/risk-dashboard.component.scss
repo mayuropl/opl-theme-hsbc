@@ -1,0 +1,207 @@
+.dashbord_wrap {
+    .LH_NP_Com{
+      .box_title{
+        padding: 20px 15px;
+        margin: 0;
+      }
+    }
+    ._Heading_grp_right_dtls{
+      &:last-child{
+        .Heading_Title{
+          text-align: right;
+        }    
+      }
+    }
+    .Heading_Title{
+      min-width: 140px;
+    }
+    .TeaserView_Details_CGRP{
+      &+.TeaserView_Details_CGRP{
+        border-top: 1px solid #D9D9D9;
+      }
+     
+      span{
+        max-width: 140px;
+        .fa-circle{
+          font-size: 10px;
+        }
+        &:last-child{
+          text-align: right;
+        }
+      }
+    }
+    .teaserView_Details {
+      height: 240px;
+      overflow-y: auto;
+      padding-bottom: 0 !important;
+    }
+  }
+
+  
+.speedometer {margin: 2em auto;height: 150px;width: 320px;overflow:hidden;display: flex;display: -webkit-flex;flex-direction: column;-webkit-flex-direction: column;align-items: center;-webkit-align-items: center;position: relative}
+.speedometerReadingBase {height: 150px;width: 300px;border-top-left-radius: 150px;border-top-right-radius: 150px;border: 20px solid #f6f5f6;border-bottom: 0;box-sizing: border-box;position: absolute;left: 10px;top: 0}
+.speedometerReading {position: absolute;left: 10px;top: 0;transform: rotate(-45deg);transition-duration:3s;height: 300px;width: 300px;background: transparent;border-radius: 50%;border: 20px solid #fe6c5c;border-color: transparent transparent #fe6c5c #fe6c5c;box-sizing: border-box;cursor: pointer;z-index: 1;  animation: movement 2s}
+.speedometerBase {
+  width: auto;
+    height: auto;
+     position: relative;
+    top: -50px;
+    z-index: 9999999999999999;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    margin: 0 auto;
+    max-width: max-content;
+    transition-duration: 3s;
+}
+ .speedometerCentreCircle {position: absolute;bottom: 0px;left: 47%;transform:translateX(-50%);width: 0;height: 0;z-index:99}
+.speedometerCentreCircle span{transform: rotate(-90deg);transition-duration:3s;content: "";display: block;position: absolute;bottom:0;background:transparent;  border-left: 10px solid transparent;border-right: 10px solid transparent;  border-bottom-left-radius: 5em;border-bottom-right-radius: 5em;transform-origin: center 100%;animation: niddle 2s}
+
+  
+ 
+
+.teaserView_Details{
+  display: flex;
+  flex-direction: column;
+  .TeaserView_Details_CGRP{
+    .green_text{
+      u{
+        cursor: pointer;
+      }
+    }
+  }
+}
+.total_box{
+  padding: 20px !important;
+  background: #F7F7F7;
+  margin-top: auto;
+}
+
+
+
+.right_side_select{
+    display: flex;
+    justify-content: flex-end;
+    width: 130px;
+    float: right;
+    margin-bottom: -50px;
+    position: relative;
+    z-index: 2;
+}
+ 
+.high_box{
+  .speedometerBase{
+    background: #FF6961;
+  }
+  .speedometerCentreCircle span{border-bottom: 110px solid #FF6961;}
+  .speedometerReading {border: 20px solid #FF6961;border-color: transparent transparent #FF6961 #FF6961;}
+}
+.medium_box{
+  .speedometerBase{
+    background: #F8D66E;
+  }
+  .speedometerCentreCircle span{border-bottom: 110px solid #F8D66E;}
+  .speedometerReading {border: 20px solid #F8D66E;border-color: transparent transparent #F8D66E #F8D66E;}
+}
+.low_box{
+  .speedometerBase{
+    background: #7ABD7E;
+  }
+  .speedometerCentreCircle span{border-bottom: 110px solid #7ABD7E;}
+  .speedometerReading {border: 20px solid #7ABD7E;border-color: transparent transparent #7ABD7E #7ABD7E;}
+}
+.critical_box{
+  .speedometerBase{
+    background: #842002;
+  }
+  .speedometerCentreCircle span{border-bottom: 110px solid #842002;}
+  .speedometerReading {border: 20px solid #842002;border-color: transparent transparent #842002 #842002;}
+}
+.norisk_box{
+  .speedometerBase{
+    background: #047500;
+  }
+  .speedometerCentreCircle span{border-bottom: 110px solid #047500;}
+  .speedometerReading {border: 20px solid #047500;border-color: transparent transparent #047500 #047500;}
+}
+
+
+
+
+ 
+
+.norisk_shape{
+  height: 250px;
+  width: 250px;
+  border: 30px solid #F3F7FC;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+.teaserView_Details{
+  height: 100%;
+  .no_data_chart{
+    display: flex;
+    height: 100%;
+    padding: 50px 0;
+    align-items: center;
+    justify-content: center;
+    color: #b4b7bb;
+    font-size: 16px;
+  }
+}
+
+
+.speedometerReadingBase{
+  &::before{
+    position: absolute;
+    content: '';
+    background-image: url(../../../../../assets/images/speedometer-tick.svg);
+    background-repeat: no-repeat;
+    height: 130px;
+    width: 260px;
+    background-size: cover;
+    top: 0;
+  }
+}
+
+.f_round_txt{
+  float: right;
+  margin-bottom: 20px;
+  color: #000;
+  font-size: 14px;
+  a{
+    u{
+      cursor: pointer;
+    }
+  }
+}
+
+
+.note_desc{
+  float: left;
+  margin: 20px 0;
+  p{
+    color: #000;
+    font-weight: 400;
+  }
+}
+
+.ellips_txt{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 75px;
+  display: block;
+}
+
+.chart_btm_title{
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+  margin: 0;
+}

@@ -1,0 +1,85 @@
+<div class="sidemenu-wrapper" [class.closeLeftmenu]="iscloseLeftmenu">
+  <div class="side-menu-container">
+    <nav class="side-menu">
+      <ng-container *ngFor="let node of menuStructure">
+        <!-- Level 1 Section -->
+        <div class="menu-section" [class.active]="isNodeActive(node)" *ngIf="node.visible"
+          (mouseenter)="onSectionHover(node.label, $event)" (mouseleave)="onSectionLeave()">
+
+          <div class="menu-item section-header" [class.expanded]="node.expanded" (click)="onNodeClick(node, $event)">
+            <span class="menu-icon" *ngIf="node.icon"><i [class]="node.icon"></i></span>
+            <span class="menu-label">{{ node.label }}</span>
+            <span class="menu-chevron" *ngIf="node.children && node.children.length" [class.expanded]="node.expanded">
+              <i class="fi fi-rr-angle-small-down"></i>
+            </span>
+          </div>
+
+          <!-- Level 2 Sub-menu -->
+          <ul class="sub-menu" [class.open]="node.expanded" *ngIf="node.children && node.children.length">
+            <ng-container *ngFor="let child of node.children">
+
+              <!-- Recursive Check: If child has children, it's a sub-section (Level 2 Header) -->
+              <ng-container *ngIf="child.visible !== false">
+                <ng-container *ngIf="child.children && child.children.length > 0; else leafNode">
+                  <li class="sub-item has-dropdown nested-header" [class.active]="isNodeActive(child)"
+                    (click)="toggleNode(child); $event.stopPropagation()">
+                    <span class="menu-label">{{ child.label }}</span>
+                    <span class="menu-chevron" [class.expanded]="child.expanded"><i
+                        class="fi fi-rr-angle-small-down"></i></span>
+                  </li>
+                  <!-- Level 3+ Nested Menu (Recursive) -->
+                  <ul class="nested-sub-menu" [class.open]="child.expanded">
+                    <ng-container
+                      *ngTemplateOutlet="recursiveNodeTemplate; context:{ $implicit: child.children }"></ng-container>
+                  </ul>
+                </ng-container>
+
+                <!-- Leaf Node (Level 2 Item) -->
+                <ng-template #leafNode>
+                  <li class="sub-item" [class.active]="child.tabKey && activeTab === child.tabKey"
+                    (click)="onNodeClick(child, $event)">
+                    {{ child.label }}
+                  </li>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </ul>
+        </div>
+      </ng-container>
+    </nav>
+  </div>
+  <div class="menu-label-flyout" *ngIf="iscloseLeftmenu && hoveredLabel" [style.top.px]="hoveredTop">
+    {{ hoveredLabel }}
+  </div>
+</div>
+
+<!-- Recursive Template for Level 3+ Nodes -->
+<ng-template #recursiveNodeTemplate let-nodes>
+  <ng-container *ngFor="let node of nodes">
+    <ng-container *ngIf="node.visible !== false">
+
+      <!-- Folder Node -->
+      <ng-container *ngIf="node.children && node.children.length > 0; else leafNode">
+        <li class="sub-item has-dropdown nested-header" [class.active]="isNodeActive(node)"
+          (click)="toggleNode(node); $event.stopPropagation()">
+          <span class="menu-label">{{ node.label }}</span>
+          <span class="menu-chevron" [class.expanded]="node.expanded">
+            <i class="fi fi-rr-angle-small-down"></i>
+          </span>
+        </li>
+        <ul class="nested-sub-menu" [class.open]="node.expanded">
+          <ng-container *ngTemplateOutlet="recursiveNodeTemplate; context:{ $implicit: node.children }"></ng-container>
+        </ul>
+      </ng-container>
+
+      <!-- Leaf Node -->
+      <ng-template #leafNode>
+        <li class="nested-item" [class.active]="node.tabKey && activeTab === node.tabKey"
+          (click)="onNodeClick(node, $event)">
+          {{ node.label }}
+        </li>
+      </ng-template>
+
+    </ng-container>
+  </ng-container>
+</ng-template>

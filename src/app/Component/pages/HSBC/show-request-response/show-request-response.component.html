@@ -1,0 +1,24 @@
+<div class="popup_design ">
+  <div class="pop_up_container">
+    <div class="popup_header" mat-dialog-title>
+      <h3> <label>{{typeName}} Data <i style="cursor: pointer;" class="fa fa-clone" aria-hidden="true"
+            (click)="copyToClipBoard(responseData,true)"></i></label></h3>
+    </div>
+    <!-- Modal-scroll -->
+    <mat-dialog-content class="">
+      <div class="popup_body">
+        <div class="row m-0">
+          <div class="col-md-12 p-0">
+            <div style="font-size: large;" class="Cont_View">
+              <pre>{{responseData | json}}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="d-flex justify-content-end popup_actions_btns pt-0">
+      <button mat-flat-button color="primary" (click)="downloadTxtFile(responseData)">Download JSON</button>
+      <button mat-flat-button class="ml-2" color="grey" (click)="closeModal()">Cancel</button>
+    </mat-dialog-actions>
+  </div>
+</div>

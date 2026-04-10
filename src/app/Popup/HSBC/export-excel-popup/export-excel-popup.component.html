@@ -1,0 +1,892 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial (click)="closeDialog()">close</mat-icon>
+    </a>
+    <mat-tab-group mat-align-tabs="start" class="tabs-design" animationDuration="0ms" #tabGroup (click)="tabChange()">
+        <mat-tab label="Custom"  >
+            <mat-card-content>
+                <div class="pop_up_container">
+                    <mat-dialog-content class="px-0">
+                        <div class="popup_body exp_accordian">
+                            <mat-accordion class="accordion_design1">
+                                <div class="title_box">
+                                    <h3>To add more columns in excel, Please select from the following list</h3>
+                                </div>
+                                <mat-expansion-panel >
+                                    <mat-expansion-panel-header >
+                                        <mat-panel-title><mat-checkbox [(ngModel)]="isCustomerProfileChecked"
+                                                (change)="onCustomerProfileChange($event)">Customer
+                                                Profile</mat-checkbox></mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="accordion_content">
+                                        <div class="chk_group">
+                                          <mat-checkbox [(ngModel)]="CustomerProfileDto.constitutionAsPerMca"
+                                                (change)="onCustomerProfileCheckboxChange()">Constitution As Per MCA</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.constitutionAsPerGst"
+                                                (change)="onCustomerProfileCheckboxChange()">Constitution As Per GST</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.gstStatus"
+                                                (change)="onCustomerProfileCheckboxChange()">GST Status</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.dateOfIncorporation"
+                                                (change)="onCustomerProfileCheckboxChange()">Date of Incorporation</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.cin"
+                                                (change)="onCustomerProfileCheckboxChange()">CIN</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.pan" *ngIf = '!isTarget'
+                                                (change)="onCustomerProfileCheckboxChange()">PAN</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.iec"
+                                                (change)="onCustomerProfileCheckboxChange()">IEC</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.leiNumber"
+                                                (change)="onCustomerProfileCheckboxChange()">LEI Number</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.leiExpiry"
+                                                (change)="onCustomerProfileCheckboxChange()">LEI Expiry</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.industry"
+                                                (change)="onCustomerProfileCheckboxChange()">Industry</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.sector"
+                                                (change)="onCustomerProfileCheckboxChange()">Sector</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.listingStatus"
+                                                (change)="onCustomerProfileCheckboxChange()">Listing Status</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.foreignShareholding"
+                                                (change)="onCustomerProfileCheckboxChange()">Foreign Shareholding</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.noOfEmployees"
+                                                (change)="onCustomerProfileCheckboxChange()">No. of Employees</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.gstTurnover"
+                                                (change)="onCustomerProfileCheckboxChange()">GST Turnover Slab</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.pslStatus"
+                                                (change)="onCustomerProfileCheckboxChange()">PSL Status</mat-checkbox>
+                                            <!-- <mat-checkbox [(ngModel)]="CustomerProfileDto.persona"
+                                                (change)="onCustomerProfileCheckboxChange()">Persona</mat-checkbox> -->
+
+                                            <!-- <mat-checkbox [(ngModel)]="CustomerProfileDto.bureauVintage"
+                                                (change)="onCustomerProfileCheckboxChange()">Bureau Vintage</mat-checkbox> -->
+
+
+
+                                            <!-- <mat-checkbox [(ngModel)]="CustomerProfileDto.timeWithHsbc"
+                                                (change)="onCustomerProfileCheckboxChange()">Time  with HSBC</mat-checkbox> -->
+
+
+
+
+                                            <!-- <mat-checkbox [(ngModel)]="CustomerProfileDto.business"
+                                                (change)="onCustomerProfileCheckboxChange()">Business</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.segment"
+                                                (change)="onCustomerProfileCheckboxChange()">Segment</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.region"
+                                                (change)="onCustomerProfileCheckboxChange()">Region</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.customerType"
+                                                (change)="onCustomerProfileCheckboxChange()">Customer Type</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.rmName"
+                                                (change)="onCustomerProfileCheckboxChange()">RM Name</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="CustomerProfileDto.rmPSID"
+                                                (change)="onCustomerProfileCheckboxChange()">RM PS ID</mat-checkbox> -->
+                                                <mat-checkbox [(ngModel)]="CustomerProfileDto.agriPsl"
+                                                (change)="onCustomerProfileCheckboxChange()">Agri PSL</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="CustomerProfileDto.udayam"
+                                                (change)="onCustomerProfileCheckboxChange()">Udyam Number</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="CustomerProfileDto.udyamStatus"
+                                                (change)="onCustomerProfileCheckboxChange()">Udyam status</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="CustomerProfileDto.udyamCategory"
+                                                (change)="onCustomerProfileCheckboxChange()">Udyam category</mat-checkbox>
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title><mat-checkbox [(ngModel)]="isHsbcCustomerDetailsChecked"
+                                                (change)="onHsbcCustomerDetailsChange($event)">HSBC Customer Details
+                                            </mat-checkbox></mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="accordion_content">
+                                        <div class="chk_group">
+
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.rmName"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">RM name</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.rmPSID"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">RM PSID</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.business"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">Business</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.segment"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">Segment</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.region"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">Region</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.city"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">City</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.customerType"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">Customer Type</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.crr"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">CRR</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.lastApprovedDate"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">Last Approved Date</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.nextReviewDate"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">Next Review Date</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="hsbcCustomerDetails.cddDate"
+                                                (change)="onHsbcCustomerDetailsCheckboxChange()">CDD Date</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="hsbcCustomerDetails.cddRiskRating"
+                                            (change)="onHsbcCustomerDetailsCheckboxChange()">CDD RIsk Rating</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="hsbcCustomerDetails.timeWithHsbc"
+                                            (change)="onHsbcCustomerDetailsCheckboxChange()">Time with HSBC</mat-checkbox>
+<!--                                            <mat-checkbox *ngIf="isETB" [(ngModel)]="hsbcCustomerDetails.currentYearRevenue"-->
+<!--                                            (change)="onHsbcCustomerDetailsCheckboxChange()">Current Year Revenue</mat-checkbox>-->
+<!--                                            <mat-checkbox *ngIf="isETB" [(ngModel)]="hsbcCustomerDetails.lastYearRevenue"-->
+<!--                                            (change)="onHsbcCustomerDetailsCheckboxChange()">Last Year Revenue</mat-checkbox>-->
+
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel >
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title><mat-checkbox [(ngModel)]="isRatingAndCodChecked"
+                                                (change)="onRatingAndCodeChange($event)">Industry Risk & Rating</mat-checkbox></mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="accordion_content">
+                                        <div class="chk_group">
+                                                <mat-checkbox [(ngModel)]="ratingAndCod.latestCreditRating"
+                                                (change)="onRatingAndCodCheckedCheckboxChange()">Latest credit rating</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="ratingAndCod.isRatingType"
+                                                (change)="onRatingAndCodCheckedCheckboxChange()">Rating Type</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="ratingAndCod.ratingAgency"
+                                                (change)="onRatingAndCodCheckedCheckboxChange()">Rating agency</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="ratingAndCod.dateOfRating"
+                                                (change)="onRatingAndCodCheckedCheckboxChange()">Date of rating</mat-checkbox>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel >
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title><mat-checkbox [(ngModel)]="isFinancialChecked"
+                                            (change)="onFinancialsChange($event)">Financials</mat-checkbox></mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="accordion_content">
+                                        <div class="chk_group">
+                                            <mat-checkbox [(ngModel)]="financials.latestAuditedYear"
+                                            (change)="onFinancialsCheckboxChange()">Latest audited year</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.nameofAuditor"
+                                            (change)="onFinancialsCheckboxChange()">Name of auditor</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.auditedTurnover"
+                                            (change)="onFinancialsCheckboxChange()">Audited Turnover</mat-checkbox>
+                                            <!-- <mat-checkbox [(ngModel)]="financials.gstTurnover"
+                                            (change)="onFinancialsCheckboxChange()">GST Tunrover</mat-checkbox> -->
+                                            <!-- <mat-checkbox [(ngModel)]="financials.eximTurnover"
+                                            (change)="onFinancialsCheckboxChange()">EXIM Turnover</mat-checkbox> -->
+                                            <mat-checkbox [(ngModel)]="financials.itItesTurnover"
+                                            (change)="onFinancialsCheckboxChange()">IT/ITES Turnover</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.ebitda"
+                                            (change)="onFinancialsCheckboxChange()">EBIDTA</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.ebitdaPercentage"
+                                            (change)="onFinancialsCheckboxChange()">EBIDTA %</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.pat"
+                                            (change)="onFinancialsCheckboxChange()">PAT</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.patPercentage"
+                                            (change)="onFinancialsCheckboxChange()">PAT %</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.tradeReceivables"
+                                            (change)="onFinancialsCheckboxChange()">Trade receivables</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.inventories"
+                                            (change)="onFinancialsCheckboxChange()">Inventories</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.nonCurrentAssets"
+                                            (change)="onFinancialsCheckboxChange()">Non current assets</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.assetSize"
+                                            (change)="onFinancialsCheckboxChange()">Total Assets</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.netWorth"
+                                            (change)="onFinancialsCheckboxChange()">Net worth</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.tradePayable"
+                                            (change)="onFinancialsCheckboxChange()">Trade Payable</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.longTermBorrowings"
+                                            (change)="onFinancialsCheckboxChange()">Long Term Borrowings</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.shortTermBorrowings"
+                                            (change)="onFinancialsCheckboxChange()">Short Term Borrowings</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.leverage"
+                                            (change)="onFinancialsCheckboxChange()">Leverage</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.netDebtEBITDA"
+                                            (change)="onFinancialsCheckboxChange()">Net debt/EBITDA</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.workingCapitalCycle"
+                                            (change)="onFinancialsCheckboxChange()">Working Capital Cycle</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.payableDaysOnSalesBasis"
+                                            (change)="onFinancialsCheckboxChange()">Payable Days(Sales Basis)</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.daysOfSalesOutstanding"
+                                            (change)="onFinancialsCheckboxChange()">Days Of Sales Outstanding</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.inventoryDaysSalesBasis"
+                                            (change)="onFinancialsCheckboxChange()">Inventory Days(Sales Basis)</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.currentRatio"
+                                            (change)="onFinancialsCheckboxChange()">Current Ratio</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.dscr"
+                                            (change)="onFinancialsCheckboxChange()">DSCR</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="financials.interestCoverageRatio"
+                                            (change)="onFinancialsCheckboxChange()">Interest coverage ratio</mat-checkbox>
+
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel >
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title><mat-checkbox [(ngModel)]="isLiabilitiesOpportunityChecked"
+                                        (change)="onLiabilitiesOpportunityChange($event)">Liabilities Opportunity</mat-checkbox></mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="accordion_content">
+                                    <div class="chk_group">
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.cashAndBank"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Cash & Bank</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.currentInvestments"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Current Investments</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.annualTax"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Annual Tax</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.annualSalary"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Annual Salary</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.unbilledRevenue"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Unbilled revenue</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.dividendPaid"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Dividend Paid</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.dividendPayable"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Dividend Payable</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.csrObligation"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">CSR Obligation</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.csrAmountSpent"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">CSR Amount Spent</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="liabilitiesOpportunity.transferToUnspentCsrAc"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Transfer to Unspent CSR A/C</mat-checkbox>
+                                        <mat-checkbox *ngIf="data?.type === 'ETB'" [(ngModel)]="liabilitiesOpportunity.cyChurnPer"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Credit Churn (Current FY)</mat-checkbox>
+                                        <mat-checkbox *ngIf="data?.type === 'ETB'" [(ngModel)]="liabilitiesOpportunity.pyChurnPer"
+                                        (change)="onLiabilitiesOpportunityCheckboxChange()">Credit Churn (Previous FY)</mat-checkbox>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel >
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title><mat-checkbox [(ngModel)]="isLendingOpportunityChecked"
+                                                (change)="onLendingOpportunityChange($event)">Lending Opportunity
+                                            </mat-checkbox></mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="accordion_content">
+                                        <div class="chk_group">
+
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.openCharges"
+                                                      (change)="onLendingOpportunityCheckedCheckboxChange()">Open charges</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.mcaOpenCharge"
+                                                      (change)="onLendingOpportunityCheckedCheckboxChange()">MCA open charge(Rs. in Lacs)</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.nameOfChargeHolder"
+                                                      (change)="onLendingOpportunityCheckedCheckboxChange()">Name of chargeholder</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.dateOfBureauReport"
+                                                      (change)="onLendingOpportunityCheckedCheckboxChange()">Date of bureau report</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.soleMultipleLending"
+                                                      (change)="onLendingOpportunityCheckedCheckboxChange()">Sole/Multiple lending</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.cmrScore"
+                                                      (change)="onLendingOpportunityCheckedCheckboxChange()">CMR score</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.totalSanction"
+                                                (change)="onLendingOpportunityCheckedCheckboxChange()">Total Sanction</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.totalUtilization"
+                                                (change)="onLendingOpportunityCheckedCheckboxChange()">Total Utilization</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.hsbcSanction"
+                                                (change)="onLendingOpportunityCheckedCheckboxChange()">HSBC Sanction</mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.hsbcUtilization"
+                                                (change)="onLendingOpportunityCheckedCheckboxChange()">HSBC Utilization</mat-checkbox>
+                                                  <mat-checkbox [(ngModel)]="lendingOpportunity.facilitiesFromPrivateAndForeignBanks"
+                                                (change)="onLendingOpportunityCheckedCheckboxChange()">Facilities from Private & Foreign Banks</mat-checkbox>
+
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.facilitiesFromNBFCAndOthers"
+                                                (change)="onLendingOpportunityCheckedCheckboxChange()">Facilities from NBFC & Others</mat-checkbox>
+
+                                             <!-- <mat-checkbox [(ngModel)]="lendingOpportunity.isPROrCIR"
+                                            (change)="onLendingOpportunityCheckedCheckboxChange()">Data Source</mat-checkbox> -->
+                                                <mat-checkbox [(ngModel)]="lendingOpportunity.facilitiesFromNBFCAndOthersOs"
+                                                (change)="onLendingOpportunityCheckedCheckboxChange()">Facilities from NBFC and Other (O/S)</mat-checkbox>
+                                                 <mat-checkbox [(ngModel)]="lendingOpportunity.bureauVintage"
+                                                (change)="onLendingOpportunityCheckedCheckboxChange()">Bureau Vintage</mat-checkbox>
+
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel >
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title><mat-checkbox [(ngModel)]="IsCrossBordersAndFlowsChecked"
+                                            (change)="onCrossBordersAndFlowsChange($event)">Cross Border Opportunity
+                                                </mat-checkbox></mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="accordion_content">
+                                        <div class="chk_group">
+                                            <div class="checkbox-list">
+                                                <!-- <mat-checkbox [(ngModel)]="lendingOpportunity.bankingArrangement" (change)="onLendingOpportunityCheckboxChange()">
+                                                  Banking Arrangement
+                                                </mat-checkbox> -->
+
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.totalExports" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  Exports last 12 months (Units in $)
+                                                </mat-checkbox>
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.noOfExportShipment" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  No. of Export shipment
+                                                </mat-checkbox>
+
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.totalImports" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                    Total Imports last 12 months (Units in $)
+                                                </mat-checkbox>
+
+                                                <!-- <mat-checkbox [(ngModel)]="crossBordersAndFlows.cashAndBank" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  Cash and Bank
+                                                </mat-checkbox> -->
+
+                                                <!-- <mat-checkbox [(ngModel)]="crossBordersAndFlows.fixedDeposits" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  Fixed deposits
+                                                </mat-checkbox> -->
+
+                                                <!-- <mat-checkbox [(ngModel)]="crossBordersAndFlows.annualTax" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  Annual Tax
+                                                </mat-checkbox>
+
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.annualSalary" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  Annual Salary
+                                                </mat-checkbox>
+
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.currentInvestments" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  Current investments
+                                                </mat-checkbox> -->
+
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.noOfImportShipment" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  No. of Import shipment
+                                                </mat-checkbox>
+
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.ecb" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  ECB (Units in $)
+                                                </mat-checkbox>
+
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.fdi" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  FDI (Units in $)
+                                                </mat-checkbox>
+
+                                                <mat-checkbox [(ngModel)]="crossBordersAndFlows.odi" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                  ODI (Units in $)
+                                                </mat-checkbox>
+
+                                              <!-- <mat-checkbox [(ngModel)]="crossBordersAndFlows.unbilledRevenue" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                Unbilled Revenue
+                                              </mat-checkbox>
+                                              <mat-checkbox [(ngModel)]="crossBordersAndFlows.dividendPaid" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                Dividend Paid
+                                              </mat-checkbox>
+
+
+                                              <mat-checkbox [(ngModel)]="crossBordersAndFlows.dividendPayable" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                Dividend Payable
+                                              </mat-checkbox>
+                                              <mat-checkbox [(ngModel)]="crossBordersAndFlows.csrObligation" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                CSR Obligation
+                                              </mat-checkbox>
+                                              <mat-checkbox [(ngModel)]="crossBordersAndFlows.csrAmountSpent" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                CSR Amount Spend
+                                              </mat-checkbox>
+                                              <mat-checkbox [(ngModel)]="crossBordersAndFlows.transferToUnspentCsrAc" (change)="onCrossBordersAndFlowsCheckboxChange()">
+                                                Transfer To Unspent CSR A/c
+                                              </mat-checkbox> -->
+                                              </div>
+
+                                            <!-- <mat-checkbox [(ngModel)]="lendingOpportunity.bankingArrangement"
+                                            (change)="onLendingOpportunityCheckboxChange()">Banking Arrangement</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.noOfLenders"
+                                            (change)="onLendingOpportunityCheckboxChange()">No. of Lenders</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.totalSanction"
+                                            (change)="onLendingOpportunityCheckboxChange()">Total Sanction</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.sactionWallet"
+                                            (change)="onLendingOpportunityCheckboxChange()">Sanction Wallet</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.mcaOpenCharge"
+                                            (change)="onLendingOpportunityCheckboxChange()">MCA Open Charges</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.countOfEnquiriesInPast12M"
+                                            (change)="onLendingOpportunityCheckboxChange()">Count of Enquiries in Past 12 M</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.totalOutstanding"
+                                            (change)="onLendingOpportunityCheckboxChange()">Total Outstanding</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.utilisationWallet"
+                                            (change)="onLendingOpportunityCheckboxChange()">Utilisation Wallet</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.facilitiesFromNBFCOthers"
+                                            (change)="onLendingOpportunityCheckboxChange()">Facilities from NBFC/ Others</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.availingProducts"
+                                            (change)="onLendingOpportunityCheckboxChange()">Availing Products</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="lendingOpportunity.noOfProductsNotWithHSBC"
+                                            (change)="onLendingOpportunityCheckboxChange()">No. of Products not with HSBC</mat-checkbox> -->
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel >
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title><mat-checkbox [(ngModel)]="isWpbOpportunityChecked"
+                                                (change)="onWpbOpportunityChange($event)">WPB Opportunity
+                                            </mat-checkbox></mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="accordion_content">
+                                        <div class="chk_group">
+
+                                          <mat-checkbox [(ngModel)]="wpbOpportunity.noOfDirectors"
+                                                (change)="onWpbOpportunityCheckboxChange()">No. of directors</mat-checkbox>
+                                          <mat-checkbox [(ngModel)]="wpbOpportunity.directorRemuneration"
+                                                (change)="onWpbOpportunityCheckboxChange()">Director remuneration</mat-checkbox>
+                                          <mat-checkbox [(ngModel)]="wpbOpportunity.lapLoans"
+                                                (change)="onWpbOpportunityCheckboxChange()">LAP Loans</mat-checkbox>
+                                          <mat-checkbox [(ngModel)]="wpbOpportunity.homeLoans"
+                                                (change)="onWpbOpportunityCheckboxChange()">Home Loans</mat-checkbox>
+                                          <mat-checkbox [(ngModel)]="wpbOpportunity.cards"
+                                                (change)="onWpbOpportunityCheckboxChange()">Cards</mat-checkbox>
+
+
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+
+                            </mat-accordion>
+                        </div>
+                    </mat-dialog-content>
+                    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                        <button mat-flat-button color="primary"  (click)="submitData()">Submit</button>
+                    </mat-dialog-actions>
+                </div>
+            </mat-card-content>
+        </mat-tab>
+    <mat-tab label="Reports" >
+        <mat-card-content>
+            <div class="pop_up_container">
+                <mat-dialog-content class="px-0">
+                    <div class="popup_body exp_accordian">
+                        <mat-accordion class="accordion_design1">
+                            <div class="title_box">
+                                <h3>Select from the following list to download the report in excel format</h3>
+                            </div>
+                            <mat-radio-group [(ngModel)]="selectedValue" name="changeValue" class="flex-column">
+                              <mat-expansion-panel >
+                                <mat-expansion-panel-header>
+                                    <div class="panel_head">
+                                        <mat-panel-title><mat-radio-button [matTooltip]="toolTipMgs" name="changeValue" value="1" (change)="onBureauReportChange($event)" >Bureau Report
+                                        </mat-radio-button></mat-panel-title>
+                                        <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                            <mat-form-field appearance="outline">
+                                                 <mat-select placeholder="Select" [(ngModel)]="bureauReportType">
+                                                    <mat-option value="1">Latest Data Report</mat-option>
+                                                    <mat-option value="2">Previous data report</mat-option>
+                                                    <mat-option value="3">Previous to previous report</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel-header>
+                                <div class="accordion_content">
+                                    <div class="chk_group">
+                                            <mat-checkbox [(ngModel)]="bureauReport.rmName" [disabled]="isDisabled">RM name</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="bureauReport.segment" [disabled]="isDisabled">Segment</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.city" [disabled]="isDisabled">City</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="bureauReport.crr" [disabled]="isDisabled">CRR</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.creditRating" [disabled]="isDisabled">Latest credit rating</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isRatingType" [disabled]="isDisabled">Rating Type</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isDateOfBureau" [disabled]="isDisabled">Date Of Bureau</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.bureauDataType" [disabled]="isDisabled">Bureau Data Type</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isProduct" [disabled]="isDisabled">Product</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isOtherSanction" [disabled]="isDisabled">Other Sanction</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isOtherUtilization" [disabled]="isDisabled">Other Utilization</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isHSBCSaction" [disabled]="isDisabled">HSBC Sanction</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isHSBCUtilization" [disabled]="isDisabled">HSBC Utilization</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isSanctionedBy" [disabled]="isDisabled">Sanctioned By</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.isUtilizedBy" [disabled]="isDisabled">Utilized By</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="bureauReport.noOfCreditFacility" [disabled]="isDisabled">No of Facility</mat-checkbox>
+                                            <!-- <mat-checkbox  [(ngModel)]="bureauReport.categoryOfLoan" [disabled]="isDisabled">Category of Loan</mat-checkbox> -->
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+
+                              <mat-expansion-panel >
+                                <mat-expansion-panel-header>
+                                    <div class="panel_head">
+                                        <mat-panel-title><mat-radio-button [matTooltip]="toolTipMgs" name="changeValue" value="2" (change)="onBureauReportChange($event)">Pre Qualified Product
+                                            </mat-radio-button></mat-panel-title>
+                                            <!-- <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                                <mat-form-field appearance="outline">
+                                                     <mat-select placeholder="Select">
+                                                        <mat-option value="0">Latest Data Report</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div> -->
+                                    </div>
+                                </mat-expansion-panel-header>
+                                <div class="accordion_content">
+                                    <div class="chk_group">
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.rmName" [disabled]="isDisabled">RM name</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.segment" [disabled]="isDisabled">Segment</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="preQualifiedProducts.isCity" [disabled]="isDisabled">City</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.crr" [disabled]="isDisabled">CRR</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.isCreditRating" [disabled]="isDisabled">Latest credit rating</mat-checkbox>
+                                            <mat-checkbox  [(ngModel)]="preQualifiedProducts.isRatingType" [disabled]="isDisabled">Rating Type</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.isApplicationCode" [disabled]="isDisabled">Application Code</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.isProductName" [disabled]="isDisabled">Product Name</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.isAmount" [disabled]="isDisabled">Amount</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.isDateOfApplication" [disabled]="isDisabled">Date Of Application</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.isStatus" [disabled]="isDisabled">Status</mat-checkbox>
+                                            <mat-checkbox [(ngModel)]="preQualifiedProducts.isRiskFlag" [disabled]="isDisabled">Risk Flag</mat-checkbox>
+                                        </div>
+                                </div>
+                            </mat-expansion-panel>
+
+                          <mat-expansion-panel >
+                            <mat-expansion-panel-header>
+                                <div class="panel_head">
+                                    <mat-panel-title><mat-radio-button [matTooltip]="toolTipMgs" name="changeValue" value="3" (change)="onBureauReportChange($event)">PSL Report
+                                        </mat-radio-button></mat-panel-title>
+                                        <!-- <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                            <mat-form-field appearance="outline">
+                                                 <mat-select placeholder="Select">
+                                                    <mat-option value="0">Latest Data Report</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div> -->
+                                </div>
+                            </mat-expansion-panel-header>
+                            <div class="accordion_content">
+                                <div class="chk_group">
+                                        <mat-checkbox [(ngModel)]="pslReportDto.rmName" [disabled]="isDisabled">RM name</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.segment" [disabled]="isDisabled">Segment</mat-checkbox>
+                                        <mat-checkbox  [(ngModel)]="pslReportDto.city" [disabled]="isDisabled">City</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.constitutionAsPerGST" [disabled]="isDisabled">CRR</mat-checkbox>
+                                        <!-- <mat-checkbox [(ngModel)]="pslReportDto.city" [disabled]="isDisabled">City</mat-checkbox> -->
+                                        <mat-checkbox [(ngModel)]="pslReportDto.industry" [disabled]="isDisabled">Industry</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.sector" [disabled]="isDisabled">Sector</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.constitutionAsPerMCA" [disabled]="isDisabled">Constitution as per MCA</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.constitutionAsPerGST" [disabled]="isDisabled">Constitution as per GST</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.creditRating" [disabled]="isDisabled">Latest credit rating</mat-checkbox>
+                                        <mat-checkbox  [(ngModel)]="pslReportDto.isRatingType" [disabled]="isDisabled">Rating Type</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.agriPsl" [disabled]="isDisabled">Agri PSL</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.startUpPsl" [disabled]="isDisabled">Start Up PSL</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.msmePsl" [disabled]="isDisabled">MSME PSL</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.udyamNumber" [disabled]="isDisabled">Udyam Number</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.udyamStatus" [disabled]="isDisabled">Udyam Status</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.udyamCategory" [disabled]="isDisabled">Udyam Category</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.nicCode" [disabled]="isDisabled">NIC Code</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.dateOfIncorporation" [disabled]="isDisabled">Date Of Incorporation</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.latestAuditedYear" [disabled]="isDisabled">Latest Audited Year</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.totalAsset" [disabled]="isDisabled">Total Asset</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.auditedTurnover" [disabled]="isDisabled">Audited Turnover</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.exportTurnover" [disabled]="isDisabled">Export Turnover ($)</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.agriExports" [disabled]="isDisabled">Agri Export Last 24 months ($)</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.auditedTurnoverNetExports" [disabled]="isDisabled">Audited Turnover Net Exports</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.gstTurnover" [disabled]="isDisabled">GST Turnover Slab</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.dateOfBureau" [disabled]="isDisabled">Date of bureau report</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.bureauDataType" [disabled]="isDisabled">Bureau Data Type</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.bureauLeading" [disabled]="isDisabled">Lending category</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.totalSanction" [disabled]="isDisabled">Total Sanction</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.totalUtilization" [disabled]="isDisabled">Total Utilization</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.hsbcSanction" [disabled]="isDisabled">HSBC Sanction</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.hsbcUtilization" [disabled]="isDisabled">HSBC Utilization</mat-checkbox>
+
+                                        <!-- <mat-checkbox [(ngModel)]="pslReportDto.fundBasedSanction" [disabled]="isDisabled">Fund Based Sanction</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.fundBasedUtilization" [disabled]="isDisabled">Fund Based Utilization</mat-checkbox> -->
+
+
+
+
+                                        <!-- <mat-checkbox [(ngModel)]="pslReportDto.fundBaseSanction" [disabled]="isDisabled">Fund based Sanction</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="pslReportDto.fundBaseUtilization" [disabled]="isDisabled">Fund based Utilization</mat-checkbox> -->
+                                        <!-- <mat-checkbox [(ngModel)]="pslReportDto.creditRating" [disabled]="isDisabled">Latest credit rating</mat-checkbox> -->
+
+
+
+
+
+
+
+
+                                    </div>
+                            </div>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel >
+                            <mat-expansion-panel-header>
+                                <div class="panel_head">
+                                    <mat-panel-title><mat-radio-button [matTooltip]="toolTipMgs"  name="changeValue" value="4" (change)="onBureauReportChange($event)">Compliance Report
+                                        </mat-radio-button></mat-panel-title>
+                                        <!-- <div class="input_field mr-2" (click)="$event.stopPropagation()">
+                                            <mat-form-field appearance="outline">
+                                                 <mat-select placeholder="Select">
+                                                    <mat-option value="0">Latest Data Report</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div> -->
+                                </div>
+                            </mat-expansion-panel-header>
+                            <div class="accordion_content">
+                                <div class="chk_group">
+
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.rmName" [disabled]="isDisabled">RM name</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.segment" [disabled]="isDisabled">Segment</mat-checkbox>
+                                        <mat-checkbox  [(ngModel)]="complianceReportDto.city" [disabled]="isDisabled">City</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.crr" [disabled]="isDisabled">CRR</mat-checkbox>
+                                        <mat-checkbox  [(ngModel)]="complianceReportDto.creditRating" [disabled]="isDisabled">Latest credit rating</mat-checkbox>
+                                        <mat-checkbox  [(ngModel)]="complianceReportDto.isRatingType" [disabled]="isDisabled">Rating Type</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.isExcoMatch" [disabled]="isDisabled">EXCO Match</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.isConnectedLending" [disabled]="isDisabled">Connected Lending</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.isBlacklistedAuditor" [disabled]="isDisabled">Blacklisted Auditor</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.isStrikeOff5" [disabled]="isDisabled">Strike Off -5</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.isStrikeOff7" [disabled]="isDisabled">Strike Off -7</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.isRBIWilfulDflt" [disabled]="isDisabled">RBI Wilful Defaulter</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.isSuitFiled" [disabled]="isDisabled">Suit Filed</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.isNctl" [disabled]="isDisabled">NCLT</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.shellCompany" [disabled]="isDisabled">Shell</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.disqualifiedUs164Pdf" [disabled]="isDisabled">Disqualified Director (PDF)</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.disqualifiedUs164Din" [disabled]="isDisabled">Disqualified Director (u/s)</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.legalDefaults" [disabled]="isDisabled">Legal Defaults</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="complianceReportDto.litigations" [disabled]="isDisabled">Litigations</mat-checkbox>
+                                    </div>
+                            </div>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <div class="panel_head">
+                                    <mat-panel-title><mat-radio-button [matTooltip]="toolTipMgs"  name="changeValue" value="5" (change)="onBureauReportChange($event)">ECB, FDI, ODI Report
+                                        </mat-radio-button></mat-panel-title>
+                                </div>
+                            </mat-expansion-panel-header>
+                            <div class="accordion_content">
+                                <div class="chk_group">
+                                    <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.rmName" [disabled]="isDisabled">RM name</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.segment" [disabled]="isDisabled">Segment</mat-checkbox>
+                                        <mat-checkbox  [(ngModel)]="ecbFdiOdiReportDto.city" [disabled]="isDisabled">City</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.crr" [disabled]="isDisabled">CRR</mat-checkbox>
+                                        <mat-checkbox  [(ngModel)]="ecbFdiOdiReportDto.creditRating" [disabled]="isDisabled">Latest credit rating</mat-checkbox>
+                                        <mat-checkbox  [(ngModel)]="ecbFdiOdiReportDto.isRatingType" [disabled]="isDisabled">Rating Type</mat-checkbox>
+                                        <!-- <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.city" [disabled]="isDisabled">City</mat-checkbox>    -->
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isFdiDate" [disabled]="isDisabled">FDI Date</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isForeignCollaborator" [disabled]="isDisabled">Foreign Collaborator</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isCountry" [disabled]="isDisabled">Country</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isItemofManufacture" [disabled]="isDisabled">Item of Manufacture</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isFDIInflows" [disabled]="isDisabled">FDI Inflows (US$ Mn)</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isECBFCCBDate" [disabled]="isDisabled">ECB FCCB Date</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isRoute" [disabled]="isDisabled">Route</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isEquicalentAmount" [disabled]="isDisabled">Equicalent Amount in USD</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isPurpose" [disabled]="isDisabled">Purpose</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isMaturityPeriod" [disabled]="isDisabled">Maturity Period</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isODIDate" [disabled]="isDisabled">ODI Date</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isNameoftheJVWOS" [disabled]="isDisabled">Name of the JV/WOS</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isWhetherJointVentureSubsidiary" [disabled]="isDisabled">Whether joint venture/Subsidiary</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isOverseasCountry" [disabled]="isDisabled">Overseas country</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isMajorActivity" [disabled]="isDisabled">Major activity</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isEquity" [disabled]="isDisabled">Equity (US$ Mn)</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isLoan" [disabled]="isDisabled">Loan (US$ Mn)</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isGuaranteeIssues" [disabled]="isDisabled">Guarantee Issues (US$ Mn)</mat-checkbox>
+                                        <mat-checkbox [(ngModel)]="ecbFdiOdiReportDto.isTotalAmount" [disabled]="isDisabled">Total Amount (US$ Mn)</mat-checkbox>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel *ngIf="data?.type === 'ETB'" [(ngModel)]="hsbcWalletReportDto">
+                            <mat-expansion-panel-header>
+                                <div class="panel_head">
+                                    <mat-panel-title><mat-radio-button [matTooltip]="toolTipMgs"  name="changeValue" value="6" (change)="onBureauReportChange($event)">HSBC Wallet Report
+                                        </mat-radio-button></mat-panel-title>
+                                </div>
+                            </mat-expansion-panel-header>
+                            <div class="accordion_content">
+                                <div class="chk_group">
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.customerId" [disabled]="isDisabled">Customer ID</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.customerName" [disabled]="isDisabled">Customer Name</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.rmName" [disabled]="isDisabled">RM Name</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.segment" [disabled]="isDisabled">Segment</mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.hsbcFdi" [disabled]="isDisabled">HsbcFdi</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.hsbcOdi" [disabled]="isDisabled">HsbcOdi</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.hsbcEcb" [disabled]="isDisabled">HsbcEcb</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.totalFdi" [disabled]="isDisabled">TotalFdi</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.totalOdi" [disabled]="isDisabled">TotalOdi</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.totalEcb" [disabled]="isDisabled">TotalEcb</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.walletFdi" [disabled]="isDisabled">WalletFdi</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.walletOdi" [disabled]="isDisabled">WalletOdi</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.walletEcb" [disabled]="isDisabled">WalletEcb</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.hsbcImport" [disabled]="isDisabled">HsbcImport</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.hsbcExport" [disabled]="isDisabled">HsbcExport</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.totalImport" [disabled]="isDisabled">TotalImport</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.totalExport" [disabled]="isDisabled">TotalExport</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.walletImport" [disabled]="isDisabled">WalletImport</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="hsbcWalletReportDto.walletExport" [disabled]="isDisabled">WalletExport</mat-checkbox>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+
+                              <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                  <div class="panel_head">
+                                    <mat-panel-title>
+                                      <mat-radio-button
+                                        [matTooltip]="toolTipMgs"
+                                        name="changeValue"
+                                        value="7"
+                                        (change)="onBureauReportChange($event)">
+                                        Mastergroup Income Report
+                                      </mat-radio-button>
+                                    </mat-panel-title>
+                                  </div>
+                                </mat-expansion-panel-header>
+
+                                <div class="accordion_content">
+                                  <div class="chk_group">
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.mastergroupName"
+                                                  [disabled]="isDisabled">
+                                      Mastergroup Name
+                                    </mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.segment"
+                                                  [disabled]="isDisabled">
+                                      Segment
+                                    </mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.derivedSegment"
+                                                  [disabled]="isDisabled">
+                                      Derived Segment
+                                    </mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.customerId"
+                                                  [disabled]="isDisabled">
+                                      Customer ID
+                                    </mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.customerName"
+                                                  [disabled]="isDisabled">
+                                      Customer Name
+                                    </mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.rmName"
+                                                  [disabled]="isDisabled">
+                                      RM Name
+                                    </mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.city" [disabled]="isDisabled">
+                                      City
+                                    </mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.previousYearIncome"
+                                                  [disabled]="isDisabled">
+                                      Previous Year Income ($m)
+                                    </mat-checkbox>
+
+                                    <mat-checkbox [(ngModel)]="mastergroupIncomeReportDto.currentYearIncome"
+                                                  [disabled]="isDisabled">
+                                      Current Year Income ($m)
+                                    </mat-checkbox>
+                                  </div>
+                                </div>
+                              </mat-expansion-panel>
+
+                              <mat-expansion-panel *ngIf="data?.type === 'ETB'">
+                                <mat-expansion-panel-header>
+                                  <div class="panel_head">
+                                    <mat-panel-title>
+                                      <mat-radio-button
+                                        [matTooltip]="toolTipMgs"
+                                        name="changeValue"
+                                        value="8"
+                                        (change)="onBureauReportChange($event)">
+                                        Service Export Details
+                                      </mat-radio-button>
+                                    </mat-panel-title>
+                                  </div>
+                                </mat-expansion-panel-header>
+                                <div class="accordion_content">
+                                  <div class="chk_group">
+                                    <mat-checkbox [(ngModel)]="serviceExportReportDto.name" [disabled]="isDisabled">Name</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="serviceExportReportDto.cin" [disabled]="isDisabled">CIN</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="serviceExportReportDto.pan" [disabled]="isDisabled">PAN</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="serviceExportReportDto.exportRevenueServices" [disabled]="isDisabled">Export Revenue Services (Rs Cr)</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="serviceExportReportDto.nicCode" [disabled]="isDisabled">NIC Code</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="serviceExportReportDto.nicHead" [disabled]="isDisabled">NIC Head</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="serviceExportReportDto.nicSubHead" [disabled]="isDisabled">NIC Sub Head</mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="serviceExportReportDto.yearCategory" [disabled]="isDisabled">Year Category</mat-checkbox>
+                                  </div>
+                                </div>
+                              </mat-expansion-panel>
+
+                            </mat-radio-group>
+                        </mat-accordion>
+                    </div>
+                </mat-dialog-content>
+                <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                    <button mat-flat-button color="primary"  (click)="submitData()">Submit</button>
+                </mat-dialog-actions>
+            </div>
+        </mat-card-content>
+    </mat-tab>
+    <mat-tab label="Status" >
+        <mat-card-content>
+            <mat-dialog-content class="px-0 pt-0">
+            <div class="popup_body ">
+            <div class="tableResponsive max-h-400" appTableScroll>
+                <table
+                    class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                    <thead>
+                        <tr class="tr_lightred_bg">
+                            <th width="2%">Sr. No.</th>
+                            <th width="30%">Report Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Download Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let report of paginatedReportStatuses; let i = index">
+                            <td>{{ (currentPage - 1) * selectedRowsPerPage + i + 1 }}</td>
+                            <td><b>{{ report.reportName }}</b></td>
+                            <td>{{ report.startDate | date:'MM/dd/yy h:mm a' }}</td>
+                            <td>{{ report.endDate ? (report.endDate | date:'MM/dd/yy h:mm a') : 'Pending' }}</td>
+                            <td>
+                                <span [ngClass]="{
+                                    'yellow_badge': report.status === 'Pending',
+                                    'red_badge': report.status === 'Failed',
+                                    'green_badge': report.status === 'Completed'
+                                }">
+                                    {{ report.status }}
+                                    <i *ngIf="report.status === 'Failed'" class="fa fa-info-circle mr-1 red_text" [ngbTooltip]="report.failureReason"></i>
+                                </span>
+                                <a *ngIf="report.status === 'Completed'" (click)="downloadExportReport(report.docReferenceId,report.reportName)" class="green_text dwn_link cursor_pointer">
+                                    <mat-icon class="ml-2 mr-0">arrow_downward_alt</mat-icon>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="paginatedReportStatuses == null || paginatedReportStatuses == undefined || paginatedReportStatuses?.length == 0">
+                            <td colspan="5">
+                                <app-no-data-found message="No data found"/>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="pagination-table NP_LeftPagintion"  *ngIf="paginatedReportStatuses != null || paginatedReportStatuses != undefined || paginatedReportStatuses?.length != 0">
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                    <div class="dataTables_info" role="status" aria-live="polite">
+                        Showing {{ paginatedReportStatuses?.length }} rows from {{ reportStatuses.length }}
+                        <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select [(value)]="selectedRowsPerPage" (selectionChange)="changePageSize($event.value)" [panelClass]="'pagination_select'">
+                                        <mat-option *ngFor="let option of pageSizeOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagination pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="reportStatuses.length" [maxSize]="3" [(page)]="currentPage" [rotate]="true" [boundaryLinks]="true" [pageSize]="selectedRowsPerPage"></ngb-pagination>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </mat-dialog-content>
+            <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                <button mat-flat-button color="primary" (click)="closeDialog()">Ok</button>
+            </mat-dialog-actions>
+        </mat-card-content>
+    </mat-tab>
+</mat-tab-group>
+</section>

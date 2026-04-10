@@ -1,0 +1,60 @@
+.files-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .file_list{
+        margin: 0;
+    }
+}
+.number_list{
+    font-size: 14px;
+    color: #000;
+}
+
+.suess_text{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.mat-form-field-required-marker {
+  color: red !important;
+}
+
+.upload_bank_statement {
+    .page_Title_Right{
+        width: 60%;
+    }
+    .upload_bank_mange{
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .col-lg-6 .fieldset{
+        min-width: 280px;
+    }
+    .checkbox_lists .mat-mdc-checkbox .mdc-label {
+        color: #707070 !important;
+        font-weight: 500;
+        font-size: 14px;
+        margin: 0;
+    }
+    
+}
+
+.date_top_right{
+    display: flex;
+    align-items: center;
+    .custom_month_picker .form_box{
+        max-width: 150px;
+    }
+    .orange_badge.pending_text,
+    .lightred_badge.fail_text{
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+    }
+   
+}
+
+

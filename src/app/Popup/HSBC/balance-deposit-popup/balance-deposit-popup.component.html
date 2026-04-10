@@ -1,0 +1,269 @@
+<section class="popup_design max-1000 HSBC_Common_Pages pb-0 balance-deposit-popup">
+  <a class="modal_closeicn_btn" href="javascript:void(0)">
+    <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+  </a>
+  <div class="pop_up_container popup-container"  [ngClass]="{'subloaderShowingg': isLoadingPopup}">
+    <app-sub-loader></app-sub-loader>
+    <div class="popup_header" mat-dialog-title>
+      <h3>balance and deposit trends</h3>
+      <div class="balance-select-group">
+
+        <!-- When showRmdata is true -->
+        <ng-container *ngIf="showRmdata">
+
+          <!-- Segment dropdown (only for trendChange === 1) -->
+          <fieldset *ngIf="trendChange === 1">
+            <label>Segment</label>
+            <mat-form-field appearance="outline" floatLabel="never">
+              <mat-select placeholder="Select" [(value)]="selectedSegment" (selectionChange)="updateCitySegMentvalues($event, 1)">
+                <mat-option *ngFor="let option of segmentList" [value]="option?.value">
+                  {{ option.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </fieldset>
+
+
+          <fieldset class="ml-3" *ngIf="trendChange === 1 || trendChange === 2">
+            <label>City</label>
+            <mat-form-field appearance="outline" floatLabel="never">
+              <mat-select placeholder="Select" [(value)]="selectedCity" (selectionChange)="updateCitySegMentvalues($event, 2)">
+                <mat-option *ngFor="let option of cityList" [value]="option?.value">
+                  {{ option.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </fieldset>
+
+        </ng-container>
+
+        <!-- When showRmdata is false -->
+        <ng-container *ngIf="!showRmdata">
+
+          <div class="flex gap-4">
+            <!-- Segment -->
+            <label *ngIf="trendChange === 1">Segment</label>
+            <mat-form-field appearance="outline" floatLabel="never"  *ngIf="trendChange === 1">
+              <input matInput [value]=" selectedSegmentName || '-'" disabled>
+            </mat-form-field>
+
+
+            <!-- City -->
+            <label *ngIf="trendChange === 1 || trendChange === 2">City</label>
+            <mat-form-field appearance="outline" floatLabel="never" *ngIf="trendChange === 1 || trendChange === 2">
+              <input matInput [value]="selectedCityName || '-'" disabled>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+      </div>
+
+    </div>
+    <div class="balance-body" *ngIf="showRmdata">
+      <div class="sub_popup_header">
+        <h3>Relationship Manager</h3>
+      </div>
+      <mat-dialog-content class="px-0">
+        <div class="popup_body">
+          <div class="table_sec">
+            <div
+              class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+              <div class="tableResponsive inside_table">
+                <table class="bordered_table w-100">
+                  <thead>
+                  <tr class="tr_lightred_bg">
+                    <th>
+                      <div class="d-flex align-items-center">
+                        RM Name
+                        <div class="sort-icons ml-2">
+                          <mat-icon class="sort-icon-up" [ngClass]="{'active': sortStates.innerColumn === '11' && sortStates.innerOrder === '1'}" (click)="handleSort('11', '1')">arrow_drop_up</mat-icon>
+                          <mat-icon class="sort-icon-down" [ngClass]="{'active': sortStates.innerColumn === '11' && sortStates.innerOrder === '2'}" (click)="handleSort('11', '2')">arrow_drop_down</mat-icon>
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="d-flex align-items-center">
+                        {{data?.c1Name}}
+                        <div class="sort-icons ml-2">
+                          <mat-icon class="sort-icon-up" [ngClass]="{'active': sortStates.innerColumn === '7' && sortStates.innerOrder === '1'}" (click)="handleSort('7', '1')">arrow_drop_up</mat-icon>
+                          <mat-icon class="sort-icon-down" [ngClass]="{'active': sortStates.innerColumn === '7' && sortStates.innerOrder === '2'}" (click)="handleSort('7', '2')">arrow_drop_down</mat-icon>
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="d-flex align-items-center">
+                        {{data?.c2Name}}
+                        <div class="sort-icons ml-2">
+                          <mat-icon class="sort-icon-up" [ngClass]="{'active': sortStates.innerColumn === '8' && sortStates.innerOrder === '1'}" (click)="handleSort('8', '1')">arrow_drop_up</mat-icon>
+                          <mat-icon class="sort-icon-down" [ngClass]="{'active': sortStates.innerColumn === '8' && sortStates.innerOrder === '2'}" (click)="handleSort('8', '2')">arrow_drop_down</mat-icon>
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="d-flex align-items-center">
+                        % of Change
+                        <div class="sort-icons ml-2">
+                          <mat-icon class="sort-icon-up" [ngClass]="{'active': sortStates.innerColumn === '9' && sortStates.innerOrder === '1'}" (click)="handleSort('9', '1')">arrow_drop_up</mat-icon>
+                          <mat-icon class="sort-icon-down" [ngClass]="{'active': sortStates.innerColumn === '9' && sortStates.innerOrder === '2'}" (click)="handleSort('9', '2')">arrow_drop_down</mat-icon>
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    @if(rmList?.length>0){
+                  <tr *ngFor="let cust of rmList ">
+                    <td (click)="getCustomerByRm(cust)"><a class="link">{{cust?.rm_name || '-'}}</a></td>
+                    <td>{{currencySymbol}} {{ cust?.criteria1Total | number:'1.0-0' }}</td>
+                    <td>{{currencySymbol}} {{ cust?.criteria2Total | number:'1.0-0' }}</td>
+                    <td>{{ cust?.changePct?.toFixed(2) }}%</td>
+                  </tr>
+                    }  @else {
+                      <tr>
+                        <td colspan="10">
+                          <app-no-data-found message="No Data found" />
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="pagination-table NP_LeftPagintion" *ngIf="rmList?.length>0">
+              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+               Showing
+                {{((pagination.pageIndex - 1) * pagination.pageSize+1)}} to
+                {{(pagination.pageSize*pagination.pageIndex) > (pagination?.totalSize) ? (pagination?.totalSize) : (pagination.pageSize*pagination.pageIndex)}} of
+                {{pagination?.totalSize}} rows
+                <div class="dataTables_length" id="tickets-table_length">
+                  <div class="NP_HSBC_ComInput select-field">
+                    <mat-form-field appearance="outline">
+                      <mat-select [(ngModel)]="pagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                  (ngModelChange)="parentPagination()">
+                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                          {{pages.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <span class="grey_text"> row per page</span>
+              </div>
+              <div class="text-md-right float-md-right pagination-rounded">
+                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                  <ngb-pagination [collectionSize]="pagination.totalSize" [maxSize]="3"
+                                  [(page)]="pagination.pageIndex" [rotate]="true" [boundaryLinks]="true"
+                                  [pageSize]="pagination.pageSize" (pageChange)="parentPagination()">
+                  </ngb-pagination>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-dialog-content>
+    </div>
+    <div class="balance-body" *ngIf="!showRmdata">
+      <div class="sub_popup_header">
+        <h3>Regional Manager <span>{{rmName}}</span></h3>
+
+      </div>
+      <mat-dialog-content class="px-0">
+        <div class="popup_body">
+          <div class="table_sec">
+            <div
+              class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+              <div class="tableResponsive inside_table">
+                <table class="bordered_table w-100">
+                  <thead>
+                  <tr class="tr_lightred_bg">
+                    <th>Customer Name</th>
+                    <th>
+                      <div class="d-flex align-items-center">
+                        {{data?.c1Name}}
+                        <div class="sort-icons ml-2">
+                          <mat-icon class="sort-icon-up" [ngClass]="{'active': childSortStates.innerColumn === '7' && childSortStates.innerOrder === '1'}" (click)="handleChildSort('7', '1')">arrow_drop_up</mat-icon>
+                          <mat-icon class="sort-icon-down" [ngClass]="{'active': childSortStates.innerColumn === '7' && childSortStates.innerOrder === '2'}" (click)="handleChildSort('7', '2')">arrow_drop_down</mat-icon>
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="d-flex align-items-center">
+                        {{data?.c2Name}}
+                        <div class="sort-icons ml-2">
+                          <mat-icon class="sort-icon-up" [ngClass]="{'active': childSortStates.innerColumn === '8' && childSortStates.innerOrder === '1'}" (click)="handleChildSort('8', '1')">arrow_drop_up</mat-icon>
+                          <mat-icon class="sort-icon-down" [ngClass]="{'active': childSortStates.innerColumn === '8' && childSortStates.innerOrder === '2'}" (click)="handleChildSort('8', '2')">arrow_drop_down</mat-icon>
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="d-flex align-items-center">
+                        % of Change
+                        <div class="sort-icons ml-2">
+                          <mat-icon class="sort-icon-up" [ngClass]="{'active': childSortStates.innerColumn === '9' && childSortStates.innerOrder === '1'}" (click)="handleChildSort('9', '1')">arrow_drop_up</mat-icon>
+                          <mat-icon class="sort-icon-down" [ngClass]="{'active': childSortStates.innerColumn === '9' && childSortStates.innerOrder === '2'}" (click)="handleChildSort('9', '2')">arrow_drop_down</mat-icon>
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    @if(custList?.length>0){
+                  <tr *ngFor="let cust of custList ">
+                    <td>{{cust?.cust_name || '-'}}</td>
+                    <td>{{currencySymbol}} {{ cust?.criteria1Total | number:'1.0-0' }}</td>
+                    <td>{{currencySymbol}} {{ cust?.criteria2Total | number:'1.0-0' }}</td>
+                    <td>{{ cust?.changePct?.toFixed(2) }}%</td>
+                  </tr>
+                    }  @else {
+                      <tr>
+                        <td colspan="10">
+                          <app-no-data-found message="No Data found" />
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="pagination-table NP_LeftPagintion" *ngIf="custList?.length>0">
+              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                Showing
+                {{((childPagination.pageIndex - 1) * childPagination.pageSize+1)}} to
+                {{(childPagination.pageSize*childPagination.pageIndex) > (childPagination?.totalSize) ? (childPagination?.totalSize) : (childPagination.pageSize*childPagination.pageIndex)}} of
+                {{childPagination?.totalSize}} rows
+                <div class="dataTables_length" id="tickets-table_length">
+                  <div class="NP_HSBC_ComInput select-field">
+                    <mat-form-field appearance="outline">
+                      <mat-select [(ngModel)]="childPagination.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                  (ngModelChange)="childPaginations()">
+                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                          {{pages.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <span class="grey_text"> row per page</span>
+              </div>
+              <div class="text-md-right float-md-right pagination-rounded">
+                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                  <ngb-pagination [collectionSize]="childPagination.totalSize" [maxSize]="3"
+                                  [(page)]="childPagination.pageIndex" [rotate]="true" [boundaryLinks]="true"
+                                  [pageSize]="childPagination.pageSize" (pageChange)="childPaginations()">
+                  </ngb-pagination>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </mat-dialog-content>
+
+      <div *ngIf="showBack"class="box_design_ttl_bar_center apply-btn" fxLayout="row" fxLayoutAlign="center center">
+        <button (click)="back()"  class="" mat-flat-button color="primary">Back</button>
+      </div>
+
+    </div>
+  </div>
+
+</section>

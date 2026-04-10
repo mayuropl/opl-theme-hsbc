@@ -1,0 +1,11 @@
+.page_Title_sec .page_Title_left{
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    @media(max-width: 1366px){
+        margin-bottom: 10px;
+    }
+    h4{
+        margin-bottom: 0;
+    }
+}

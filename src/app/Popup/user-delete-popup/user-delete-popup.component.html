@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title">Delete Data</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <span [innerHTML]="data.message"></span>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!-- Ok Button (Confirm) -->
+    <a href="javascript: void(0)" class="btn btn-psb btn-psbpurple" (click)="onConfirm()">Ok</a>
+  
+    <!-- Cancel Button -->
+    <a href="javascript: void(0)" class="btn btn-psb btn-secondary waves-effect" [mat-dialog-close]="true">Cancel</a>
+  </div>
+  

@@ -1,0 +1,176 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4>
+                    Notification Configuration
+                </h4>
+            </div>
+
+            <div class="page_Title_Right">
+                <mat-slide-toggle [(ngModel)]="isActive" (change)="onToggleChange()" class="sliderToggle_design3 mr-2">
+                    {{ isActive ? 'Active' : 'Inactive' }}
+                </mat-slide-toggle>
+                <button type="button" mat-flat-button class="btn_design with_icn" color="secondary"
+                    (click)="toggleOn =!toggleOn">Add New
+                    <em class="fas fa-plus ml-2" *ngIf="!toggleOn"></em>
+                    <em class="fas fa-minus ml-2" *ngIf="toggleOn"></em>
+                </button>
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="box_design mb-3" *ngIf="toggleOn">
+                <div class="box_design_ttl_bar ">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Add New</h4>
+                    </div>
+                </div>
+                <div class="box_design_details with_padding">
+                    <form class="form_design" [formGroup]="notificationForm" (ngSubmit)="onSubmit()">
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Name</mat-label>
+                                            <input matInput name="name" formControlName="name"
+                                                (keypress)="blockInvalidChars($event)" (paste)="handlePaste($event)"
+                                                required>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Description</mat-label>
+                                            <input matInput name="description" formControlName="description"
+                                                (keypress)="blockInvalidChars($event)" (paste)="handlePaste($event)"
+                                                required>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type</mat-label>
+                                            <mat-select formControlName="type" required>
+                                                <mat-option *ngFor="let t of typeList" [value]="t">
+                                                    {{ t }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <!-- <input matInput name="type" formControlName="type" (keypress)="blockInvalidChars($event)"
+                                            (paste)="handlePaste($event)" required> -->
+                                        </mat-form-field>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <fieldset>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Template JSON</mat-label>
+                                            <textarea matInput name="templateJson" formControlName="templateJson"
+                                                rows="3" placeholder='{"title": "Sample", "message": "Content"}'
+                                                required></textarea>
+                                        </mat-form-field>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <mat-label>Status</mat-label>
+                                    <div class="mt-2">
+                                        <mat-slide-toggle formControlName="isActive" class="sliderToggle_design3">
+                                            {{ notificationForm.get('isActive')?.value ? 'Active' : 'Inactive' }}
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page_Actions text-right">
+                            <button mat-flat-button color="grey" class="mr-2" (click)="onCancel()">Cancel</button>
+                            <button mat-flat-button color="primary" [disabled]="notificationForm.invalid"
+                                class="">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box_design">
+                <div class="tableResponsive" appTableScroll>
+                    <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table">
+                        <thead>
+                            <tr>
+                                <th width="12%" class="text-center">Id</th>
+                                <th width="10%">Name</th>
+                                <th width="10%">Type</th>
+                                <th width="10%">Description</th>
+                                <th width="35%">Template JSON</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let notification of listOfNotificationData let i = index">
+                                <td data-label="Index" class="text-center">{{ (page - 1) * pageSize + i + 1 }}</td>
+                                <td data-label="Name">{{notification.templateName}}</td>
+                                <td data-label="Type">{{notification.notificationTypeName}}</td>
+                                <td data-label="Description">{{notification.notificationDescription}}</td>
+                                <td data-label="Template JSON" class="template-json-cell">
+                                    <div class="json-preview" [title]="notification.notificationTemplate">
+                                        {{(notification.notificationTemplate) | slice:0:50}}
+                                        {{(notification.notificationTemplate)?.length > 50 ? '...' : ''}}
+                                    </div>
+                                </td>
+                                <td data-label="Action" class="text-right">
+                                    <button mat-mini-fab color="secondary" [matMenuTriggerFor]="menu4"
+                                        class="action_menu_btn">
+                                        <mat-icon>more_horiz</mat-icon>
+                                    </button>
+                                    <mat-menu #menu4="matMenu" class="action_menu">
+                                        <button mat-menu-item (click)="updateNotification(notification)">
+                                            <em class="fas fa-edit"></em>Edit
+                                        </button>
+                                        <button mat-menu-item (click)="deleteNotification(notification.id)">
+                                            <em class="fas fa-trash"></em>Delete
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pagination-table NP_LeftPagintion">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{(startIndex+1)}} to
+                    {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                    {{totalSize}}
+                    <div class="dataTables_length" id="tickets-table_length">
+                        <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                                <mat-select [(ngModel)]="pageSize" (ngModelChange)="onPageChange(page)">
+                                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                        {{pages.value}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <span class="grey_text"> row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                        <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                            [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                        </ngb-pagination>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

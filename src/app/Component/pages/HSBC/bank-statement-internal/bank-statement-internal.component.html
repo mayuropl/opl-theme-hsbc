@@ -1,0 +1,1994 @@
+<div class="container-fluid HSBC_Common_Pages ">
+    <div class="__main_Container">
+
+        <div class="page_Details ">
+
+            <div class="page_Title_sec">
+                <div class="page_Title_left">
+                    <h4 class="cursor_pointer" (click)="navigateToViewComponent()">
+                        <em class="fa fa-arrow-left mr-2" (click)="navigateToViewComponent()"></em>
+                        Bank Statement - Internal
+                    </h4>
+                </div>
+
+            </div>
+            <div class="dropdown-container" *ngIf="selectedTabIndex === 1 && childCustomerList && childCustomerList.length > 0">
+                <div class="right_input_field">
+                    <div class="input_field">
+                        <fieldset class="NP_HSBC_ComInput white_bg_select title_line">
+                            <mat-label>Select Child Company</mat-label>
+                            <mat-form-field appearance="outline" class="w-600">
+                                <mat-select placeholder="Select Child Company" [(ngModel)]="selectedChildCustomer" (selectionChange)="onChildCustomerSelected($event.value)">
+                                    <mat-option *ngFor="let child of childCustomerList" [value]="child">
+                                        {{child?.childCustomerId || child?.parentCustomerId}} - {{child?.childCustomerName || child?.pan}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <mat-tab-group class="tabbing_design tab_auto" (selectedTabChange)="onTabChange($event)">
+              <mat-tab label="Parent Company Analysis">
+                <mat-card-content class="px-0">
+            <div *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.BANK_STATEMENT_INTERNAL,consValue.PageActions.SUPPLIER_LIST)" class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>{{ isFromTargetAndProspect ? 'Customer Payment Outflow' : 'Supplier List' }}</h4>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th class="text-center">Sr.No</th>
+                                <th width="75%">{{ isFromTargetAndProspect ? 'Name of the receiver  ' : 'Counter Party Name' }}</th>
+                                <!-- <th class="text-center" *ngIf="isFromTargetAndProspect">Customer Type</th> -->
+                                <th>{{ isFromTargetAndProspect ? 'No. of Transactions  ' : 'Count' }}
+                                </th>
+                                <th>Amount
+                                </th>
+                                <th  *ngIf="!isFromTargetAndProspect">% Debit
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @if(supplierList?.counterPartyList?.length>0){
+                        <ng-container *ngFor="let supplier of supplierList.counterPartyList;let i = index">
+                            <tr>
+                                <td>  <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.supplier[i] = !collapseStates.supplier[i]"
+                                              [ngClass]="{'rotate_icon': !collapseStates.supplier[i]}">
+                                  <i class="fas fa-chevron-down"></i>
+                                </button><b>{{(pagination.supplier.pageIndex-1)*pagination.supplier.pageSize+(i+1)}}</b></td>
+                                <td><b>{{supplier?.partyName}}</b></td>
+                                <!-- <th class="text-center" *ngIf="isFromTargetAndProspect">{{customerType}}</th> -->
+                                <td><b>{{supplier?.totalCount | number:'1.0-0' }}</b></td>
+                                <td><b>₹ {{supplier?.totalAmount | number:'1.0-0' }}</b></td>
+                                <td *ngIf="!isFromTargetAndProspect"><b>{{supplier?.amountRatio | number:'1.2-2'}}</b></td>
+                            </tr>
+                           <tr [ngbCollapse]="collapseStates.supplier[i]">
+                                <td colspan="6" class="p-0">
+                                    <table class="table table_border_none mb-0 simple_inside_table">
+                                        <tr *ngFor="let bank of supplier.bankWise;let i = index">
+                                            <td></td>
+                                            <td></td>
+                                            <td width="75%">{{bank?.bankName}}</td>
+                                            <td>{{ bank?.totalCount  | number:'1.0-0' }}</td>
+                                            <td>₹ {{bank?.totalAmount| number:'1.0-0' }}</td>
+                                            <td *ngIf="!isFromTargetAndProspect">{{bank?.amountRatio}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                          <tr class="collapsing_tr" [ngbCollapse]="collapseStates.supplier[i]">
+                                <td colspan="15">
+                                    <div class="box_design">
+                                        <div class="tableResponsive inside_table">
+                                            <table class="bordered_table w-100 after_cont_none">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Calendar Year</th>
+                                                        <th>Particulars</th>
+                                                        <th>Jan</th>
+                                                        <th>Feb</th>
+                                                        <th>Mar</th>
+                                                        <th>Apr</th>
+                                                        <th>May</th>
+                                                        <th>Jun</th>
+                                                        <th>Jul</th>
+                                                        <th>Aug</th>
+                                                        <th>Sep</th>
+                                                        <th>Oct</th>
+                                                        <th>Nov</th>
+                                                        <th>Dec</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                              <tbody>
+                                              <ng-container *ngFor="let year of supplier.yearWise">
+                                                <tr>
+                                                  <td rowspan="2">{{ year.year }}</td>
+                                                  <td>Count</td>
+                                                  <td *ngFor="let month of monthList">
+                                                    {{ getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0'  || '-' }}
+                                                  </td>
+                                                  <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0' }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="none"></td>
+                                                  <td>Amount</td>
+                                                  <td *ngFor="let month of monthList">
+                                                    ₹ {{ getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0' || '0' }}
+                                                  </td>
+                                                  <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                                </tr>
+                                              </ng-container>
+                                              </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                          }  @else {
+                            <tr>
+                              <td colspan="10">
+                                <app-no-data-found message="No Data found" />
+                              </td>
+                            </tr>
+                          }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-table NP_LeftPagintion" *ngIf="supplierList?.counterPartyList?.length>0">
+                    <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                      <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{((pagination.supplier.pageIndex - 1) * pagination.supplier.pageSize+1)}} to
+                        {{(pagination.supplier.pageSize*pagination.supplier.pageIndex) > (supplierList?.totalRows) ? (supplierList?.totalRows) : (pagination.supplier.pageSize*pagination.supplier.pageIndex)}} of
+                        {{supplierList?.totalRows}} rows
+                        <div class="dataTables_length" id="tickets-table_length">
+                          <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                              <mat-select [value]="pagination.supplier.pageSize"
+                                          (selectionChange)="pagination.supplier.pageSize = $event.value; pagination.supplier.pageIndex = 1;onPageChange('supplier');">
+                                 <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                      </div>
+                      <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                          <ngb-pagination
+                            [maxSize]="3"
+                            [rotate]="true"
+                            [collectionSize]="supplierList.totalRows"
+                            [pageSize]="pagination.supplier.pageSize"
+                            [(page)]="pagination.supplier.pageIndex"
+                            (pageChange)="onPageChange('supplier')"
+                            [boundaryLinks]="true">
+                          </ngb-pagination>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.BANK_STATEMENT_INTERNAL,consValue.PageActions.CUSTOMER_LIST)" class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                      <h4>{{ isFromTargetAndProspect ? 'Customer Payment Inflow' : 'Customer List' }}</h4>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                 <th class="text-center">Sr.No</th>
+                                <th width="75%">{{ isFromTargetAndProspect ? 'Name of the payer' : 'Counter Party Name' }}</th>
+                                 <!-- <th class="text-center" *ngIf="isFromTargetAndProspect">Customer Type</th> -->
+                                <th>
+                                    {{ isFromTargetAndProspect ? 'No. of Transactions  ' : 'Count' }}
+                                    <span class="shorting">
+                                      </span>
+                                </th>
+                                <th>Amount
+                                    <span class="shorting">
+                                      </span>
+                                </th>
+                                <th *ngIf="!isFromTargetAndProspect">% Credit
+                                    <span class="shorting">
+                                      </span>
+                                </th>
+                            </tr>
+                        </thead>
+                       <tbody>
+                         @if(customerList?.counterPartyList?.length>0){
+                       <ng-container *ngFor="let customer of customerList.counterPartyList;let i = index">
+                         <tr>
+                           <td> <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.customer[i] = !collapseStates.customer[i]"
+                                        [ngClass]="{'rotate_icon': !collapseStates.customer[i]}">
+                             <i class="fas fa-chevron-down"></i>
+                           </button> <b>{{(pagination.customer.pageIndex-1)*pagination.customer.pageSize+(i+1)}}</b></td>
+                           <td><b>{{customer?.partyName}}</b></td>
+                            <!-- <th class="text-center" *ngIf="isFromTargetAndProspect">{{customerType}}</th> -->
+                           <td><b>{{customer?.totalCount | number:'1.0-0' }}</b></td>
+                           <td><b>₹ {{customer?.totalAmount | number:'1.0-0' }}</b></td>
+                           <td *ngIf="!isFromTargetAndProspect"><b>{{customer?.amountRatio | number:'1.2-2'}}</b></td>
+                         </tr>
+                         <tr [ngbCollapse]="collapseStates.customer[i]">
+                           <td colspan="6" class="p-0">
+                             <table class="table table_border_none mb-0 simple_inside_table">
+                               <tr *ngFor="let bank of customer.bankWise;let i = index">
+                                 <td></td>
+                                 <td></td>
+                                 <td width="75%">{{bank?.bankName}}</td>
+                                 <td>{{bank?.totalCount | number:'1.0-0'}}</td>
+                                 <td>₹ {{bank?.totalAmount | number:'1.0-0'}}</td>
+                                 <td *ngIf="!isFromTargetAndProspect">{{bank?.amountRatio | number:'1.2-2'}}</td>
+                               </tr>
+                             </table>
+                           </td>
+                         </tr>
+                         <tr class="collapsing_tr" [ngbCollapse]="collapseStates.customer[i]">
+                           <td colspan="15">
+                             <div class="box_design">
+                               <div class="tableResponsive inside_table">
+                                 <table class="bordered_table w-100 after_cont_none" >
+                                   <thead>
+                                   <tr>
+                                     <th>Calendar Year</th>
+                                     <th>Particulars</th>
+                                     <th>Jan</th>
+                                     <th>Feb</th>
+                                     <th>Mar</th>
+                                     <th>Apr</th>
+                                     <th>May</th>
+                                     <th>Jun</th>
+                                     <th>Jul</th>
+                                     <th>Aug</th>
+                                     <th>Sep</th>
+                                     <th>Oct</th>
+                                     <th>Nov</th>
+                                     <th>Dec</th>
+                                     <th>Total</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   <ng-container *ngFor="let year of customer?.yearWise">
+                                     <tr>
+                                       <td rowspan="2">{{ year.year }}</td>
+                                       <td>Count</td>
+                                       <td *ngFor="let month of monthList">
+                                         {{ getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0' || '-' }}
+                                       </td>
+                                       <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0'}}</b></td>
+                                     </tr>
+                                     <tr>
+                                       <td class="none"></td>
+                                       <td>Amount</td>
+                                       <td *ngFor="let month of monthList">
+                                         ₹ {{ getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0'|| '0' }}
+                                       </td>
+                                       <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                     </tr>
+                                   </ng-container>
+                                   </tbody>
+
+                                 </table>
+                               </div>
+                             </div>
+                           </td>
+                         </tr>
+                       </ng-container>
+                         }  @else {
+                           <tr>
+                             <td colspan="10">
+                               <app-no-data-found message="No Data found" />
+                             </td>
+                           </tr>
+                         }
+                        </tbody>
+                    </table>
+                </div>
+              <div class="pagination-table NP_LeftPagintion" *ngIf="customerList?.counterPartyList?.length>0">
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                  <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{((pagination.customer.pageIndex - 1) * pagination.customer.pageSize+1)}} to
+                    {{(pagination.customer.pageSize*pagination.customer.pageIndex) > (customerList?.totalRows) ? (customerList?.totalRows) : (pagination.customer.pageSize*pagination.customer.pageIndex)}} of
+                    {{customerList?.totalRows}} rows
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                          <mat-select [(ngModel)]="pagination.customer.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                      (ngModelChange)="onPageChange('customer')">
+                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                              {{pages.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <span class="grey_text">row per page</span>
+                  </div>
+                  <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                      <ngb-pagination
+                        [maxSize]="3"
+                        [rotate]="true"
+                        [collectionSize]="customerList.totalRows"
+                        [pageSize]="pagination.customer.pageSize"
+                        [(page)]="pagination.customer.pageIndex"
+                        (pageChange)="onPageChange('customer')"
+                        [boundaryLinks]="true">
+                      </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              </div>
+            <div *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.BANK_STATEMENT_INTERNAL,consValue.PageActions.PAYMENT_OUT)" class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Payment to Related /connected/Group entity</h4>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                 <th class="text-center">Sr.No</th>
+                                <th width="80%">Connected Party</th>
+                                <th>
+                                    Count
+                                    <span class="shorting">
+                                      </span>
+                                </th>
+                                <th>Amount
+                                    <span class="shorting">
+                                      </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @if(connectedPartyDebitList?.connectedPartyList?.length>0){
+                        <ng-container *ngFor="let debitParty of connectedPartyDebitList.connectedPartyList;let i = index">
+                          <tr>
+                            <td>  <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.connectedPartyDebit[i] = !collapseStates.connectedPartyDebit[i]"
+                                          [ngClass]="{'rotate_icon': !collapseStates.connectedPartyDebit[i]}">
+                              <i class="fas fa-chevron-down"></i>
+                            </button> <b>{{(pagination.connectedPartyDebit.pageIndex-1)*pagination.connectedPartyDebit.pageSize+(i+1)}}</b></td>
+                            <td><b>{{debitParty?.partyName}}</b></td>
+                            <td><b>{{debitParty?.totalCount | number:'1.0-0'}}</b></td>
+                            <td><b>₹ {{debitParty?.totalAmount | number:'1.0-0'}}</b></td>
+<!--                            <td><b>{{debitParty?.amountRatio}}</b></td>-->
+                          </tr>
+                          <tr [ngbCollapse]="collapseStates.connectedPartyDebit[i]">
+                            <td colspan="6" class="p-0">
+                              <table class="table table_border_none mb-0 simple_inside_table">
+                                <tr *ngFor="let bank of debitParty.bankWise;let i = index">
+                                  <td></td>
+                                  <td></td>
+                                  <td width="75%">{{bank?.bankName}}</td>
+                                  <td>{{bank?.totalCount | number:'1.0-0'}}</td>
+                                  <td>₹ {{bank?.totalAmount | number:'1.0-0'}}</td>
+<!--                                  <td>{{bank?.amountRatio}}</td>-->
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr class="collapsing_tr" [ngbCollapse]="collapseStates.connectedPartyDebit[i]">
+                            <td colspan="15">
+                              <div class="box_design">
+                                <div class="tableResponsive inside_table">
+                                  <table class="bordered_table w-100 after_cont_none">
+                                    <thead>
+                                    <tr>
+                                      <th>Calendar Year</th>
+                                      <th>Particulars</th>
+                                      <th>Jan</th>
+                                      <th>Feb</th>
+                                      <th>Mar</th>
+                                      <th>Apr</th>
+                                      <th>May</th>
+                                      <th>Jun</th>
+                                      <th>Jul</th>
+                                      <th>Aug</th>
+                                      <th>Sep</th>
+                                      <th>Oct</th>
+                                      <th>Nov</th>
+                                      <th>Dec</th>
+                                      <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <ng-container *ngFor="let year of debitParty.yearWise">
+                                      <tr>
+                                        <td rowspan="2">{{ year.year }}</td>
+                                        <td>Count</td>
+                                        <td *ngFor="let month of monthList">
+                                          {{ getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0'|| '-' }}
+                                        </td>
+                                        <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0'}}</b></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="none"></td>
+                                        <td>Amount</td>
+                                        <td *ngFor="let month of monthList">
+                                          ₹ {{ getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0' || '0' }}
+                                        </td>
+                                        <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                      </tr>
+                                    </ng-container>
+                                    </tbody>
+
+                                  </table>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </ng-container>
+                          }  @else {
+                            <tr>
+                              <td colspan="10">
+                                <app-no-data-found message="No Data found" />
+                              </td>
+                            </tr>
+                          }
+                        </tbody>
+                    </table>
+                </div>
+              <div class="pagination-table NP_LeftPagintion" *ngIf="connectedPartyDebitList?.connectedPartyList?.length>0">
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                  <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{((pagination.connectedPartyDebit.pageIndex - 1) * pagination.connectedPartyDebit.pageSize+1)}} to
+                    {{(pagination.connectedPartyDebit.pageSize*pagination.connectedPartyDebit.pageIndex) > (connectedPartyDebitList?.totalRows) ? (connectedPartyDebitList?.totalRows) : (pagination.connectedPartyDebit.pageSize*pagination.connectedPartyDebit.pageIndex)}} of
+                    {{connectedPartyDebitList?.totalRows}} rows
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                          <mat-select [(ngModel)]="pagination.connectedPartyDebit.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                      (ngModelChange)="onPageChange('customer')">
+                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                              {{pages.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <span class="grey_text">row per page</span>
+                  </div>
+                  <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                      <ngb-pagination
+                        [maxSize]="3"
+                        [rotate]="true"
+                        [collectionSize]="connectedPartyDebitList.totalRows"
+                        [pageSize]="pagination.connectedPartyDebit.pageSize"
+                        [(page)]="pagination.connectedPartyDebit.pageIndex"
+                        (click)="onPageChange('connectedPartyDebit')"
+                        [boundaryLinks]="true">
+                      </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.BANK_STATEMENT_INTERNAL,consValue.PageActions.PAYMENT_IN)" class="box_design mt-4">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Receipt from Related /connected/Group entity</h4>
+              </div>
+            </div>
+            <div class="tableResponsive">
+              <table
+                class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                <thead>
+                <tr class="tr_lightred_bg">
+                   <th class="text-center">Sr.No</th>
+                  <th width="80%">Connected Party</th>
+                  <th> Count </th>
+                  <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @if(connectedPartyCreditList?.connectedPartyList?.length>0){
+                <ng-container *ngFor="let creditParty of connectedPartyCreditList.connectedPartyList;let i = index">
+                  <tr>
+                    <td>  <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.connectedPartyCredit[i] = !collapseStates.connectedPartyCredit[i]"
+                                  [ngClass]="{'rotate_icon': !collapseStates.connectedPartyCredit[i]}">
+                      <i class="fas fa-chevron-down"></i>
+                    </button> <b>{{(pagination.connectedPartyCredit.pageIndex-1)*pagination.connectedPartyCredit.pageSize+(i+1)}}</b></td>
+                    <td><b>{{creditParty?.partyName}}</b></td>
+                    <td><b>{{creditParty?.totalCount | number:'1.0-0'}}</b></td>
+                    <td><b>₹ {{creditParty?.totalAmount | number:'1.0-0'}}</b></td>
+                  </tr>
+                  <tr [ngbCollapse]="collapseStates.connectedPartyCredit[i]">
+                    <td colspan="6" class="p-0">
+                      <table class="table table_border_none mb-0 simple_inside_table">
+                        <tr *ngFor="let bank of creditParty.bankWise;let i = index">
+                          <td></td>
+                          <td></td>
+                          <td width="75%">{{bank?.bankName}}</td>
+                          <td>{{bank?.totalCount | number:'1.0-0'}}</td>
+                          <td>₹ {{bank?.totalAmount | number:'1.0-0'}}</td>
+                          <!--                                  <td>{{bank?.amountRatio}}</td>-->
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr class="collapsing_tr" [ngbCollapse]="collapseStates.connectedPartyCredit[i]">
+                    <td colspan="15">
+                      <div class="box_design">
+                        <div class="tableResponsive inside_table">
+                          <table class="bordered_table w-100 after_cont_none">
+                            <thead>
+                            <tr>
+                              <th>Calendar Year</th>
+                              <th>Particulars</th>
+                              <th>Jan</th>
+                              <th>Feb</th>
+                              <th>Mar</th>
+                              <th>Apr</th>
+                              <th>May</th>
+                              <th>Jun</th>
+                              <th>Jul</th>
+                              <th>Aug</th>
+                              <th>Sep</th>
+                              <th>Oct</th>
+                              <th>Nov</th>
+                              <th>Dec</th>
+                              <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <ng-container *ngFor="let year of creditParty.yearWise">
+                              <tr>
+                                <td rowspan="2">{{ year.year }}</td>
+                                <td>Count</td>
+                                <td *ngFor="let month of monthList">
+                                  {{ getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0'|| '-' }}
+                                </td>
+                                <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0'}}</b></td>
+                              </tr>
+                              <tr>
+                                <td class="none"></td>
+                                <td>Amount</td>
+                                <td *ngFor="let month of monthList">
+                                  ₹ {{ getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0' || '0' }}
+                                </td>
+                                <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                              </tr>
+                            </ng-container>
+                            </tbody>
+
+                          </table>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+                  }  @else {
+                    <tr>
+                      <td colspan="10">
+                        <app-no-data-found message="No Data found" />
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination-table NP_LeftPagintion" *ngIf="connectedPartyCreditList?.connectedPartyList?.length>0">
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{((pagination.connectedPartyCredit.pageIndex - 1) * pagination.connectedPartyCredit.pageSize+1)}} to
+                  {{(pagination.connectedPartyCredit.pageSize*pagination.connectedPartyCredit.pageIndex) > (connectedPartyCreditList?.totalRows) ? (connectedPartyCreditList?.totalRows) : (pagination.connectedPartyCredit.pageSize*pagination.connectedPartyCredit.pageIndex)}} of
+                  {{connectedPartyCreditList?.totalRows}} rows
+                  <div class="dataTables_length" id="tickets-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="pagination.connectedPartyCredit.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                    (ngModelChange)="onPageChange('customer')">
+                          <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                            {{pages.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                     </div>
+                  </div>
+                  <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination
+                      [maxSize]="3"
+                      [rotate]="true"
+                      [collectionSize]="connectedPartyCreditList.totalRows"
+                      [pageSize]="pagination.connectedPartyCredit.pageSize"
+                      [(page)]="pagination.connectedPartyCredit.pageIndex"
+                      (pageChange)="onPageChange('connectedPartyCredit')"
+                      [boundaryLinks]="true">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.BANK_STATEMENT_INTERNAL,consValue.PageActions.SELF_TRANSFER)" class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Self Transfers<span style="margin-left:16px;" class="skyblue_badge">Net Amount : {{(selfTransfersListALL?.netAmount | number:'1.0-0') ||
+                        '-'}}</span></h4>
+                    </div>
+                  <div class="box_design_ttl_bar_right">
+                    <mat-radio-group
+                      aria-label="Select an option"
+                      [(ngModel)]="selectedSelfTransfer"
+                      name="selfTransferOption"
+                      (change)="updateSelfTransferList($event.value)"
+                      class="self-transfer-radio-group" >
+                      <mat-radio-button value="1">Moving out of HSBC</mat-radio-button>
+                      <mat-radio-button value="2">Moving into HSBC</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <div class="tableResponsive">
+                    <table
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                 <th class="text-center">Sr.No</th>
+                                <th width="75%">Bank Name</th>
+                                <th>
+                                    Count
+                                    <span class="shorting"> </span>
+                                </th>
+                                <th>Amount
+                                    <span class="shorting"> </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @if(selfTransfersList?.length>0){
+                        <ng-container *ngFor="let bank of selfTransfersList;let i = index">
+                          <tr>
+                            <td> <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.selfTransfers[i] = !collapseStates.selfTransfers[i]"
+                                         [ngClass]="{'rotate_icon': !collapseStates.selfTransfers[i]}">
+                              <i class="fas fa-chevron-down"></i>
+                            </button> <b>{{(pagination.selfTransfers.pageIndex-1)*pagination.selfTransfers.pageSize+(i+1)}}</b></td>
+                            <td  width="75%"><b>{{bank?.bankName}}</b></td>
+                            <td><b>{{bank?.totalCount | number:'1.0-0'}}</b></td>
+                            <td><b>₹ {{bank?.totalAmount | number:'1.0-0'}}</b></td>
+                          </tr>
+                          <tr class="collapsing_tr" [ngbCollapse]="collapseStates.selfTransfers[i]">
+                            <td colspan="15">
+                              <div class="box_design">
+                                <div class="tableResponsive inside_table">
+                                  <table class="bordered_table w-100 after_cont_none">
+                                    <thead>
+                                    <tr>
+                                      <th>Calendar Year</th>
+                                      <th>Particulars</th>
+                                      <th>Jan</th>
+                                      <th>Feb</th>
+                                      <th>Mar</th>
+                                      <th>Apr</th>
+                                      <th>May</th>
+                                      <th>Jun</th>
+                                      <th>Jul</th>
+                                      <th>Aug</th>
+                                      <th>Sep</th>
+                                      <th>Oct</th>
+                                      <th>Nov</th>
+                                      <th>Dec</th>
+                                      <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <ng-container *ngFor="let year of bank.yearWise">
+                                      <tr>
+                                        <td rowspan="2">{{ year.year }}</td>
+                                        <td>Count</td>
+                                        <td *ngFor="let month of monthList">
+                                          {{ (getMonthData(year.monthWise, month, 'totalCount') |number:'1.0-0') || '-'  }}
+                                        </td>
+                                        <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0'}}</b></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="none"></td>
+                                        <td>Amount</td>
+                                        <td *ngFor="let month of monthList">
+                                          ₹ {{ getMonthData(year.monthWise, month, 'totalAmount') || '0' | number:'1.0-0'}}
+                                        </td>
+                                        <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                      </tr>
+                                    </ng-container>
+                                    </tbody>
+
+                                  </table>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </ng-container>
+                          }  @else {
+                            <tr>
+                              <td colspan="10">
+                                <app-no-data-found message="No Data found" />
+                              </td>
+                            </tr>
+                          }
+                             </tbody>
+                    </table>
+                </div>
+              <div class="pagination-table NP_LeftPagintion" *ngIf="selfTransfersList?.length>0">
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                  <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{((pagination.selfTransfers.pageIndex - 1) * pagination.selfTransfers.pageSize+1)}} to
+                    {{(pagination.selfTransfers.pageSize*pagination.selfTransfers.pageIndex) > (selfTransfersList?.totalRows) ? (selfTransfersList?.totalRows) : (pagination.selfTransfers.pageSize*pagination.selfTransfers.pageIndex)}} of
+                    {{selfTransfersList?.totalRows}} rows
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                        <mat-form-field appearance="outline">
+                          <mat-select [(ngModel)]="pagination.selfTransfers.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                      (ngModelChange)="onPageChange('customer')">
+                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                              {{pages.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <span class="grey_text">row per page</span>
+                  </div>
+                  <div class="text-md-right float-md-right pagination-rounded">
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                      <ngb-pagination
+                        [maxSize]="3"
+                        [rotate]="true"
+                        [collectionSize]="selfTransfersList.totalRows"
+                        [pageSize]="pagination.selfTransfers.pageSize"
+                        [(page)]="pagination.selfTransfers.pageIndex"
+                        (pageChange)="onPageChange('selfTransfers')"
+                        [boundaryLinks]="true">
+                      </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Statutory Payments</h4>
+                    </div>
+                </div>
+
+                <div class="tableResponsive">
+                    <table id="myTable" class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                        <tr class="tr_lightred_bg">
+                            <th width="6.5%" class="text-right">Sr. No.</th>
+                            <th width="80%">Payment Detail</th>
+                            <th>Amount (Rs.)</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            @if(statuatoryList?.data?.length>0){
+                                <ng-container *ngFor="let statData of statuatoryList?.data;let i = index">
+                                    <tr>
+                                        <td>  <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapseStates.statuatory[i] = !collapseStates.statuatory[i]"
+                                                      [ngClass]="{'rotate_icon': !collapseStates.statuatory[i]}">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button> <b>{{(pagination.statuatory.pageIndex-1)*pagination.statuatory.pageSize+(i+1)}}</b></td>
+                                        <td><b>{{statData?.category_name}}</b></td>
+                                        <td><b>₹ {{statData?.totalAmount | number:'1.0-0'}}</b></td>
+                                    </tr>
+                                    <tr class="collapsing_tr" [ngbCollapse]="collapseStates.statuatory[i]">
+                                        <td colspan="15">
+                                            <div class="box_design">
+                                                <div class="tableResponsive inside_table">
+                                                    <table class="bordered_table w-100 after_cont_none">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Calendar Year</th>
+                                                            <th>Particulars</th>
+                                                            <th>Jan</th>
+                                                            <th>Feb</th>
+                                                            <th>Mar</th>
+                                                            <th>Apr</th>
+                                                            <th>May</th>
+                                                            <th>Jun</th>
+                                                            <th>Jul</th>
+                                                            <th>Aug</th>
+                                                            <th>Sep</th>
+                                                            <th>Oct</th>
+                                                            <th>Nov</th>
+                                                            <th>Dec</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <ng-container *ngFor="let year of statData?.yearWise">
+                                                            <tr>
+                                                                <td rowspan="2">{{ year.year }}</td>
+                                                                <td>Count</td>
+                                                                <td *ngFor="let month of monthList">
+                                                                    {{ getMonthData(year.monthWise, month, 'totalCount') != null
+                                                                    ? (getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0')
+                                                                    : '-' }}
+                                                                </td>
+                                                                <td>
+                                                                    <b>{{ getTotal(year.monthWise, 'totalCount') != null
+                                                                        ? (getTotal(year.monthWise, 'totalCount') | number:'1.0-0')
+                                                                        : '-' }}</b>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="none"></td>
+                                                                <td>Amount</td>
+                                                                <td *ngFor="let month of monthList">
+                                                                    ₹ {{ getMonthData(year.monthWise, month, 'totalAmount') != null
+                                                                    ? (getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0')
+                                                                    : '-' }}
+                                                                </td>
+                                                                <td>
+                                                                    <b>₹ {{ getTotal(year.monthWise, 'totalAmount') != null
+                                                                        ? (getTotal(year.monthWise, 'totalAmount') | number:'1.0-0')
+                                                                        : '-' }}</b>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            }  @else {
+                                <tr>
+                                    <td colspan="10">
+                                        <app-no-data-found message="No Data found" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div class="pagination-table NP_LeftPagintion" *ngIf="statuatoryList?.data?.length>0">
+                    <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{((pagination.statuatory.pageIndex - 1) * pagination.statuatory.pageSize+1)}} to
+                            {{(pagination.statuatory.pageSize*pagination.statuatory.pageIndex) > (statuatoryList?.totalRows) ? (statuatoryList?.totalRows) : (pagination.statuatory.pageSize*pagination.statuatory.pageIndex)}} of
+                            {{statuatoryList?.totalRows}} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="pagination.statuatory.pageSize" #pagesizee [panelClass]="'pagination_select'"
+                                                    (ngModelChange)="onPageChange('statuatory')">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination
+                                        [maxSize]="3"
+                                        [rotate]="true"
+                                        [collectionSize]="statuatoryList?.totalRows"
+                                        [pageSize]="pagination.statuatory.pageSize"
+                                        [(page)]="pagination.statuatory.pageIndex"
+                                        (pageChange)="onPageChange('statuatory')"
+                                        [boundaryLinks]="true">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.BANK_STATEMENT_INTERNAL,consValue.PageActions.CURRENT_ACCOUNT_AVG_BALANCE)" class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Average Bank Balance Current Account</h4>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table class="CommonTable_Scroll design_Main_listTable bordered_table">
+                        <tbody>
+                          <ng-container *ngFor="let yearData of currentAccountData">
+                            <tr>
+                                <td rowspan="2">{{yearData?.year}}</td>
+                                <td>Month</td>
+                                <td *ngFor="let month of yearData?.monthWise">{{month?.monthName}}</td>
+                            </tr>
+                            <tr>
+                              <td class="none"></td>
+                                <td>Amount</td>
+                                <td *ngFor="let month of yearData?.monthWise">
+                                  <!-- {{month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0' }} -->
+                                  {{ month?.totalAmount != null ? getCurrencySymbol(1) : ''}} {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                                </td>
+                            </tr>
+                        </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Liquidity Bank Balance</h4>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table class="CommonTable_Scroll design_Main_listTable bordered_table">
+                        <tbody>
+                          <ng-container *ngIf="crilcCurrentAccountData && crilcCurrentAccountData.length > 0; else noCrilcData">
+                            <ng-container *ngFor="let yearData of crilcCurrentAccountData">
+                                <tr>
+                                    <td rowspan="2">{{yearData?.year}}</td>
+                                    <td>Month</td>
+                                    <td *ngFor="let month of yearData?.monthWise">{{month?.monthName}}</td>
+                                </tr>
+                                <tr>
+                                  <td class="none"></td>
+                                    <td>Amount</td>
+                                    <td *ngFor="let month of yearData?.monthWise">
+                                      {{ month?.totalAmount != null ? getCurrencySymbol(1) : ''}} {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                                    </td>
+                                </tr>
+                            </ng-container>
+                          </ng-container>
+                        </tbody>
+                    </table>
+
+                    <ng-template #noCrilcData>
+                      <table class="CommonTable_Scroll design_Main_listTable bordered_table">
+                        <tbody>
+                          <tr>
+                            <td colspan="14">
+                              <app-no-data-found message="No Data found" />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div  class="box_design mt-4">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Average Bank Balance OD/CC Account</h4>
+
+              </div>
+              </div>
+            <div class="tableResponsive">
+              <table class="CommonTable_Scroll design_Main_listTable bordered_table">
+
+                <ng-container *ngIf="!commonService.isObjectNullOrEmpty(odcc); else noData">
+                  <tbody>
+                  <ng-container *ngFor="let yearData of odcc">
+                    <tr>
+                      <td rowspan="2">{{yearData?.year}}</td>
+                      <td>Month</td>
+                      <td *ngFor="let month of yearData?.monthWise">{{month?.monthName}}</td>
+                    </tr>
+                    <tr>
+                      <td class="none"></td>
+                      <td>Amount</td>
+                      <td *ngFor="let month of yearData?.monthWise">
+                        {{ month?.totalAmount != null ?  getCurrencySymbol(1) : ''}}
+                        {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                      </td>
+                    </tr>
+                  </ng-container>
+                  </tbody>
+                </ng-container>
+
+                <ng-template #noData>
+                  <tbody>
+                  <tr>
+                    <td colspan="10">
+                      <app-no-data-found message="No data found" />
+                    </td>
+                  </tr>
+                  </tbody>
+                </ng-template>
+
+              </table>
+            </div>
+          </div>
+            <div *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.BANK_STATEMENT_INTERNAL,consValue.PageActions.TERM_DEPOSIT_BALANCE)" class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Balance of Term Deposit</h4>
+                    </div>
+                    <div class="box_design_ttl_bar_right">
+                      <fieldset class="NP_HSBC_ComInput white_bg_select title_line">
+                        <mat-label>Select Your Currency</mat-label>
+                        <mat-form-field appearance="outline">
+                          <mat-select
+                            placeholder="INR"
+                            [(ngModel)]="selectedTermCurrency"
+                            [compareWith]="compareCurrencies"
+                            panelClass="radioSelect"
+                            (valueChange)="onTermCurrencySelected($event, 1)"
+                            >
+
+                            <mat-option *ngFor="let currency of termCurrencyList" [value]="currency">
+                              {{ currency.name }}
+                            </mat-option>
+
+                          </mat-select>
+                        </mat-form-field>
+                      </fieldset>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table class="CommonTable_Scroll design_Main_listTable bordered_table">
+
+                        <ng-container *ngIf="!commonService.isObjectNullOrEmpty(termDepositData); else noData">
+                          <tbody>
+                              <ng-container *ngFor="let yearData of termDepositData">
+                                  <tr>
+                                      <td rowspan="2">{{yearData?.year}}</td>
+                                      <td>Month</td>
+                                      <td *ngFor="let month of yearData?.monthWise">{{month?.monthName}}</td>
+                                  </tr>
+                                  <tr>
+                                      <td class="none"></td>
+                                      <td>Amount</td>
+                                      <td *ngFor="let month of yearData?.monthWise">
+                                        <ng-container *ngIf="yearData?.currency != null && yearData?.currency === 1 ">
+                                          {{ month?.totalAmount != null ? getCurrencySymbol(yearData?.currency) : ''}}
+                                        </ng-container>
+                                          {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                                      </td>
+                                  </tr>
+                              </ng-container>
+                          </tbody>
+                      </ng-container>
+
+                      <ng-template #noData>
+                          <tbody>
+                              <tr>
+                                  <td colspan="10">
+                                    <app-no-data-found message="No data found" />
+                                </td>
+                              </tr>
+                          </tbody>
+                      </ng-template>
+
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.BANK_STATEMENT_INTERNAL,consValue.PageActions.AVG_BALANCE_EEFC)" class="box_design mt-4">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>Average Bank Balance EEFC</h4>
+                    </div>
+                    <div class="box_design_ttl_bar_right">
+                        <fieldset class="NP_HSBC_ComInput white_bg_select title_line">
+                            <mat-label>Select Your Currency</mat-label>
+
+                             <mat-form-field appearance="outline">
+                              <mat-select
+                              placeholder="USD"
+                              [(ngModel)]="selectedEefcCurrency"
+                              panelClass="radioSelect"
+                              (valueChange)="onEefcCurrencySelected($event, 3)">
+
+                              <mat-option *ngFor="let currency of eefcCurrencyList" [value]="currency">
+                                <span *ngIf="currency?.id != 1">{{ currency?.name }}</span>
+                              </mat-option>
+
+                            </mat-select>
+                            </mat-form-field>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="tableResponsive">
+                    <table class="CommonTable_Scroll design_Main_listTable bordered_table">
+
+
+                        <ng-container *ngIf="!commonService.isObjectNullOrEmpty(eefData); else noData">
+                          <tbody>
+                              <ng-container *ngFor="let yearData of eefData">
+                                  <tr>
+                                      <td rowspan="2">{{yearData?.year}}</td>
+                                      <td>Month</td>
+                                      <td *ngFor="let month of yearData?.monthWise">{{month?.monthName}}</td>
+                                  </tr>
+                                  <tr>
+                                      <td class="none"></td>
+                                      <td>Amount</td>
+                                      <td *ngFor="let month of yearData?.monthWise">
+                                        <ng-container *ngIf="yearData?.currency != null && yearData?.currency === 1 ">
+                                          {{ month?.totalAmount != null ? getCurrencySymbol(yearData?.currency) : ''}}
+                                        </ng-container>
+                                          {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                                      </td>
+                                  </tr>
+                              </ng-container>
+                          </tbody>
+                      </ng-container>
+
+                      <ng-template #noData>
+                          <tbody>
+                              <tr>
+                                  <td colspan="10">
+                                    <app-no-data-found message="No data found" />
+                                </td>
+                              </tr>
+                          </tbody>
+                      </ng-template>
+
+                    </table>
+                </div>
+            </div>
+            <div class="box_design mt-4">
+              <div class="box_design_ttl_bar">
+                  <div class="box_design_ttl_bar_left">
+                      <h4>Credit Churn</h4>
+                  </div>
+                  <div class="box_design_ttl_bar_right d-flex" *ngIf="churnData?.current_fy || churnData?.last_fy">
+                    <fieldset class="NP_HSBC_ComInput white_bg_select title_line">
+                      <mat-label>Projected Yearly Turnover</mat-label>
+                      <mat-form-field appearance="outline">
+                        <span matPrefix class="ml-2">₹</span>
+                          <input type="number" placeholder="0" [(ngModel)]="projectedTurnover" matInput >
+                       </mat-form-field>
+                    </fieldset>
+                    <button type="button" mat-flat-button class="no_wrap ml-2 ln_40" color="primary" (click)="fetchList('7', 1 , 5,'')">Calculate Churn</button>
+                  </div>
+              </div>
+              <div class="tableResponsive">
+                  <table class="CommonTable_Scroll  bordered_table">
+                      <thead>
+                        <tr class="tr_lightred_bg">
+                          <th rowspan="2">Financial year</th>
+                          <th></th>
+                          <th colspan="3">Q1</th>
+                          <th colspan="3">Q2</th>
+                          <th colspan="3">Q3</th>
+                          <th colspan="3">Q4</th>
+                          <th></th>
+                        </tr>
+                        <tr class="tr_lightred_bg">
+                          <th class="none"></th>
+                          <th>Particulars</th>
+                          <th>Apr</th>
+                          <th>May</th>
+                          <th>Jun</th>
+                          <th>Jul</th>
+                          <th>Aug</th>
+                          <th>Sep</th>
+                          <th>Oct</th>
+                          <th>Nov</th>
+                          <th>Dec</th>
+                          <th>Jan</th>
+                          <th>Feb</th>
+                          <th>Mar</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                    <tbody *ngIf="churnData?.current_fy || churnData?.last_fy; else noData5">
+                    <ng-container   *ngFor="let fy of [churnData?.current_fy, churnData?.last_fy]">
+                      <tr>
+                        <td rowspan="4"><b>{{ fy?.fy_name != null ? fy.fy_name : '-' }}</b></td>
+                        <td>Net Credits(Total Credits-Self Transfer)</td>
+                        <td *ngFor="let month of fy?.monthWise">
+                          {{ month?.totalAmount != null ? (month?.totalAmount | number:'1.0-0') : '-' }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="none"></td>
+                        <td>{{ fy === churnData?.current_fy ? 'Projected Turnover' : 'Actual Turnover' }}</td>
+                        <td *ngFor="let month of fy?.monthWise">
+                          {{
+                            fy === churnData?.current_fy
+                              ? (month?.projected_turnover != null ? (month.projected_turnover | number:'1.0-0') : '-')
+                              : (month?.actual_turnover != null ? (month?.actual_turnover | number:'1.0-0') : '-')
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="none"></td>
+                        <td>Churn %</td>
+                        <td *ngFor="let month of fy?.monthWise">
+                            {{ (!isNaN(+month?.churn_percentage))
+                            ? (+month?.churn_percentage | number:'1.2-2') + '%'
+                            : '-' }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="none"></td>
+                        <td>Quarterly Churn %</td>
+                        <td *ngFor="let quarter of fy?.quarterWise" colspan="3">
+                          <b>{{ quarter?.churn_percentage != null ? (quarter?.churn_percentage | number:'1.2-2') + '%' : '-' }}</b>
+                        </td>
+                        <td *ngIf="!fy?.quarterWise || fy.quarterWise.length === 0">-</td>
+                      </tr>
+
+                    </ng-container>
+                    </tbody>
+                    </table>
+                <ng-template #noData5>
+                  <tbody>
+                  <tr>
+                    <td colspan="16" class="text-center" style="text-align: center; padding: 20px;">
+                      <app-no-data-found message="No data found"></app-no-data-found>
+                    </td>
+                  </tr>
+                  </tbody>
+                </ng-template>
+                </div>
+              </div>
+                </mat-card-content>
+              </mat-tab>
+              <mat-tab label="Child Company Analysis" *ngIf="customerType !== 'TARGET'">
+                <mat-card-content class="px-0">
+                  <div class="clearfix"></div>
+
+                  <!-- Child Company: Supplier List -->
+                  <div *ngIf="childDataLoaded" class="box_design mt-4">
+                    <div class="box_design_ttl_bar">
+                      <div class="box_design_ttl_bar_left">
+                        <h4>Supplier List</h4>
+                      </div>
+                    </div>
+                    <div class="tableResponsive">
+                      <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                          <tr class="tr_lightred_bg">
+                            <th class="text-center">Sr.No</th>
+                            <th width="75%">Counter Party Name</th>
+                            <th>Count</th>
+                            <th>Amount</th>
+                            <th>% Debit</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(childSupplierList?.counterPartyList?.length>0){
+                          <ng-container *ngFor="let supplier of childSupplierList.counterPartyList;let i = index">
+                            <tr>
+                              <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="childCollapseStates.supplier[i] = !childCollapseStates.supplier[i]"
+                                    [ngClass]="{'rotate_icon': !childCollapseStates.supplier[i]}">
+                                <i class="fas fa-chevron-down"></i>
+                              </button><b>{{(childPagination.supplier.pageIndex-1)*childPagination.supplier.pageSize+(i+1)}}</b></td>
+                              <td><b>{{supplier?.partyName}}</b></td>
+                              <td><b>{{supplier?.totalCount | number:'1.0-0' }}</b></td>
+                              <td><b>₹ {{supplier?.totalAmount | number:'1.0-0' }}</b></td>
+                              <td><b>{{supplier?.amountRatio | number:'1.2-2'}}</b></td>
+                            </tr>
+                            <tr [ngbCollapse]="childCollapseStates.supplier[i]">
+                              <td colspan="6" class="p-0">
+                                <table class="table table_border_none mb-0 simple_inside_table">
+                                  <tr *ngFor="let bank of supplier.bankWise;let j = index">
+                                    <td></td><td></td>
+                                    <td width="75%">{{bank?.bankName}}</td>
+                                    <td>{{ bank?.totalCount | number:'1.0-0' }}</td>
+                                    <td>₹ {{bank?.totalAmount| number:'1.0-0' }}</td>
+                                    <td>{{bank?.amountRatio}}</td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr class="collapsing_tr" [ngbCollapse]="childCollapseStates.supplier[i]">
+                              <td colspan="15">
+                                <div class="box_design">
+                                  <div class="tableResponsive inside_table">
+                                    <table class="bordered_table w-100 after_cont_none">
+                                      <thead>
+                                        <tr>
+                                          <th>Calendar Year</th><th>Particulars</th>
+                                          <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                          <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Total</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <ng-container *ngFor="let year of supplier.yearWise">
+                                          <tr>
+                                            <td rowspan="2">{{ year.year }}</td>
+                                            <td>Count</td>
+                                            <td *ngFor="let month of monthList">{{ getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0' || '-' }}</td>
+                                            <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0' }}</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="none"></td>
+                                            <td>Amount</td>
+                                            <td *ngFor="let month of monthList">₹ {{ getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0' || '0' }}</td>
+                                            <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                        </ng-container>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                          } @else {
+                            <tr><td colspan="10"><app-no-data-found message="No Data found" /></td></tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="childSupplierList?.counterPartyList?.length>0">
+                      <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" role="status" aria-live="polite">
+                          Showing {{((childPagination.supplier.pageIndex - 1) * childPagination.supplier.pageSize+1)}} to
+                          {{(childPagination.supplier.pageSize*childPagination.supplier.pageIndex) > (childSupplierList?.totalRows) ? (childSupplierList?.totalRows) : (childPagination.supplier.pageSize*childPagination.supplier.pageIndex)}} of
+                          {{childSupplierList?.totalRows}} rows
+                          <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                              <mat-form-field appearance="outline">
+                                <mat-select [value]="childPagination.supplier.pageSize"
+                                  (selectionChange)="childPagination.supplier.pageSize = $event.value; childPagination.supplier.pageIndex = 1;onChildPageChange('supplier');">
+                                  <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">{{pages.value}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                          <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="childSupplierList.totalRows"
+                              [pageSize]="childPagination.supplier.pageSize" [(page)]="childPagination.supplier.pageIndex"
+                              (pageChange)="onChildPageChange('supplier')" [boundaryLinks]="true"></ngb-pagination>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Child Company: Customer List -->
+                  <div *ngIf="childDataLoaded" class="box_design mt-4">
+                    <div class="box_design_ttl_bar">
+                      <div class="box_design_ttl_bar_left">
+                        <h4>Customer List</h4>
+                      </div>
+                    </div>
+                    <div class="tableResponsive">
+                      <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                          <tr class="tr_lightred_bg">
+                            <th class="text-center">Sr.No</th>
+                            <th width="75%">Counter Party Name</th>
+                            <th>Count</th>
+                            <th>Amount</th>
+                            <th>% Credit</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(childCustomerListData?.counterPartyList?.length>0){
+                          <ng-container *ngFor="let customer of childCustomerListData.counterPartyList;let i = index">
+                            <tr>
+                              <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="childCollapseStates.customer[i] = !childCollapseStates.customer[i]"
+                                    [ngClass]="{'rotate_icon': !childCollapseStates.customer[i]}">
+                                <i class="fas fa-chevron-down"></i>
+                              </button><b>{{(childPagination.customer.pageIndex-1)*childPagination.customer.pageSize+(i+1)}}</b></td>
+                              <td><b>{{customer?.partyName}}</b></td>
+                              <td><b>{{customer?.totalCount | number:'1.0-0' }}</b></td>
+                              <td><b>₹ {{customer?.totalAmount | number:'1.0-0' }}</b></td>
+                              <td><b>{{customer?.amountRatio | number:'1.2-2'}}</b></td>
+                            </tr>
+                            <tr [ngbCollapse]="childCollapseStates.customer[i]">
+                              <td colspan="6" class="p-0">
+                                <table class="table table_border_none mb-0 simple_inside_table">
+                                  <tr *ngFor="let bank of customer.bankWise;let j = index">
+                                    <td></td><td></td>
+                                    <td width="75%">{{bank?.bankName}}</td>
+                                    <td>{{bank?.totalCount | number:'1.0-0'}}</td>
+                                    <td>₹ {{bank?.totalAmount | number:'1.0-0'}}</td>
+                                    <td>{{bank?.amountRatio | number:'1.2-2'}}</td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr class="collapsing_tr" [ngbCollapse]="childCollapseStates.customer[i]">
+                              <td colspan="15">
+                                <div class="box_design">
+                                  <div class="tableResponsive inside_table">
+                                    <table class="bordered_table w-100 after_cont_none">
+                                      <thead>
+                                        <tr>
+                                          <th>Calendar Year</th><th>Particulars</th>
+                                          <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                          <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Total</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <ng-container *ngFor="let year of customer?.yearWise">
+                                          <tr>
+                                            <td rowspan="2">{{ year.year }}</td>
+                                            <td>Count</td>
+                                            <td *ngFor="let month of monthList">{{ getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0' || '-' }}</td>
+                                            <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="none"></td>
+                                            <td>Amount</td>
+                                            <td *ngFor="let month of monthList">₹ {{ getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0'|| '0' }}</td>
+                                            <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                        </ng-container>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                          } @else {
+                            <tr><td colspan="10"><app-no-data-found message="No Data found" /></td></tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="childCustomerListData?.counterPartyList?.length>0">
+                      <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" role="status" aria-live="polite">
+                          Showing {{((childPagination.customer.pageIndex - 1) * childPagination.customer.pageSize+1)}} to
+                          {{(childPagination.customer.pageSize*childPagination.customer.pageIndex) > (childCustomerListData?.totalRows) ? (childCustomerListData?.totalRows) : (childPagination.customer.pageSize*childPagination.customer.pageIndex)}} of
+                          {{childCustomerListData?.totalRows}} rows
+                          <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                              <mat-form-field appearance="outline">
+                                <mat-select [value]="childPagination.customer.pageSize"
+                                  (selectionChange)="childPagination.customer.pageSize = $event.value; childPagination.customer.pageIndex = 1;onChildPageChange('customer');">
+                                  <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">{{pages.value}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                          <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="childCustomerListData.totalRows"
+                              [pageSize]="childPagination.customer.pageSize" [(page)]="childPagination.customer.pageIndex"
+                              (pageChange)="onChildPageChange('customer')" [boundaryLinks]="true"></ngb-pagination>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Child Company: Payment to Related/connected/Group entity -->
+                  <!-- <div *ngIf="childDataLoaded" class="box_design mt-4">
+                    <div class="box_design_ttl_bar">
+                      <div class="box_design_ttl_bar_left">
+                        <h4>Payment to Related /connected/Group entity</h4>
+                      </div>
+                    </div>
+                    <div class="tableResponsive">
+                      <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                          <tr class="tr_lightred_bg">
+                            <th class="text-center">Sr.No</th>
+                            <th width="80%">Connected Party</th>
+                            <th>Count</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(childConnectedPartyDebitList?.connectedPartyList?.length>0){
+                          <ng-container *ngFor="let debitParty of childConnectedPartyDebitList.connectedPartyList;let i = index">
+                            <tr>
+                              <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="childCollapseStates.connectedPartyDebit[i] = !childCollapseStates.connectedPartyDebit[i]"
+                                    [ngClass]="{'rotate_icon': !childCollapseStates.connectedPartyDebit[i]}">
+                                <i class="fas fa-chevron-down"></i>
+                              </button><b>{{(childPagination.connectedPartyDebit.pageIndex-1)*childPagination.connectedPartyDebit.pageSize+(i+1)}}</b></td>
+                              <td><b>{{debitParty?.partyName}}</b></td>
+                              <td><b>{{debitParty?.totalCount | number:'1.0-0'}}</b></td>
+                              <td><b>₹ {{debitParty?.totalAmount | number:'1.0-0'}}</b></td>
+                            </tr>
+                            <tr [ngbCollapse]="childCollapseStates.connectedPartyDebit[i]">
+                              <td colspan="6" class="p-0">
+                                <table class="table table_border_none mb-0 simple_inside_table">
+                                  <tr *ngFor="let bank of debitParty.bankWise;let j = index">
+                                    <td></td><td></td>
+                                    <td width="75%">{{bank?.bankName}}</td>
+                                    <td>{{bank?.totalCount | number:'1.0-0'}}</td>
+                                    <td>₹ {{bank?.totalAmount | number:'1.0-0'}}</td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr class="collapsing_tr" [ngbCollapse]="childCollapseStates.connectedPartyDebit[i]">
+                              <td colspan="15">
+                                <div class="box_design">
+                                  <div class="tableResponsive inside_table">
+                                    <table class="bordered_table w-100 after_cont_none">
+                                      <thead>
+                                        <tr>
+                                          <th>Calendar Year</th><th>Particulars</th>
+                                          <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                          <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Total</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <ng-container *ngFor="let year of debitParty.yearWise">
+                                          <tr>
+                                            <td rowspan="2">{{ year.year }}</td>
+                                            <td>Count</td>
+                                            <td *ngFor="let month of monthList">{{ getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0'|| '-' }}</td>
+                                            <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="none"></td>
+                                            <td>Amount</td>
+                                            <td *ngFor="let month of monthList">₹ {{ getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0' || '0' }}</td>
+                                            <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                        </ng-container>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                          } @else {
+                            <tr><td colspan="10"><app-no-data-found message="No Data found" /></td></tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="childConnectedPartyDebitList?.connectedPartyList?.length>0">
+                      <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" role="status" aria-live="polite">
+                          Showing {{((childPagination.connectedPartyDebit.pageIndex - 1) * childPagination.connectedPartyDebit.pageSize+1)}} to
+                          {{(childPagination.connectedPartyDebit.pageSize*childPagination.connectedPartyDebit.pageIndex) > (childConnectedPartyDebitList?.totalRows) ? (childConnectedPartyDebitList?.totalRows) : (childPagination.connectedPartyDebit.pageSize*childPagination.connectedPartyDebit.pageIndex)}} of
+                          {{childConnectedPartyDebitList?.totalRows}} rows
+                          <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                              <mat-form-field appearance="outline">
+                                <mat-select [value]="childPagination.connectedPartyDebit.pageSize"
+                                  (selectionChange)="childPagination.connectedPartyDebit.pageSize = $event.value; childPagination.connectedPartyDebit.pageIndex = 1;onChildPageChange('connectedPartyDebit');">
+                                  <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">{{pages.value}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                          <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="childConnectedPartyDebitList.totalRows"
+                              [pageSize]="childPagination.connectedPartyDebit.pageSize" [(page)]="childPagination.connectedPartyDebit.pageIndex"
+                              (pageChange)="onChildPageChange('connectedPartyDebit')" [boundaryLinks]="true"></ngb-pagination>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- Child Company: Receipt from Related/connected/Group entity -->
+                  <!-- <div *ngIf="childDataLoaded" class="box_design mt-4">
+                    <div class="box_design_ttl_bar">
+                      <div class="box_design_ttl_bar_left">
+                        <h4>Receipt from Related /connected/Group entity</h4>
+                      </div>
+                    </div>
+                    <div class="tableResponsive">
+                      <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                          <tr class="tr_lightred_bg">
+                            <th class="text-center">Sr.No</th>
+                            <th width="80%">Connected Party</th>
+                            <th>Count</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(childConnectedPartyCreditList?.connectedPartyList?.length>0){
+                          <ng-container *ngFor="let creditParty of childConnectedPartyCreditList.connectedPartyList;let i = index">
+                            <tr>
+                              <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="childCollapseStates.connectedPartyCredit[i] = !childCollapseStates.connectedPartyCredit[i]"
+                                    [ngClass]="{'rotate_icon': !childCollapseStates.connectedPartyCredit[i]}">
+                                <i class="fas fa-chevron-down"></i>
+                              </button><b>{{(childPagination.connectedPartyCredit.pageIndex-1)*childPagination.connectedPartyCredit.pageSize+(i+1)}}</b></td>
+                              <td><b>{{creditParty?.partyName}}</b></td>
+                              <td><b>{{creditParty?.totalCount | number:'1.0-0'}}</b></td>
+                              <td><b>₹ {{creditParty?.totalAmount | number:'1.0-0'}}</b></td>
+                            </tr>
+                            <tr [ngbCollapse]="childCollapseStates.connectedPartyCredit[i]">
+                              <td colspan="6" class="p-0">
+                                <table class="table table_border_none mb-0 simple_inside_table">
+                                  <tr *ngFor="let bank of creditParty.bankWise;let j = index">
+                                    <td></td><td></td>
+                                    <td width="75%">{{bank?.bankName}}</td>
+                                    <td>{{bank?.totalCount | number:'1.0-0'}}</td>
+                                    <td>₹ {{bank?.totalAmount | number:'1.0-0'}}</td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr class="collapsing_tr" [ngbCollapse]="childCollapseStates.connectedPartyCredit[i]">
+                              <td colspan="15">
+                                <div class="box_design">
+                                  <div class="tableResponsive inside_table">
+                                    <table class="bordered_table w-100 after_cont_none">
+                                      <thead>
+                                        <tr>
+                                          <th>Calendar Year</th><th>Particulars</th>
+                                          <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                          <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Total</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <ng-container *ngFor="let year of creditParty.yearWise">
+                                          <tr>
+                                            <td rowspan="2">{{ year.year }}</td>
+                                            <td>Count</td>
+                                            <td *ngFor="let month of monthList">{{ getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0'|| '-' }}</td>
+                                            <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="none"></td>
+                                            <td>Amount</td>
+                                            <td *ngFor="let month of monthList">₹ {{ getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0' || '0' }}</td>
+                                            <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                        </ng-container>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                          } @else {
+                            <tr><td colspan="10"><app-no-data-found message="No Data found" /></td></tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="childConnectedPartyCreditList?.connectedPartyList?.length>0">
+                      <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" role="status" aria-live="polite">
+                          Showing {{((childPagination.connectedPartyCredit.pageIndex - 1) * childPagination.connectedPartyCredit.pageSize+1)}} to
+                          {{(childPagination.connectedPartyCredit.pageSize*childPagination.connectedPartyCredit.pageIndex) > (childConnectedPartyCreditList?.totalRows) ? (childConnectedPartyCreditList?.totalRows) : (childPagination.connectedPartyCredit.pageSize*childPagination.connectedPartyCredit.pageIndex)}} of
+                          {{childConnectedPartyCreditList?.totalRows}} rows
+                          <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                              <mat-form-field appearance="outline">
+                                <mat-select [value]="childPagination.connectedPartyCredit.pageSize"
+                                  (selectionChange)="childPagination.connectedPartyCredit.pageSize = $event.value; childPagination.connectedPartyCredit.pageIndex = 1;onChildPageChange('connectedPartyCredit');">
+                                  <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">{{pages.value}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                          <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="childConnectedPartyCreditList.totalRows"
+                              [pageSize]="childPagination.connectedPartyCredit.pageSize" [(page)]="childPagination.connectedPartyCredit.pageIndex"
+                              (pageChange)="onChildPageChange('connectedPartyCredit')" [boundaryLinks]="true"></ngb-pagination>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- Child Company: Self Transfers -->
+                  <!-- <div *ngIf="childDataLoaded" class="box_design mt-4">
+                    <div class="box_design_ttl_bar">
+                      <div class="box_design_ttl_bar_left">
+                        <h4>Self Transfers<span style="margin-left:16px;" class="skyblue_badge">Net Amount : {{(childSelfTransfersListALL?.netAmount | number:'1.0-0') || '-'}}</span></h4>
+                      </div>
+                      <div class="box_design_ttl_bar_right">
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="childSelectedSelfTransfer" name="childSelfTransferOption"
+                          (change)="updateChildSelfTransferList($event.value)" class="self-transfer-radio-group">
+                          <mat-radio-button value="1">Moving out of HSBC</mat-radio-button>
+                          <mat-radio-button value="2">Moving into HSBC</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                    <div class="tableResponsive">
+                      <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                          <tr class="tr_lightred_bg">
+                            <th class="text-center">Sr.No</th>
+                            <th width="75%">Bank Name</th>
+                            <th>Count</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(childSelfTransfersList?.length>0){
+                          <ng-container *ngFor="let bank of childSelfTransfersList;let i = index">
+                            <tr>
+                              <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="childCollapseStates.selfTransfers[i] = !childCollapseStates.selfTransfers[i]"
+                                    [ngClass]="{'rotate_icon': !childCollapseStates.selfTransfers[i]}">
+                                <i class="fas fa-chevron-down"></i>
+                              </button><b>{{(childPagination.selfTransfers.pageIndex-1)*childPagination.selfTransfers.pageSize+(i+1)}}</b></td>
+                              <td width="75%"><b>{{bank?.bankName}}</b></td>
+                              <td><b>{{bank?.totalCount | number:'1.0-0'}}</b></td>
+                              <td><b>₹ {{bank?.totalAmount | number:'1.0-0'}}</b></td>
+                            </tr>
+                            <tr class="collapsing_tr" [ngbCollapse]="childCollapseStates.selfTransfers[i]">
+                              <td colspan="15">
+                                <div class="box_design">
+                                  <div class="tableResponsive inside_table">
+                                    <table class="bordered_table w-100 after_cont_none">
+                                      <thead>
+                                        <tr>
+                                          <th>Calendar Year</th><th>Particulars</th>
+                                          <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                          <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Total</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <ng-container *ngFor="let year of bank.yearWise">
+                                          <tr>
+                                            <td rowspan="2">{{ year.year }}</td>
+                                            <td>Count</td>
+                                            <td *ngFor="let month of monthList">{{ (getMonthData(year.monthWise, month, 'totalCount') |number:'1.0-0') || '-' }}</td>
+                                            <td><b>{{ getTotal(year.monthWise, 'totalCount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="none"></td>
+                                            <td>Amount</td>
+                                            <td *ngFor="let month of monthList">₹ {{ getMonthData(year.monthWise, month, 'totalAmount') || '0' | number:'1.0-0'}}</td>
+                                            <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') | number:'1.0-0'}}</b></td>
+                                          </tr>
+                                        </ng-container>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                          } @else {
+                            <tr><td colspan="10"><app-no-data-found message="No Data found" /></td></tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="childSelfTransfersList?.length>0">
+                      <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" role="status" aria-live="polite">
+                          Showing {{((childPagination.selfTransfers.pageIndex - 1) * childPagination.selfTransfers.pageSize+1)}} to
+                          {{(childPagination.selfTransfers.pageSize*childPagination.selfTransfers.pageIndex) > (childSelfTransfersList?.totalRows) ? (childSelfTransfersList?.totalRows) : (childPagination.selfTransfers.pageSize*childPagination.selfTransfers.pageIndex)}} of
+                          {{childSelfTransfersList?.totalRows}} rows
+                          <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                              <mat-form-field appearance="outline">
+                                <mat-select [value]="childPagination.selfTransfers.pageSize"
+                                  (selectionChange)="childPagination.selfTransfers.pageSize = $event.value; childPagination.selfTransfers.pageIndex = 1;onChildPageChange('selfTransfers');">
+                                  <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">{{pages.value}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                          <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="childSelfTransfersList.totalRows"
+                              [pageSize]="childPagination.selfTransfers.pageSize" [(page)]="childPagination.selfTransfers.pageIndex"
+                              (pageChange)="onChildPageChange('selfTransfers')" [boundaryLinks]="true"></ngb-pagination>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- Child Company: Statutory Payments -->
+                  <!-- <div *ngIf="childDataLoaded" class="box_design mt-4">
+                    <div class="box_design_ttl_bar">
+                      <div class="box_design_ttl_bar_left">
+                        <h4>Statutory Payments</h4>
+                      </div>
+                    </div>
+                    <div class="tableResponsive">
+                      <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                        <thead>
+                          <tr class="tr_lightred_bg">
+                            <th width="6.5%" class="text-right">Sr. No.</th>
+                            <th width="80%">Payment Detail</th>
+                            <th>Amount (Rs.)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(childStatuatoryList?.data?.length>0){
+                          <ng-container *ngFor="let statData of childStatuatoryList?.data;let i = index">
+                            <tr>
+                              <td><button mat-icon-button class="matIcon red_icn mr-2" (click)="childCollapseStates.statuatory[i] = !childCollapseStates.statuatory[i]"
+                                    [ngClass]="{'rotate_icon': !childCollapseStates.statuatory[i]}">
+                                <i class="fas fa-chevron-down"></i>
+                              </button><b>{{(childPagination.statuatory.pageIndex-1)*childPagination.statuatory.pageSize+(i+1)}}</b></td>
+                              <td><b>{{statData?.category_name}}</b></td>
+                              <td><b>₹ {{statData?.totalAmount | number:'1.0-0'}}</b></td>
+                            </tr>
+                            <tr class="collapsing_tr" [ngbCollapse]="childCollapseStates.statuatory[i]">
+                              <td colspan="15">
+                                <div class="box_design">
+                                  <div class="tableResponsive inside_table">
+                                    <table class="bordered_table w-100 after_cont_none">
+                                      <thead>
+                                        <tr>
+                                          <th>Calendar Year</th><th>Particulars</th>
+                                          <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                          <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Total</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <ng-container *ngFor="let year of statData?.yearWise">
+                                          <tr>
+                                            <td rowspan="2">{{ year.year }}</td>
+                                            <td>Count</td>
+                                            <td *ngFor="let month of monthList">
+                                              {{ getMonthData(year.monthWise, month, 'totalCount') != null
+                                                ? (getMonthData(year.monthWise, month, 'totalCount') | number:'1.0-0') : '-' }}
+                                            </td>
+                                            <td><b>{{ getTotal(year.monthWise, 'totalCount') != null
+                                              ? (getTotal(year.monthWise, 'totalCount') | number:'1.0-0') : '-' }}</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="none"></td>
+                                            <td>Amount</td>
+                                            <td *ngFor="let month of monthList">
+                                              ₹ {{ getMonthData(year.monthWise, month, 'totalAmount') != null
+                                                ? (getMonthData(year.monthWise, month, 'totalAmount') | number:'1.0-0') : '-' }}
+                                            </td>
+                                            <td><b>₹ {{ getTotal(year.monthWise, 'totalAmount') != null
+                                              ? (getTotal(year.monthWise, 'totalAmount') | number:'1.0-0') : '-' }}</b></td>
+                                          </tr>
+                                        </ng-container>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                          } @else {
+                            <tr><td colspan="10"><app-no-data-found message="No Data found" /></td></tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="childStatuatoryList?.data?.length>0">
+                      <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                        <div class="dataTables_info" role="status" aria-live="polite">
+                          Showing {{((childPagination.statuatory.pageIndex - 1) * childPagination.statuatory.pageSize+1)}} to
+                          {{(childPagination.statuatory.pageSize*childPagination.statuatory.pageIndex) > (childStatuatoryList?.totalRows) ? (childStatuatoryList?.totalRows) : (childPagination.statuatory.pageSize*childPagination.statuatory.pageIndex)}} of
+                          {{childStatuatoryList?.totalRows}} rows
+                          <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                              <mat-form-field appearance="outline">
+                                <mat-select [value]="childPagination.statuatory.pageSize"
+                                  (selectionChange)="childPagination.statuatory.pageSize = $event.value; childPagination.statuatory.pageIndex = 1;onChildPageChange('statuatory');">
+                                  <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">{{pages.value}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <span class="grey_text">row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                          <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [maxSize]="3" [rotate]="true" [collectionSize]="childStatuatoryList?.totalRows"
+                              [pageSize]="childPagination.statuatory.pageSize" [(page)]="childPagination.statuatory.pageIndex"
+                              (pageChange)="onChildPageChange('statuatory')" [boundaryLinks]="true"></ngb-pagination>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- Child Company: Average Bank Balance Current Account -->
+                  <!-- <div *ngIf="childDataLoaded" class="box_design mt-4">
+                    <div class="box_design_ttl_bar">
+                      <div class="box_design_ttl_bar_left">
+                        <h4>Average Bank Balance Current Account</h4>
+                      </div>
+                    </div>
+                    <div class="tableResponsive">
+                      <table class="CommonTable_Scroll design_Main_listTable bordered_table">
+                        <tbody>
+                          <ng-container *ngFor="let yearData of childCurrentAccountData">
+                            <tr>
+                              <td rowspan="2">{{yearData?.year}}</td>
+                              <td>Month</td>
+                              <td *ngFor="let month of yearData?.monthWise">{{month?.monthName}}</td>
+                            </tr>
+                            <tr>
+                              <td class="none"></td>
+                              <td>Amount</td>
+                              <td *ngFor="let month of yearData?.monthWise">
+                                {{ month?.totalAmount != null ? getCurrencySymbol(1) : ''}} {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div> -->
+
+                  <!-- Child Company: Average Bank Balance OD/CC Account -->
+                  <!-- <div *ngIf="childDataLoaded" class="box_design mt-4">
+                    <div class="box_design_ttl_bar">
+                      <div class="box_design_ttl_bar_left">
+                        <h4>Average Bank Balance OD/CC Account</h4>
+                      </div>
+                    </div>
+                    <div class="tableResponsive">
+                      <table class="CommonTable_Scroll design_Main_listTable bordered_table">
+                        <ng-container *ngIf="!commonService.isObjectNullOrEmpty(childOdcc); else childNoDataOdcc">
+                          <tbody>
+                            <ng-container *ngFor="let yearData of childOdcc">
+                              <tr>
+                                <td rowspan="2">{{yearData?.year}}</td>
+                                <td>Month</td>
+                                <td *ngFor="let month of yearData?.monthWise">{{month?.monthName}}</td>
+                              </tr>
+                              <tr>
+                                <td class="none"></td>
+                                <td>Amount</td>
+                                <td *ngFor="let month of yearData?.monthWise">
+                                  {{ month?.totalAmount != null ? getCurrencySymbol(1) : ''}}
+                                  {{ month?.totalAmount == null ? '-' : month?.totalAmount | number:'1.0-0'}}
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </ng-container>
+                        <ng-template #childNoDataOdcc>
+                          <tbody>
+                            <tr><td colspan="10"><app-no-data-found message="No data found" /></td></tr>
+                          </tbody>
+                        </ng-template>
+                      </table>
+                    </div>
+                  </div> -->
+
+                  <!-- Prompt to select child company if not yet selected -->
+                  <div *ngIf="!childDataLoaded && selectedTabIndex === 1" class="box_design mt-4">
+                    <div class="text-center p-5">
+                      <app-no-data-found message="{{ childCustomerList && childCustomerList.length === 0 ? 'Child customers not found' : 'Please select a Child Company from the dropdown above to view the analysis data' }}" />
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+    </div>
+</div>
+

@@ -1,0 +1,231 @@
+ <section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial (click)="closeDialog()">close</mat-icon>
+    </a> 
+    <mat-tab-group mat-align-tabs="start" class="tabs-design" animationDuration="0ms">
+        <mat-tab label="Funding Round">
+            <mat-card-content>
+                <div class="pop_up_container">
+                    <mat-dialog-content class="px-0 pt-0"> 
+                        <div class="popup_body">
+                            <div class="table_sec">
+                                <div class="tableResponsive max-h-100">
+                                    <table
+                                        class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table ">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th width="5%" class="text-center">Sr No.</th>
+                                                <th>Name Of Round</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                                <th>Facilitators</th>
+                                                <th>Investors</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="listOfFundingRoundListdetails.length > 0; else noFundingRoundData">
+                                            <tr *ngFor="let fundingRoundDetails of listOfFundingRoundListdetails; let i = index">
+                                                <td data-label="Sr No." class="text-center">{{(((tracxnFundingRoundListDetailsPage.page()-1) * tracxnFundingRoundListDetailsPage.pageSize()) + (i+1))}}</td>
+                                                <td data-label="Name Of Round">{{fundingRoundDetails?.nameOfRound || '-'}}</td>
+                                                <td data-label="Date">{{ fundingRoundDetails?.date ? (fundingRoundDetails.date | date:'dd-MM-yyyy') : '-' }}</td>
+                                                <td data-label="Amount">{{fundingRoundDetails?.amount | millionFormat }}</td>
+                                                <td data-label="Investors" class="wrp_text">
+                                                    {{fundingRoundDetails?.facilitors || '-'}}
+                                                </td>
+                                                <td data-label="Facilitators" class="wrp_text">
+                                                    {{fundingRoundDetails?.investors || '-'}}
+                                                </td>
+                                               
+                                            </tr>
+                                            <!-- <tr>
+                                                <td colspan="6">
+                                                    <app-no-data-found message="No record found" />
+                                                </td>
+                                            </tr> -->
+                                        </tbody>
+                                    </table>
+                                    <ng-template #noFundingRoundData>
+                                        <tr>
+                                          <td colspan="6" class="text-center text-danger">
+                                            <app-no-data-found message="No Funding Round Details found." />
+                                         </td>
+                                        </tr>
+                                   </ng-template>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                        Showing
+                                        {{(tracxnFundingRoundListDetailsPage.startIndex()+1)}} to
+                                        {{(tracxnFundingRoundListDetailsPage.pageSize()*tracxnFundingRoundListDetailsPage.page()) >
+                                        (tracxnFundingRoundListDetailsPage.totalSize) ? (tracxnFundingRoundListDetailsPage.totalSize) :
+                                        (tracxnFundingRoundListDetailsPage.pageSize()*tracxnFundingRoundListDetailsPage.page())}} of
+                                        {{tracxnFundingRoundListDetailsPage.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="tracxnFundingRoundListDetailsPage.pageSize"
+                                                        (selectionChange)="getAllFundingRoundListDetails()" [panelClass]="'pagination_select'">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="tracxnFundingRoundListDetailsPage.totalSize" [maxSize]="3"
+                                                [(page)]="tracxnFundingRoundListDetailsPage.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="tracxnFundingRoundListDetailsPage.pageSize()" (pageChange)="getAllFundingRoundListDetails()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-dialog-content>
+                    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                        <button mat-flat-button color="primary" matDialogClose="">OK</button>
+                    </mat-dialog-actions>
+                </div>
+            </mat-card-content>
+        </mat-tab>
+    <mat-tab label="Venture Debt" *ngIf="listOfFundingRoundVentureDebtListdetails.length > 0; else noFundingRoundData">
+        <mat-card-content>
+            <div class="pop_up_container">
+                <mat-dialog-content class="px-0 pt-0"> 
+                    <div class="popup_body">
+                        <div class="table_sec">
+                            <div class="tableResponsive max-h-100">
+                                <table
+                                    class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table">
+                                    <thead>
+                                        <tr class="tr_lightred_bg">
+                                            <th width="5%" class="text-center">Sr No.</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Investors</th>
+                                          </tr> 
+                                    </thead>
+                                    <tbody >
+                                        <tr *ngFor="let fundingRoundventureDebtDetails of listOfFundingRoundVentureDebtListdetails; let i = index">
+                                            <td data-label="Sr No." class="text-center">{{(((tracxnFundingVentureDebtPage.page()-1) * tracxnFundingVentureDebtPage.pageSize()) + (i+1))}}</td>
+                                            <td data-label="Date">{{ fundingRoundventureDebtDetails?.date ? (fundingRoundventureDebtDetails.date | date:'dd-MM-yyyy') : '-' }}</td>
+                                            <td data-label="Amount" *ngIf="fundingRoundventureDebtDetails?.currency == 'USD'">{{fundingRoundventureDebtDetails?.amount | millionFormat }}</td>
+                                            <td data-label="Amount" *ngIf="fundingRoundventureDebtDetails?.currency == 'INR'">{{fundingRoundventureDebtDetails?.amount | millionFormatINRPipe }}</td> 
+                                            <td data-label="Investors">
+                                                {{fundingRoundventureDebtDetails?.investors || '-'}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                             <div class="pagination-table NP_LeftPagintion">
+                                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                    Showing
+                                    {{(tracxnFundingVentureDebtPage.startIndex()+1)}} to
+                                    {{(tracxnFundingVentureDebtPage.pageSize()*tracxnFundingVentureDebtPage.page()) >
+                                    (tracxnFundingVentureDebtPage.totalSize) ? (tracxnFundingVentureDebtPage.totalSize) :
+                                    (tracxnFundingVentureDebtPage.pageSize()*tracxnFundingVentureDebtPage.page())}} of
+                                    {{tracxnFundingVentureDebtPage.totalSize}} rows
+                                    <div class="dataTables_length" id="tickets-table_length">
+                                        <div class="NP_HSBC_ComInput select-field">
+                                            <mat-form-field appearance="outline">
+                                                <mat-select [(ngModel)]="tracxnFundingVentureDebtPage.pageSize"
+                                                    (selectionChange)="getAllTracxnFundingVentureDebtDetails()" [panelClass]="'pagination_select'">
+                                                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                        {{pages.value}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <span class="grey_text"> row per page</span>
+                                </div>
+                                <div class="text-md-right float-md-right pagination-rounded">
+                                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                        <ngb-pagination [collectionSize]="tracxnFundingVentureDebtPage.totalSize" [maxSize]="3"
+                                            [(page)]="tracxnFundingVentureDebtPage.page" [rotate]="true" [boundaryLinks]="true"
+                                            [pageSize]="tracxnFundingVentureDebtPage.pageSize()" (pageChange)="getAllTracxnFundingVentureDebtDetails()">
+                                        </ngb-pagination>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-dialog-content>
+                <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                    <button mat-flat-button color="primary">Ok</button>
+                </mat-dialog-actions>
+            </div>
+        </mat-card-content>
+    </mat-tab>
+    <mat-tab label="Buyout" *ngIf="listOfFundingRoundBuyOutListdetails.length > 0; else noFundingRoundData">
+        <mat-card-content>
+            <mat-dialog-content class="px-0 pt-0">
+                <div class="popup_body">
+                    <div class="table_sec">
+                        <div class="tableResponsive max-h-100">
+                            <table
+                                class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table">
+                                <thead>
+                                    <tr class="tr_lightred_bg">
+                                        <th width="5%" class="text-center">Sr No.</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Acquirers</th>
+                                      </tr> 
+                                </thead>
+                                <tbody >
+                                    <tr *ngFor="let fundingRoundBuyOutDetails of listOfFundingRoundBuyOutListdetails; let i = index">
+                                            <td data-label="Sr No." class="text-center">{{(((tracxnFundingBuyOutPage.page()-1) * tracxnFundingBuyOutPage.pageSize()) + (i+1))}}</td>
+                                            <td data-label="Date">{{ fundingRoundBuyOutDetails?.date ? (fundingRoundBuyOutDetails.date | date:'dd-MM-yyyy') : '-' }}</td>
+                                            <td data-label="Amount" *ngIf="fundingRoundBuyOutDetails?.currency == 'USD'">{{fundingRoundBuyOutDetails?.amount | millionFormat }}</td>
+                                            <td data-label="Amount" *ngIf="fundingRoundBuyOutDetails?.currency == 'INR'">{{fundingRoundBuyOutDetails?.amount | millionFormatINRPipe }}</td>
+                                             <td data-label="Acquirers">{{fundingRoundBuyOutDetails?.acquires || '-'}}</td>
+                                    </tr> 
+                                </tbody>
+                            </table>
+                        </div>
+                         <div class="pagination-table NP_LeftPagintion">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(tracxnFundingBuyOutPage.startIndex()+1)}} to
+                                {{(tracxnFundingBuyOutPage.pageSize()*tracxnFundingBuyOutPage.page()) >
+                                (tracxnFundingBuyOutPage.totalSize) ? (tracxnFundingBuyOutPage.totalSize) :
+                                (tracxnFundingBuyOutPage.pageSize()*tracxnFundingBuyOutPage.page())}} of
+                                {{tracxnFundingBuyOutPage.totalSize}} rows
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(ngModel)]="tracxnFundingBuyOutPage.pageSize"
+                                                (selectionChange)="getAllTracxnFundingBuyOutDetails()" [panelClass]="'pagination_select'">
+                                                <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                    {{pages.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <span class="grey_text"> row per page</span>
+                            </div>
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="tracxnFundingBuyOutPage.totalSize" [maxSize]="3"
+                                        [(page)]="tracxnFundingBuyOutPage.page" [rotate]="true" [boundaryLinks]="true"
+                                        [pageSize]="tracxnFundingBuyOutPage.pageSize()" (pageChange)="getAllTracxnFundingBuyOutDetails()">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-dialog-content>
+            <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                <button mat-flat-button color="primary">Ok</button>
+            </mat-dialog-actions>
+        </mat-card-content>
+    </mat-tab>
+    </mat-tab-group>
+ </section>

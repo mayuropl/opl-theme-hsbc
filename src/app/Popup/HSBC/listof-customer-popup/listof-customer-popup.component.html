@@ -1,0 +1,113 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>List Of Customers</h3>
+        </div>
+        <mat-dialog-content class="px-0">
+
+            <div *ngIf="!customerRmList || customerRmList?.length === 0">
+                    <app-no-data-found message="No details found" />
+                </div>
+            <div class="popup_body">
+
+                <div class="table_sec" *ngIf="customerRmList && customerRmList?.length > 0">
+                    <div class="tableResponsive max-h-100">
+
+                        <table class="CommonTable_NP Mobile_table_View_NP table_BG no_stripe_borderX_table">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th width="7%">Sr.No</th>
+                                    <th>Customer Name</th>
+                                    <th>Status</th>
+                                    <th>Pending Time</th>
+                                     <th *ngIf="isApproverRemarkForSender">Approver Remarks</th>
+                                     <th *ngIf="isReceverRemarkFlag">Requester remarks</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let cust of customerRmList.slice(startIndex, endIndex) ; let i = index">
+                                    <td>{{startIndex+i+1}}</td>
+                                    <td><b>{{cust.customerName}}</b></td>
+                                    <td class="darkgreen_text">{{cust.status}}</td>
+
+                                    <td>{{cust.pendingTime===-1 || cust.pendingTime==='-1' ? 'Unlimited' : cust.pendingTime}}</td>
+
+                                    <td *ngIf="isApproverRemarkForSender">
+                                    {{ cust.approverRemarks && cust.approverRemarks.trim() !== '' ? cust.approverRemarks : '-' }}
+                                    </td>
+
+
+                                    <td *ngIf="isReceverRemarkFlag">
+                                    {{ cust.requestorRemarks && cust.requestorRemarks.trim() !== '' ? cust.requestorRemarks : '-' }}
+                                    </td>
+
+                                    <td>       
+                                        <ng-container *ngIf="cust.status === 'Approved'">
+                                              <button mat-icon-button class="matIcon skyblue_icn mr-2" ngbTooltip="View" (click)="navigateToView(cust.pan)">
+                                                <em class="fa fa-eye"></em>
+                                              </button>
+
+                                              <button  mat-icon-button class="matIcon skyblue_icn" *ngIf="isReceverRemarkFlag" ngbTooltip="Revoke" (click)="revokeCustomer(cust)">
+                                                <em class="fas fa-undo-alt"></em>
+                                              </button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="cust.status === 'Pending'">
+                                              <button mat-icon-button class="matIcon skyblue_icn" *ngIf="isReceverRemarkFlag" ngbTooltip="Revoke" (click)="revokeCustomer(cust)">
+                                                <em class="fas fa-undo-alt"></em>
+                                              </button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="cust.status === 'Revoked'" ngbTooltip="Request has beem already Revoked">
+                                                -
+                                            </ng-container>
+                                    </td>
+                                </tr>
+
+                        </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{(startIndex+1)}} to
+                                {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                                {{totalSize}}
+                                row
+                                <div class="dataTables_length" id="tickets-table_length">
+                                    <div class="NP_HSBC_ComInput select-field">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                                                (valueChange)="pageSizeChange(pagesizee.value,page)" (ngModelChange)="onChangePage(page);"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                    {{pages.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-5">
+                            <div class="text-md-right float-md-right pagination-rounded">
+                                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                    <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                        [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                                    </ngb-pagination>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

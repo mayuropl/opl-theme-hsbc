@@ -1,0 +1,33 @@
+
+.HSBC_Common_Pages{
+    float: left;
+}
+
+.topside_btn{ 
+    position: absolute;
+    z-index: 2;
+    width: auto;
+    margin-left: auto;
+    top: 6px;
+    right: 10px;
+    .search_label_btn{
+        flex-direction: row-reverse;
+    }
+}
+
+.subloaderShowing{
+    height: 50vh;
+    overflow: hidden;
+  }
+
+  .back_menu_btn{
+    height: 20px !important;
+    width: 20px !important;
+    font-size: 20px;
+    margin-right: 5px;
+    padding: 0 !important;
+    vertical-align: -6px;
+    color: #797b7c;
+  }
+
+  

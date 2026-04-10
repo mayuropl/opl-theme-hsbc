@@ -1,0 +1,106 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>{{title}}</h3>
+        </div>
+        <mat-dialog-content class="px-0 max-h-100">
+            <div class="popup_body">
+                <div class="table_sec">
+                    <div class="tableResponsive max-h-300" appTableScroll>
+                        <table class="CommonTable_FixedScroll no_stripe_borderX_table table_wrap">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th class="firstColsticky minw_auto">Sr.No</th>
+                                    <th class="text-left secondColsticky left_59" width="15%">{{ currentLevel === 'GRO'
+                                        ? 'RM Name' : 'Master Group' }}</th>
+                                    <th>{{tableHeaderText1}} <br> In-Country</th>
+                                    <th>{{tableHeaderText1}} <br> Inbound</th>
+                                    <th>{{tableHeaderText1}} <br> Outbound</th>
+                                    <th>{{tableHeaderText1}} <br> Total</th>
+                                    <th>{{tableHeaderText2}} <br> In-Country</th>
+                                    <th>{{tableHeaderText2}} <br> Inbound</th>
+                                    <th>{{tableHeaderText2}} <br> Outbound</th>
+                                    <th>{{tableHeaderText2}} <br> Total</th>
+                                    <th *ngIf="currentLevel === 'GRO'" class="lastColsticky">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="pos_rel" [ngClass]="{'subloaderShowing': loading}">
+                                <div class="table_sep_loader" *ngIf="loading">
+                                    <div class="loaderoverlay loader_screen">
+                                        <div class="loader_screen_center">
+                                            <div class="loader_screen_lottie">
+                                                <span class="logo_loader">
+                                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                                        alt="">
+                                                </span>
+                                            </div>
+                                            <h3>Please wait data is loading</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <tr *ngFor="let item of tableData; let i = index">
+                                    <td class="firstColsticky minw_auto">{{ (page - 1) * pageSize + i + 1 }}</td>
+                                    <td class="text-left secondColsticky left_59"><b>{{ item.name }}</b></td>
+                                    <td>{{ item.inCountry1 || '-' }}</td>
+                                    <td>{{ item.inBound1 || '-' }}</td>
+                                    <td>{{ item.outBound1 || '-' }}</td>
+                                    <td>{{ item.total1 || '-' }}</td>
+                                    <td>{{ item.inCountry2 || '-' }}</td>
+                                    <td>{{ item.inBound2 || '-' }}</td>
+                                    <td>{{ item.outBound2 || '-' }}</td>
+                                    <td>{{ item.total2 || '-' }}</td>
+                                    <td class="lastColsticky" *ngIf="currentLevel === 'GRO'">
+                                        <a href="javascript:void(0)" class="view_link darkgreen_text cursor_pointer"
+                                            (click)="onDrillDown(item)">View</a>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="!tableData || tableData.length === 0">
+                                    <td [attr.colspan]="currentLevel === 'GRO' ? 11 : 10" class="text-center">No data
+                                        found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion" *ngIf="totalRecords > 0">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing {{ (page - 1) * pageSize + 1 }} to {{ page * pageSize > totalRecords ? totalRecords
+                            : page * pageSize }} of {{ totalRecords }} rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [panelClass]="'pagination_select'" [(ngModel)]="pageSize"
+                                            (selectionChange)="onPageChange(1)">
+                                            <mat-option [value]="5">5</mat-option>
+                                            <mat-option [value]="10">10</mat-option>
+                                            <mat-option [value]="20">20</mat-option>
+                                            <mat-option [value]="50">50</mat-option>
+                                            <mat-option [value]="100">100</mat-option>
+
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span class="grey_text"> row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="totalRecords" [(page)]="page" [pageSize]="pageSize"
+                                    [maxSize]="3" [rotate]="true" [boundaryLinks]="true"
+                                    (pageChange)="onPageChange($event)">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-stroked-button color="primary" class="btn_design white_bg ln_40" (click)="onBack()"
+                *ngIf="history.length > 0">Back</button>
+            <button mat-flat-button color="primary" class="ln_40 ml-2" matDialogClose="">Close</button>
+        </mat-dialog-actions>
+    </div>
+</section>

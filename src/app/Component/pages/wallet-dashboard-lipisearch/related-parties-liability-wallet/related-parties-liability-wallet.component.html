@@ -1,0 +1,237 @@
+<div class="wallet_chart_main mt-4">
+    <div class="card_box w-100">
+        <div class="title_chart">
+            <div class="lef_desc">
+                <h2><i class="fi fi-rr-users red_text mr-2"></i> Related Parties</h2>
+            </div>
+            <div class="right_desc">
+                <div class="slide_both_label">
+                    <label class="mr-1">Payment</label>
+                    <mat-slide-toggle class="sliderToggle_design2">Receipt</mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+        <div class="table_wrp_box">
+            <div class="chart_box">
+                <div class="pr_bank_tabs_list">
+                    <div class="bank-list">
+                        <div class="header">
+                            <span>Bank Name <i class="fi fi-br-sort-amount-up red_text ml-1"></i></span>
+                            <span>Payments (₹M)</span>
+                        </div>
+
+                        <div *ngFor="let bank of banks" class="bank-row"
+                            [class.active_bank_row]="selectedBank === bank.name" (click)="selectedBank = bank.name">
+
+                            <div class="bank-info">
+                                <img [src]="bank.logo" alt="{{ bank.name }} logo" class="bank-logo" />
+                                <span class="bank-name">{{ bank.name }}</span>
+                            </div>
+
+                            <div class="bank-loss">{{ bank.loss }}</div>
+                            <i class="fas fa-caret-right"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="pad_box">
+                <div class="tableResponsive card_box w-100">
+                    <table id="myTable"
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table design_Main_listTable table_wrap no_sticky_table">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th width="5%" class="text-center">#</th>
+                                <th>
+                                    Bank Customer Name 
+                                    <span class="shorting">
+                                        <mat-icon>unfold_more</mat-icon>
+                                        <!-- <mat-icon>north</mat-icon>
+                                        <mat-icon>south</mat-icon> -->
+                                    </span>
+                                </th>
+                                <th>
+                                    Counterparty Count
+                                    <span class="shorting">
+                                        <mat-icon>unfold_more</mat-icon>
+                                        <!-- <mat-icon>north</mat-icon>
+                                        <mat-icon>south</mat-icon> -->
+                                    </span>
+                                </th>
+                                <th>
+                                    Bank Count  
+                                    <span class="shorting">
+                                        <mat-icon>unfold_more</mat-icon>
+                                        <!-- <mat-icon>north</mat-icon>
+                                        <mat-icon>south</mat-icon> -->
+                                    </span>
+                                </th>
+                                <th>
+                                    Txn Count 
+                                    <span class="shorting">
+                                        <mat-icon>unfold_more</mat-icon>
+                                        <!-- <mat-icon>north</mat-icon>
+                                        <mat-icon>south</mat-icon> -->
+                                    </span>
+                                </th>
+                                <th>
+                                    Payments (₹M) 
+                                    <span class="shorting">
+                                        <mat-icon>unfold_more</mat-icon>
+                                        <!-- <mat-icon>north</mat-icon>
+                                        <mat-icon>south</mat-icon> -->
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                                <td></td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter Customer">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter Customer">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter value">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter value">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Enter value">
+                                        </mat-form-field>
+                                    </fieldset>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>ABC Industries</td>
+                                <td>ETB</td>
+                                <td>10</td>
+                                <td>35</td>
+                                <td>365</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>Zenith Traders</td>
+                                <td>Prospect</td>
+                                <td>9</td>
+                                <td>95</td>
+                                <td>865</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>Metro Infra</td>
+                                <td>Target</td>
+                                <td>8</td>
+                                <td>45</td>
+                                <td>256</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td>Global Textiles</td>
+                                <td>ETB</td>
+                                <td>15</td>
+                                <td>88</td>
+                                <td>854</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td>Stellar Engg</td>
+                                <td>NTB</td>
+                                <td>14</td>
+                                <td>25</td>
+                                <td>221</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">6</td>
+                                <td>Coal India Ltd</td>
+                                <td>Target</td>
+                                <td>19</td>
+                                <td>56</td>
+                                <td>852</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">7</td>
+                                <td>ITC Ltd</td>
+                                <td>Stellar Engg</td>
+                                <td>17</td>
+                                <td>73</td>
+                                <td>441</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">8</td>
+                                <td>JSW Steel Ltd</td>
+                                <td>ETB</td>
+                                <td>11</td>
+                                <td>59</td>
+                                <td>775</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">9</td>
+                                <td>Vedanta Ltd</td>
+                                <td>Stellar Engg</td>
+                                <td>3</td>
+                                <td>48</td>
+                                <td>652</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-table NP_LeftPagintion p-0">
+                    <div class="col-sm-12 col-md-5">
+                      <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        0 to
+                        5 of
+                        50
+                        row
+                        <div class="dataTables_length" id="tickets-table_length">
+                          <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                              <mat-select  id="pagesizee" #pagesizee [panelClass]="'pagination_select'">
+                                <mat-option>
+                                  10
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                      </div>
+                    </div>
+      
+                    <div class="col-sm-12 col-md-5">
+                      <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                          <ngb-pagination [maxSize]="3" [rotate]="true"
+                            [boundaryLinks]="true">
+                          </ngb-pagination>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

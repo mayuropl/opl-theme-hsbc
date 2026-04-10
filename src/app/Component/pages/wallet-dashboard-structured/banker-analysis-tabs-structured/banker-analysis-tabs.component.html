@@ -1,0 +1,198 @@
+<div class="page_Title_sec">
+    <div class="page_Title_left">
+        <h4>
+            Banker and Analysis
+        </h4>
+    </div>
+    <div class="page_Title_Right">
+
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="slide_box">
+    <div class="scroll-controls">
+        <button #leftBtn class="control_btn left_btn" (click)="scroll.scrollLeft()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button #rightBtn class="control_btn right_btn" (click)="scroll.scrollRight()">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    <div class="wallet_tabing_main banker_tabing_main" appScrollButtons #scroll="appScrollButtons"
+        [leftButton]="leftBtn" [rightButton]="rightBtn">
+        <ul>
+            <li [ngClass]="{ 'active': activeTab === 0 }" (click)="setActiveTab(0)">
+                <div class="tab_wrp">
+                    <div class="left_side align_side">
+                        <div class="box_icon">
+                            <i class="fi fi-rr-users"></i>
+                        </div>
+                        <h5 class="short_desc ml-2">Balance</h5>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Current Account</h5>
+                            <h2 class="number_title">5400</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">Cash Credit</h5>
+                            <h2 class="number_title">-3400</h2>
+                        </div>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Deposit</h5>
+                            <h2 class="number_title">1700</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">Deposit</h5>
+                            <h2 class="number_title">2500</h2>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li [ngClass]="{ 'active': activeTab === 1 }" (click)="setActiveTab(1)">
+                <div class="tab_wrp">
+                    <div class="left_side align_side">
+                        <div class="box_icon">
+                            <i class="fi fi-rr-money-bill-transfer"></i>
+                        </div>
+                        <h5 class="short_desc ml-2">Self Transfer</h5>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Banks</h5>
+                            <h2 class="number_title">10</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">Move In</h5>
+                            <h2 class="number_title">3400</h2>
+                        </div>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Move out</h5>
+                            <h2 class="number_title">4200</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">Net Transfer</h5>
+                            <h2 class="number_title">-800</h2>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li [ngClass]="{ 'active': activeTab === 2 }" (click)="setActiveTab(2)">
+                <div class="tab_wrp">
+                    <div class="left_side align_side">
+                        <div class="box_icon">
+                            <i class="fi fi-rr-document"></i>
+                        </div>
+                        <h5 class="short_desc ml-2">Receipts</h5>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Customers</h5>
+                            <h2 class="number_title">15000</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">ETB Count</h5>
+                            <h2 class="number_title">50</h2>
+                        </div>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Interactions</h5>
+                            <h2 class="number_title">500</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">Amount</h5>
+                            <h2 class="number_title">75000M</h2>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li [ngClass]="{ 'active': activeTab === 3 }" (click)="setActiveTab(3)">
+                <div class="tab_wrp">
+                    <div class="left_side align_side">
+                        <div class="box_icon">
+                            <i class="fi fi-rr-payment-pos"></i>
+                        </div>
+                        <h5 class="short_desc ml-2">Payments</h5>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Suppliers</h5>
+                            <h2 class="number_title">76000</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">ETB Count</h5>
+                            <h2 class="number_title">450</h2>
+                        </div>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Interactions</h5>
+                            <h2 class="number_title">1200</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">Amount</h5>
+                            <h2 class="number_title">125000M</h2>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li [ngClass]="{ 'active': activeTab === 4 }" (click)="setActiveTab(4)">
+                <div class="tab_wrp">
+                    <div class="left_side align_side">
+                        <div class="box_icon">
+                            <i class="fi fi-rr-users"></i>
+                        </div>
+                        <h5 class="short_desc ml-2">Related Parties</h5>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Payment</h5>
+                            <h2 class="number_title">1290</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">Receipts</h5>
+                            <h2 class="number_title">570</h2>
+                        </div>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Parties Count</h5>
+                            <h2 class="number_title">480</h2>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li [ngClass]="{ 'active': activeTab === 5 }" (click)="setActiveTab(5)">
+                <div class="tab_wrp">
+                    <div class="left_side align_side">
+                        <div class="box_icon">
+                            <i class="fi fi-rr-assessment"></i>
+                        </div>
+                        <h5 class="short_desc ml-2">Others</h5>
+                    </div>
+                    <div class="btm_desc">
+                        <div class="left_side">
+                            <h5 class="short_desc">Statutory Payments</h5>
+                            <h2 class="number_title">25M</h2>
+                        </div>
+                        <div class="left_side">
+                            <h5 class="short_desc">Other Flows</h5>
+                            <h2 class="number_title">₹ 5625M</h2>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<app-balance-liability-walllet *ngIf="activeTab === 0"></app-balance-liability-walllet>
+<app-self-transfer-liability-wallet *ngIf="activeTab === 1"></app-self-transfer-liability-wallet>
+<app-receipts-liability-wallet *ngIf="activeTab === 2"></app-receipts-liability-wallet>
+<app-payments-liability-wallet *ngIf="activeTab === 3"></app-payments-liability-wallet>
+<app-related-parties-liability-wallet *ngIf="activeTab === 4"></app-related-parties-liability-wallet>
+<app-others-liability-wallet *ngIf="activeTab === 5"></app-others-liability-wallet>

@@ -1,0 +1,10 @@
+.radio-dropdown-row {
+    display: flex;
+    justify-content: space-between;  /* radios on left, dropdown on right */
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .dropdown-right {
+    min-width: 250px; /* control dropdown width */
+  }

@@ -1,0 +1,243 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4 class="cursor_pointer" routerLink="/hsbc/Commercial-Cibil-Bulk-Upload">
+                    <em class="fmdi fmdi-arrow-left mr-2"></em>
+                    Customer Processing Status Overview
+                </h4>
+            </div>
+            <div class="page_Title_Right d-flex align-items-center">
+                <!-- <button type="button" mat-flat-button class="btn_design with_right_icn mr-2 br_8" color="secondary">
+                    Download<i class="fas fa-download ml-2"></i>
+                </button> -->
+                <div class="custom_month_picker">
+                    <div class="form_box">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date" bsDatepicker
+                            [maxDate]="maxDate"
+                            [bsConfig]="{ dateInputFormat: 'MMM YYYY', adaptivePosition: true, maxDate: maxDate }"
+                            (ngModelChange)="getCommercialSummaryData(0)"
+                            (onShown)="onOpenCalendar($event)"
+                            onkeydown="return false">
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="box_design pipeline-flow-container box-shadow-0 mb-2">
+                <h5 class="pipeline-flow-title">Pipeline Flow Overview</h5>
+                <div class="pipeline-flow-cards">
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon">
+                            <i class="fi fi-rr-users"></i>
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">Input Generation</span>
+                            <h4 class="pipeline-card__value">{{commercialSummaryData?.totalCustomer}} 
+                                <span>Rate : {{ commercialSummaryData?.inputGenerationPer ? (commercialSummaryData.inputGenerationPer | number:'1.2-2')  : '0.00' }}%</span></h4>
+                        </div>
+                        <div class="pipeline-card__connector">
+                            <i class="fi fi-rr-angle-double-small-right"></i>
+                        </div>
+                    </div>
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon">
+                            <i class="fi fi-rr-user-trust"></i>
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">Bureau Report</span>
+                            <h4 class="pipeline-card__value">{{commercialSummaryData?.bureauReport}}  <span>Rate : {{ commercialSummaryData?.bureauReportPer ? (commercialSummaryData.bureauReportPer | number:'1.2-2')  : '0.00' }}%</span></h4>
+                        </div>
+                        <div class="pipeline-card__connector">
+                            <i class="fi fi-rr-angle-double-small-right"></i>
+                        </div>
+                    </div>
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon">
+                            <i class="fi fi-rr-user-forbidden-alt"></i>
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">Data Upload</span>
+                            <h4 class="pipeline-card__value">{{commercialSummaryData?.successfullyUploaded}} <span>Rate : {{ commercialSummaryData?.successfullyUploaded ? (commercialSummaryData.dataUploadPer | number:'1.2-2')  : '0.00' }}%</span></h4>
+                        </div>
+                        <div class="pipeline-card__connector">
+                            <i class="fi fi-rr-angle-double-small-right"></i>
+                        </div>
+                    </div>
+                    <div class="pipeline-card">
+                        <div class="pipeline-card__icon ">
+                            <i class="fi fi-rr-document-circle-wrong"></i>
+                        </div>
+                        <div class="pipeline-card__content">
+                            <span class="pipeline-card__label">Analytics Processing</span>
+                            <h4 class="pipeline-card__value">{{commercialSummaryData?.successfullyProcessed}} <span>Rate : {{ commercialSummaryData?.successfullyProcessedPer ? (commercialSummaryData.successfullyProcessedPer | number:'1.2-2')  : '0.00' }}%</span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box_design pipeline-flow-container box-shadow-0 mb-2 stage-breakdown-section">
+                <h5 class="pipeline-flow-title">Detailed Stage Breakdown</h5>
+                <div class="stage-breakdown-body">
+                     <div class="stage-breakdown-row">
+                        <div class="stage-breakdown-row-title">Row 1 : Input Generation Breakdown</div>
+                        <div class="stage-breakdown-flow">
+                            <div class="stage-summary-box">
+                                <span class="stage-summary-label">Total Entities: <b>{{commercialSummaryData?.totalCustomer}}</b></span>
+                                <span class="stage-summary-dot"></span>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--teal line_attach">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Complete Input</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.bureauReport}} ({{ commercialSummaryData?.inputGenerationPer ? (commercialSummaryData.inputGenerationPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--check"><i
+                                        class="fas fa-check-circle"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('COMPLETE_INPUT')"><i class="fas fa-file-download"></i></a>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--red">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Incomplete Input</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.incompleteInput}} ({{ commercialSummaryData?.incompleteInputPer ? (commercialSummaryData.incompleteInputPer | number:'1.2-2')  : '0.00' }}%) missing required fields</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--warning"><i
+                                        class="fas fa-exclamation-triangle"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('INCOMPLETE_INPUT')"><i class="fas fa-file-download"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="stage-breakdown-row">
+                        <div class="stage-breakdown-row-title">Row 2 : Bureau Report Breakdown</div>
+                        <div class="stage-breakdown-flow">
+                            <div class="stage-summary-box">
+                                <span class="stage-summary-label">Total Entities: <b>{{commercialSummaryData?.bureauReport}}</b></span>
+                                <span class="stage-summary-dot"></span>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--teal">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Successfully Uploaded</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.successfullyUploaded}} ({{ commercialSummaryData?.successfullyUploadedPer ? (commercialSummaryData.successfullyUploadedPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--check"><i
+                                        class="fas fa-check-circle"></i></span>
+                                <a class="download_btn" (click)="downloadSummary('SUCCESSFULLY_UPLOADED')"><i class="fas fa-file-download"></i></a>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--red">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">No Report - Error</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.noReportError}} ({{ commercialSummaryData?.noReportErrorPer ? (commercialSummaryData.noReportErrorPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--warning"><i
+                                        class="fas fa-exclamation-triangle"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('NO_REPORT_ERROR')"><i class="fas fa-file-download"></i></a>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--blue">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">No Report - No Hit</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.noReportNoHit}} ({{ commercialSummaryData?.noReportNoHitPer ? (commercialSummaryData.noReportNoHitPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--refresh"><i class="fas fa-history"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('NO_HIT_NO_HISTORY')"><i class="fas fa-file-download"></i></a>
+                            </div>
+                            <!-- No Report - Error -->
+                            <div class="stage-outcome-box stage-outcome--red">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Data Not Received</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.dataNotRecevied}} ({{ commercialSummaryData?.dataNotReceviedPer ? (commercialSummaryData.dataNotReceviedPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--warning"><i
+                                        class="fas fa-exclamation-triangle"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('DATA_NOT_RECEVIED')"><i class="fas fa-file-download"></i></a>
+                            </div> 
+                           
+                        </div>
+                    </div>
+                     <div class="stage-breakdown-row">
+                        <div class="stage-breakdown-row-title">Row 3 : Data Upload Breakdown</div>
+                        <div class="stage-breakdown-flow">
+                            <div class="stage-summary-box">
+                                <span class="stage-summary-label">Total Records: <b>{{commercialSummaryData?.successfullyUploaded}}</b></span>
+                                <span class="stage-summary-dot"></span>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--teal">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Report with Exposure</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.reportWithExposure}} ({{ commercialSummaryData?.reportWithExposurePer ? (commercialSummaryData.reportWithExposurePer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--check"><i
+                                        class="fas fa-check-circle"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('REPORT_WITH_EXPOSURE')"><i class="fas fa-file-download"></i></a>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--orange line_attach">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Report No Exposure</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.reportWithNoExposure}} ({{ commercialSummaryData?.reportWithNoExposurePer ? (commercialSummaryData.reportWithNoExposurePer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--exclamation"><i
+                                        class="fas fa-info-circle"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('REPORT_WITH_NO_EXPOSURE')"><i class="fas fa-file-download"></i></a>
+                            </div> 
+                            <div class="stage-outcome-box stage-outcome--red">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Upload Errors</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.uploadFailed}} ({{ commercialSummaryData?.uploadFailedPer ? (commercialSummaryData.uploadFailedPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--warning"><i
+                                        class="fas fa-exclamation-triangle"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('UPLOAD_FAILED_VALIDATION')"><i class="fas fa-file-download"></i></a>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--blue">
+                                <i class="stage-outcome-icon-left fi fi-sr-layers"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">PR date of Previous month</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.reportDateNoMatch}} ({{ commercialSummaryData?.reportDateNoMatchPer ? (commercialSummaryData.reportDateNoMatchPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <a class="download_btn"  (click)="downloadSummary('REPORT_DATE_NO_MATCH')"><i class="fas fa-file-download"></i></a>
+                                <!-- <span class="stage-outcome-icon-right stage-outcome-icon--refresh"><i class="fas fa-history"></i></span> -->
+                            </div>
+                        </div>
+                    </div>
+                     <div class="stage-breakdown-row">
+                        <div class="stage-breakdown-row-title">Row 4 : Analytics Processing Breakdown</div>
+                        <div class="stage-breakdown-flow">
+                            <div class="stage-summary-box">
+                                <span class="stage-summary-label">Total Processed: <b>{{commercialSummaryData?.successfullyUploaded}}</b></span>
+                                <span class="stage-summary-dot"></span>
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--teal line_attach">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Successfully Processed</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.successfullyProcessed}} ({{ commercialSummaryData?.successfullyProcessedPer ? (commercialSummaryData.successfullyProcessedPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--check"><i
+                                        class="fas fa-check-circle"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('SUCCESSFULLY_PROCESSED')"><i class="fas fa-file-download"></i></a>        
+                            </div>
+                            <div class="stage-outcome-box stage-outcome--blue">
+                                <i class="stage-outcome-icon-left fas fa-chart-bar"></i>
+                                <div class="stage-outcome-content">
+                                    <span class="stage-outcome-label">Processing</span>
+                                    <span class="stage-outcome-count">{{commercialSummaryData?.processingAnalysis}} ({{ commercialSummaryData?.processingAnalysisPer ? (commercialSummaryData.processingAnalysisPer | number:'1.2-2')  : '0.00' }}%)</span>
+                                </div>
+                                <span class="stage-outcome-icon-right stage-outcome-icon--warning"><i
+                                        class="fas fa-history"></i></span>
+                                <a class="download_btn"  (click)="downloadSummary('PROCESSING_ERRORS')"><i class="fas fa-file-download"></i></a>                                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

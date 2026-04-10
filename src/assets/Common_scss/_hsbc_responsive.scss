@@ -1,0 +1,746 @@
+@media only screen and (max-width:1900px) and (min-width:768px) {
+
+  /* Common Css Started */
+  .common-pages-width {
+    padding: 20px 0;
+  }
+
+  .pagination {
+    .page-item {
+      &.active {
+        a {
+          font-size: $fs-12;
+        }
+      }
+    }
+  }
+
+
+  /* This Css Cont Top heading View S */
+  .__Top_Heading_GRP {
+    .Top_Heading_Txt_left {
+      .Heading__H4 {
+        font-size: 20px;
+        line-height: 1.5;
+
+        &.__22pxBold {
+          font-size: 18px;
+        }
+
+        &.__18pxBold {
+          font-size: 15px;
+        }
+
+        &.__16pxBold {
+          font-size: 13px;
+        }
+
+        &.__14pxBold {
+          font-size: 12px;
+        }
+      }
+
+      .Heading__P {
+        font-weight: 500;
+
+        &.__15pxSemiBold {
+          font-size: 13px;
+        }
+
+        &.__18pxSemiBold {
+          font-size: 16px;
+        }
+      }
+
+      &.__ArrowLeft {
+
+        i,
+        em {
+          font-size: 24px;
+        }
+      }
+    }
+
+    .Top_Heading__Right {
+      .Heading_Right_H3 {
+        font-size: 24px;
+      }
+    }
+  }
+
+  .__Top_Heading_GRP,
+  .JNS__Heading__Tab__Grp {
+    &.__Heading_Btn_Fixed {
+      width: calc(100% - 270px);
+      left: 255px;
+    }
+  }
+
+  .enlarged {
+
+    .__Top_Heading_GRP,
+    .JNS__Heading__Tab__Grp {
+      &.__Heading_Btn_Fixed {
+        width: calc(100% - 100px);
+        left: 85px;
+      }
+    }
+  }
+
+  /* This Css Cont Top heading View E */
+
+  /* This Css Cont Second Top heading View S*/
+  .JNS__Heading__Tab__Grp {
+    @include Com-fw;
+
+    &.__PT35 {
+      padding-top: 15px;
+    }
+
+    .Top__Heading__View {
+      .Heading__H4 {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  /* This Css Cont Second Top heading View E*/
+  /* this Css Cont card View s */
+  .JNS__Card {
+    padding: 18px
+  }
+
+  .JNS__Card_Details {
+    max-width: calc(400px / 1 - 40px);
+
+    .Com_Txt_grp {
+      h4 {
+        font-size: 18px;
+      }
+    }
+  }
+
+  /* this Css Cont card View E */
+  .appdetails {
+    padding: 6px 12px;
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  /* Thankyou details Page css Stated */
+  .HSBC_thankyou {
+    .__HSBC_lotties {
+      height: 250px;
+      width: 250px;
+    }
+
+    .HSBCWithtxt_Cont {
+      .HSBC_h4 {
+        font-size: 30px;
+      }
+
+      .HSBC_span {
+        font-size: 20px;
+      }
+    }
+  }
+
+  /* Thankyou details Page css End */
+}
+
+
+@media only screen and (max-width:1250px) and (min-width:768px) {
+
+  /* Common Font Style */
+  // *,
+  // body {
+  //   font-size: 11px;
+  // }
+
+  /* This Css Cont Top heading View */
+  .__Top_Heading_GRP {
+    .Top_Heading_Txt_left {
+      .Heading__H4 {
+        font-size: 20px;
+        line-height: 1.5;
+
+        &.__22pxBold {
+          font-size: 14px;
+        }
+      }
+
+      .Heading__P {
+        &.__15pxSemiBold {
+          font-size: 13px;
+        }
+
+        &.__18pxSemiBold {
+          font-size: 16px;
+        }
+      }
+
+      &.__ArrowLeft {
+
+        i,
+        em {
+          font-size: 24px;
+        }
+      }
+    }
+
+    .Top_Heading__Right {
+      .Heading_Right_H3 {
+        font-size: 24px;
+      }
+    }
+  }
+
+  /* This Css Cont Top heading View */
+
+  /* This Css Cont Second Top heading View */
+  .JNS__Heading__Tab__Grp {
+    @include Com-fw;
+
+    &.__PT35 {
+      padding-top: 15px;
+    }
+
+
+    .Top__Heading__View {
+      .Heading__H4 {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  /* Common Font Style */
+
+}
+
+@media (max-width: 1366px) {
+  .tabs-design {
+    &.mat-mdc-tab-group {
+      .mat-mdc-tab-header {
+        .mat-mdc-tab {
+          font-size: $fs-14;
+          height: 45px;
+        }
+
+        .mdc-tab-indicator__content--underline {
+          height: 2px;
+        }
+      }
+
+      .mat-mdc-tab-body-content {
+        padding-top: 30px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+
+
+  .Mobile_table_View_NP {
+    thead {
+      display: none;
+    }
+
+    thead,
+    tbody {
+      tr {
+        &.Mobile_View_Filter_Hide_NP {
+          display: none;
+        }
+
+        border: 1px solid $opl-bc !important;
+        margin-bottom: 1rem;
+        @include Com-fw;
+        border-radius: 5px;
+        padding-bottom: 0;
+
+        th,
+        td {
+          &:nth-child(n) {
+            float: left;
+            width: 100% !important;
+            text-align: right !important;
+            border-bottom: 1px solid $opl-bc;
+            padding: .5rem .85rem !important;
+            color: #000000;
+            font-size: .75rem;
+
+            .Comon-Dot-text {
+              justify-content: flex-end;
+            }
+
+            &:last-of-type {
+              border-bottom: 0;
+
+              &.NP_Action {
+                .NP_Action_table {
+                  width: auto;
+                  float: right;
+                }
+              }
+            }
+
+            // @include thtd-f12p;
+            .Mobile_Action {
+              float: right;
+            }
+          }
+
+        }
+
+        td {
+          &::before {
+            content: attr(data-label);
+            float: left;
+            color: #878787;
+          }
+
+          .table_Icon_Btn_Radius {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+
+    &.NP_BGBHSBC_Lastcols,
+    &.NP_BGBHSBC {
+
+      thead,
+      tbody {
+        tr {
+
+          th,
+          td {
+            &:nth-child(n) {
+              max-width: 100% !important;
+
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  /* This Css Cont Top heading View S */
+  .__Top_Heading_GRP {
+    .Top_Heading_Txt_left {
+      .Heading__H4 {
+        font-size: $fs-16 !important;
+      }
+
+      .Heading__P {
+        font-size: $fs-13 !important;
+      }
+    }
+
+    .Top_Heading__Right {
+      .Heading_Right_H3 {
+        font-size: $fs-18 !important;
+      }
+    }
+  }
+
+  /* This Css Cont Top heading View S */
+
+  .__CardBox_grp {
+    &.__TwoCont {
+
+      .Form_Card_HSBC,
+      .List_Card_HSBC {
+        width: calc(100% / 2 - 10px);
+
+        &.bgColor {
+          width: calc(50% / 1 - 0px);
+        }
+
+        .__Top_Heading_GRP {
+          .Heading__H4 {
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+  }
+
+  .__HSBC_Common_Grp {
+    row-gap: 12px;
+
+    &.bgWhite {
+      padding: 16px 20px;
+    }
+
+    .__HSBC_Common_List {
+      span {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .NP_HSBC_ComInput {
+    .__Input__Btn_View {
+      .__Input__Btn__Grp {
+        &.aiFstart_sp {
+          justify-content: flex-start;
+          column-gap: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width:768px) {
+  .__CardBox_grp {
+    flex-wrap: wrap;
+    row-gap: 15px;
+
+    &.__TwoCont {
+      .Form_Card_HSBC {
+        row-gap: 30px;
+        display: grid;
+      }
+
+      .Form_Card_HSBC,
+      .List_Card_HSBC {
+        width: calc(100% / 1 - 10px);
+
+        &.bgColor {
+          width: calc(100% / 1 - 0px);
+        }
+
+        .__Top_Heading_GRP {
+          .Heading__H4 {
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767.97px) {
+
+  .mat-mdc-snack-bar-handset {
+    position: absolute !important;
+    bottom: 0;
+  }
+
+  /* Tab Scroll Cont*/
+  .JNS__Heading__Tab__Grp {
+    &.__PT35 {
+      padding-top: 0;
+    }
+
+    .Top__Heading__View {
+      .Heading__H4 {
+        font-size: $fs-18;
+        margin-bottom: 5px;
+      }
+    }
+
+    .JNS__Tab__Btn__Grp {
+      .JNS__Tab__Grp {
+        max-width: 230px;
+      }
+
+      @media screen and (max-width:330px) {
+        flex-wrap: wrap;
+
+        .JNS__Tab__Grp {
+          max-width: 100%;
+          width: 100%;
+
+          .nav-bordered {
+            &.Tab_radius_NP {
+              &.__TabScroll {
+                .nav-tabs {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+
+        .JNS__Btn__Grp {
+          width: 100%;
+          text-align: right;
+        }
+      }
+    }
+
+    &.__JNS_SP {
+      @include Cjc-sp-ai;
+
+      .JNS__Tab__Btn__Grp {
+        width: auto;
+      }
+    }
+  }
+
+  .nav-bordered {
+    &.Tab_radius_NP {
+      &.__TabScroll {
+        @include Cai-center;
+
+        &.PB_15px {
+          padding-bottom: 15px;
+        }
+
+        .nav-tabs {
+          white-space: nowrap;
+          flex-wrap: nowrap;
+          width: 100%;
+          float: left;
+          padding: 0;
+          margin-inline-end: 15px;
+          margin-inline-start: 15px;
+          overflow: hidden;
+          height: 45px;
+          @include Cai-center;
+
+          .nav-item {
+            text-align: center;
+
+            .nav-link {
+              .number-text {
+                font-size: $fs-14;
+                line-height: 33px;
+              }
+            }
+          }
+        }
+
+        @media screen and (max-width:330px) {
+
+          // flex-wrap: wrap;
+          .nav-bordered {
+            &.Tab_radius_NP {
+              &.__TabScroll {
+                .nav-tabs {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // &.PB_15px{
+      //   padding-bottom: 15px;
+      // }
+    }
+  }
+
+  /* Tab Scroll Cont*/
+  .enlarged {
+
+    .JNS__Heading__Tab__Grp,
+    .__Top_Heading_GRP {
+      &.__Heading_Btn_Fixed {
+        width: calc(100% - 0px);
+        left: 0;
+      }
+    }
+  }
+
+  .commonDesign_page {
+    .mobileViewPage_wrapper {
+      padding: 10px 5px;
+    }
+  }
+
+  /* Common card View */
+  .JNS__Card {
+    padding: 15px;
+
+    /* This Css Cont Top heading View S */
+    .__Top_Heading_GRP {
+      flex-wrap: wrap;
+    }
+
+    /* This Css Cont Top heading View S */
+  }
+
+  .Checkbox_btn_grp {
+    flex-wrap: wrap;
+    @include Cjc-center-ai;
+    row-gap: 20px;
+
+    .NP_HSBC_ComInput {
+      width: 100%;
+    }
+
+    .mat-mdc-outlined-button {
+      min-width: 200px;
+    }
+  }
+
+  /* Thankyou details Page css Stated */
+
+  &.thankyou_bg {
+    margin: 50px -10px 20px;
+    width: calc(100% + 20px);
+    background-size: contain;
+  }
+
+  .HSBC_thankyou {
+    .__HSBC_lotties {
+      height: 250px;
+      width: 250px;
+    }
+
+    .HSBCWithtxt_Cont {
+      padding: 0 15px;
+      padding-bottom: 30px;
+
+      .HSBC_h4 {
+        font-size: 30px;
+      }
+
+      .HSBC_span {
+        font-size: 18px;
+      }
+    }
+  }
+
+  /* Thankyou details Page css End */
+
+}
+
+@media (max-width: 600px) {
+
+
+  /* Popup Css */
+
+  .modal-open {
+    .modal {
+      margin-top: 150px;
+    }
+  }
+
+  .JNS_Common_popup {
+    .__JNS_Popup__header {
+      .Jns__title {
+        font-size: $fs-15;
+        font-weight: 600;
+      }
+
+      .Jns__subtitle {
+        font-size: $fs-12;
+      }
+    }
+
+    .JNS_Popup_btn_Grp {
+      flex-wrap: wrap;
+    }
+  }
+
+
+
+  .__JNS_Common_Cont_Popup {
+    margin-bottom: 10px;
+
+    .__Common_texts {
+      .__ptext {
+        font-size: $fs-14;
+      }
+
+      .Text_span_ML {
+        font-size: $fs-12;
+      }
+
+      .OTP_H3 {
+        font-size: $fs-14;
+        margin-bottom: 15px;
+      }
+
+    }
+  }
+
+  /* Popup Css */
+
+  /* This Css Cont Top heading View S */
+  .__Top_Heading_GRP {
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .Top_Heading_Txt_left,
+    .Top_Heading__Right {
+      width: auto;
+    }
+
+    .Top_Heading__Right {
+      text-align: right;
+
+      // &.__Btn_Cont{
+      //   width: 100%;
+      //   .mat-mdc-button,
+      //   .mat-mdc-raised-button,
+      //   .mat-mdc-outlined-button,
+      //   .mat-mdc-unelevated-button{
+      //     min-width: calc(100% / 2 - 10px);
+      //   }
+      // }
+      &.Mobile_Btn_View {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 0;
+      }
+
+      &._Mobile_SearchFilter {
+        width: 100%;
+
+        &.FlexWrap {
+          flex-wrap: wrap;
+        }
+      }
+
+      &.__RightCountView {
+        text-align: center;
+
+        .Top_Heading_Txt_left {
+          @include Cai-center;
+          gap: 10px;
+
+          .Heading__P {
+            font-weight: 500;
+          }
+        }
+
+        // .__Total_Count {
+        //   @include Cai-center;
+        //   gap: 10px
+        // }
+      }
+    }
+
+  }
+
+  /* This Css Cont Top heading View S */
+
+
+  /* Mobile View none */
+  .MobileView_none {
+    display: none;
+  }
+
+  /* Mobile View  */
+  .MobileView_None_Block {
+    display: block;
+  }
+
+
+
+}

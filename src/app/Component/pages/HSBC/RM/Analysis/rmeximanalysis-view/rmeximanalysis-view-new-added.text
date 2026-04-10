@@ -1,0 +1,2125 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page  ">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4 class="cursor_pointer" (click)="goBack()">
+                    <em class="fa fa-arrow-left mr-2"></em>
+                    EXIM Analysis
+                </h4>
+            </div>
+            <div class="page_Title_Right">
+                <span class="lightred_badge"><span>Name :</span>
+                    {{ summaryInfo?.companyName || '-'}}</span>
+            </div>
+        </div>
+        <div class="page_Details">
+            <div class="NP_Com_Group MT_MB_15px">
+                <mat-tab-group mat-align-tabs="start" class="tabs-design tabBorder" [@.disabled]="true"
+                    (selectedTabChange)="onTabChange($event)" #tabGroup [selectedIndex]="selectedTabIndex"
+                    (selectedIndexChange)="selectedTabIndex=$event;">
+                    <mat-tab label="Summary Info">
+                        <mat-card-content>
+                            <div class="DetailsCard_teaserView single_cols">
+                                <div class="LH_NP_Com">
+                                    <div class="NP_Group_Heading">
+                                        <div class="_Heading_grp">
+                                            <!-- <mat-icon [svgIcon]="'company_Icon'"></mat-icon> -->
+                                            <h4 class="Heading_Title">Summary</h4>
+                                        </div>
+                                    </div>
+                                    <div class="teaserView_Details">
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>Name Of Company</span>
+                                            <span>{{ summaryInfo?.companyName || '-'}}</span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>PAN</span>
+                                            <span>{{ summaryInfo?.pan || '-'}}</span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>Address</span>
+                                            <span>{{ summaryInfo?.address || '-'}}</span>
+                                        </div>
+                                        <div class="TeaserView_Details_CGRP">
+                                            <span>Report Fetched On</span>
+                                            <span>{{ ( summaryInfo?.reportFetchedDate | date:'dd MMMM yyyy, hh:mm a' )
+                                                || '-'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="LH_NP_Com">
+                                    <div class="NP_Com_Group Com_Table_grp box-shadow-0 border-0">
+                                        <div class="Top_Heading_Txt_left ">
+                                            <h4 class="Heading__H4">
+                                                EXIM Summary
+                                            </h4>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="CommonTable_NP table_BG">
+                                                <thead>
+                                                    <tr class="tr_lightred_bg">
+                                                        <th>Financial year</th>
+                                                        <th>Total Export</th>
+                                                        <th>Total Import</th>
+                                                        <th>Total EXIM</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (exportImport of totalExportImport; track $index) {
+                                                    <tr>
+                                                        <td data-label="Financial year">
+                                                            {{exportImport.financial_year_start || '-'}}</td>
+                                                        <td data-label="Total Export">{{(exportImport.totalExportSum |
+                                                            currency:'USD':'symbol':'1.0-2') || '-'}}</td>
+                                                        <td data-label="Total Import">{{(exportImport.totalImportSum |
+                                                            currency:'USD':'symbol':'1.0-2') || '-'}}</td>
+                                                        <td data-label="Total EXIM">{{(exportImport.totalEximSum |
+                                                            currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                    </tr>
+                                                    } @empty {
+                                                    <tr>
+                                                        <td colspan="10">
+                                                            <app-no-data-found message="No data found" />
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Export Wallet">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        Export Details
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll FirstColsExpend no_stripe_borderX_table ">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th class="mWidth80">&nbsp;</th>
+                                                <th class="mWidth80">Sr. No.</th>
+                                                <th>Buyer Name</th>
+                                                <!-- <th>Buyer since</th> -->
+                                                <th>Country</th>
+                                                <th>No. of shipment {{exportShipShortYear[0]}}</th>
+                                                <th>No. of shipment {{exportShipShortYear[1]}}</th>
+                                                <th>Shipment value {{exportShipShortYear[0]}}</th>
+                                                <th>Shipment value {{exportShipShortYear[1]}}</th>
+                                                <!-- <th>Currency</th> -->
+                                                <th>Address</th>
+                                                <th>Parent Company </th>
+                                                <th>Address Of Parent Company</th>
+                                                <th>Duns ID</th>
+                                                <th>HSBC Presence</th>
+                                                <th>HSBC Banking</th>
+                                                <th>Wallet Share last 3 Months</th>
+                                                <th class="mWidth80">HSN</th>
+                                            </tr>
+                                        </thead>
+                                        @for (exportAnalysisData of exportAnalysis; track $index) {
+                                        <tbody>
+
+                                            <tr>
+                                                <td class="mWidth80">
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!exportAnalysisData.isCollapsed">
+                                                        <em
+                                                            [ngClass]="!exportAnalysisData.isCollapsed ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em></button>
+                                                </td>
+                                                <td class="mWidth80">{{$index+1}}</td>
+                                                <td>{{exportAnalysisData.buyerName || '-'}}</td>
+                                                <!-- <td>{{exportAnalysisData.suplierSince || '-'}} </td> -->
+                                                <td>{{exportAnalysisData.country || '-'}} </td>
+                                                <td>{{exportAnalysisData.eximFYearResList[0].totalNumberOfShipments ||
+                                                    '-'}} </td>
+                                                <td>{{exportAnalysisData.eximFYearResList[1].totalNumberOfShipments ||
+                                                    '-'}} </td>
+                                                <td>{{(exportAnalysisData.eximFYearResList[0].totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <td>{{(exportAnalysisData.eximFYearResList[1].totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+
+                                                <!-- <td>{{exportAnalysisData.currency || '-'}} </td> -->
+                                                <td>{{exportAnalysisData.address || '-'}} </td>
+                                                <td>{{exportAnalysisData.parentCompany || '-'}} </td>
+                                                <td>{{exportAnalysisData.parentCompanyAddress || '-'}} </td>
+                                                <td>{{exportAnalysisData.dunsId || '-'}} </td>
+                                                <!-- <td><span class="active">{{exportAnalysisData.isHsbcPresence ? 'Yes':'No' || '-'}} </span></td> -->
+                                                <td><span class="active">NA </span></td>
+                                                <td>{{exportAnalysisData.hsbcBanking || '-'}}</td>
+                                                <td>{{exportAnalysisData.walletShareLast3M || 'NA'}}</td>
+                                                <td class="mWidth80">
+                                                    <button mat-icon-button class="matIcon"
+                                                        (click)="HSNCodePopup(exportAnalysisData.eximId,exportAnalysisData.mappingId)">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse"
+                                                [(ngbCollapse)]="exportAnalysisData.isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td colspan="15" class="expandTables">
+                                                    <div class="expandTablesView box_design w-100 ">
+                                                        <table class="w-100 bordered_table">
+                                                            <thead>
+                                                                <tr class="tr_lightblue_bg border-0">
+                                                                    <th class="firstChild mwidth200px">Financial year
+                                                                    </th>
+                                                                    <th class="secondChild mwidth200px">Particular
+                                                                    </th>
+                                                                    <!-- Total -->
+                                                                    @for (monthWiseDetail of
+                                                                    exportAnalysisData?.eximFYearResList[0]?.eximMonthlyAnalysis;
+                                                                    track $index) {
+                                                                    <th>{{monthWiseDetail.month || '-'}} </th>
+                                                                    }
+                                                                    <!-- <th>Jan</th>
+                                                                    <th>Feb</th>
+                                                                    <th>Mar</th>
+                                                                    <th>Apr</th>
+                                                                    <th>May</th>
+                                                                    <th>Jun</th>
+                                                                    <th>Jul</th>
+                                                                    <th>Aug</th>
+                                                                    <th>Sep</th>
+                                                                    <th>Oct</th>
+                                                                    <th>Nov</th>
+                                                                    <th>Dec</th> -->
+                                                                </tr>
+                                                            </thead>
+
+                                                            @for (yearWiseAnalysisData of
+                                                            exportAnalysisData?.eximFYearResList; track $index) {
+
+                                                            <tbody>
+                                                                <!-- {{yearWiseAnalysisData | json}} -->
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">
+                                                                        {{yearWiseAnalysisData.financialYear ||
+                                                                        '-'}}
+                                                                    </td>
+                                                                    <td class="secondChild">No. of shipment</td>
+                                                                    @for (monthWiseDetail of
+                                                                    yearWiseAnalysisData?.eximMonthlyAnalysis; track
+                                                                    $index) {
+                                                                    <td>{{monthWiseDetail.numberOfShipments || '-'}}
+                                                                    </td>
+                                                                    }
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="secondChild">Value of Shipment ($)
+                                                                    </td>
+                                                                    @for (monthWiseDetail of
+                                                                    yearWiseAnalysisData?.eximMonthlyAnalysis; track
+                                                                    $index) {
+                                                                    <td>{{(monthWiseDetail.shipmentValue |
+                                                                        noSymbolCurrency:'USD':'1.0-2' ) || '-'}}
+                                                                    </td>
+                                                                    }
+                                                                </tr>
+                                                            </tbody>
+                                                            }
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        } @empty {
+                                        <tr>
+                                            <td colspan="10">
+                                                <app-no-data-found message="No data found" />
+                                            </td>
+                                        </tr>
+                                        }
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(exPagination.startIndex()+1)}} to
+                                        {{(exPagination.pageSize()*exPagination.page()) > (exPagination.totalSize) ?
+                                        (exPagination.totalSize) : (exPagination.pageSize()*exPagination.page())}} of
+                                        {{exPagination.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="exPagination.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getEximExportData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="exPagination.totalSize" [maxSize]="3"
+                                                [(page)]="exPagination.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="exPagination.pageSize()" (pageChange)="getEximExportData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Import Wallet">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        Import Details
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll FirstColsExpend no_stripe_borderX_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th class="mWidth80">&nbsp;</th>
+                                                <th class="mWidth80">Sr. No.</th>
+                                                <th>Supplier Name</th>
+                                                <!-- <th>Supplier since</th> -->
+                                                <th>Country</th>
+                                                <!-- <th>No. of shipment {{exportShipShortYear[0]}}</th>
+                                                <th>No. of shipment {{exportShipShortYear[1]}}</th> -->
+                                                <th>Shipment value {{exportShipShortYear[0]}}</th>
+                                                <th>Shipment value {{exportShipShortYear[1]}}</th>
+                                                <!-- <th>Currency</th> -->
+                                                <th>Address</th>
+                                                <th>Parent Company </th>
+                                                <th>Address Of Parent Company</th>
+                                                <th>Duns ID</th>
+                                                <th>HSBC Presence</th>
+                                                <th>HSBC Banking</th>
+                                                <th>Wallet Share last 3 Months</th>
+                                                <th class="mWidth80">HSN</th>
+                                            </tr>
+                                        </thead>
+                                        @for (exportAnalysisData of importAnalysis; track $index) {
+
+                                        <tbody>
+                                            <tr>
+                                                <td class="mWidth80">
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!exportAnalysisData.isCollapsed">
+                                                        <em
+                                                            [ngClass]="!exportAnalysisData.isCollapsed ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em></button>
+                                                </td>
+                                                <td class="mWidth80">{{$index+1}}</td>
+                                                <td>{{exportAnalysisData.buyerName || '-'}}</td>
+                                                <!-- <td>{{exportAnalysisData.suplierSince || '-'}}</td> -->
+                                                <td>{{exportAnalysisData.country || '-'}}</td>
+                                                <!-- <td>{{exportAnalysisData.eximFYearResList[0].totalNumberOfShipments || '-'}} </td>
+                                                <td>{{exportAnalysisData.eximFYearResList[1].totalNumberOfShipments || '-'}} </td> -->
+                                                <td>{{(exportAnalysisData.eximFYearResList[0].totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <td>{{(exportAnalysisData.eximFYearResList[1].totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <!-- <td>{{exportAnalysisData.currency || '-'}}</td> -->
+                                                <td>{{exportAnalysisData.address || '-'}} </td>
+                                                <td>{{exportAnalysisData.parentCompany || '-'}}</td>
+                                                <td>{{exportAnalysisData.parentCompanyAddress || '-'}}</td>
+                                                <td>{{exportAnalysisData.dunsId || '-'}}</td>
+                                                <!-- <td><span class="active">{{exportAnalysisData.isHsbcPresence ? 'Yes':'No' || '-'}} </span></td> -->
+                                                <td><span class="active">NA </span></td>
+                                                <td>{{exportAnalysisData.hsbcBanking || '-'}}</td>
+                                                <td>{{exportAnalysisData.walletShareLast3M || 'NA'}}</td>
+                                                <td class="mWidth80">
+                                                    <button mat-icon-button class="matIcon"
+                                                        (click)="HSNCodePopup(exportAnalysisData.eximId,exportAnalysisData.mappingId)">
+                                                        <!-- <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon> -->
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse"
+                                                [(ngbCollapse)]="exportAnalysisData.isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td colspan="15" class="expandTables">
+                                                    <div class="expandTablesView w-100 box_design">
+                                                        <table class="w-100 bordered_table">
+                                                            <thead>
+                                                                <tr class="tr_lightblue_bg border-0">
+                                                                    <th class="firstChild mwidth200px">Financial
+                                                                        year
+                                                                    </th>
+                                                                    <th class="secondChild mwidth200px">Particular
+                                                                    </th>
+                                                                    <!-- Total -->
+                                                                    @for (monthWiseDetail of
+                                                                    exportAnalysisData?.eximFYearResList[0]?.eximMonthlyAnalysis;
+                                                                    track $index) {
+                                                                    <th>{{monthWiseDetail.month || '-'}} </th>
+                                                                    }
+                                                                    <!-- <th>Jan</th>
+                                                                        <th>Feb</th>
+                                                                        <th>Mar</th>
+                                                                        <th>Apr</th>
+                                                                        <th>May</th>
+                                                                        <th>Jun</th>
+                                                                        <th>Jul</th>
+                                                                        <th>Aug</th>
+                                                                        <th>Sep</th>
+                                                                        <th>Oct</th>
+                                                                        <th>Nov</th>
+                                                                        <th>Dec</th> -->
+                                                                </tr>
+                                                            </thead>
+                                                            @for (yearWiseAnalysisData of
+                                                            exportAnalysisData?.eximFYearResList; track $index) {
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td rowspan="3" class="firstChild">
+                                                                        {{yearWiseAnalysisData.financialYear ||
+                                                                        '-'}}
+                                                                    </td>
+                                                                    <td class="secondChild">No. of shipment</td>
+                                                                    @for (monthWiseDetail of
+                                                                    yearWiseAnalysisData?.eximMonthlyAnalysis; track
+                                                                    $index) {
+                                                                    <td>{{monthWiseDetail.numberOfShipments || '-'}}
+                                                                    </td>
+                                                                    }
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="secondChild">Value of Shipment ($)
+                                                                    </td>
+                                                                    @for (monthWiseDetail of
+                                                                    yearWiseAnalysisData?.eximMonthlyAnalysis; track
+                                                                    $index) {
+                                                                    <td>{{(monthWiseDetail.shipmentValue |
+                                                                        noSymbolCurrency:'USD':'1.0-2' ) || '-'}}
+                                                                    </td>
+                                                                    }
+                                                                </tr>
+                                                            </tbody>
+                                                            }
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        } @empty {
+                                        <tr>
+                                            <td colspan="10">
+                                                <app-no-data-found message="No data found" />
+                                            </td>
+                                        </tr>
+                                        }
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(imPagination.startIndex()+1)}} to
+                                        {{(imPagination.pageSize()*imPagination.page()) > (imPagination.totalSize) ?
+                                        (imPagination.totalSize) : (imPagination.pageSize()*imPagination.page())}} of
+                                        {{imPagination.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="imPagination.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getEximImportData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="imPagination.totalSize" [maxSize]="3"
+                                                [(page)]="imPagination.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="imPagination.pageSize()" (pageChange)="getEximImportData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+
+                    <mat-tab label="Same Buyer Peer" (click)="getEximBuyerData()">
+                        <mat-card-content>
+
+
+
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        <!-- Competition Within Buyer Network -->
+                                        Same Buyer Peer
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_NP table_BG">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th class="mWidth80">&nbsp;</th>
+                                                <th class="mWidth80">Sr. No.</th>
+                                                <th width="35%">Consignee Name </th>
+                                                <!-- <th>No. of shipment</th> -->
+                                                <th width="20%">Value In Last 12 Months
+                                                    <span class="shorting"><mat-icon>north</mat-icon></span>
+                                                </th>
+                                                <th width="35%">Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (buyerPeer of buyerPeers; track $index) {
+                                            <tr>
+                                                <td>
+                                                    <!-- (click)="isCollapsed.toggle()" -->
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed">
+                                                        <em
+                                                            [ngClass]="!isCollapsed ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em></button>
+                                                </td>
+                                                <td data-label="Sr. No.">
+                                                    {{(buyerPeerPagntn.page()-1)*buyerPeerPagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="Consignee Name">{{buyerPeer.buyerName || '-'}}</td>
+                                                <!-- <td data-label="No. of shipment">{{buyerPeer.totalNumberOfShipments ||
+                                                    '-'}}</td> -->
+                                                <td data-label="Value In Last 12 Months">{{(buyerPeer.totalShipmentValue
+                                                    | currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <td data-label="Address">{{buyerPeer.address || '-'}}</td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td></td>
+                                                <td colspan="4" class="expandTables">
+                                                    <div class="box_design">
+                                                        <div class="expandTablesView w-100 ">
+                                                            <table class="w-100 bordered_table">
+                                                                <thead>
+                                                                    <tr class="tr_lightblue_bg border-0">
+                                                                        <th class="">Sr. No.</th>
+                                                                        <th class=" mwidth200px">Shipper Name
+                                                                        </th>
+                                                                        <th>No. of Shipment</th>
+                                                                        <th>Value in last 12 months
+                                                                            <span
+                                                                                class="shorting"><mat-icon>north</mat-icon></span>
+                                                                        </th>
+                                                                        <th>HSN Details</th>
+                                                                        <th>Address</th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td><a (click)="HSNdetails_popup()"
+                                                                                class="view_link_btn">
+                                                                                View</a>
+                                                                        </td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td><a (click)="HSNdetails_popup()"
+                                                                                class="view_link_btn">
+                                                                                View</a>
+                                                                        </td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td><a (click)="HSNdetails_popup()"
+                                                                                class="view_link_btn">
+                                                                                View</a>
+                                                                        </td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td><a (click)="HSNdetails_popup()"
+                                                                                class="view_link_btn">
+                                                                                View</a>
+                                                                        </td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="pagination-table py-0 NP_LeftPagintion">
+                                                            <div class="dataTables_info my-2" id="tickets-table_info"
+                                                                role="status" aria-live="polite">
+                                                                Showing
+                                                                {{(buyerPeerPagntn.startIndex()+1)}} to
+                                                                {{(buyerPeerPagntn.pageSize()*buyerPeerPagntn.page()) >
+                                                                (buyerPeerPagntn.totalSize) ?
+                                                                (buyerPeerPagntn.totalSize) :
+                                                                (buyerPeerPagntn.pageSize()*buyerPeerPagntn.page())}} of
+                                                                {{buyerPeerPagntn.totalSize}} rows
+                                                                <div class="dataTables_length"
+                                                                    id="tickets-table_length">
+                                                                    <div class="NP_HSBC_ComInput select-field">
+                                                                        <mat-form-field appearance="outline">
+                                                                            <mat-select
+                                                                                [(ngModel)]="buyerPeerPagntn.pageSize"
+                                                                                [panelClass]="'pagination_select'"
+                                                                                (selectionChange)="getEximBuyerData()">
+                                                                                <mat-option
+                                                                                    *ngFor="let pages of PageSelectNumber"
+                                                                                    [value]="pages.value">
+                                                                                    {{pages.value}}
+                                                                                </mat-option>
+                                                                            </mat-select>
+                                                                        </mat-form-field>
+                                                                    </div>
+                                                                </div>
+                                                                <span>row per page</span>
+                                                            </div>
+                                                            <div
+                                                                class="text-md-right float-md-right pagination-rounded">
+                                                                <ul
+                                                                    class="pagiation pagination-rounded psb-flex-end my-2">
+                                                                    <ngb-pagination
+                                                                        [collectionSize]="buyerPeerPagntn.totalSize"
+                                                                        [maxSize]="3" [(page)]="buyerPeerPagntn.page"
+                                                                        [rotate]="true" [boundaryLinks]="true"
+                                                                        [pageSize]="buyerPeerPagntn.pageSize()"
+                                                                        (pageChange)="getEximBuyerData()">
+                                                                    </ngb-pagination>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="5">
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(buyerPeerPagntn.startIndex()+1)}} to
+                                        {{(buyerPeerPagntn.pageSize()*buyerPeerPagntn.page()) >
+                                        (buyerPeerPagntn.totalSize) ? (buyerPeerPagntn.totalSize) :
+                                        (buyerPeerPagntn.pageSize()*buyerPeerPagntn.page())}} of
+                                        {{buyerPeerPagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="buyerPeerPagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getEximBuyerData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="buyerPeerPagntn.totalSize" [maxSize]="3"
+                                                [(page)]="buyerPeerPagntn.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="buyerPeerPagntn.pageSize()"
+                                                (pageChange)="getEximBuyerData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Same Seller Peer" (click)="getEximSellerData()">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        <!-- Competition Within Seller Network -->
+                                        Same Seller Peer
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_NP table_BG">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th class="mWidth80">&nbsp;</th>
+                                                <th class="mWidth80">Sr. No.</th>
+                                                <th width="35%">Shipper Name </th>
+                                                <!-- <th>No. of shipment</th> -->
+                                                <th width="20%">Value In Last 12 Months
+                                                    <span class="shorting"><mat-icon>south</mat-icon></span>
+                                                </th>
+                                                <th width="35%">Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (sellerPeer of sellerPeers; track $index) {
+                                            <tr>
+                                                <td>
+                                                    <!-- (click)="isCollapsed.toggle()" -->
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed">
+                                                        <em
+                                                            [ngClass]="!isCollapsed ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em></button>
+                                                </td>
+                                                <td data-label="Sr. No.">
+                                                    {{(sellerPeerPagntn.page()-1)*sellerPeerPagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="Shipper Name">{{sellerPeer.buyerName || '-'}}
+                                                </td>
+                                                <!-- <td data-label="No. of shipment">{{sellerPeer.totalNumberOfShipments ||
+                                                    '-'}}</td> -->
+                                                <td data-label="Value in last 12 months">
+                                                    {{(sellerPeer.totalShipmentValue| currency:'USD':'symbol':'1.0-2' )
+                                                    || '-'}}</td>
+                                                <!-- <td data-label="Parent company">{{sellerPeer.parentCompany || '-'}}</td>
+                                              <td data-label="Parent company address">{{sellerPeer.parentCompanyAddress || '-'}}</td> -->
+                                                <td data-label="Address">{{sellerPeer.address || '-'}}</td>
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td></td>
+                                                <td colspan="4" class="expandTables">
+                                                    <div class="box_design">
+                                                        <div class="expandTablesView w-100 ">
+                                                            <table class="w-100 bordered_table">
+                                                                <thead>
+                                                                    <tr class="tr_lightblue_bg border-0">
+                                                                        <th class="">Sr. No.</th>
+                                                                        <th class=" mwidth200px">Consignee Name
+                                                                        </th>
+                                                                        <th>No. of Shipment</th>
+                                                                        <th>Value in last 12 months
+                                                                            <span
+                                                                                class="shorting"><mat-icon>north</mat-icon></span>
+                                                                        </th>
+                                                                        <th>HSN Details</th>
+                                                                        <th>Address</th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td><a (click)="HSNdetails_popup()"
+                                                                                class="view_link_btn">
+                                                                                View</a>
+                                                                        </td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td><a (click)="HSNdetails_popup()"
+                                                                                class="view_link_btn">
+                                                                                View</a>
+                                                                        </td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td><a (click)="HSNdetails_popup()"
+                                                                                class="view_link_btn">
+                                                                                View</a>
+                                                                        </td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td><a (click)="HSNdetails_popup()"
+                                                                                class="view_link_btn">
+                                                                                View</a>
+                                                                        </td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="pagination-table NP_LeftPagintion py-0 ">
+                                                            <div class="dataTables_info my-2" id="tickets-table_info"
+                                                                role="status" aria-live="polite">
+                                                                Showing
+                                                                {{(sellerPeerPagntn.startIndex()+1)}} to
+                                                                {{(sellerPeerPagntn.pageSize()*sellerPeerPagntn.page())
+                                                                >
+                                                                (sellerPeerPagntn.totalSize) ?
+                                                                (sellerPeerPagntn.totalSize) :
+                                                                (sellerPeerPagntn.pageSize()*sellerPeerPagntn.page())}}
+                                                                of
+                                                                {{sellerPeerPagntn.totalSize}} rows
+                                                                <div class="dataTables_length"
+                                                                    id="tickets-table_length">
+                                                                    <div class="NP_HSBC_ComInput select-field">
+                                                                        <mat-form-field appearance="outline">
+                                                                            <mat-select
+                                                                                [(ngModel)]="sellerPeerPagntn.pageSize"
+                                                                                [panelClass]="'pagination_select'"
+                                                                                (selectionChange)="getEximSellerData()">
+                                                                                <mat-option
+                                                                                    *ngFor="let pages of PageSelectNumber"
+                                                                                    [value]="pages.value">
+                                                                                    {{pages.value}}
+                                                                                </mat-option>
+                                                                            </mat-select>
+                                                                        </mat-form-field>
+                                                                    </div>
+                                                                </div>
+                                                                <span>row per page</span>
+                                                            </div>
+                                                            <div
+                                                                class="text-md-right float-md-right pagination-rounded">
+                                                                <ul
+                                                                    class="pagiation pagination-rounded psb-flex-end my-2">
+                                                                    <ngb-pagination
+                                                                        [collectionSize]="sellerPeerPagntn.totalSize"
+                                                                        [maxSize]="3" [(page)]="sellerPeerPagntn.page"
+                                                                        [rotate]="true" [boundaryLinks]="true"
+                                                                        [pageSize]="sellerPeerPagntn.pageSize()"
+                                                                        (pageChange)="getEximSellerData()">
+                                                                    </ngb-pagination>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="5">
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(sellerPeerPagntn.startIndex()+1)}} to
+                                        {{(sellerPeerPagntn.pageSize()*sellerPeerPagntn.page()) >
+                                        (sellerPeerPagntn.totalSize) ? (sellerPeerPagntn.totalSize) :
+                                        (sellerPeerPagntn.pageSize()*sellerPeerPagntn.page())}} of
+                                        {{sellerPeerPagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="sellerPeerPagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getEximSellerData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="sellerPeerPagntn.totalSize" [maxSize]="3"
+                                                [(page)]="sellerPeerPagntn.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="sellerPeerPagntn.pageSize()"
+                                                (pageChange)="getEximSellerData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Product Export Peer">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        <!-- Competitors Same Product Export -->
+                                        Product Export Peer
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_NP table_BG">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th class="mWidth80">&nbsp;</th>
+                                                <th class="mWidth80">Sr. No.</th>
+                                                <th width="10%">HSN Code</th>
+                                                <th width="65%">HSN Description</th>
+                                                <th width="15%">HSN Value
+                                                    <span class="shorting"><mat-icon>north</mat-icon></span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (productExPeer of productExPeers; track $index) {
+                                            <tr>
+                                                <td>
+                                                    <!-- (click)="isCollapsed.toggle()" -->
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed">
+                                                        <em
+                                                            [ngClass]="!isCollapsed ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em></button>
+                                                </td>
+                                                <td data-label="Sr. No.">
+                                                    {{(productExPagntn.page()-1)*productExPagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; parts of machinery for
+                                                    making up paper pulp, paper or paperboard, including cutting
+                                                    machines of all kinds</td>
+                                                <td data-label="HSN Value">$ 39,13,351</td>
+                                                <!-- <td data-label="HSN Code">{{productExPeer.buyerName || '-'}}
+                                                </td>
+                                                <td data-label="HSN Description">{{productExPeer.totalNumberOfShipments
+                                                    || '-'}}</td> -->
+                                                <!-- <td data-label="Value in last 12 months">
+                                                    {{(productExPeer.totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td> -->
+                                                <!-- <td data-label="Parent company">{{productExPeer.parentCompany || '-'}}</td> -->
+                                                <!-- <td data-label="Parent company address">{{productExPeer.parentCompanyAddress || '-'}}</td> -->
+                                                <!-- <td data-label="HSN Value">{{productExPeer.address || '-'}}</td> -->
+                                            </tr>
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td></td>
+                                                <td colspan="4" class="expandTables">
+                                                    <div class="box_design">
+                                                        <div class="expandTablesView w-100 ">
+                                                            <table class="w-100 bordered_table">
+                                                                <thead>
+                                                                    <tr class="tr_lightblue_bg border-0">
+                                                                        <th class="">Sr. No.</th>
+                                                                        <th class=" mwidth200px">Name of Party</th>
+                                                                        <th>No. of Shipment</th>
+                                                                        <th>Value in last 12 months
+                                                                            <span
+                                                                                class="shorting"><mat-icon>south</mat-icon></span>
+                                                                        </th>
+                                                                        <th>Address</th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                        <!-- <td class="secondChild">No. of shipment</td> -->
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="pagination-table NP_LeftPagintion py-0 ">
+                                                            <div class="dataTables_info my-2" id="tickets-table_info"
+                                                                role="status" aria-live="polite">
+                                                                Showing
+                                                                {{(productExPagntn.startIndex()+1)}} to
+                                                                {{(productExPagntn.pageSize()*productExPagntn.page()) >
+                                                                (productExPagntn.totalSize) ?
+                                                                (productExPagntn.totalSize) :
+                                                                (productExPagntn.pageSize()*productExPagntn.page())}} of
+                                                                {{productExPagntn.totalSize}} rows
+                                                                <div class="dataTables_length"
+                                                                    id="tickets-table_length">
+                                                                    <div class="NP_HSBC_ComInput select-field">
+                                                                        <mat-form-field appearance="outline">
+                                                                            <mat-select
+                                                                                [(ngModel)]="productExPagntn.pageSize"
+                                                                                [panelClass]="'pagination_select'"
+                                                                                (selectionChange)="getProductExportData()">
+                                                                                <mat-option
+                                                                                    *ngFor="let pages of PageSelectNumber"
+                                                                                    [value]="pages.value">
+                                                                                    {{pages.value}}
+                                                                                </mat-option>
+                                                                            </mat-select>
+                                                                        </mat-form-field>
+                                                                    </div>
+                                                                </div>
+                                                                <span>row per page</span>
+                                                            </div>
+                                                            <div
+                                                                class="text-md-right float-md-right pagination-rounded">
+                                                                <ul
+                                                                    class="pagiation pagination-rounded psb-flex-end my-2">
+                                                                    <ngb-pagination
+                                                                        [collectionSize]="productExPagntn.totalSize"
+                                                                        [maxSize]="3" [(page)]="productExPagntn.page"
+                                                                        [rotate]="true" [boundaryLinks]="true"
+                                                                        [pageSize]="productExPagntn.pageSize()"
+                                                                        (pageChange)="getProductExportData()">
+                                                                    </ngb-pagination>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="5">
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(productExPagntn.startIndex()+1)}} to
+                                        {{(productExPagntn.pageSize()*productExPagntn.page()) >
+                                        (productExPagntn.totalSize) ? (productExPagntn.totalSize) :
+                                        (productExPagntn.pageSize()*productExPagntn.page())}} of
+                                        {{productExPagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="productExPagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getProductExportData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="productExPagntn.totalSize" [maxSize]="3"
+                                                [(page)]="productExPagntn.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="productExPagntn.pageSize()"
+                                                (pageChange)="getProductExportData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Product Import Peer">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        <!-- Competitors Same Product Import -->
+                                        Product Import Peer
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_NP table_BG">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th class="mWidth80">&nbsp;</th>
+                                                <th class="mWidth80">Sr. No.</th>
+                                                <th width="10%">HSN Code</th>
+                                                <th width="65%">HSN Description</th>
+                                                <th width="15%">HSN Value
+                                                    <span class="shorting"><mat-icon>north</mat-icon></span>
+                                                </th>
+                                                <!-- <th>Name of competitors</th> -->
+                                                <!-- <th>No. of shipment</th> -->
+                                                <!-- <th>Value in last 12 months</th> -->
+                                                <!-- <th>Parent company</th>
+                                                <th>Parent company address</th> -->
+                                                <!-- <th>Address</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (productImPeer of productImPeers; track $index) {
+                                            <tr>
+                                                <td>
+                                                    <!-- (click)="isCollapsed.toggle()" -->
+                                                    <button class="matIcon" mat-icon-button (click)="collapse.toggle()"
+                                                        [attr.aria-expanded]="!isCollapsed">
+                                                        <em
+                                                            [ngClass]="!isCollapsed ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em></button>
+                                                </td>
+                                                <td data-label="Sr. No.">
+                                                    {{(productImPagntn.page()-1)*productImPagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; parts of machinery for
+                                                    making up paper pulp, paper or paperboard, including cutting
+                                                    machines of all kinds</td>
+                                                <td data-label="HSN Value">$ 39,13,351</td>
+
+                                                <!-- <td data-label="Name of competitors">{{productImPeer.buyerName || '-'}}
+                                                </td>
+                                                <td data-label="No. of shipment">{{productImPeer.totalNumberOfShipments
+                                                    || '-'}}</td>
+                                                <td data-label="Value in last 12 months">
+                                                    {{(productImPeer.totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td> -->
+                                                <!-- <td data-label="Parent company">{{productImPeer.parentCompany || '-'}}</td> -->
+                                                <!-- <td data-label="Parent company address">{{productImPeer.parentCompanyAddress || '-'}}</td> -->
+                                                <!-- <td data-label="Address">{{productImPeer.address || '-'}}</td> -->
+                                            </tr>
+
+                                            <tr #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                                                <!-- [(ngbCollapse)]="isCollapsed" -->
+                                                <td></td>
+                                                <td colspan="4" class="expandTables">
+                                                    <div class="box_design">
+                                                        <div class="expandTablesView w-100 ">
+                                                            <table class="w-100 bordered_table">
+                                                                <thead>
+                                                                    <tr class="tr_lightblue_bg border-0">
+                                                                        <th class="">Sr. No.</th>
+                                                                        <th class=" mwidth200px">Name of Party</th>
+                                                                        <th>No. of Shipment</th>
+                                                                        <th>Value in last 12 months
+                                                                            <span
+                                                                                class="shorting"><mat-icon>south</mat-icon></span>
+                                                                        </th>
+                                                                        <th>Address</th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>GANT AB</td>
+                                                                        <td>12</td>
+                                                                        <td>$ 10,000</td>
+                                                                        <td>first floor, ashwameghaeligance -3,
+                                                                            ambawadi,
+                                                                            ahemdabad -380015</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="pagination-table NP_LeftPagintion py-0 ">
+                                                            <div class="dataTables_info my-2" id="tickets-table_info"
+                                                                role="status" aria-live="polite">
+                                                                Showing
+                                                                {{(productImPagntn.startIndex()+1)}} to
+                                                                {{(productImPagntn.pageSize()*productImPagntn.page()) >
+                                                                (productImPagntn.totalSize) ?
+                                                                (productImPagntn.totalSize) :
+                                                                (productImPagntn.pageSize()*productImPagntn.page())}} of
+                                                                {{productImPagntn.totalSize}} rows
+                                                                <div class="dataTables_length"
+                                                                    id="tickets-table_length">
+                                                                    <div class="NP_HSBC_ComInput select-field">
+                                                                        <mat-form-field appearance="outline">
+                                                                            <mat-select
+                                                                                [(ngModel)]="productImPagntn.pageSize"
+                                                                                [panelClass]="'pagination_select'"
+                                                                                (selectionChange)="getProductImportData()">
+                                                                                <mat-option
+                                                                                    *ngFor="let pages of PageSelectNumber"
+                                                                                    [value]="pages.value">
+                                                                                    {{pages.value}}
+                                                                                </mat-option>
+                                                                            </mat-select>
+                                                                        </mat-form-field>
+                                                                    </div>
+                                                                </div>
+                                                                <span>row per page</span>
+                                                            </div>
+                                                            <div
+                                                                class="text-md-right float-md-right pagination-rounded">
+                                                                <ul
+                                                                    class="pagiation pagination-rounded psb-flex-end my-2">
+                                                                    <ngb-pagination
+                                                                        [collectionSize]="productImPagntn.totalSize"
+                                                                        [maxSize]="3" [(page)]="productImPagntn.page"
+                                                                        [rotate]="true" [boundaryLinks]="true"
+                                                                        [pageSize]="productImPagntn.pageSize()"
+                                                                        (pageChange)="getProductImportData()">
+                                                                    </ngb-pagination>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="5">
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(productImPagntn.startIndex()+1)}} to
+                                        {{(productImPagntn.pageSize()*productImPagntn.page()) >
+                                        (productImPagntn.totalSize) ? (productImPagntn.totalSize) :
+                                        (productImPagntn.pageSize()*productImPagntn.page())}} of
+                                        {{productImPagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="productImPagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getProductImportData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="productImPagntn.totalSize" [maxSize]="3"
+                                                [(page)]="productImPagntn.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="productImPagntn.pageSize()"
+                                                (pageChange)="getProductImportData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="New buyer">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        New buyer
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Sr. No.</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <!-- <th>Parent company</th>
+                                              <th>Parent company address</th> -->
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (newBuyer of newBuyers; track $index) {
+                                            <tr>
+                                                <td data-label="Sr. No.">
+                                                    {{(newBuyerPagntn.page()-1)*newBuyerPagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="Name of competitors">{{newBuyer.buyerName || '-'}}</td>
+                                                <td data-label="No. of shipment">{{newBuyer.totalNumberOfShipments ||
+                                                    '-'}}</td>
+                                                <td data-label="Value in last 12 months">{{(newBuyer.totalShipmentValue
+                                                    | currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <!-- <td data-label="Parent company">{{newBuyer.parentCompany || '-'}}</td>
+                                            <td data-label="Parent company address">{{newBuyer.parentCompanyAddress || '-'}}</td> -->
+                                                <td data-label="Address">{{newBuyer.address || '-'}}</td>
+                                            </tr>
+
+                                            <!--   <tr>
+                                              <td data-label="Sr. No.">1</td>
+                                              <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                              <td data-label="No. of shipment">74125</td>
+                                              <td data-label="Value in last 12 months">$15,620</td>
+                                              <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                              <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                              <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                          </tr>
+                                          <tr>
+                                              <td data-label="Sr. No.">1</td>
+                                              <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                              <td data-label="No. of shipment">74125</td>
+                                              <td data-label="Value in last 12 months">$15,620</td>
+                                              <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                              <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                              <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                          </tr>
+                                          <tr>
+                                              <td data-label="Sr. No.">1</td>
+                                              <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                              <td data-label="No. of shipment">74125</td>
+                                              <td data-label="Value in last 12 months">$15,620</td>
+                                              <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                              <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                              <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                          </tr> -->
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <!-- <app-no-data-found message="Coming Soon"/> -->
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(newBuyerPagntn.startIndex()+1)}} to
+                                        {{(newBuyerPagntn.pageSize()*newBuyerPagntn.page()) > (newBuyerPagntn.totalSize)
+                                        ? (newBuyerPagntn.totalSize) :
+                                        (newBuyerPagntn.pageSize()*newBuyerPagntn.page())}} of
+                                        {{newBuyerPagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="newBuyerPagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getNewBuyerData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="newBuyerPagntn.totalSize" [maxSize]="3"
+                                                [(page)]="newBuyerPagntn.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="newBuyerPagntn.pageSize()" (pageChange)="getNewBuyerData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="New seller">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        New seller
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Sr. No.</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <!-- <th>Parent company</th>
+                                                <th>Parent company address</th> -->
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (newSeller of newSellers; track $index) {
+                                            <tr>
+                                                <td data-label="Sr. No.">
+                                                    {{(newSellerPagntn.page()-1)*newSellerPagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="Name of competitors">{{newSeller.buyerName || '-'}}</td>
+                                                <td data-label="No. of shipment">{{newSeller.totalNumberOfShipments ||
+                                                    '-'}}</td>
+                                                <td data-label="Value in last 12 months">{{(newSeller.totalShipmentValue
+                                                    | currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <!-- <td data-label="Parent company">{{newSeller.parentCompany || '-'}}</td>
+                                              <td data-label="Parent company address">{{newSeller.parentCompanyAddress || '-'}}</td> -->
+                                                <td data-label="Address">{{newSeller.address || '-'}}</td>
+                                            </tr>
+
+                                            <!-- <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr> -->
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <!-- <app-no-data-found message="Coming Soon"/> -->
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(newSellerPagntn.startIndex()+1)}} to
+                                        {{(newSellerPagntn.pageSize()*newSellerPagntn.page()) >
+                                        (newSellerPagntn.totalSize) ? (newSellerPagntn.totalSize) :
+                                        (newSellerPagntn.pageSize()*newSellerPagntn.page())}} of
+                                        {{newSellerPagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="newSellerPagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getNewSellerData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="newSellerPagntn.totalSize" [maxSize]="3"
+                                                [(page)]="newSellerPagntn.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="newSellerPagntn.pageSize()"
+                                                (pageChange)="getNewSellerData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Search by Anchor">
+                        <mat-card-content>
+                            <div class="NP_Com_Group">
+                                <form class="NP_Form Form_Cont form_design" autocomplete="off"
+                                    [formGroup]="searchAnchorForm">
+                                    <div class="row_div">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-6 col-12">
+                                                <fieldset>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Search by Anchor Name</mat-label>
+                                                        <input matInput placeholder="Search by Name" required
+                                                            formControlName="anchorName">
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-12">
+                                                <fieldset class="">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Analysis Data Require</mat-label>
+                                                        <mat-select placeholder="Select Any One"
+                                                            [panelClass]="'pagination_select'"
+                                                            formControlName="direction">
+                                                            @for ( data of DataStatus ;track $index){
+                                                            <mat-option [value]="data.tab">
+                                                                {{data.value}}
+                                                            </mat-option>
+                                                            }
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-12">
+                                                <fieldset class=" Btn_Filter">
+                                                    <button mat-flat-button color="primary" (click)="searchByAnchor()"
+                                                        class="Btn__Common __Primary">Search</button>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-12">
+                                                <fieldset class="">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Anchor</mat-label>
+                                                        <mat-select placeholder="Select Any One"
+                                                            [panelClass]="'pagination_select'"
+                                                            (selectionChange)="anchorCcnSelected($event)">
+                                                            @for ( data of companyDetails ;track $index){
+                                                            <mat-option [value]="data.ccn_id">
+                                                                {{data.name}}
+                                                            </mat-option>
+                                                            }
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- <button mat-flat-button color="primary" class="Btn__Common __Primary __btn_Icon"><em class="fa fa-arrow-down"></em> Download HSN Code </button> -->
+                            </div>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        Search by Anchor
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Sr. No.</th>
+                                                <th>Name of competitors</th>
+                                                <th>CCN ID</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value of shipment(Last 12 Month)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (searchByAnchor of searchByAnchors; track $index) {
+                                            <tr>
+                                                <td data-label="Sr. No.">
+                                                    {{(searchByAnchorPagntn.page()-1)*searchByAnchorPagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="Name of competitors">{{searchByAnchor.nameOfCompetitor
+                                                    || '-'}}</td>
+                                                <td data-label="CCN ID">{{searchByAnchor.ccnId || '-'}}</td>
+                                                <td data-label="No. of shipment">{{searchByAnchor.noOfShipment || '-'}}
+                                                </td>
+                                                <td data-label="Value of shipment (Last 12 Month)">
+                                                    {{(searchByAnchor.shipmentValue | currency:'USD':'symbol':'1.0-2' )
+                                                    || '-'}}</td>
+                                            </tr>
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <!-- <app-no-data-found message="Coming Soon"/> -->
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+
+                                            <!-- <tr>
+                                                    <td>1</td>
+                                                    <td>Shah industies</td>
+                                                    <td>6 year </td>
+                                                    <td>Denmark</td>
+                                                    <td>12</td>
+                                                    <td>8</td>
+                                                    <td>$15,500</td>
+                                                    <td>$12,500</td>
+                                                    <td>USD</td>
+                                                    <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                    <td>Wellcome fisheries ltd</td>
+                                                    <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                    <td>2541030</td>
+                                                    <td><span class="active">Yes</span></td>
+                                                    <td>6854</td>
+                                                    <td>5200</td>
+                                                    <td class="mWidth80">
+                                                        <button mat-icon-button class="matIcon">
+                                                            <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Shah industies</td>
+                                                    <td>6 year </td>
+                                                    <td>Denmark</td>
+                                                    <td>12</td>
+                                                    <td>8</td>
+                                                    <td>$15,500</td>
+                                                    <td>$12,500</td>
+                                                    <td>USD</td>
+                                                    <td>35 Main,Worcester ,MA 011308,united State</td>
+                                                    <td>Wellcome fisheries ltd</td>
+                                                    <td>Azad Nagar Royapettah Chennai,Tamil Nadu 600014,India</td>
+                                                    <td>2541030</td>
+                                                    <td><span class="active">Yes</span></td>
+                                                    <td>6854</td>
+                                                    <td>5200</td>
+                                                    <td class="mWidth80">
+                                                        <button mat-icon-button class="matIcon">
+                                                            <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </tr> -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(searchByAnchorPagntn.startIndex()+1)}} to
+                                        {{(searchByAnchorPagntn.pageSize()*searchByAnchorPagntn.page()) >
+                                        (searchByAnchorPagntn.totalSize) ? (searchByAnchorPagntn.totalSize) :
+                                        (searchByAnchorPagntn.pageSize()*searchByAnchorPagntn.page())}} of
+                                        {{searchByAnchorPagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="searchByAnchorPagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="searchByAnchorCcn()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="searchByAnchorPagntn.totalSize"
+                                                [maxSize]="3" [(page)]="searchByAnchorPagntn.page" [rotate]="true"
+                                                [boundaryLinks]="true" [pageSize]="searchByAnchorPagntn.pageSize()"
+                                                (pageChange)="searchByAnchorCcn()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Search by Product" *ngIf="false">
+                        <mat-card-content>
+                            <div class="NP_Com_Group">
+                                <form class="NP_Form Form_Cont" autocomplete="off" [formGroup]="searchProductForm">
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-label>Search by Product Name</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput placeholder="Product by Name" required
+                                                formControlName="productName">
+                                        </mat-form-field>
+                                    </fieldset>
+                                    <fieldset class="NP_HSBC_ComInput">
+                                        <mat-label>Analysis Data Require</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-select placeholder="Select Any One" [panelClass]="'pagination_select'">
+                                                <mat-option *ngFor="let data of DataStatus" [value]="data.value">
+                                                    {{data.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </fieldset>
+                                    <fieldset class="NP_HSBC_ComInput Btn_Filter">
+                                        <button mat-flat-button color="primary" (click)="searchByProduct()"
+                                            class="Btn__Common __Primary">Search</button>
+                                    </fieldset>
+                                </form>
+                                <!-- <button mat-flat-button color="primary" class="Btn__Common __Primary __btn_Icon"><em class="fa fa-arrow-down"></em> Download HSN Code </button> -->
+                            </div>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        Competitors Details
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <!--  onWheel="this.scrollLeft+=event.deltaY>0?250:-250" -->
+                                    <table class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Sr. No.</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of shipment</th>
+                                                <th>Value in last 12 months</th>
+                                                <!-- <th>Parent company</th>
+                                                <th>Parent company address</th> -->
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (searchByProduct of searchByProducts; track $index) {
+                                            <tr>
+                                                <td data-label="Sr. No.">
+                                                    {{(searchByProductPagntn.page()-1)*searchByProductPagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="Name of competitors">{{searchByProduct.buyerName ||
+                                                    '-'}}</td>
+                                                <td data-label="No. of shipment">
+                                                    {{searchByProduct.totalNumberOfShipments || '-'}}</td>
+                                                <td data-label="Value in last 12 months">
+                                                    {{(searchByProduct.totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <!-- <td data-label="Parent company">{{searchByProduct.parentCompany || '-'}}</td>
+                                              <td data-label="Parent company address">{{searchByProduct.parentCompanyAddress || '-'}}</td> -->
+                                                <td data-label="Address">{{searchByProduct.address || '-'}}</td>
+                                            </tr>
+
+                                            <!-- <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Rajesh Exports Ltd.</td>
+                                                <td data-label="No. of shipment">74125</td>
+                                                <td data-label="Value in last 12 months">$15,620</td>
+                                                <td data-label="Parent company">Wellcome fisheries ltd</td>
+                                                <td data-label="Parent company address">Netaji nagar,KOLKATA ,WEST BENGAL</td>
+                                                <td data-label="Address">174/31/2A, NSC Bose road, Netaji nagar,KOLKATA ,WEST BENGAL,700040</td>
+                                            </tr> -->
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(searchByProductPagntn.startIndex()+1)}} to
+                                        {{(searchByProductPagntn.pageSize()*searchByProductPagntn.page()) >
+                                        (searchByProductPagntn.totalSize) ? (searchByProductPagntn.totalSize) :
+                                        (searchByProductPagntn.pageSize()*searchByProductPagntn.page())}} of
+                                        {{searchByProductPagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="searchByProductPagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="searchByProduct()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="searchByProductPagntn.totalSize"
+                                                [maxSize]="3" [(page)]="searchByProductPagntn.page" [rotate]="true"
+                                                [boundaryLinks]="true" [pageSize]="searchByProductPagntn.pageSize()"
+                                                (pageChange)="searchByProduct()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Export Country Exposure">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        Export Country Exposure
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Sr. No.</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of Shipment last 12 months</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>% of Exposure</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (exCntryExposure of exCntryExposures; track $index) {
+
+                                            <tr>
+                                                <td data-label="Sr. No.">
+                                                    {{(exCntryExposurePagntn.page()-1)*exCntryExposurePagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="Name of competitors">{{exCntryExposure.countryName ||
+                                                    '-'}}</td>
+                                                <td data-label="No. of Shipment last 12 months">
+                                                    {{exCntryExposure.totalNumberOfShipments || '-'}}</td>
+                                                <td data-label="Value in last 12 months">
+                                                    {{(exCntryExposure.totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <td data-label="% of Exposure">{{(exCntryExposure.exposurePercent |
+                                                    number:'1.2-2' )|| '-'}}</td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Wellcome fisheries ltd</td>
+                                                <td data-label="No. of Shipment last 12 months">1555</td>
+                                                <td data-label="Value in last 12 months">11</td>
+                                                <td data-label="% of Exposure">68.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Wellcome fisheries ltd</td>
+                                                <td data-label="No. of Shipment last 12 months">1555</td>
+                                                <td data-label="Value in last 12 months">11</td>
+                                                <td data-label="% of Exposure">68.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Wellcome fisheries ltd</td>
+                                                <td data-label="No. of Shipment last 12 months">1555</td>
+                                                <td data-label="Value in last 12 months">11</td>
+                                                <td data-label="% of Exposure">68.5</td>
+                                            </tr> -->
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <!-- <app-no-data-found message="Coming Soon"/> -->
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(exCntryExposurePagntn.startIndex()+1)}} to
+                                        {{(exCntryExposurePagntn.pageSize()*exCntryExposurePagntn.page()) >
+                                        (exCntryExposurePagntn.totalSize) ? (exCntryExposurePagntn.totalSize) :
+                                        (exCntryExposurePagntn.pageSize()*exCntryExposurePagntn.page())}} of
+                                        {{exCntryExposurePagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="exCntryExposurePagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getExCntryExposureData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="exCntryExposurePagntn.totalSize"
+                                                [maxSize]="3" [(page)]="exCntryExposurePagntn.page" [rotate]="true"
+                                                [boundaryLinks]="true" [pageSize]="exCntryExposurePagntn.pageSize()"
+                                                (pageChange)="getExCntryExposureData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Import country exposure">
+                        <mat-card-content>
+                            <div class="NP_Com_Group Com_Table_grp">
+                                <div class="Top_Heading_Txt_left ">
+                                    <h4 class="Heading__H4">
+                                        Import country exposure
+                                    </h4>
+                                </div>
+                                <div class="tableResponsive pad0px">
+                                    <table class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Sr. No.</th>
+                                                <th>Name of competitors</th>
+                                                <th>No. of Shipment last 12 months</th>
+                                                <th>Value in last 12 months</th>
+                                                <th>% of Exposure</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (imCntryExposure of imCntryExposures; track $index) {
+
+                                            <tr>
+                                                <td data-label="Sr. No.">
+                                                    {{(imCntryExposurePagntn.page()-1)*imCntryExposurePagntn.pageSize()+($index+1)}}
+                                                </td>
+                                                <td data-label="Name of competitors">{{imCntryExposure.countryName ||
+                                                    '-'}}</td>
+                                                <td data-label="No. of Shipment last 12 months">
+                                                    {{imCntryExposure.totalNumberOfShipments || '-'}}</td>
+                                                <td data-label="Value in last 12 months">
+                                                    {{(imCntryExposure.totalShipmentValue |
+                                                    currency:'USD':'symbol':'1.0-2' ) || '-'}}</td>
+                                                <td data-label="% of Exposure">{{(imCntryExposure.exposurePercent|
+                                                    number:'1.2-2' )|| '-'}}</td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Wellcome fisheries ltd</td>
+                                                <td data-label="No. of Shipment last 12 months">1555</td>
+                                                <td data-label="Value in last 12 months">11</td>
+                                                <td data-label="% of Exposure">68.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Wellcome fisheries ltd</td>
+                                                <td data-label="No. of Shipment last 12 months">1555</td>
+                                                <td data-label="Value in last 12 months">11</td>
+                                                <td data-label="% of Exposure">68.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="Sr. No.">1</td>
+                                                <td data-label="Name of competitors">Wellcome fisheries ltd</td>
+                                                <td data-label="No. of Shipment last 12 months">1555</td>
+                                                <td data-label="Value in last 12 months">11</td>
+                                                <td data-label="% of Exposure">68.5</td>
+                                            </tr> -->
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <!-- <app-no-data-found message="Coming Soon"/> -->
+                                                    <app-no-data-found message="No data found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(imCntryExposurePagntn.startIndex()+1)}} to
+                                        {{(imCntryExposurePagntn.pageSize()*imCntryExposurePagntn.page()) >
+                                        (imCntryExposurePagntn.totalSize) ? (imCntryExposurePagntn.totalSize) :
+                                        (imCntryExposurePagntn.pageSize()*imCntryExposurePagntn.page())}} of
+                                        {{imCntryExposurePagntn.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="imCntryExposurePagntn.pageSize"
+                                                        [panelClass]="'pagination_select'"
+                                                        (selectionChange)="getImCntryExposureData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span>row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="imCntryExposurePagntn.totalSize"
+                                                [maxSize]="3" [(page)]="imCntryExposurePagntn.page" [rotate]="true"
+                                                [boundaryLinks]="true" [pageSize]="imCntryExposurePagntn.pageSize()"
+                                                (pageChange)="getImCntryExposureData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

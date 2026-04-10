@@ -1,0 +1,21 @@
+
+  <div class="modal-header">
+    <h4 class="modal-title">
+      Delete User</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <span>
+          Are you sure you want to Delete entry for "{{this.user.email}}" email address ?
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="javascript: void(0)" class="btn btn-psb btn-secondary waves-effect" (click)="closeModal(0)">Cancel</a>
+    <a href="javascript: void(0)" class="btn btn-psb btn-psbpurple ml-3" (click)="closeModal(1)"><i
+        class="zmdi zmdi-lock mr-1"></i> Delete User
+    </a>
+  </div>
+  

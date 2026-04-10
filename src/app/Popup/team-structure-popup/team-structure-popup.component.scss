@@ -1,0 +1,181 @@
+.team_structure_popup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .popup_header {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        .modal_closeicn_btn {
+            position: absolute;
+            right: -10px;
+            top: -10px;
+        }
+        h3 {
+            margin-right: auto;
+        }
+        .input_field {
+            margin-bottom: 0;
+        }
+    }
+    .team_structure_list {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    .team_tree {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .right_fields{
+        display: flex;
+        align-items: center;
+        .input_field{
+            :ng-deep{
+                .mat-mdc-form-field{
+                    max-width: 200px;
+                }
+            }
+        }
+    }
+    $row-spacing: 10px;
+    $connector-gap: 8px;
+    $hierarchy-vertical-left: 10px;
+    $hierarchy-gutter: 22px;
+
+    .team_tree_item {
+        margin-bottom: $row-spacing;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        .team_tree_children {
+            list-style: none;
+            padding: ($row-spacing) 0 0 ($hierarchy-vertical-left + $hierarchy-gutter + $connector-gap);
+            margin: 0;
+            position: relative;
+            &::before {
+                content: '';
+                position: absolute;
+                left: $hierarchy-vertical-left;
+                top: 0;
+                bottom: 0;
+                width: 1px;
+                background: #DBE6E9;
+            }
+            > .team_tree_item {
+                margin-bottom: $row-spacing;
+                &:last-child {
+                    margin-bottom: 0;
+                    position: relative;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        left: -30px;
+                        top: 32px;
+                        bottom: 0;
+                        width: $hierarchy-vertical-left + 2px;
+                        background: #fff;
+                        pointer-events: none;
+                    }
+                }
+            }
+            .team_row {
+                position: relative;
+                background: #FFFFFF;
+                border: 1px solid #DBE6E9;
+                border-radius: 12px;
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: -($hierarchy-gutter + $connector-gap);
+                    top: 50%;
+                    width: $hierarchy-gutter + 8px;
+                    height: 1px;
+                    background: #DBE6E9;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+        &.collapsed > .team_tree_children {
+            display: none;
+        }
+    }
+    .team_tree > .team_tree_item:last-child {
+        margin-bottom: 0;
+    }
+    .team_row {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding: 0.625rem 1rem;
+        border-radius: 12px;
+        min-height: 44px;
+        cursor: pointer;
+        &.main_row {
+            background: #EDF2F480 0% 0% no-repeat padding-box;
+            border: 1px solid #DBE6E9;
+            border-radius: 12px;
+            padding: 0.625rem 1rem;
+        }
+        .chevron {
+            display: inline-flex;
+            cursor: pointer;
+            mat-icon {
+                font-size: 20px;
+                width: 20px;
+                height: 20px;
+                color: #3A4A62;
+            }
+        }
+        mat-checkbox {
+            width: auto;
+            margin-right: 0.25rem;
+        }
+        .member_name {
+            flex: 0 0 auto;
+            color: #000000;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .report_badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.5rem;
+            padding: 0 0.5rem;
+            border-radius: 12px;
+            background-color: #DBE6E9;
+            font-size: 0.75rem;
+            color: #262626;
+            font-weight: 500;
+        }
+        .customer_count { 
+            margin-left: auto;
+            font-size: 0.875rem;
+            background: #F6F8F9;
+            padding: 5px 10px;
+            color: #9198A1;
+            border-radius: 8px;
+            .customer_badge {
+                display: inline-flex;
+                align-items: center;
+               color: #000;
+               font-weight: 500;
+            }
+        }
+    } 
+}
+
+.popup_actions_btns{
+    border-top: 1px solid #DBE6E9;
+}
+
+ 
+ 
+
+  .subloaderShowing{
+    height: 35vh;
+    overflow: hidden;
+  }

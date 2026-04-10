@@ -1,0 +1,91 @@
+<section class="popup_design max-500 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <div class="lottie_icn">
+                <lottie-player class="__HSBC_lotties_Not" src="../assets/images/Json/userid.json"
+                    background="transparent" speed="1" loop autoplay></lottie-player>
+            </div>
+             <h3 class="mt-2" *ngIf="data == null"><br> Please select the User id to whom <br> you want to assign this customer</h3>             
+             <h3 class="mt-2" *ngIf="data != null"> {{data}} <br> Please select the User id to whom <br> you want to assign to customers</h3>
+            </div>
+        <mat-dialog-content class="px-0">
+            <div class="popup_body">
+                <div class="form_content">
+                    <fieldset class="mn_select input_field">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>RM ID</mat-label>
+                        <input type="text"
+                               placeholder="Enter RM ID"
+                               aria-label="Number"
+                               matInput
+                               [formControl]="rmIdController" (ngModelChange)="onRmIdChange(rmIdController.value);"
+                               [matAutocomplete]="autoId">
+
+                        <mat-autocomplete autoActiveFirstOption #autoId="matAutocomplete">
+                          @for (option of filteredRmIdOptions | async; track option) {
+                            <mat-option [value]="option">{{option}}</mat-option>
+                          }
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      </fieldset>
+
+                      <fieldset class="mn_select ml-2 input_field">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>RM Name</mat-label>
+                          <input type="text"
+                                 placeholder="Enter RM Name"
+                                 aria-label="Number"
+                                 matInput
+                                 [formControl]="rmNameController" (ngModelChange)="onRmNameChange(rmNameController.value);"
+                                 [matAutocomplete]="autoName">
+
+                          <mat-autocomplete autoActiveFirstOption #autoName="matAutocomplete">
+                            @for (option of filteredRmNameOptions | async; track option) {
+                              <mat-option [value]="option">{{option}}</mat-option>
+                            }
+                          </mat-autocomplete>
+                        </mat-form-field>
+                        </fieldset>
+
+                      <!-- <fieldset class="NP_HSBC_ComInput ml-2">
+                        <mat-form-field appearance="outline" floatLabel="never">
+                            <input matInput [value]="userName" disabled >
+                        </mat-form-field>
+                    </fieldset> -->
+                </div>
+                <div class="form_content text_box">
+                  <fieldset class="w-100">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Remarks</mat-label>
+                      <textarea
+                      matInput
+                      placeholder="Enter Remarks"
+                      rows="3"
+                      [formControl]="remarksController"
+                      maxlength="5000" 
+                    ></textarea>  
+                    
+                    <mat-error *ngIf="remarksController.hasError('required')">
+                      Remarks is mandatory
+                    </mat-error>
+                    <mat-error *ngIf="remarksController.hasError('invalidRemarks')">
+                      Remarks must contain at least one alphabet
+                    </mat-error>
+                    <mat-error *ngIf="remarksController.hasError('maxlength')">
+                      Remarks should not exceed 5000 characters
+                    </mat-error>
+              
+                    </mat-form-field>
+                    </fieldset>
+              </div>
+             </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" (click)="onAssignRm()">Assign</button>
+            <button mat-stroked-button color="primary"  [mat-dialog-close]="true">Cancel</button>
+        </mat-dialog-actions>
+    </div>
+</section>

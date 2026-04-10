@@ -1,0 +1,252 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+             <div class="page_Title_sec">
+                <div class="page_Title_left">
+                    <h4>
+                        Campaign Through Bulk Upload
+                    </h4>
+                </div>
+                <div class="page_Title_Right">
+                    <div ngbDropdown container="body" class="dropdown d-inline">
+                        <button type="button" mat-flat-button ngbDropdownToggle color="primary" class="br_8">
+                            Download Template <i class="fas fa-caret-down ml-2"></i>
+                        </button>
+
+                        <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover download_template">
+                            <a ngbDropdownItem href="" download>
+                                EXIM Export Template
+                            </a>
+                            <a ngbDropdownItem href="" download>
+                                EXIM Import Template
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page_Details">
+                <div class="box_design mb-3 p-0"> 
+                        <h2 class="bg_title">Create Campaign</h2>
+                        <div class="input_box">
+                            <div class="input_field">
+                                <mat-label class="input_label">Campaign Name</mat-label>
+                                <mat-form-field appearance="outline" class="w-100"
+                                    [class.error-field]="isFieldEmpty(campaignName) || campaignName?.trim().length > 50">
+                                    <input type="text" matInput [(ngModel)]="campaignName" placeholder="Enter Campaign Name" required maxlength="50"
+                                        (keydown)="onCampaignNameKeydown($event)" (paste)="onCampaignNamePaste($event)">
+                                    <mat-hint align="end">{{campaignName?.trim().length || 0}}/50</mat-hint>
+                                    <mat-error *ngIf="isFieldEmpty(campaignName)">Campaign name is required</mat-error>
+                                    <mat-error *ngIf="campaignName?.trim().length > 50">Campaign name cannot exceed 50 characters</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field">
+                                <mat-label class="input_label">Estimated Revenue</mat-label>
+                                <mat-form-field appearance="outline" class="w-100"
+                                    [class.error-field]="isFieldEmpty(estimatedRevenue)">
+                                    <input type="text" matInput [(ngModel)]="estimatedRevenue" placeholder="Enter Estimated Revenue"
+                                        required (input)="onRevenueInput()" (keydown)="onRevenueKeydown($event)">
+                                    <mat-error *ngIf="isFieldEmpty(estimatedRevenue)">Estimated revenue is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field input_fieldNew">
+                                <mat-label class="input_label">From Date</mat-label>
+                                <mat-form-field appearance="outline" class="w-100"
+                                    [class.error-field]="!startDate">
+                                    <input type="text" matInput [matDatepicker]="picker" [(ngModel)]="startDate"
+                                        readonly placeholder="Select Date" required
+                                        [min]="minStartDate" [max]="maxStartDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-error *ngIf="!startDate">From date is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="input_field input_fieldNew">
+                                <mat-label class="input_label">To Date</mat-label>
+                                <mat-form-field appearance="outline" class="w-100"
+                                    [class.error-field]="!endDate">
+                                    <input type="text" matInput [matDatepicker]="picker2" [(ngModel)]="endDate"
+                                        readonly placeholder="Select Date" required
+                                        [min]="minEndDate" [max]="getMaxEndDate()">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                    <mat-error *ngIf="!endDate">To date is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                     </div>
+                     <div class="input_box">
+                        <div class="input_field">
+                            <mat-label class="input_label">Objective</mat-label>
+                            <mat-form-field appearance="outline" class="w-100"
+                                [class.error-field]="isFieldEmpty(objective) || objective?.trim().length > 250">
+                                <textarea matInput [(ngModel)]="objective" placeholder="Enter Objective" required maxlength="250"></textarea>
+                                <mat-hint align="end">{{objective?.trim().length || 0}}/250</mat-hint>
+                                <mat-error *ngIf="isFieldEmpty(objective)">Objective is required</mat-error>
+                                <mat-error *ngIf="objective?.trim().length > 250">Objective cannot exceed 250 characters</mat-error>
+                            </mat-form-field>
+                        </div> 
+
+                 </div>
+                  <div class="btm_box_wrap">
+                    <div class="btm_box_inner_wrap">
+                        <div class="btm_box_inner">
+                            <div class="btm_box_left">
+                                <h2>Want to Run Pre-Approved Offer</h2>
+                            </div>
+                            <div class="btm_box_right">
+                                <mat-radio-group class="small_w_radio small_radio" [(ngModel)]="preApprovedOffer"
+                                    (change)="onPreApprovedOfferChange($event)">
+                                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                                    <mat-radio-button value="no" class="ml-2">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="note_text" *ngIf="preApprovedOffer === 'yes'">
+                            <p>If you select Yes – Fetch Fresh CIR Report, the approval process will be triggered, and the system will fetch new CIR reports for customers who require them post-approval.</p>
+                            <p>If you select No – Do Not Fetch CIR Report, the pre-approval journey will be processed based on the available data.</p>
+                        </div>
+                        <div class="cir_info_box" *ngIf="preApprovedOffer === 'yes'">
+                            <p class="mb-2">To proceed with Pre-Approval, please choose how CIR reports should be handled for the customers in this campaign.</p>
+                            <p class="mb-2">If any customer's existing CIR report is older than 60 days or not available, the system will detect this in the background.</p>
+                            <p class="mb-2">If you select <b>Yes – Fetch Fresh CIR Report</b>, the approval process will be triggered and the system will fetch new CIR reports for customers who need them post approval.</p>
+                            <p class="mb-2">If you select <b>No – Do Not Fetch CIR Report</b>, Preapproval Journey will be processed as per available data.</p>
+                            <div class="radio-group-wrapper pe-4">
+                                <mat-radio-group [(ngModel)]="fetchFreshCIR" required class="d-flex flex-column">
+                                    <mat-radio-button class="ml-1 mb-2" value="yes">Yes – Fetch Fresh CIR Report</mat-radio-button>
+                                    <mat-radio-button class="ml-1" value="no">No – Do Not Fetch CIR Report</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="border_box" *ngIf="loadProductDropDown">
+                            <div class="border_box_inner">
+                                <h3>Select Product For Pre-Approved?</h3>
+                              <div class="checkbox_wrap checkbox_lists">
+                                <ng-container *ngFor="let item of allProductList">
+                                    <mat-checkbox [(ngModel)]="selectedProducts[item?.value]"
+                                        (change)="onProductCheckboxChange(item, $event.checked)"
+                                        class="ml-2">{{ item?.label }}</mat-checkbox>
+                                </ng-container>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btm_box_inner_wrap">
+                        <div class="btm_box_inner">
+                            <div class="btm_box_left">
+                                <h2>Select customer type</h2>
+                            </div>
+                            <div class="btm_box_right">
+                                <mat-radio-group class="small_w_radio small_radio" [(ngModel)]="customerType">
+                                    <mat-radio-button value="ETB">ETB</mat-radio-button>
+                                    <mat-radio-button value="NTB" class="ml-2">NTB</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div> 
+                    </div>
+                 </div>
+                 <div class="__Btn_Group __MT15px __JcEnd p-2">
+                    <div class="upload_file_wrap" *ngIf="uploadedFileName">
+                        <span class="uploaded_file_name">
+                            <i class="fas fa-file-excel green_text mr-1"></i> {{uploadedFileName}}
+                            <i class="fas fa-times red_text cursor_pointer ml-2" (click)="removeFile()"></i>
+                        </span>
+                    </div>
+                    <button mat-stroked-button color="primary" class="btn_design br_8" (click)="onUploadFile()"><mat-icon>arrow_upward_alt</mat-icon> Upload File</button>
+                    <button mat-flat-button color="primary" class="br_8" (click)="onSubmit()"
+                        [disabled]="!isFormValid() || isSubmitButtonDisabled">Submit</button>
+                  </div>
+                </div>
+            </div>
+
+            <div class="box_design">
+                <div class="box_design_ttl_bar">
+                    <div class="box_design_ttl_bar_left">
+                        <h4>File Uploads History</h4>
+                    </div>
+                </div>
+                <div class="box_design_details p-0">
+                    <div class="tableResponsive" appTableScroll>
+                        <table
+                            class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap no_sticky_table">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th width="5%">Sr. No.</th>
+                                    <th>File Name</th>
+                                    <th>Uploaded On</th>
+                                    <th>Status</th>
+                                    <th class="text-right">Successful Entries</th>
+                                    <th class="text-right">Failed Entries</th>
+                                    <th class="text-right pr-3">Total Entries</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of uploadHistoryList; let i = index">
+                                    <td>{{historyStartIndex + i + 1}}.</td>
+                                    <td>{{item.fileName}}</td>
+                                    <td>{{formatDate(item.createdDate)}}</td>
+                                    <td>{{item.uploadStatus}}</td>
+                                    <td class="text-right">
+                                        {{item.successCount}}
+                                        <button type="button" class="btn-link p-0 border-0 bg-transparent"
+                                            *ngIf="item.successCount > 0" (click)="downloadFile(item.id, 'success')">
+                                            <i class="fas fa-download green_text cursor_pointer ml-1"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-right">
+                                        {{item.failCount}}
+                                        <button type="button" class="btn-link p-0 border-0 bg-transparent"
+                                            *ngIf="item.failCount > 0" (click)="downloadFile(item.id, 'failed')">
+                                            <i class="fas fa-download red_text cursor_pointer ml-1"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-right">
+                                        {{item.totalRows}}
+                                        <button type="button" class="btn-link p-0 border-0 bg-transparent"
+                                            *ngIf="item.totalRows > 0" (click)="downloadFile(item.id, 'total')">
+                                            <i class="fas fa-download grey_text cursor_pointer ml-1"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="uploadHistoryList.length === 0">
+                                    <td colspan="7" class="text-center">No upload history found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="pagination-table NP_LeftPagintion" *ngIf="uploadHistoryList.length > 0">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info mb-2" role="status" aria-live="polite">
+                            Showing
+                            {{(historyStartIndex + 1)}} to
+                            {{(historyPageSize * historyPage) > historyTotalSize ? historyTotalSize : (historyPageSize * historyPage)}} of
+                            {{historyTotalSize}}
+                            row
+                            <div class="dataTables_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [(ngModel)]="historyPageSize"
+                                            [panelClass]="'pagination_select'"
+                                            (valueChange)="onHistoryPageSizeChange($event)"
+                                            [ngModelOptions]="{standalone: true}">
+                                            <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                {{pages.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-5">
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [collectionSize]="historyTotalSize" [maxSize]="3" [(page)]="historyPage"
+                                    [rotate]="true" [boundaryLinks]="true" [pageSize]="historyPageSize"
+                                    (pageChange)="onHistoryPageChange($event)">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     </div>
+</div>

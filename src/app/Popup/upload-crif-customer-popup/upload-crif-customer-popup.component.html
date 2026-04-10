@@ -1,0 +1,120 @@
+<section class="popup_design max-800 HSBC_Common_Pages pb-0" [formGroup]="crifUploadCustomerForm" autocomplete="off">
+  <a class="modal_closeicn_btn" href="javascript:void(0)">
+    <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+  </a>
+  <div class="pop_up_container">
+    <div class="popup_header" mat-dialog-title>
+      <h3>Upload Customer File</h3>
+      <div class="page_Title_Right">
+        <a type="button" mat-flat-button class="btn_design with_right_icn" color="secondary" href="assets/files/sample_customer_upload.csv">Download Template<mat-icon
+          class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+      </div>
+    </div>
+    <mat-dialog-content>
+      <div class="popup_body">
+        <div class="box_design mb-3 p-3">
+          <div class="dragDrop-Common" appDragDrop>
+            <div class="Input-text-Fill-Cutome">
+              <input class="File-input-common" type="file" (change)="fileBrowseHandler($event.target.files)" required
+                     #fileDropRef id="fileUpload" name="fileUpload" formControlName="fileUpload"/>
+              <div class="Input-text-File">
+                <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                <p class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop</p>
+              </div>
+            </div>
+          </div>
+          <div class="__Btn_Group __MT15px __JcEnd">
+            <input type="file" accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden #fileInput formControlName="fileUpload" id="fileUpload" name="fileUpload" (change)="fileBrowseHandler($event.target.files)" required/>
+            <button mat-flat-button class="btn_design mat-primary" (click)="openFileDialog(fileInput)">
+              <i class="fas fa-arrow-up mr-2"></i>Upload File
+            </button>
+          </div>
+          <mat-card class="box_design b0 bx_none mt-3" *ngIf="files.length > 0">
+            <div class="files_list_Grp tableResponsive">
+              <div class="singlefile_View" *ngFor="let file of files; let i = index">
+                <div class="fileProgress">
+                  <div class="FileName_IconUpload">
+                    <span class="number_list">{{i+1}}</span>
+                    <div class="file_Icon green_text">
+                      <mat-icon>description</mat-icon>
+                    </div>
+                    <div class="info">
+                      <h4 class="fileName mb-1">{{ file?.name }}</h4>
+                      <div class="Progreebar">
+                        <mat-progress-bar value="{{file.progress}}" [max]="100"></mat-progress-bar>
+                      </div>
+                    </div>
+                    <div class="delete_Icon">
+                      <mat-icon class="primary" class="lightGreentxt">check_circle</mat-icon>
+                      <mat-icon class="blckTxt" (click)="deleteFile(i)">cancel</mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+          <div class="__Btn_Group __MT15px __JcEnd" *ngIf="files.length > 0">
+            <button type="submit" mat-flat-button color="primary" class="btn_design" (click)='submit()' class="d-flex ml-auto">Submit</button>
+          </div>
+        </div>
+
+        <div class="table_sec">
+          <div class="tableResponsive">
+            <table style="margin-top: 16px;" class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table compressed_table">
+              <thead>
+              <tr class="tr_lightred_bg">
+                <th>File Name</th>
+                <th>File Upload Date</th>
+                <th>Input File Report</th>
+                <th>Failed</th>
+                <th>Total</th>
+              </tr>
+              </thead>
+              <tbody>
+              <ng-container *ngFor="let file of bulkUploadHistory; let i = index">
+                <tr>
+                  <td>{{file?.fileName}} <span><i *ngIf="file?.statusCode === 3" class="fas fa-info-circle red_text mr-1" matTooltip="{{file.fileUploadFailureReason}}"></i></span></td>
+                  <td>{{file.createdDate | date:'dd MMM yyyy HH:mm:ss'}}</td>
+                  <td data-label="Successful Entries">{{ file.successEntries ?? '-' }} <i *ngIf="file.successEntries" (click)="getData(2, CrifDownloadUrls.DOWNLOAD_UPLOADEDCUSTOMER_DATA, file?.fileId, 'Success-Entries-File-Data')" class="fas fa-download green_text"></i></td>
+                  <td data-label="Failed Entries">{{ file.failEntries ?? '-'}} <i *ngIf="file.failEntries" (click)="getData(3, CrifDownloadUrls.DOWNLOAD_UPLOADEDCUSTOMER_DATA, file?.fileId, 'Fail-Entries-File-Data')" class="fas fa-download red_text"></i></td>
+                  <td data-label="Total Entries">{{ file.totalEntries ?? '-'}}<i *ngIf="file.totalEntries" (click)="getData(1, CrifDownloadUrls.DOWNLOAD_UPLOADEDCUSTOMER_DATA, file?.fileId, 'Total-Entries-File-Data')" class="fas fa-download grey_text"></i></td>
+                </tr>
+              </ng-container>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination-table NP_LeftPagintion">
+            <div class="col-sm-12 col-md-5">
+              <div class="dataTables_info mb-2" role="status" aria-live="polite">
+                Showing {{(startIndex+1)}} to {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of {{totalSize}} row
+                <div class="dataTables_length">
+                  <div class="NP_HSBC_ComInput select-field">
+                    <mat-form-field appearance="outline">
+                      <mat-select [(ngModel)]="pageSize" [panelClass]="'pagination_select'"
+                                  (valueChange)="pageSizeChange(pageSize, page)" (ngModelChange)="onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">{{pages.value}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-right float-md-right pagination-rounded">
+                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                  <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                                  [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                  </ngb-pagination>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+      <button mat-flat-button color="primary" matDialogClose="">OK</button>
+    </mat-dialog-actions>
+  </div>
+</section>

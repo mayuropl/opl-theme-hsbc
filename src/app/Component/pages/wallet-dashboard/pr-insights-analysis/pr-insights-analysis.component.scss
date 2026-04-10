@@ -1,0 +1,30 @@
+.align_side{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    .short_desc{
+        font-size: 14px;
+        white-space: normal;
+    }
+}
+
+.btm_desc{
+    display: flex;
+    margin-top: 10px;
+    margin: auto;
+    margin-left: 0;
+    .left_side{
+        .number_title{
+            font-size: 15px; 
+            @media (min-resolution: 114dpi) {
+                font-size: 13px;
+             }
+            
+        }
+        &+.left_side{
+            margin-left: 10px;
+            padding-left: 10px;
+            border-left: 1px solid rgba(112, 112, 112, .24);
+        }
+    }
+}

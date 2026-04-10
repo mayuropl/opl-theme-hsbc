@@ -1,0 +1,175 @@
+<div class="popup_design max-640" *ngIf="!hidden">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="popup_header" mat-dialog-title>
+        <h3>Change Status</h3>
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content class="mb-2 pt-0">
+            <div class="popup_body">
+                <div class="wrp_box">
+                    <div class="form_box_wrap mt-1" *ngFor="let item of campaignNames">
+                        <div class="checkbox-group-wrapper">
+                            <mat-label class="mb-1">{{item}}</mat-label>
+                            <div class="checkbox-group">
+                                <mat-checkbox *ngIf="shouldShowConvertReject()"
+                                    [(ngModel)]="campaignStatuses[item].convert"
+                                    (change)="onConvertChange(item, $event)">Convert</mat-checkbox>
+                                <mat-checkbox *ngIf="shouldShowConvertReject()"
+                                    [(ngModel)]="campaignStatuses[item].reject" (change)="onRejectChange(item, $event)"
+                                    class="ml-2">Reject</mat-checkbox>
+                                <mat-checkbox *ngIf="shouldShowWorkInProgress()"
+                                    [(ngModel)]="campaignStatuses[item].workInProgress"
+                                    (change)="onWorkInProgressChange(item, $event)" class="ml-2">Work In
+                                    Progress</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="input_field input_field2 ml-4">
+                            <mat-label *ngIf="campaignStatuses[item].reject">Remark <span class="text-danger"
+                                    *ngIf="campaignStatuses[item].reject">*</span></mat-label>
+                            <mat-label *ngIf="campaignStatuses[item].convert">Revenue <span class="text-danger"
+                                    *ngIf="campaignStatuses[item].convert">*</span></mat-label>
+                            <mat-label
+                                *ngIf="!campaignStatuses[item].convert && !campaignStatuses[item].reject">Revenue</mat-label>
+                            <mat-form-field appearance="outline">
+                                <input matInput *ngIf="campaignStatuses[item].reject" [matAutocomplete]="autoRemark"
+                                    [(ngModel)]="campaignRemarks[item]" placeholder="Select Remark" required readonly
+                                    #autoTriggerRemark="matAutocompleteTrigger" (focus)="autoTriggerRemark.openPanel()"
+                                    (click)="autoTriggerRemark.openPanel()">
+                                <mat-autocomplete #autoRemark="matAutocomplete"
+                                    (optionSelected)="campaignRemarks[item] = $event.option.value">
+                                    <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                        <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                            <input type="text" [(ngModel)]="rejectionSearchText[item]"
+                                                (input)="filterRejectionReasons(item)"
+                                                (keydown)="$event.stopPropagation()" placeholder="Search"
+                                                class="searchbox_input">
+                                            <em class="fas fa-search searchbox_Icn"></em>
+                                        </div>
+                                    </mat-option>
+                                    <mat-option *ngFor="let reason of filteredRejectionReasonList[item]"
+                                        [value]="reason.reasonName">
+                                        {{ reason.reasonName }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <input type="text" matInput *ngIf="campaignStatuses[item].convert"
+                                    [(ngModel)]="campaignRevenues[item]" [attr.data-campaign]="item"
+                                    (keydown)="preventMultipleDots($event, item)" (input)="onRevenueInput(item, $event)"
+                                    required>
+                                <input type="text" matInput
+                                    *ngIf="(!campaignStatuses[item].convert && !campaignStatuses[item].reject) || campaignStatuses[item].workInProgress"
+                                    [placeholder]="getOldConvertedValue(item)" disabled>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-end popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" [disabled]="!isFormValid()" (click)="onSubmit()">Submit</button>
+        </mat-dialog-actions>
+    </div>
+</div>
+
+
+
+
+<div class="popup_design max-800" *ngIf="hidden">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="popup_header" mat-dialog-title>
+        <h3>Change Status</h3>
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content class="mb-2 pt-0">
+            <div class="popup_body">
+                <div class="wrp_box new_form_box">
+                    <div class="form_box_wrap mt-1" *ngFor="let item of campaignNames">
+                        <h2 class="title_bg">{{item}}</h2>
+                        <div class="inner_form_box">
+                            <div class="checkbox-group-wrapper">
+                                <div class="checkbox-group radio_group_wrap">
+                                    <mat-label>Select:</mat-label>
+                                    <mat-radio-group class="radio_group small_w_radio small_radio ml-2"
+                                        [(ngModel)]="campaignRadioSelection[item]"
+                                        (change)="onRadioChange(item, $event)">
+                                        <mat-radio-button value="work_in_progress">Work in progress</mat-radio-button>
+                                        <mat-radio-button value="convert" class="ml-2">Convert</mat-radio-button>
+                                        <mat-radio-button value="reject" class="ml-2">Reject</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                <div class="input_field input_field2 ml-4">
+                                    <mat-label *ngIf="campaignStatuses[item].reject">Reason <span
+                                            class="text-danger">*</span></mat-label>
+                                    <mat-label *ngIf="campaignStatuses[item].workInProgress || (!campaignStatuses[item].convert && !campaignStatuses[item].reject && !campaignStatuses[item].workInProgress)">Remark <span
+                                            *ngIf="campaignStatuses[item].workInProgress" class="text-danger">*</span></mat-label>
+                                    <mat-label *ngIf="campaignStatuses[item].convert">Revenue <span
+                                            class="text-danger">*</span></mat-label>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput *ngIf="campaignStatuses[item].workInProgress || (!campaignStatuses[item].convert && !campaignStatuses[item].reject && !campaignStatuses[item].workInProgress)"
+                                            [matAutocomplete]="autoWip" [(ngModel)]="campaignWipReasons[item]"
+                                            placeholder="Select Reason" [required]="campaignStatuses[item].workInProgress" readonly
+                                            [disabled]="!campaignStatuses[item].workInProgress"
+                                            #autoTriggerWip="matAutocompleteTrigger"
+                                            (focus)="campaignStatuses[item].workInProgress ? autoTriggerWip.openPanel() : null" 
+                                            (click)="campaignStatuses[item].workInProgress ? autoTriggerWip.openPanel() : null">
+                                        <mat-autocomplete #autoWip="matAutocomplete"
+                                            (optionSelected)="campaignWipReasons[item] = $event.option.value">
+                                            <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                                <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                                    <input type="text" [(ngModel)]="wipSearchText[item]"
+                                                        (input)="filterWipReasons(item)"
+                                                        (keydown)="$event.stopPropagation()" placeholder="Search"
+                                                        class="searchbox_input">
+                                                    <em class="fas fa-search searchbox_Icn"></em>
+                                                </div>
+                                            </mat-option>
+                                            <mat-option *ngFor="let reason of filteredWorkInProgressReasonList[item]"
+                                                [value]="reason.reasonName">
+                                                {{ reason.reasonName }}
+                                            </mat-option>
+                                        </mat-autocomplete>
+
+                                        <input matInput *ngIf="campaignStatuses[item].reject"
+                                            [matAutocomplete]="autoRemarkNew" [(ngModel)]="campaignRemarks[item]"
+                                            placeholder="Select Remark" required readonly
+                                            #autoTriggerRemarkNew="matAutocompleteTrigger"
+                                            (focus)="autoTriggerRemarkNew.openPanel()"
+                                            (click)="autoTriggerRemarkNew.openPanel()">
+                                        <mat-autocomplete #autoRemarkNew="matAutocomplete"
+                                            (optionSelected)="campaignRemarks[item] = $event.option.value">
+                                            <mat-option (click)="$event.stopPropagation()" class="sticky_option">
+                                                <div class="filter_select_search" (click)="$event.stopPropagation()">
+                                                    <input type="text" [(ngModel)]="rejectionSearchText[item]"
+                                                        (input)="filterRejectionReasons(item)"
+                                                        (keydown)="$event.stopPropagation()" placeholder="Search"
+                                                        class="searchbox_input">
+                                                    <em class="fas fa-search searchbox_Icn"></em>
+                                                </div>
+                                            </mat-option>
+                                            <mat-option *ngFor="let reason of filteredRejectionReasonList[item]"
+                                                [value]="reason.reasonName">
+                                                {{ reason.reasonName }}
+                                            </mat-option>
+                                        </mat-autocomplete>
+
+                                        <input type="text" matInput *ngIf="campaignStatuses[item].convert"
+                                            [(ngModel)]="campaignRevenues[item]" [attr.data-campaign]="item"
+                                            (keydown)="preventMultipleDots($event, item)"
+                                            (input)="onRevenueInput(item, $event)" required>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-end popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" [disabled]="!isFormValid()" (click)="onSubmit()">Submit</button>
+        </mat-dialog-actions>
+    </div>
+</div>

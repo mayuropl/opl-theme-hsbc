@@ -1,0 +1,1679 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page">
+  <div class="__main_Container">
+    <div class="page_Title_sec auto_set_top" [ngClass]="{ fixedtitle: scrolled }">
+      <div class="page_Title_left">
+        <h4 class="cursor_pointer" (click)="navBack();">
+          <em class="fa fa-arrow-left mr-2"></em>
+          Commercial Bureau Details
+        </h4>
+        <p class="pr-1"><span>Important Instructions</span> : Any commercial bureau pull leaves HSBC footprint in bureau and also has a significant cost to the bank. Go ahead only for customers where you are prospecting for lending and you have customer consent. We are also enabling bureau checks every 2 months for you. Limit bureau checks to max of 2 in an year.</p>
+      </div>
+      <div class="page_Title_Right">
+                <span class="lightred_badge "><span>Name:</span> <b class="companyName_limit">{{borrowerInformation?.nameOfCompany ||
+                    '-'}}</b></span>
+        <span class="lightred_badge "><span>PAN:</span> {{pan || '-'}}</span>
+        <button type="button" mat-flat-button class="btn_design with_icn " color="secondary" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD)"
+                (click)="downloadCommercialReport()" [disabled]="!checkAnalysisExistOrNot">
+          Bureau Report <em class="fas fa-download ml-2"></em>
+        </button>
+        <button type="button" mat-flat-button class="btn_design with_icn" color="secondary" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD)"
+               (click)="downloadCommercialPdf()" [disabled]="!checkAnalysisExistOrNot">
+          Analysis Report <em class="fas fa-download ml-2"></em>
+        </button>
+        <!-- <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="downloadCommercialReport()" [disabled]="!checkAnalysisExistOrNot">Download Report</button>
+          <button mat-menu-item (click)="downloadCommercialPdf()" [disabled]="!checkAnalysisExistOrNot">Download Pdf</button>
+        </mat-menu> -->
+      </div>
+    </div>
+    <!-- <div class="__Top_Heading_GRP __PB_20 mobileTopHeading">
+            <div class="Top_Heading_Txt_left __ArrowLeft" routerLink="/rmCommercialBureau">
+                <mat-icon svgIcon="chevron_left" class="primary" matRipple></mat-icon>
+                <h4 class="Heading__H4 _afterview">
+                    Commercial Bureau Details
+                </h4>
+                <p><span>Important Instructions</span> : Any commercial bureau pull leaves HSBC footprint in bureau and also has a significant cost to the bank. Go ahead only for customers where you are prospecting for lending and you have customer consent. We are also enabling bureau checks every 2 months for you. Limit bureau checks to max of 2 in an year.</p>
+            </div>
+
+            <div class="Top_Heading__Right __DFS_Btn_Grp tab_Btn_Grp">
+                <div class="HSBC_BGCard_View __HeadingTab">
+                    <div class="nav-bordered dash-tab-Np ">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item tx-center">
+                                <div class="nav-link">
+                                    <span>Name</span>
+                                    <p class="notification-list">{{borrowerInformation?.nameOfCompany  || '-'}}</p>
+                                </div>
+                            </li>
+                            <li class="nav-item tx-center">
+                                <div class="nav-link">
+                                    <span>PAN</span>
+                                    <p class="notification-list">{{borrowerInformation?.pan  || '-'}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <button mat-flat-button color="primary" class="Btn__Common __Primary"
+                (click)="downloadCommercialReport()" >Download Report</button>
+            </div>
+        </div> -->
+            <div class="comingSoon_div mt-3 box_design p-5" *ngIf="checkAnalysisExistOrNot == false">
+                <div class="comingSoon_lottie_icon">
+                  <i class="fas fa-exclamation-triangle __HSBC_lotties_Not"></i>
+                </div>
+                <div class="comingSoon_text">
+                    <h3 class="theme_text orange_text">
+                      Bureau Analysis Failed.
+                      <p>There is some issue in calculation go back and retry</p>
+                    </h3>
+                </div>
+            </div>
+            <div class="comingSoon_div mt-3 box_design p-5"  *ngIf="checkAnalysisExistOrNot == undefined || checkAnalysisExistOrNot ==null ">
+                <div class="comingSoon_lottie">
+                    <img class="__HSBC_lotties_Not"
+                        src="assets/images/hsbc/comingsoon_img.svg" />
+                </div>
+                <div class="comingSoon_text">
+                    <h3 class="theme_text">Please wait!<br>We are calculating data.</h3>
+                </div>
+            </div>
+
+    <div *ngIf="checkAnalysisExistOrNot">
+    <div class="export_details_cols cols_3  without_lottie_cols red_boxes mb-3">
+      <div class="exp_col" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.CMR_SCORE) ||commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.CMR_SCORE)">
+        <div class="exp_col_dtl">
+          <p>CMR Score</p>
+          <h3>{{cmrScore || '-'}}</h3>
+        </div>
+      </div>
+      <div class="exp_col" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.BUREAU_VINTAGE) ||commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.BUREAU_VINTAGE) ">
+        <div class="exp_col_dtl">
+          <p>Bureau Vintage</p>
+          <h3> {{!this.commonService.isObjectNullOrEmpty(bureauVintage) ? bureauVintage + ' Years':
+            '-'}}</h3>
+        </div>
+      </div >
+      <div class="exp_col" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.TOTAL_LENDERS) ||commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.TOTAL_LENDERS)  ">
+
+        <div class="exp_col_dtl">
+          <p>Total Lenders</p>
+          <h3>{{totalLenders || '-'}}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="NP_Com_Group mb-3">
+
+      <div class="DetailsCard_teaserView Tablet_mobileView mb-0">
+
+        <div class="LH_NP_Com box_design" *ngIf="(borrowerInformation && commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.BORROWER_DETAILS)) || (borrowerInformation && commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.BORROWER_DETAILS))">
+          <div class="NP_Group_Heading">
+            <div class="_Heading_grp">
+              <!-- <mat-icon [svgIcon]="'company_Icon'"></mat-icon> -->
+              <h4 class="Heading_Title">Borrower details</h4>
+            </div>
+          </div>
+          <div class="teaserView_Details">
+            <div class="TeaserView_Details_CGRP">
+              <span>Name of Company</span>
+              <span>{{borrowerInformation?.nameOfCompany || '-'}}</span>
+            </div>
+            <div class="TeaserView_Details_CGRP">
+              <span>PAN</span>
+              <span>{{borrowerInformation?.pan || '-'}}</span>
+            </div>
+            <div class="TeaserView_Details_CGRP">
+              <span>Date of Incorporation</span>
+              <span> {{borrowerInformation?.dateOfIncorporation || '-'}}</span>
+            </div>
+            <div class="TeaserView_Details_CGRP">
+              <span>Constitution</span>
+              <span>{{borrowerInformation?.constitution || '-'}}</span>
+            </div>
+            <div class="TeaserView_Details_CGRP">
+              <span>Business type</span>
+              <span>{{borrowerInformation?.businessType || '-'}}</span>
+            </div>
+            <div class="TeaserView_Details_CGRP">
+              <span>Address </span>
+              <span>{{borrowerInformation?.address || '-'}}</span>
+            </div>
+            <div class="TeaserView_Details_CGRP">
+            <span>Commercial Score Description</span>
+              <span>{{borrowerInformation?.commercialScoreDescription || '-'}}</span>
+            </div>
+            <div class="TeaserView_Details_CGRP">
+            <span>On You Status </span>
+              <span>{{borrowerInformation?.onYouStatus || '-'}}</span>
+            </div>
+            <div class="TeaserView_Details_CGRP">
+            <span>Off You Status </span>
+              <span>{{borrowerInformation?.offYouStatus || '-'}}</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="LH_NP_Com" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.DPD_DETAILS) ||commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.DPD_DETAILS) ">
+          <div class="NP_Com_Group Com_Table_grp TwoContView Border_0_width_100 box-shadow-0">
+            <div class="NP_Group_Heading">
+              <div class="_Heading_grp">
+                <!-- <mat-icon [svgIcon]="'company_Icon'"></mat-icon> -->
+                <h4 class="Heading_Title">DPD Details</h4>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table
+                class="CommonTable_NP table_BG_br_center Mobile_table_View_NP no_stripe_borderX_table bordered_table">
+                <thead>
+                <tr class="tr_lightred_bg">
+                  <th rowspan="2">DPDs</th>
+                  <!-- <th>24 Months (No.)</th>
+                  <th>12 Months (No.)</th>
+                  <th>6 Months (No.)</th> -->
+
+                  <th *ngFor="let detail of dpdDetail; let i = index" class="text-center"> Report Fetched based on {{detail?.prOrCir || '-'}} <br/>{{!this.commonService.isObjectNullOrEmpty(detail?.reportOrderDate)
+                    ? detail?.reportOrderDate : '-'}}</th>
+                </tr>
+                <tr class="tr_lightred_bg">
+                  <th *ngFor="let detail of dpdDetail; let i = index" class="text-center">Current Month (No)</th>
+                </tr>
+                </thead>
+                <!-- <tbody *ngIf="dpdDetail">
+                        <tr>
+                            <td data-label="DPDs">
+                                 90 Days
+                                </td>
+
+                            <td data-label="24 Months (No.)">
+                                2
+                            </td>
+                            <td data-label="12 Months (No.)">
+                                5
+                            </td>
+                            <td data-label="6 Months (No.)">
+                                0
+                            </td>
+                            <td data-label="Current Month (No)">
+                                -
+                            </td>
+                        </tr>
+                    </tbody> -->
+
+
+
+                <tbody *ngIf="dpdDetail">
+                <tr>
+                  <td data-label="DPDs">
+                    > 90 Days
+                  </td>
+                  <td *ngFor="let detail of dpdDetail; let i = index" data-label="dpd detail"  class="text-center">
+                    {{!this.commonService.isObjectNullOrEmpty(detail?.numberOfDPDMoreThen90Days)
+                    ? detail?.numberOfDPDMoreThen90Days : '-'}}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td data-label="DPDs">
+                    > 60 Days
+                  </td>
+                  <td *ngFor="let detail of dpdDetail; let i = index" data-label="dpd detail"  class="text-center">
+                    {{!this.commonService.isObjectNullOrEmpty(detail?.numberOfDPDMoreThen60Days)
+                    ? detail?.numberOfDPDMoreThen60Days : '-'}}
+                  </td>
+
+                </tr>
+
+                <tr>
+                  <td data-label="DPDs">
+                    > 30 Days
+                  </td>
+                  <td *ngFor="let detail of dpdDetail; let i = index" data-label="dpd detail"  class="text-center">
+                    {{!this.commonService.isObjectNullOrEmpty(detail?.numberOfDPDMoreThen30Days)
+                    ? detail?.numberOfDPDMoreThen30Days : '-'}}
+                  </td>
+
+                </tr>
+
+                <tr>
+                  <td data-label="DPDs">
+                    > 0 Days
+                  </td>
+                  <td *ngFor="let detail of dpdDetail; let i = index" data-label="dpd detail"  class="text-center">
+                    {{!this.commonService.isObjectNullOrEmpty(detail?.numberOfDPDMoreThen0Days)
+                    ? detail?.numberOfDPDMoreThen0Days : '-'}}
+                  </td>
+
+                </tr>
+
+                </tbody>
+
+                <tbody *ngIf="dpdDetail == null && dpdDetail == undefined">
+                <tr>
+                  <td colspan="10">
+                    <app-no-data-found />
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="CommonGrp_View NP_Com_Group">
+      <!-- <div class="NP_Com_Group Com_Table_grp">
+        <div class="Top_Heading_Txt_left">
+          <h4 class="Heading__H4">
+            No. of Inquiries outside Institution
+          </h4>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="CommonTable_NP Mobile_table_View_NP table_BG_br_center no_stripe_table bordered_table">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th rowspan="2">Months</th>
+              <th *ngFor="let detail of numberOfInquiriesOutsideInstitution; let i = index">Report Fetched based on {{detail?.prOrCir || '-'}}</th>
+            </tr>
+            <tr class="tr_lightred_bg">
+              <th class="txtCenter"
+                  *ngFor="let detail of numberOfInquiriesOutsideInstitution; let i = index">
+                {{detail?.reportDate || '-'}}</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="numberOfInquiriesOutsideInstitution">
+            <tr>
+              <td data-label="Months">Upto 3</td>
+              <td data-label="Report date"
+                  *ngFor="let detail of numberOfInquiriesOutsideInstitution; let i = index">
+                {{detail.dataCountForUpTo3Month || '-'}}</td>
+            </tr>
+            <tr>
+              <td data-label="Months">4 to 6</td>
+              <td data-label="Report date"
+                  *ngFor="let detail of numberOfInquiriesOutsideInstitution; let i = index">
+                {{detail.dataCountFor4To6Month || '-'}}</td>
+            </tr>
+            <tr>
+              <td data-label="Months">7 to 12</td>
+              <td data-label="Report date"
+                  *ngFor="let detail of numberOfInquiriesOutsideInstitution; let i = index">
+                {{detail.dataCountFor7To12Month || '-'}}</td>
+            </tr>
+            <tr>
+              <td data-label="Months">More than 12 Months</td>
+              <td data-label="Report date"
+                  *ngFor="let detail of numberOfInquiriesOutsideInstitution; let i = index">
+                {{detail.dataCountForMoreThen12Months || '-'}}</td>
+            </tr>
+            </tbody>
+            <tbody
+              *ngIf="numberOfInquiriesOutsideInstitution == null && numberOfInquiriesOutsideInstitution == undefined">
+            <tr>
+              <td colspan="10">
+                <app-no-data-found />
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+
+      <!-- Outstanding balance  OLD HTML START-->
+      <!-- <div class="NP_Com_Group Com_Table_grp">
+        <div class="Top_Heading_Txt_left">
+          <h4 class="Heading__H4">
+            Outstanding balance based on Assets classification (OLD)
+          </h4>
+        </div>
+        <div class="table-responsive">
+          <table class="CommonTable_NP Mobile_table_View_NP table_BG no_stripe_borderX_table">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th>Product</th>
+              <th>Your Institution</th>
+              <th>Other Institution</th>
+              <th>HSBC % compare to others</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="outStandingBalanceBasedOnAssetsClassification">
+            <tr *ngFor="let item of outStandingBalanceBasedOnAssetsClassification; let i = index">
+              <td data-label="Product">{{!this.commonService.isObjectNullOrEmpty(item?.product) ?
+                item?.product : '-'}}</td>
+              <td data-label="Your Institution">
+                ₹{{commonMethod.currencyMaskForObject(item?.yourInstitution+"")}}</td>
+              <td data-label="Other Institution">
+                ₹{{commonMethod.currencyMaskForObject(item?.otherInstitution+"")}}</td>
+              <td data-label="HSBC % compare to others">
+                {{!this.commonService.isObjectNullOrEmpty(item?.hsbcCompareToOtherInPercentage)
+                ? item?.hsbcCompareToOtherInPercentage.toFixed(2) + '%' : '-'}}</td>
+            </tr>
+            </tbody>
+            <tbody
+              *ngIf="outStandingBalanceBasedOnAssetsClassification == null && outStandingBalanceBasedOnAssetsClassification == undefined">
+            <tr>
+              <td colspan="10">
+                <app-no-data-found />
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td data-label="Total">Total</td>
+              <td data-label="Your Institution">
+                ₹{{commonMethod.currencyMaskForObject(totalYourInstitution+"")}}</td>
+              <td data-label="Other Institution">
+                ₹{{commonMethod.currencyMaskForObject(totalOtherInstitution+"")}}</td>
+              <td data-label="HSBC % compare to others">{{ totalHSBCPercentage != null ?
+                totalHSBCPercentage.toFixed(2) : '-' }} %</td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div> -->
+      <!-- Outstanding balance  OLD HTML END-->
+
+
+      <!-- Outstanding balance  New HTML START-->
+      <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.OVERALL_DETAILS) || commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.OVERALL_DETAILS) ">
+        <div class="Top_Heading_Txt_left">
+          <!-- <h4 class="Heading__H4">
+            Outstanding balance based on Assets classification
+          </h4> -->
+        </div>
+        <div class="table-responsive">
+          <table class="CommonTable_NP Mobile_table_View_NP table_BG no_stripe_borderX_table">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th>Overall Details</th>
+              <th>Total Lenders</th>
+              <th>Open Facilities</th>
+              <th>Total Outstanding</th>
+              <th>Wallet %</th>
+              <th>Latest Sanction Date</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="outStandingBalanceBasedOnAssetsClassificationNew">
+            <tr *ngFor="let item of outStandingBalanceBasedOnAssetsClassificationNew; let i = index">
+              <td data-label="Overall Details">{{!this.commonService.isObjectNullOrEmpty(item?.productDetails) ?
+                item?.productDetails : '-'}}</td>
+              <td data-label="Total Lenders">{{!this.commonService.isObjectNullOrEmpty(item?.totalLemders) ?
+                item?.totalLemders : '-'}}</td>
+              <td data-label="Open Facilities">{{!this.commonService.isObjectNullOrEmpty(item?.openFacilities) ?
+                item?.openFacilities : '-'}}</td>
+              <td data-label="Total Outstanding">₹{{commonMethod.currencyMaskForObject(item?.totalOutstanding+"")}}</td>
+              <td data-label="Wallet %">{{!this.commonService.isObjectNullOrEmpty(item?.walletPer)
+                ? item?.walletPer.toFixed(2) + '%' : '-'}}</td>
+              <td data-label="Latest Sanction Date">{{!this.commonService.isObjectNullOrEmpty(item?.latestSanctionDate) ?
+                item?.latestSanctionDate : '-'}}</td>
+            </tr>
+
+
+            <!-- <tr *ngFor="let item of outStandingBalanceBasedOnAssetsClassification; let i = index">
+                <td data-label="Product">{{!this.commonService.isObjectNullOrEmpty(item?.product) ?
+                    item?.product : '-'}}</td>
+                <td data-label="Your Institution">
+                    ₹{{commonMethod.currencyMaskForObject(item?.yourInstitution+"")}}</td>
+                <td data-label="Other Institution">
+                    ₹{{commonMethod.currencyMaskForObject(item?.otherInstitution+"")}}</td>
+                <td data-label="HSBC % compare to others">
+                    {{!this.commonService.isObjectNullOrEmpty(item?.hsbcCompareToOtherInPercentage)
+                    ? item?.hsbcCompareToOtherInPercentage.toFixed(2) + '%' : '-'}}</td>
+            </tr> -->
+            </tbody>
+            <tbody
+              *ngIf="outStandingBalanceBasedOnAssetsClassificationNew == null && outStandingBalanceBasedOnAssetsClassificationNew == undefined">
+            <tr>
+              <td colspan="6">
+                <app-no-data-found />
+              </td>
+            </tr>
+            </tbody>
+            <!-- <tfoot>
+            <tr>
+              <td data-label="Total">Total</td>
+              <td data-label="Your Institution">
+                ₹{{commonMethod.currencyMaskForObject(totalYourInstitution+"")}}</td>
+              <td data-label="Other Institution">
+                ₹{{commonMethod.currencyMaskForObject(totalOtherInstitution+"")}}</td>
+              <td data-label="HSBC % compare to others">{{ totalHSBCPercentage != null ?
+                totalHSBCPercentage.toFixed(2) : '-' }} %</td>
+            </tr>
+            </tfoot> -->
+          </table>
+        </div>
+      </div >
+      <!-- Outstanding balance  New HTML END-->
+
+      <div class="NP_Com_Group">
+        <h4 class="fs-14 mt-0 note_h4">
+          Note :
+          <span class="fw-400">Includes all open facilities</span>
+        </h4>
+      </div>
+
+
+      <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.TREND_ANALYTICS) || commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.TREND_ANALYTICS)">
+        <div class="Top_Heading_Txt_left">
+          <h4 class="Heading__H4">
+            Trend analytics
+          </h4>
+        </div>
+        <div class="table-responsive">
+          <table class="CommonTable_NP Mobile_table_View_NP table_BG no_stripe_borderX_table bordered_table">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th rowspan="2">Particulars</th>
+              <th *ngFor="let detail of additionalDetails; let i = index">Report Fetched based on {{detail?.prOrCir || '-'}}</th>
+            </tr>
+            <tr class="tr_lightred_bg">
+              <th class="txtCenter" *ngFor="let detail of additionalDetails; let i = index">
+                {{detail?.reportedDate || '-'}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td data-label="Particulars">CMR Score</td>
+              <td data-label="Report date" *ngFor="let detail of additionalDetails; let i = index">
+                {{detail.cmrScore ||
+                '-'}}</td>
+            </tr>
+            <tr>
+              <td data-label="Particulars">No. of Lenders</td>
+              <td data-label="" *ngFor="let detail of additionalDetails; let i = index">
+                {{detail.totalLenders || '-'}}</td>
+            </tr>
+            <!-- <tr>
+                <td data-label="Particulars">No. of Loans Enquiries</td>
+                <td data-label="Report date" *ngFor="let detail of additionalDetails; let i = index">
+                    {{detail.noOfLoanEnquiries || '-'}}</td>
+            </tr> -->
+            <tr>
+              <td data-label="Particulars">No. of open credit facilities</td>
+              <td data-label="" *ngFor="let detail of additionalDetails; let i = index">
+                {{detail.noOfOpenCreditFacilities || '-'}}</td>
+            </tr>
+            <tr>
+              <td data-label="Particulars">Sanctioned Amount</td>
+              <td data-label="" *ngFor="let detail of additionalDetails; let i = index">
+                {{detail?.sanctionLoanAmount ? ('₹ '+(detail?.sanctionLoanAmount
+                |indianCurrency)):'-'}}
+                <!-- ₹ {{commonMethod.currencyMaskForObject(detail?.sanctionLoanAmount+"")}} -->
+                <!-- {{!this.commonService.isObjectNullOrEmpty(detail?.sanctionLoanAmount) ? '₹' + detail?.sanctionLoanAmount  : '-'}} -->
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Particulars">Outstanding Balance</td>
+              <td data-label="" *ngFor="let detail of additionalDetails; let i = index">
+                {{detail?.outStandingLoanAmount ? ('₹ '+(detail?.outStandingLoanAmount
+                |indianCurrency)):'-'}}
+                <!-- ₹{{commonMethod.currencyMaskForObject(detail?.outStandingLoanAmount+"")}} -->
+                <!-- {{!this.commonService.isObjectNullOrEmpty(detail?.outStandingLoanAmount) ? '₹' + detail?.outStandingLoanAmount  : '-'}} -->
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Particulars">Utilisation %</td>
+              <td data-label="" *ngFor="let detail of additionalDetails; let i = index">
+                {{!this.commonService.isObjectNullOrEmpty(detail.utilization) ?
+                detail.utilization.toFixed(2) + '%' : '-'}}
+              </td>
+            </tr>
+            <tr>
+              <td data-label="Particulars">HSBC Sanction Wallet %</td>
+              <td data-label="" *ngFor="let detail of additionalDetails; let i = index">
+                {{!this.commonService.isObjectNullOrEmpty(detail.hsbcSanctionWalletPercent) ?
+                detail.hsbcSanctionWalletPercent.toFixed(2) + '%' : '-'}}</td>
+            </tr>
+            <tr>
+              <td data-label="Particulars">HSBC Utilization Wallet %</td>
+              <td data-label="" *ngFor="let detail of additionalDetails; let i = index">
+                {{!this.commonService.isObjectNullOrEmpty(detail.hsbcUtilizationWalletPercent) ?
+                detail.hsbcUtilizationWalletPercent.toFixed(2) + '%' : '-'}}</td>
+            </tr>
+            <tr>
+              <td data-label="Particulars">Enquiries Outside in last 6 months</td>
+              <td data-label="" *ngFor="let detail of additionalDetails; let i = index">
+                {{detail.enqOutSideInLast6Months || '-'}}</td>
+            </tr>
+            <!-- <tr>
+                <td data-label="Particulars">No. of Products not with HSBC</td>
+                <td data-label="Report date" *ngFor="let detail of additionalDetails; let i = index">
+                    {{detail?.noOfProductsNotWithHSBC || '-'}}
+                </td>
+            </tr> -->
+            </tbody>
+            <!-- <tfoot>
+                <tr>
+                    <td data-label="Overall Details">Total Debt</td>
+                    <td data-label="Total Lenders">18</td>
+                    <td data-label="Open Facilities">10</td>
+                    <td data-label="Total Outstanding">₹ 11,06,56,923</td>
+                    <td data-label="Wallet %">100%</td>
+                    <td data-label=""></td>
+                </tr>
+            </tfoot> -->
+          </table>
+        </div>
+      </div>
+
+      <!-- <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.PRODUCT_WISE_DETAILS) || commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.PRODUCT_WISE_DETAILS)">
+        <div class="Top_Heading_Txt_left">
+          <h4 class="Heading__H4">
+            Product wise details
+          </h4>
+        </div>
+        <div class="table-responsive">
+          <table class="CommonTable_NP  Mobile_table_View_NP table_BG_No no_stripe_borderX_table">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th>Sr.no</th>
+              <th>Product
+                <span class="shorting" (click)="toggleSort('product', true)">
+                <mat-icon *ngIf="currentSortField !== 'product'">unfold_more</mat-icon>
+                <mat-icon *ngIf="currentSortField === 'product' && sortDirection === 'ASC'">north</mat-icon>
+                <mat-icon *ngIf="currentSortField === 'product' && sortDirection === 'DESC'">south</mat-icon>
+              </span>
+              </th>
+              <th>No. of Credit Facility
+                <span class="shorting" (click)="toggleSort('noOfCreditFacility',true)">
+                                        <mat-icon
+                                          *ngIf="currentSortField !== 'noOfCreditFacility'">unfold_more</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'noOfCreditFacility' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'noOfCreditFacility' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+              </th>
+              <th>Other Sanction
+                <span class="shorting" (click)="toggleSort('sanctionedAmountOther',true)">
+                                        <mat-icon
+                                          *ngIf="currentSortField !== 'sanctionedAmountOther'">unfold_more</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'sanctionedAmountOther' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'sanctionedAmountOther' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+              </th>
+              <th>Other Utilization
+                <span class="shorting" (click)="toggleSort('utilizationOther',true)">
+                                        <mat-icon
+                                          *ngIf="currentSortField !== 'utilizationOther'">unfold_more</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'utilizationOther' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'utilizationOther' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+              </th>
+              <th>Hsbc Sanction
+                <span class="shorting" (click)="toggleSort('sanctionedAmountHsbc',true)">
+                                        <mat-icon
+                                          *ngIf="currentSortField !== 'sanctionedAmountHsbc'">unfold_more</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'sanctionedAmountHsbc' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'sanctionedAmountHsbc' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+              </th>
+              <th>Hsbc Utilization
+                <span class="shorting" (click)="toggleSort('utilizationHsbc',true)">
+                                        <mat-icon
+                                          *ngIf="currentSortField !== 'utilizationHsbc'">unfold_more</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'utilizationHsbc' && sortDirection === 'ASC'">north</mat-icon>
+                                        <mat-icon
+                                          *ngIf="currentSortField === 'utilizationHsbc' && sortDirection === 'DESC'">south</mat-icon>
+                                    </span>
+              </th>
+              <th>Sanctioned By
+                <span class="shorting" (click)="toggleSort('sanctionBy', true)">
+                <mat-icon *ngIf="currentSortField !== 'sanctionBy'">unfold_more</mat-icon>
+                <mat-icon *ngIf="currentSortField === 'sanctionBy' && sortDirection === 'ASC'">north</mat-icon>
+                <mat-icon *ngIf="currentSortField === 'sanctionBy' && sortDirection === 'DESC'">south</mat-icon>
+              </span>
+              </th>
+              <th>Utilization By
+                <span class="shorting" (click)="toggleSort('utilizationBy', true)">
+                <mat-icon *ngIf="currentSortField !== 'utilizationBy'">unfold_more</mat-icon>
+                <mat-icon *ngIf="currentSortField === 'utilizationBy' && sortDirection === 'ASC'">north</mat-icon>
+                <mat-icon *ngIf="currentSortField === 'utilizationBy' && sortDirection === 'DESC'">south</mat-icon>
+              </span>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            @if(productWisePaginationData?.length>0){
+            @for (item of productWisePaginationData; track $index) {
+            <tr>
+              <td data-label="Sr.no">
+                {{(productWisePagination.page-1)*productWisePagination.pageSize+($index+1)}}
+              </td>
+              <td data-label="Product">{{!this.commonService.isObjectNullOrEmpty(item?.product) ?
+                item?.product : '-'}}
+              </td>
+              <td data-label="No. of Credit Facility">
+                {{!this.commonService.isObjectNullOrEmpty(item?.noOfCreditFacility) ?
+                item?.noOfCreditFacility : '-'}}
+              </td>
+              <td data-label="Other Sanction">
+                ₹{{commonMethod.currencyMaskForObject(item?.sanctionedAmountOther+"")}}
+              </td>
+              <td data-label="Other Utilization">
+                {{!this.commonService.isObjectNullOrEmpty(item.utilizationOther) ?
+                item.utilizationOther.toFixed(2) + '%' : '-'}}
+              </td>
+              <td data-label="Hsbc Sanction">
+                ₹{{commonMethod.currencyMaskForObject(item?.sanctionedAmountHsbc+"")}}
+              </td>
+              <td data-label="Hsbc Utilization">
+                {{!this.commonService.isObjectNullOrEmpty(item.utilizationHsbc) ?
+                item.utilizationHsbc.toFixed(2) + '%' : '-'}}
+              </td>
+              <td data-label="Sanctioned By">
+                {{!this.commonService.isObjectNullOrEmpty(item?.sanctionBy) ?
+                item?.sanctionBy : '-'}}
+              </td>
+              <td data-label="Utilization By">
+                {{!this.commonService.isObjectNullOrEmpty(item?.utilizationBy) ?
+                item?.utilizationBy : '-'}}
+              </td>
+            </tr>
+            }
+            } @else {
+            <tr>
+              <td colspan="10">
+                <app-no-data-found />
+              </td>
+            </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+              <td data-label="-">-</td>
+              <td data-label="Total">Total</td>
+              <td data-label="No. of Credit Facility">
+                {{commonMethod.currencyMaskForObject(totalnoOfCreditFacility+"")}}</td>
+              <td data-label="Other Sanction Total">
+                {{commonMethod.currencyMaskForObject(totalsanctionedAmountOther+"")}}</td>
+              <td data-label="Other Utilization Percentage">{{ totalOtherUtiPercentage != null ?
+                totalOtherUtiPercentage.toFixed(2) : '-' }} %</td>
+              <td data-label="Hsbc Sanction Total">
+                {{commonMethod.currencyMaskForObject(totalsanctionedAmountHsbc+"")}}</td>
+              <td data-label="Hsbc Utilization Percentage">{{ totalHsbcUtiPercentage != null ?
+                totalHsbcUtiPercentage.toFixed(2) : '-' }} %</td>
+              <td data-label="Sanctioned By Total">-</td>
+              <td data-label="Utilization By Total">-</td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div> -->
+
+
+      <div class="NP_Com_Group Com_Table_grp" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.PRODUCT_WISE_DETAILS) || commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.PRODUCT_WISE_DETAILS)">
+        <div class="Top_Heading_Txt_left">
+          <h4 class="Heading__H4">
+            Product wise details
+          </h4>
+        </div>
+        <div class="tableResponsive">
+          <table class="CommonTable_NP  Mobile_table_View_NP table_BG_No no_stripe_borderX_table CommonTable_Scroll NonBG_Table no_sticky_table design_Main_listTable table_wrap">
+            <thead>
+              <tr class="tr_lightred_bg">
+                <th width="10%">Sr.no</th>
+                <th>Product
+                  <span class="shorting" (click)="toggleSort('product', true)">
+                    <mat-icon *ngIf="currentSortField !== 'product'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'product' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'product' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>No. of Credit Facility
+                  <span class="shorting" (click)="toggleSort('noOfCreditFacility',true)">
+                    <mat-icon *ngIf="currentSortField !== 'noOfCreditFacility'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'noOfCreditFacility' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'noOfCreditFacility' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Other Sanction
+                  <span class="shorting" (click)="toggleSort('sanctionedAmountOther',true)">
+                    <mat-icon *ngIf="currentSortField !== 'sanctionedAmountOther'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionedAmountOther' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionedAmountOther' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Other Utilization
+                  <span class="shorting" (click)="toggleSort('utilizationOther',true)">
+                    <mat-icon *ngIf="currentSortField !== 'utilizationOther'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationOther' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationOther' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Hsbc Sanction
+                  <span class="shorting" (click)="toggleSort('sanctionedAmountHsbc',true)">
+                    <mat-icon *ngIf="currentSortField !== 'sanctionedAmountHsbc'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionedAmountHsbc' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionedAmountHsbc' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Hsbc Utilization
+                  <span class="shorting" (click)="toggleSort('utilizationHsbc',true)">
+                    <mat-icon *ngIf="currentSortField !== 'utilizationHsbc'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationHsbc' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationHsbc' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Sanctioned By
+                  <span class="shorting" (click)="toggleSort('sanctionBy', true)">
+                    <mat-icon *ngIf="currentSortField !== 'sanctionBy'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionBy' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'sanctionBy' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+                <th>Utilization By
+                  <span class="shorting" (click)="toggleSort('utilizationBy', true)">
+                    <mat-icon *ngIf="currentSortField !== 'utilizationBy'">unfold_more</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationBy' && sortDirection === 'ASC'">north</mat-icon>
+                    <mat-icon *ngIf="currentSortField === 'utilizationBy' && sortDirection === 'DESC'">south</mat-icon>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of productWisePaginationData; track $index) {
+              <tr>
+                <td data-label="Sr.no">
+                  <button mat-icon-button class="matIcon red_icn mr-2" (click)="collapsedList1.toggle()"
+                    [ngClass]="{'rotate_icon': collapsedList1}"><i class="fas fa-chevron-down"></i></button>
+                  {{(productWisePagination.page-1)*productWisePagination.pageSize+($index+1)}}
+                </td>
+                <td data-label="Product">{{!this.commonService.isObjectNullOrEmpty(item?.product) ?
+                  item?.product : '-'}}</td>
+                <td data-label="No. of Credit Facility">{{!this.commonService.isObjectNullOrEmpty(item?.noOfCreditFacility) ?
+                  item?.noOfCreditFacility : '-'}}</td>
+                <td data-label="Other Sanction">₹{{commonMethod.currencyMaskForObject(item?.sanctionedAmountOther+"")}}</td>
+                <td data-label="Other Utilization">{{!this.commonService.isObjectNullOrEmpty(item.utilizationOther) ?
+                  item.utilizationOther.toFixed(2) + '%' : '-'}}</td>
+                <td data-label="Hsbc Sanction">₹{{commonMethod.currencyMaskForObject(item?.sanctionedAmountHsbc+"")}}</td>
+                <td data-label="Hsbc Utilization">{{!this.commonService.isObjectNullOrEmpty(item.utilizationHsbc) ?
+                  item.utilizationHsbc.toFixed(2) + '%' : '-'}}</td>
+                <td data-label="Sanctioned By">{{!this.commonService.isObjectNullOrEmpty(item?.sanctionBy) ?
+                  item?.sanctionBy : '-'}}</td>
+                <td data-label="Utilization By">{{!this.commonService.isObjectNullOrEmpty(item?.utilizationBy) ?
+                  item?.utilizationBy : '-'}}</td>
+              </tr>
+              <tr class="collapsing_tr" #collapsedList1="ngbCollapse" [(ngbCollapse)]="collapsedList1">
+                <td colspan="15">
+                  <div class="box_design">
+                    <div class="tableResponsive inside_table">
+                      <table class="bordered_table w-100">
+                        <thead>
+                          <tr>
+                            <th>Sr. No.</th>
+                            <th>Product</th>
+                            <th>No.Of Credit Facility</th>
+                            <th>Other Sanction</th>
+                            <th>Other Utilization</th>
+                            <th>Hsbc Sanction</th>
+                            <th>Hsbc Utilization</th>
+                            <th>Sanctioned By</th>
+                            <th>Utilization By</th>
+                          </tr>
+                        </thead>
+      
+                        <tbody class="subtable-container">
+                          @for (subItem of item.subTypeOfProductDetails |
+                          slice:
+                          (item?.internalPagination.page()-1) *
+                          item?.internalPagination.pageSize() :
+                          (item?.internalPagination.page()-1) *
+                          item?.internalPagination.pageSize() +
+                          item?.internalPagination.pageSize() ; track $index) {
+                          <tr>
+                            <td data-label="Sr.no">
+                              {{(item?.internalPagination.page()-1)*item?.internalPagination.pageSize()+($index+1)}}
+                            </td>
+                            <td data-label="Product">{{!this.commonService.isObjectNullOrEmpty(subItem?.subProduct) ?
+                              subItem?.subProduct : '-'}}</td>
+                            <td data-label="No. of Credit Facility">
+                              {{!this.commonService.isObjectNullOrEmpty(subItem?.subNoOfCreditFacility) ?
+                              subItem?.subNoOfCreditFacility : '-'}}</td>
+                            <td data-label="Other Sanction">
+                              ₹{{commonMethod.currencyMaskForObject(subItem?.subSanctionedAmountOther+"")}}</td>
+                            <td data-label="Other Utilization">
+                              {{!this.commonService.isObjectNullOrEmpty(subItem.subUtilizationOther) ?
+                              subItem.subUtilizationOther.toFixed(2) + '%' : '-'}}</td>
+                            <td data-label="Hsbc Sanction">
+                              ₹{{commonMethod.currencyMaskForObject(subItem?.subSanctionedAmountHsbc+"")}}</td>
+                            <td data-label="Hsbc Utilization">
+                              {{!this.commonService.isObjectNullOrEmpty(subItem.subUtilizationHsbc) ?
+                              subItem.subUtilizationHsbc.toFixed(2) + '%' : '-'}}</td>
+                            <td data-label="Sanctioned By">{{!this.commonService.isObjectNullOrEmpty(subItem?.subSanctionBy) ?
+                              subItem?.subSanctionBy : '-'}}</td>
+                            <td data-label="Utilization By">
+                              {{!this.commonService.isObjectNullOrEmpty(subItem?.subUtilizationBy) ?
+                              subItem?.subUtilizationBy : '-'}}</td>
+                          </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    
+                    <div class="pagination-table NP_LeftPagintion py-0 ">
+                      <div class="dataTables_info my-2" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+                        {{(item?.internalPagination.startIndex()+1)}} to
+                        {{(item?.internalPagination.pageSize()*item?.internalPagination.page())
+                        >
+                        (item?.internalPagination.totalSize) ?
+                        (item?.internalPagination.totalSize) :
+                        (item?.internalPagination.pageSize()*item?.internalPagination.page())}}
+                        of
+                        {{item?.internalPagination.totalSize}} rows
+                        <div class="dataTables_length" id="tickets-table_length">
+                          <div class="NP_HSBC_ComInput select-field">
+                            <mat-form-field appearance="outline">
+                              <mat-select [(ngModel)]="item?.internalPagination.pageSize"
+                                [panelClass]="'pagination_select'">
+                                <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                  {{pages.value}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <span>row per page</span>
+                      </div>
+                      <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                          <ngb-pagination [collectionSize]="item?.internalPagination.totalSize" [maxSize]="2"
+                            [(page)]="item?.internalPagination.page" [rotate]="true" [boundaryLinks]="true"
+                            [pageSize]="item?.internalPagination.pageSize()">
+                          </ngb-pagination>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="10">
+                  <app-no-data-found message="No data found" />
+                </td>
+              </tr>
+              }
+            </tbody>
+            <tfoot>
+            <tr>
+              <td data-label="-">-</td>
+              <td data-label="Total">Total</td>
+              <td data-label="No. of Credit Facility">
+                {{commonMethod.currencyMaskForObject(totalnoOfCreditFacility+"")}}</td>
+              <td data-label="Other Sanction Total">
+                {{commonMethod.currencyMaskForObject(totalsanctionedAmountOther+"")}}</td>
+              <td data-label="Other Utilization Percentage">{{ totalOtherUtiPercentage != null ?
+                totalOtherUtiPercentage.toFixed(2) : '-' }} %</td>
+              <td data-label="Hsbc Sanction Total">
+                {{commonMethod.currencyMaskForObject(totalsanctionedAmountHsbc+"")}}</td>
+              <td data-label="Hsbc Utilization Percentage">{{ totalHsbcUtiPercentage != null ?
+                totalHsbcUtiPercentage.toFixed(2) : '-' }} %</td>
+              <td data-label="Sanctioned By Total">-</td>
+              <td data-label="Utilization By Total">-</td>
+            </tr>
+            </tfoot>
+          </table>
+      
+          
+        </div>
+        <div class="pagination-table NP_LeftPagintion mt-2">
+          <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+            Showing
+            {{(productWisePagination?.startIndex+1)}} to
+            {{(productWisePagination?.pageSize*productWisePagination?.page) >
+            (productWisePagination?.totalSize) ? (productWisePagination?.totalSize) :
+            (productWisePagination?.pageSize*productWisePagination?.page)}} of
+            {{productWisePagination?.totalSize}}
+            <div class="dataTables_length" id="tickets-table_length">
+              <div class="NP_HSBC_ComInput select-field">
+                <mat-form-field appearance="outline">
+                  <mat-select [(ngModel)]="productWisePagination.pageSize" [panelClass]="'pagination_select'"
+                    (ngModelChange)="producWiseChangePage(productWisePagination.page)">
+                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                      {{pages.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            row per page
+          </div>
+          <div class="text-md-right float-md-right pagination-rounded">
+            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+              <ngb-pagination [collectionSize]="productWisePagination?.totalSize" [maxSize]="3"
+                [(productWisePagination.page)]="page" [rotate]="true" [boundaryLinks]="true"
+                [pageSize]="productWisePagination.pageSize" (pageChange)="producWiseChangePage($event)">
+              </ngb-pagination>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="NP_Com_Group">
+        <h4 class="fs-14 mt-0 note_h4">
+          Note :
+          <span class="fw-400">Excludes all other open facilities from Lenders with last reported date beyond
+              6 months - <a class="view_link_btn" (click)="Facilities_FromLenders_popup()">View</a></span>
+          <br />
+          <!-- <span class="fw-400 ml-4 pt-1 d-flex">Products sanctioned in foreign Currencies By Competitor - <a
+            class="view_link_btn" (click)="Products_ForeignCurrencies_popup()">View</a>
+                    </span> -->
+        </h4>
+      </div>
+
+      <!-- Default Data Table new STart -->
+      <div class="NP_Com_Group Com_Table_grp" style="display: none;" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU2,consValue.PageActions.DEFAULT_DATA) || commonService.isActionAvailable(pageData,consValue.pageMaster.COMMERCIAL_BUREAU,consValue.PageActions.DEFAULT_DATA)">
+        <div class="Top_Heading_Txt_left">
+          <h4 class="Heading__H4">
+            Default Data
+          </h4>
+        </div>
+        <div class="table-responsive">
+          <table class="CommonTable_NP  table_BG_br_center no_stripe_borderX_table">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th>Sr No.</th>
+              <th>Derog Information</th>
+              <th>Date</th>
+              <th>Facility</th>
+              <th>Amount</th>
+              <th>Member</th>
+            </tr>
+            </thead>
+            <!-- <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>Wilful Default</td>
+                    <td>26/09/2024</td>
+                    <td>Bank Guarantee</td>
+                    <td>NA</td>
+                    <td>Not Disclosed</td>
+                </tr>
+            </tbody> -->
+            <tbody>
+            @if(defaultDataPaginationData?.length>0){
+              @for (item of defaultDataPaginationData; track $index) {
+            <tr>
+              <td data-label="Sr.no">{{(defaultDataPagination.page-1)*defaultDataPagination.pageSize+($index+1)}}</td>
+              <td data-label="Derog Information">{{!this.commonService.isObjectNullOrEmpty(item?.status) ?
+                item?.status : '-'}}</td>
+              <td data-label="Date">
+                {{!this.commonService.isObjectNullOrEmpty(item?.date) ?
+                item?.date : '-'}}
+                <!-- {{!this.commonService.isObjectNullOrEmpty(item?.amount) ? '₹' + item?.amount : '-'}} -->
+              </td>
+              <td data-label="Facility">{{!this.commonService.isObjectNullOrEmpty(item?.cfType) ?
+                item?.cfType : '-'}}</td>
+              <td data-label="Amount">
+                {{!this.commonService.isObjectNullOrEmpty(item?.amount) ? '₹' + commonMethod.currencyMaskForObject(item?.amount+"") : '-'}}</td>
+              <td data-label="Member">
+                {{!this.commonService.isObjectNullOrEmpty(item?.member) ?
+                item?.member : '-'}}</td>
+            </tr>
+          }
+          } @else {
+            <tr *ngFor="let item of byDefaultData; let i = index">
+              <td data-label="Sr.no">{{(defaultDataPagination.page - 1) * defaultDataPagination.pageSize + (i + 1)}}</td>
+              <td data-label="Derog Information">{{item.status || '-'}}</td>
+              <td data-label="Date">{{item.date || '-'}}</td>
+              <td data-label="Facility">{{item.cfType || '-'}}</td>
+              <td data-label="Amount">{{item.amount || '-'}}</td>
+              <td data-label="Member">{{item.member || '-'}}</td>
+            </tr>
+          }
+            </tbody>
+<!--
+            <tbody *ngIf="defaultData == null || defaultData == undefined || defaultData?.length ==0">
+            <tr>
+              <td colspan="10">
+                <app-no-data-found message="No Defaults reported" />
+              </td>
+            </tr>
+            </tbody> -->
+          </table>
+
+          
+
+        </div>
+        <div class="pagination-table NP_LeftPagintion mt-2" *ngIf="defaultDataPaginationData?.length>0">
+          <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+            Showing
+            {{(defaultDataPagination?.startIndex+1)}} to
+            {{(defaultDataPagination?.pageSize*defaultDataPagination?.page) >
+            (defaultDataPagination?.totalSize) ? (defaultDataPagination?.totalSize) :
+            (defaultDataPagination?.pageSize*defaultDataPagination?.page)}} of
+            {{defaultDataPagination?.totalSize}}
+            <div class="dataTables_length" id="tickets-table_length">
+              <div class="NP_HSBC_ComInput select-field">
+                <mat-form-field appearance="outline">
+                  <mat-select [(ngModel)]="defaultDataPagination.pageSize"
+                              [panelClass]="'pagination_select'"
+                              (ngModelChange)="DefaultDataChangePage(defaultDataPagination.page)">
+                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                      {{pages.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            row per page
+          </div>
+          <div class="text-md-right float-md-right pagination-rounded">
+            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+              <ngb-pagination [collectionSize]="defaultDataPagination?.totalSize" [maxSize]="3"
+                              [(defaultDataPagination.page)]="page" [rotate]="true" [boundaryLinks]="true"
+                              [pageSize]="defaultDataPagination.pageSize"
+                              (pageChange)="DefaultDataChangePage($event)">
+              </ngb-pagination>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="NP_Com_Group" *ngIf="bureauHistoryMessage">
+        <h4 class="fs-14 mt-0 note_h4">
+          <span class="fw-400">* {{bureauHistoryMessage}}</span>
+          <br />
+        </h4>
+      </div>
+      <!-- Default Data Table new END -->
+
+      <!-- Default Data Table OLD Start -->
+      <!-- <div class="NP_Com_Group Com_Table_grp">
+        <div class="Top_Heading_Txt_left">
+          <h4 class="Heading__H4">
+            Default data of last 24 months (OLD)
+          </h4>
+        </div>
+        <div class="table-responsive">
+          <table class="CommonTable_NP Mobile_table_View_NP table_BG_br_center no_stripe_borderX_table">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th>Sr.no</th>
+              <th>Status</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Account number</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="defaultData">
+            <tr *ngFor="let item of defaultData; let i = index">
+              <td data-label="Sr.no">{{i + 1}}</td>
+              <td data-label="Status">{{!this.commonService.isObjectNullOrEmpty(item?.status) ?
+                item?.status : '-'}}</td>
+              <td data-label="Amount">
+                ₹{{commonMethod.currencyMaskForObject(item?.amount+"")}}
+                {{!this.commonService.isObjectNullOrEmpty(item?.amount) ? '₹' + item?.amount : '-'}}
+              </td>
+              <td data-label="Date">{{!this.commonService.isObjectNullOrEmpty(item?.date) ?
+                item?.date : '-'}}</td>
+              <td data-label="Account number">
+                {{!this.commonService.isObjectNullOrEmpty(item?.accountNumber) ?
+                item?.accountNumber : '-'}}</td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="defaultData == null || defaultData == undefined || defaultData?.length ==0">
+            <tr>
+              <td colspan="10">
+                <app-no-data-found message="No Defaults reported" />
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+
+          <!-- <div class="pagination-table NP_LeftPagintion">
+              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{(startIndex+1)}} to
+                  {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                  {{totalSize}}
+                  <div class="dataTables_length" id="tickets-table_length">
+                      <div class="NP_HSBC_ComInput select-field">
+                          <mat-form-field appearance="outline">
+                              <mat-select [(ngModel)]="pageSize" [panelClass]="'pagination_select'" (ngModelChange)="onPageChange(page)">
+                                  <mat-option *ngFor="let pages of PageSelectNumber"
+                                      [value]="pages.value">
+                                      {{pages.value}}
+                                  </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  row per page
+              </div>
+              <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                      <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                          [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+                      </ngb-pagination>
+                  </ul>
+              </div>
+          </div> -->
+
+       <!-- Default Data Table OLD End -->
+      <!-- Defult data table with shorting and new Start -->
+      <!-- style="display: none;" -->
+      <div class="NP_Com_Group Com_Table_grp" >
+        <div class="Top_Heading_Txt_left">
+          <h4 class="Heading__H4">
+            Default Data
+          </h4>
+        </div>
+        <div class="table-responsive ovr_auto">
+          <table class="CommonTable_Scroll NonBG_Table design_Main_listTable rmExisitingPortfolio_list_table table_wrap">
+            <thead>
+            <tr class="tr_lightred_bg">
+              <th width="5%">Sr No.</th>
+              <th>Facility Type <span class="shorting" (click)="toggleSortNewDefaultData('cfType', true)">
+                <mat-icon *ngIf="currentSortField !== 'cfType'">unfold_more</mat-icon>
+                <!-- Neutral Arrow -->
+                <mat-icon
+                    *ngIf="currentSortField === 'cfType' && sortDirection === 'ASC'">north</mat-icon>
+                <mat-icon
+                    *ngIf="currentSortField === 'cfType' && sortDirection === 'DESC'">south</mat-icon>
+                <!-- <mat-icon>south</mat-icon>-->
+            </span></th>
+              <th>Member
+                <span class="shorting" (click)="toggleSortNewDefaultData('member', true)">
+                  <mat-icon *ngIf="currentSortField !== 'member'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField === 'member' && sortDirection === 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField === 'member' && sortDirection === 'DESC'">south</mat-icon>
+                  <!-- <mat-icon>south</mat-icon>-->
+              </span>
+              </th>
+              <th>Asset Classification
+                <span class="shorting" (click)="toggleSortNewDefaultData('assetClassificationDpdDays', true)">
+                  <mat-icon *ngIf="currentSortField != 'assetClassificationDpdDays'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField == 'assetClassificationDpdDays' && sortDirection == 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField == 'assetClassificationDpdDays' && sortDirection == 'DESC'">south</mat-icon>
+                  <!-- <mat-icon>south</mat-icon>-->
+              </span>
+              </th>
+              <th>Status
+                <span class="shorting" (click)="toggleSortNewDefaultData('fullStatus', true)">
+                  <mat-icon *ngIf="currentSortField != 'fullStatus'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField == 'fullStatus' && sortDirection == 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField == 'fullStatus' && sortDirection == 'DESC'">south</mat-icon>
+                  <!-- <mat-icon>south</mat-icon>-->
+              </span>
+              </th>
+              <th>Last Reported Date
+                <span class="shorting" (click)="toggleSortNewDefaultData('dateOfReport', true)">
+                  <mat-icon *ngIf="currentSortField != 'dateOfReport'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField == 'dateOfReport' && sortDirection == 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField == 'dateOfReport' && sortDirection == 'DESC'">south</mat-icon>
+              </span>
+              </th>
+              <th>Overdue
+                <span class="shorting" (click)="toggleSortNewDefaultData('overdue', true)">
+                  <mat-icon *ngIf="currentSortField != 'overdue'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField == 'overdue' && sortDirection == 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField == 'overdue' && sortDirection == 'DESC'">south</mat-icon>
+              </span>
+              </th>
+              <th>Suit Filed
+                <span class="shorting" (click)="toggleSortNewDefaultData('suitFiled', true)">
+                  <mat-icon *ngIf="currentSortField != 'suitFiled'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField == 'suitFiled' && sortDirection == 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField == 'suitFiled' && sortDirection == 'DESC'">south</mat-icon>
+              </span>
+              </th>
+              <th>Written Off
+                <span class="shorting" (click)="toggleSortNewDefaultData('writtenOff', true)">
+                  <mat-icon *ngIf="currentSortField != 'writtenOff'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField == 'writtenOff' && sortDirection == 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField == 'writtenOff' && sortDirection == 'DESC'">south</mat-icon>
+              </span>
+              </th>
+              <th>Settled
+                <span class="shorting" (click)="toggleSortNewDefaultData('settled', true)">
+                  <mat-icon *ngIf="currentSortField != 'settled'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField == 'settled' && sortDirection == 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField == 'settled' && sortDirection == 'DESC'">south</mat-icon>
+              </span>
+              </th>
+              <th class="no_sticky">AC/DPD upto 24 month
+                <span class="shorting" (click)="toggleSortNewDefaultData('acDpdUpto24Months', true)">
+                  <mat-icon *ngIf="currentSortField != 'acDpdUpto24Months'">unfold_more</mat-icon>
+                  <!-- Neutral Arrow -->
+                  <mat-icon
+                      *ngIf="currentSortField == 'acDpdUpto24Months' && sortDirection == 'ASC'">north</mat-icon>
+                  <mat-icon
+                      *ngIf="currentSortField == 'acDpdUpto24Months' && sortDirection == 'DESC'">south</mat-icon>
+              </span>
+              </th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr class="Mobile_View_Filter_Hide_NP filter_tr">
+                <td></td>
+                <td>
+                  <!-- <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.cfType" placeholder="Search Facility Type">
+                    </mat-form-field>
+                  </fieldset> -->
+
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline" floatLabel="never">
+                      <mat-select [formControl]="searchControls.get('cfType')"
+
+                                  [placeholder]="getSelectedElementsCount('cfType')" [panelClass]="'design_multiselect'">
+                                  <mat-select-trigger>
+                                    {{ getSelectedElementsCount('cfType') }}
+                                  </mat-select-trigger>
+                                    <div class="filter_select_search sticky_option" (click)="$event.stopPropagation()">
+                                      <input type="text" placeholder="Search" class="searchbox_input" #cityFdiInput (keydown.space)="$event.stopPropagation()"
+                                       (keyup)="onCommonSearch(cityFdiInput.value, 'cfType')" >
+                                      <em class="fas fa-search searchbox_Icn"></em>
+                                    </div>
+
+                                      <!-- All option -->
+                                      <mat-option  class="mat_autocom_check_option chkOptSelect" >
+                                      <mat-checkbox
+                                        [value]="'ALL'"
+                                        [checked]="checkIsAll"
+                                        (click)="$event.stopPropagation()"
+                                        (click)="toggleSelectAll()">
+
+                                      </mat-checkbox>
+                                      <span class="chkOpt_text">All</span>
+                                      </mat-option>
+
+                        <!-- <mat-option *ngFor="let item of cfTypeArray" [value]="item"  class="sticky_option" (change)="onCityOrCountrySelectionChange(option, $event, 'cfType')">
+                          {{item}}
+                        </mat-option> -->
+
+                        @for (option of cfTypeArray; track option) {
+                          <mat-option (click)="$event.stopPropagation()" class="mat_autocom_check_option chkOptSelectinner">
+                            <mat-checkbox
+                            [checked]="this.searchControls.get('cfType').value?.includes(option)"
+                            (click)="$event.stopPropagation()" (change)="onSearchSelection(option, $event, 'cfType')">
+                            {{option}}
+                            </mat-checkbox>
+                          </mat-option>
+                        }
+
+                      </mat-select>
+                    </mat-form-field>
+                  </fieldset>
+
+
+
+
+                </td>
+                <td>
+                  <!-- <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.member" placeholder="Search Member">
+                    </mat-form-field>
+                  </fieldset> -->
+
+                  <!-- <fieldset class="NP_HSBC_ComInput ml-1">
+                    <mat-form-field appearance="outline" floatLabel="never">
+                      <mat-select [formControl]="searchControls.get('member')"
+                                  multiple
+                                  placeholder="Search Member"
+                                  (selectionChange)="onMemberSelectionChange($event.value)">
+
+                                  <mat-select-trigger>
+                                    {{ getSelectedCitiesOrCountriesCount('member') }}
+                                  </mat-select-trigger>
+
+                        <mat-option *ngFor="let item of memberArray" [value]="item">
+                          {{item}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </fieldset> -->
+
+
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline" floatLabel="never">
+                      <mat-select [formControl]="searchControls.get('member')"
+                                  [placeholder]="getSelectedElementsCount('member')" [panelClass]="'design_multiselect'">
+                                  <mat-select-trigger>
+                                    {{ getSelectedElementsCount('member') }}
+                                  </mat-select-trigger>
+                                    <div class="filter_select_search sticky_option" (click)="$event.stopPropagation()">
+                                      <input type="text" placeholder="Search" class="searchbox_input" #memberInput (keydown.space)="$event.stopPropagation()"
+                                       (keyup)="onCommonSearch(memberInput.value, 'member')" >
+                                      <em class="fas fa-search searchbox_Icn"></em>
+                                    </div>
+
+                                      <!-- All option -->
+                                      <mat-option class="mat_autocom_check_option chkOptSelect">
+                                        <mat-checkbox
+                                        [value]="'ALL'"
+                                        [checked]="isMemberCheckedAll"
+                                        (click)="$event.stopPropagation()"
+                                        (click)="toggleMemberSelectAll()">
+                                        </mat-checkbox>
+                                        <span class="chkOpt_text">All</span>
+                                      </mat-option>
+
+                        <!-- <mat-option *ngFor="let item of memberArray" [value]="item"  class="sticky_option">
+                          {{item}}
+                        </mat-option> -->
+
+                        @for (option of memberArray; track option) {
+                          <mat-option (click)="$event.stopPropagation()" class="mat_autocom_check_option chkOptSelectinner">
+                            <mat-checkbox
+                            [checked]="this.searchControls.get('member').value?.includes(option)"
+                            (click)="$event.stopPropagation()" (change)="onSearchSelection(option, $event, 'member')">
+                            {{option}}
+                            </mat-checkbox>
+                          </mat-option>
+                        }
+
+                      </mat-select>
+                    </mat-form-field>
+                  </fieldset>
+
+                </td>
+                <td>
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.get('assetClassificationDpdDays')" placeholder="Search Asset">
+                    </mat-form-field>
+                  </fieldset>
+                </td>
+                <td>
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline" floatLabel="never">
+                      <mat-select [formControl]="searchControls.get('fullStatus')"
+                                  [placeholder]="getSelectedElementsCount('fullStatus')" [panelClass]="'design_multiselect'">
+                                  <mat-select-trigger>
+                                    {{ getSelectedElementsCount('fullStatus') }}
+                                  </mat-select-trigger>
+                                    <div class="filter_select_search sticky_option" (click)="$event.stopPropagation()">
+                                      <input type="text" placeholder="Search" class="searchbox_input" #statusInput (keydown.space)="$event.stopPropagation()"
+                                       (keyup)="onCommonSearch(statusInput.value, 'fullStatus')" >
+                                      <em class="fas fa-search searchbox_Icn"></em>
+                                    </div>
+
+                                      <!-- All option -->
+                                      <mat-option class="mat_autocom_check_option chkOptSelect chkOptSelectinner">
+                                      <mat-checkbox
+                                        [value]="'ALL'"
+                                        [checked]="isStatusCheckedAll"
+                                        (click)="$event.stopPropagation()"
+                                        (click)="toggleStatusSelectAll()">
+                                        </mat-checkbox>
+                                        <span class="chkOpt_text">All</span>
+                                      </mat-option>
+
+                        @for (option of fullStatusArray; track option) {
+                          <mat-option (click)="$event.stopPropagation()" class="mat_autocom_check_option">
+                            <mat-checkbox
+                            [checked]="this.searchControls.get('fullStatus').value?.includes(option)"
+                            (click)="$event.stopPropagation()" (change)="onSearchSelection(option, $event, 'fullStatus')">
+                            {{option}}
+                            </mat-checkbox>
+                          </mat-option>
+                        }
+
+                      </mat-select>
+                    </mat-form-field>
+                  </fieldset>
+
+                </td>
+                <!-- <td>
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.get('dateOfReport')" placeholder="Search Date">
+                    </mat-form-field>
+                  </fieldset>
+                </td> -->
+              <td>
+                <fieldset class="NP_HSBC_ComInput">
+                  <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-select 
+                      [formControl]="searchControls.get('dateOfReport')" 
+                      [placeholder]="getSelectedElementsCount('dateOfReport')" [panelClass]="'design_multiselect'">
+
+                      <mat-select-trigger>
+                        {{ getSelectedElementsCount('dateOfReport') }}
+                      </mat-select-trigger>
+
+                      <div class="filter_select_search sticky_option" (click)="$event.stopPropagation()">
+                        <input 
+                          type="text" 
+                          placeholder="Search Year" 
+                          class="searchbox_input" 
+                          #yearInput 
+                          (keydown.space)="$event.stopPropagation()" 
+                          (keyup)="onCommonSearch(yearInput.value, 'dateOfReport')" />
+                        <em class="fas fa-search searchbox_Icn"></em>
+                      </div>
+
+                      <!-- All option -->
+                      <mat-option class="mat_autocom_check_option chkOptSelect">
+                        <mat-checkbox
+                          [value]="'ALL'"
+                          [checked]="isYearCheckedAll"
+                          (click)="$event.stopPropagation()"
+                          (click)="toggleYearSelectAll()">
+                        </mat-checkbox>
+                        <span class="chkOpt_text">All</span>
+                      </mat-option>
+
+                      @for (year of yearArray; track year) {
+                        <mat-option (click)="$event.stopPropagation()" class="mat_autocom_check_option chkOptSelectinner">
+                          <mat-checkbox
+                            [checked]="searchControls.get('dateOfReport').value?.includes(year)"
+                            (click)="$event.stopPropagation()"
+                            (change)="onSearchSelection(year, $event, 'dateOfReport')">
+                            {{ year }}
+                          </mat-checkbox>
+                        </mat-option>
+                      }
+
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+              </td>
+
+                <td>
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.get('overdue')" placeholder="Search Overdue">
+                    </mat-form-field>
+                  </fieldset>
+                </td>
+                <td>
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.get('suitFiled')" placeholder="Search Suit Filed">
+                    </mat-form-field>
+                  </fieldset>
+                </td>
+                <td>
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.get('writtenOff')" placeholder="Search Written Off">
+                    </mat-form-field>
+                  </fieldset>
+                </td>
+                <td>
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.get('settled')" placeholder="Search Settled">
+                    </mat-form-field>
+                  </fieldset>
+                </td>
+                <td class="no_sticky">
+                  <fieldset class="NP_HSBC_ComInput">
+                    <mat-form-field appearance="outline">
+                      <input matInput [formControl]="searchControls.get('acDpdUpto24Months')" placeholder="Search Derog Info">
+                    </mat-form-field>
+                  </fieldset>
+                </td>
+                <td>
+                  <!-- <button (click)="clearAllFilters()">clear</button> -->
+                  <button   type="button" mat-flat-button class="btn_design reset_btn_design" (click)="clearAllFilters()" color="primary">Reset</button>
+                  <!-- *ngIf="isActionAvail(constants.PageActions.TOPBAR_FILTER_RESET)" -->
+                </td>
+              </tr>
+                <!-- <tr>
+                    <td>1.</td>
+                    <td>Bank Guarantee</td>
+                    <td class="fw-500">Not Disclosed</td>
+                    <td>189 Days Past Due</td>
+                    <td>Suit Filed Case</td>
+                    <td>01-Jun-25</td>
+                    <td>₹ 3,73,908</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td class="no_sticky">Sub-standard, Mar 2024</td>
+                </tr> -->
+
+                @if(newDefaultDataPaginationData?.length>0){
+                  @for (item of newDefaultDataPaginationData; track $index) {
+                <tr>
+                  <td data-label="Sr.no">{{(newDefaultDataPagination.page-1)*newDefaultDataPagination.pageSize+($index+1)}}</td>
+                  <td data-label="Facility">{{!this.commonService.isObjectNullOrEmpty(item?.cfType) ?  item?.cfType : '-'}}</td>
+                  <td data-label="Member"> {{!this.commonService.isObjectNullOrEmpty(item?.member) ? item?.member : '-'}}
+                  </td>
+                  <td data-label="Asset">{{!this.commonService.isObjectNullOrEmpty(item?.assetClassificationDpdDays) ? item?.assetClassificationDpdDays : '-'}}</td>
+                  <td data-label="Status">
+                    {{!this.commonService.isObjectNullOrEmpty(item?.fullStatus) ? item?.fullStatus : '-'}}</td>
+                  <td data-label="Date">
+                    <!-- {{!this.commonService.isObjectNullOrEmpty(item?.dateOfReport) ? item?.dateOfReport : '-' | date: 'dd-MMM-yyyy'}} <br> -->
+                    {{item?.dateOfReport | date: 'dd-MMM-yyyy'}}
+                  </td>
+                  <td data-label="Overdue">
+                    <!-- {{!this.commonService.isObjectNullOrEmpty(item?.overdue) ? item?.overdue : '-'}} -->
+                    {{item?.overdue | currency:'INR':'symbol':'1.0-2'}}
+                  </td>
+                  <td data-label="suitFiled">
+                    <!-- {{!this.commonService.isObjectNullOrEmpty(item?.suitFiled) ? item?.suitFiled : '-'}} -->
+                    {{item?.suitFiled | currency:'INR':'symbol':'1.0-2'}}
+                  </td>
+                  <td data-label="writtenOff">
+                    {{item?.writtenOff | currency:'INR':'symbol':'1.0-2'}}
+                  </td>
+                  <td data-label="settled">
+                    {{item?.settled | currency:'INR':'symbol':'1.0-2'}}
+                  </td>
+                  <td data-label="acDpdUpto24Months">
+                    {{!this.commonService.isObjectNullOrEmpty(item?.acDpdUpto24Months) ? item?.acDpdUpto24Months : '-'}}
+                  </td>
+                </tr>
+              }
+              } @else {
+                <tr >
+                  <td data-label="Sr.no">-</td>
+                  <td data-label="Facility">-</td>
+                  <td data-label="Member">-</td>
+                  <td data-label="Asset">-</td>
+                  <td data-label="Status">-</td>
+                  <td data-label="Date">-</td>
+                  <td data-label="Overdue">-</td>
+                  <td data-label="suitFiled">-</td>
+                  <td data-label="writtenOff">-</td>
+                  <td data-label="settled">-</td>
+                  <td data-label="acDpdUpto24Months">-</td>
+                </tr>
+              }
+
+                <tr>
+                  <td></td>
+                  <td class="fw-500">Total</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="fw-500"> {{totalOverdue | currency:'INR':'symbol':'1.0-2'}}</td>
+                  <td class="fw-500"> {{totalsuitfiled | currency:'INR':'symbol':'1.0-2'}}</td>
+                  <td class="fw-500"> {{totalWrittenOff | currency:'INR':'symbol':'1.0-2'}}</td>
+                  <td class="fw-500"> {{totalSettled | currency:'INR':'symbol':'1.0-2'}}</td>
+                  <td class="no_sticky"></td>
+                </tr>
+            </tbody>
+          </table>
+
+
+
+         
+
+        </div>
+        <div class="pagination-table NP_LeftPagintion mt-2" *ngIf="newDefaultDataPaginationData?.length>0">
+          <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+            Showing
+            {{(newDefaultDataPagination?.startIndex+1)}} to
+            {{(newDefaultDataPagination?.pageSize*newDefaultDataPagination?.page) >
+            (newDefaultDataPagination?.totalSize) ? (newDefaultDataPagination?.totalSize) :
+            (newDefaultDataPagination?.pageSize*newDefaultDataPagination?.page)}} of
+            {{newDefaultDataPagination?.totalSize}}
+            <div class="dataTables_length" id="tickets-table_length">
+              <div class="NP_HSBC_ComInput select-field">
+                <mat-form-field appearance="outline">
+                  <mat-select [(ngModel)]="newDefaultDataPagination.pageSize"
+                              [panelClass]="'pagination_select'"
+                              (ngModelChange)="newDefaultDataChangePage(newDefaultDataPagination.page)">
+                    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                      {{pages.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            row per page
+          </div>
+          <div class="text-md-right float-md-right pagination-rounded">
+            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+              <ngb-pagination [collectionSize]="newDefaultDataPagination?.totalSize" [maxSize]="3"
+                              [(newDefaultDataPagination.page)]="page" [rotate]="true" [boundaryLinks]="true"
+                              [pageSize]="newDefaultDataPagination.pageSize"
+                              (pageChange)="newDefaultDataChangePage($event)">
+              </ngb-pagination>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Defult data table with shorting and new End -->
+    </div>
+    </div>
+  </div>
+</div>

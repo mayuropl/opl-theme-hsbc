@@ -1,0 +1,40 @@
+.popup_header{
+    border-bottom: 1px solid #D7D8D6;
+}
+.text_list{
+    display: flex;
+    color: rgba(0, 0, 0, .5) !important;
+    margin-top: 10px;
+    span{
+        color: #000000;
+        margin-left: 10px;
+    }
+}
+.text_area{
+    font-size: 14px !important;
+}
+.remark_box{
+    border: 1px solid #D7D8D6;
+    background: #F2F2F2;
+    margin-top: 10px;
+    h2{
+        padding: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        margin: 0;
+        color: #000000;
+    }
+}
+.remark_content{
+    padding: 10px;
+    border-top: 1px solid #D7D8D6;
+    .own_name{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        span{
+            font-style: italic;
+            color: #9F9F9F;
+        }
+    }
+}

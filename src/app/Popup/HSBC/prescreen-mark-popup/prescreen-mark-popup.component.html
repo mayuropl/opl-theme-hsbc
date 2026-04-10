@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h4 class="modal-title"><strong>Mark File Completed</strong></h4>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <p>
+        Are you sure you want to Mark File as Completed
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-psb btn-secondary waves-effect" (click)="dialogRef.close()">Cancel</button>
+  <button type="button" class="btn btn-psb btn-psbpurple" (click)="callMarkCompleted(data?.fileId, data?.revertFlag)">
+    <i class="zmdi zmdi-lock mr-1"></i> Confirm
+  </button>
+</div>

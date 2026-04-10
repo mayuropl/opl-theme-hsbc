@@ -1,0 +1,396 @@
+// FOR LIVELIHOOD SCSS START Created By @mihir
+.min-height-auto {
+    min-height: auto !important;
+}
+
+// .Main-heading-dual-Cont {
+//     .Btn-Drop_Down-dual-Cont {
+//         &.btn-drop {
+//             .dash-Download {
+//                 //  width: 27% !important;
+//             }
+//         }
+//     }
+// }
+// s
+// .teaser-Center-view {
+//     .teaserView-text {
+//         span:nth-child(1) {
+//             //   opacity: 0.7;
+//         }
+//     }
+// }
+// .DetailsCard-teaserView {
+//     .teaserView-complney-details {
+//         // &.down-width-tsv {
+//         // box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+//         // border: 1px solid #EBEBEB;
+//         // border-radius: 8px;
+//         // margin: 0;
+//         // padding: 20px !important;
+//         // }
+//     }
+// }
+// .TeaserView-company-details {
+//     .card-title {
+//         // font-size: $fs-18;
+//         // padding-bottom: 10px;
+//         // font-weight: 600;
+//         // padding-left: 10px;
+//     }
+// }
+.DetailsCard-teaserView {
+    .TeaserView-company-details {
+        &.sub-CTsv-details {
+            width: 92%;
+            margin: 0 4%;
+            // span {
+            //     &:nth-child(2) {
+            //         // font-weight: bold;
+            //         // text-align: right;
+            //         // color: #343A40;
+            //     }
+            // }
+        }
+    }
+}
+
+// .app_view_card_sec {
+//     float: $fl;
+//     width: $w-100;
+//     padding: 0 20px;
+//     box-sizing: border-box;
+//     .text-heading-cards {
+//         .main-text-heading {
+//             font-size: $fs-22;
+//             line-height: $lh-28;
+//             padding-bottom: 20px;
+//             margin-bottom: 0;
+//             font-weight: bold;
+//             padding-left: 36px;
+//         }
+//     }
+//     .DetailsCard-teaserView {
+//         display: block;
+//         .teaserView-complney-details {
+//             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+//             border: 1px solid #EBEBEB;
+//             border-radius: 8px;
+//             margin: 0;
+//             min-height: auto !important;
+//             padding: 20px !important;
+//             .card-body {
+//                 span {
+//                     &:nth-child(3) {
+//                         font-weight: bold;
+//                     }
+//                     p {
+//                         padding-bottom: 5px;
+//                         &:last-child {
+//                             padding-bottom: 0;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     td {
+//         em {
+//             font-size: $fs-14;
+//             font-weight: bold;
+//             font-style: normal;
+//             &.text-green {
+//                 color: $opl-success;
+//             }
+//             &.text-orange {
+//                 color: $opl-warning;
+//             }
+//         }
+//     }
+// }
+.DetailsCard-teaserView {
+    .teaserView-complney-details {
+        .card-body {
+            span {
+                p {
+                    padding-bottom: 5px;
+                    &:last-child {
+                        padding-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// .lhl-app-view-tsv-creditDetails_table {
+//     .table {
+//         thead {
+//             th {
+//                 font-weight: $f-w600;
+//                 border-bottom-width: 1px;
+//                 &:nth-child(2) {
+//                     width: 30%;
+//                 }
+//             }
+//         }
+//     }
+// }
+// .lhl-app-view-tsv-micro_creditPlan_table {
+//     .table {
+//         thead {
+//             th {
+//                 font-weight: $f-w600;
+//                 border-bottom-width: 1px;
+//                 &:nth-child(1) {
+//                     // width: 10%;
+//                 }
+//                 &:nth-child(2) {
+//                     width: 67%;
+//                 }
+//                 &:nth-child(3) {
+//                     width: 15%;
+//                 }
+//                 &:nth-child(4) {
+//                     width: 15%;
+//                 }
+//             }
+//         }
+//         tbody {
+//             td {
+//                 &:last-child {
+//                     font-weight: $f-w600;
+//                     color: $opl-Dgrey;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+/** LHL-Modal **/
+
+.Mediam-model {
+    // .modal-lg {
+    //     // max-width: 663px;
+    // }
+    .modal-header {
+        // padding: 30px 30px 10px;
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+}
+
+.input-group {
+    &.Common-form-icon {
+        .form-control {
+            border-right: none;
+        }
+        .input-group-text {
+            border-left: none;
+            color: #98A6AD;
+            font-size: 14px;
+            font-weight: 600;
+            background: transparent;
+        }
+    }
+}
+
+// For Main Dashboard Count 
+// .main-dash-Cont {
+//     .nav-bordered {
+//         .nav-tabs {
+//             .nav-link {
+//                 &.active {
+//                     opacity: 1;
+//                 }
+//                 opacity: 0.4;
+//             }
+//         }
+//     }
+// }
+.Common-download a {
+    font-weight: 600;
+}
+
+#map_container {
+    height: 500px;
+    min-width: 310px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+/** SUPER ADMIN LIVELIHOOD LOAN @mihir **/
+
+.max-w-102 {
+    max-width: 102px !important;
+}
+
+
+/** LHL Scheme View page **/
+
+.lhl-scheme-sa {
+    .Common-ps-FS-NP {
+        tbody {
+            tr {
+                td {
+                    color: $opl-Lgrey;
+                    font-weight: 400;
+                    &:nth-child(2) {
+                        color: rgba(0, 0, 0, 0.85);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal-footer {
+    &.footer-text-m {
+        .btn-footer-g {
+            width: auto;
+        }
+    }
+}
+
+.pl-26 {
+    padding-left: 26px;
+}
+
+.custom_error_design​​​ {
+    position: relative;
+    .errorClass {
+        position: absolute;
+        margin: 0;
+        top: 100%;
+    }
+}
+
+// Super Admin - User & Control HTML
+// Edit New Scheme Super Admin - Tab User & Access Control
+.jc-center {
+    justify-content: center;
+}
+
+.noBorder {
+    border: none !important;
+}
+
+.userAccessControl-subtable {
+    table {
+        width: 70%;
+        margin-left: 3%;
+    }
+    .userAccessControl-trTable {
+        thead {
+            tr {
+                th {
+                    &:nth-child(2) {
+                        width: 25%;
+                    }
+                    &:nth-child(3) {
+                        width: 25%;
+                    }
+                    &:nth-child(4) {
+                        width: 25%;
+                    }
+                    &:nth-child(5) {
+                        width: 25%;
+                    }
+                }
+            }
+        }
+        tbody {
+            tr {
+                td {
+                    &:nth-child(2) {
+                        width: 25%;
+                    }
+                    &:nth-child(3) {
+                        width: 25%;
+                    }
+                    &:nth-child(4) {
+                        width: 25%;
+                    }
+                    &:nth-child(5) {
+                        width: 25%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.min-w120 {
+    min-width: 120px;
+}
+
+.mt-15 {
+    margin-top: 15px;
+}
+
+.btn-bg-white {
+    background-color: $opl-white;
+}
+
+.fx-input {
+    td {
+        .input-group {
+            max-width: 180px;
+            margin-left: auto;
+        }
+    }
+}
+
+.subTable {
+    width: 100%;
+    tr {
+        td {
+            &:nth-child(2) {
+                width: 25% !important;
+            }
+            &:nth-child(3) {
+                width: 34.5%;
+            }
+        }
+        &:last-child {
+            border-bottom: none !important;
+        }
+    }
+}
+
+.Common-tsv-NPtable {
+    tbody {
+        tr {
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 1540px) and (min-width: 768px) {
+    .subTable {
+        tr {
+            td {
+                &:nth-child(3) {
+                    width: 35.5%;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 1366px) and (min-width: 768px){
+    .subTable {
+        tr {
+            td {
+                &:nth-child(3) {
+                    width: 36.5%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,167 @@
+// 
+// nav.scss
+//
+
+.nav-tabs,
+.nav-pills {
+  >li {
+    >a {
+      color: $gray-700;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+.nav-pills {
+  >a {
+    color: $gray-700;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+
+//Navtab custom
+.navtab-bg {
+  li {
+    >a {
+      background-color: $gray-200;
+      margin: 0 5px;
+    }
+  }
+}
+
+
+// Nav bordered
+
+.nav-bordered {
+  // border-bottom: 2px solid rgba($gray-600, 0.2) !important;
+
+  .nav-item {
+    margin-bottom: -14px;
+  }
+
+  li {
+    a {
+      border: 0 !important;
+      margin: 0px 20px 0;
+      padding-bottom: 1rem;
+      padding-top: 0;
+      &:first-of-type{
+        margin-left: 0 ;
+      }
+    }
+  }
+
+  a.active {
+    border-bottom: 2px solid $primary !important;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: block;
+  padding: $nav-link-padding-y 0;
+  text-decoration: if($link-decoration==none, null, none);
+
+  @include hover-focus() {
+    text-decoration: none;
+  }
+
+  // Disabled state lightens text
+  &.disabled {
+    color: $nav-link-disabled-color;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+//
+// Tabs
+//
+
+.nav-tabs {
+  border-bottom: 0;
+
+  .nav-item {
+    margin-bottom: -14px;
+  }
+
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    color: $nav-tabs-link-active-color;
+    background-color: $nav-tabs-link-active-bg;
+    border-color: $nav-tabs-link-active-border-color;
+  }
+
+  .dropdown-menu {
+    // Make dropdown border overlap tab border
+    margin-top: -$nav-tabs-border-width;
+    // Remove the top rounded corners here since there is a hard edge above the menu
+    @include border-top-radius(0);
+  }
+}
+
+
+//
+// Pills
+//
+
+.nav-pills {
+  .nav-link {
+    @include border-radius($nav-pills-border-radius);
+  }
+
+  .nav-link.active,
+  .show>.nav-link {
+    color: $nav-pills-link-active-color;
+    background-color: $nav-pills-link-active-bg;
+  }
+}
+
+
+//
+// Justified variants
+//
+
+.nav-fill {
+  .nav-item {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+.nav-justified {
+  .nav-item {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+  }
+}
+
+
+// Tabbable tabs
+//
+// Hide tabbable panes to start, show them when `.active`
+
+.tab-content {
+  >.tab-pane {
+    display: none;
+  }
+
+  >.active {
+    display: block;
+  }
+}
+
+
+.tab-content {
+  padding: 20px 0 0 0;
+}

@@ -1,0 +1,36 @@
+<div class="video-viewer-modal">
+  <button class="close-btn" (click)="onClose()">
+    <mat-icon>close</mat-icon>
+  </button>
+  
+  <h2 class="modal-title">{{ data.fileName }}</h2>
+  
+  <!-- Loading Spinner (shown while initial chunk is downloading) -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="60"></mat-spinner>
+    <p class="loading-text">Loading video...</p>
+  </div>
+  
+  <!-- Video Player with Native Browser Streaming -->
+<video
+      *ngIf="!isLoading"
+      #videoPlayer
+      [src]="videoSrc"
+      controls
+      autoplay
+      class="video-player"
+      preload="metadata">
+</video>
+
+
+  <div class="file-info">
+    <div class="info-row">
+      <span class="info-label">Format:</span>
+      <span class="info-value">video/mp4</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Uploaded On:</span>
+      <span class="info-value">{{ data.createdDate | date:'dd MMM yyyy, hh:mm a' }}</span>
+    </div>
+  </div>
+</div>

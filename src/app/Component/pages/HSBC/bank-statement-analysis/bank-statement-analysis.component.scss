@@ -1,0 +1,62 @@
+.rotate_icon{
+    i{
+        transform: rotate(180deg);
+    }
+}
+
+.none{
+    display: none;
+}
+
+.pos_rel1{
+  position: relative;
+}
+
+.pos_rel2{
+  position: relative;
+}
+
+.pos_rel3{
+  position: relative;
+}
+
+.subloaderShowing1{
+  height: 65vh;
+  overflow: hidden;
+  tr{
+    display: none;
+  }
+}
+
+.subloaderShowing2{
+  height: 65vh;
+  overflow: hidden;
+  tr{
+    display: none;
+  }
+}
+
+.subloaderShowing3{
+  height: 65vh;
+  overflow: hidden;
+  tr{
+    display: none;
+  }
+}
+
+.box_design_ttl_bar{
+  border-bottom: 1px solid #DCDFE0;
+}
+
+.intable_td{
+  padding: 10px 50px;
+}
+
+
+.no-data-cell {
+  text-align: center;          /* Center horizontally */
+  vertical-align: middle;      /* Center vertically within row */
+  height: 120px;               /* Adjust as needed */
+  font-weight: 500;            /* Optional styling */
+}
+

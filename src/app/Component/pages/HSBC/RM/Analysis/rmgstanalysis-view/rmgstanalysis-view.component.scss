@@ -1,0 +1,47 @@
+.w-300px {
+    width: 300px;
+}
+.clr_black {
+    color: #000;
+}
+.input_with_symbol{
+    input{
+        border: 1px solid #cccccc;
+        outline: none;
+        text-align: left;
+        display: inline-flex;
+        height: 30px;
+        font-weight: 600;
+        font-size: 14px;
+        color: #000000;
+        border-radius: 5px;
+    }
+}
+.exp_col_dtl {
+    .mdc-button {
+    min-width: auto;
+    line-height: 29px;
+    margin-left: 5px;
+    font-size: 13px;
+}}
+.slider_status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+   .fas {
+        font-size: 15px;
+    }
+} 
+.orange_text{
+color: #ff9900 !important;}
+
+.text_label{
+    font-weight: 500;
+    color: #000;
+    margin-right: 10px;
+}
+.note_box{
+    float: left;
+    width: 100%;
+    padding: 10px 20px;
+}

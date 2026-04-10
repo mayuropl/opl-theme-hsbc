@@ -1,0 +1,201 @@
+<section class="popup_design max-900 HSBC_Common_Pages op_exp">
+    <div class="popup_header" mat-dialog-title>
+        <h3>Audit log</h3>
+        <a class="modal_closeicn_btn" href="javascript:void(0)">
+            <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+        </a>
+    </div>
+    <div class="pop_up_container">
+        <mat-card-content>
+            <mat-dialog-content class="px-0 pt-0">
+                <div class="pop_up_container">
+                    <div class="popup_body">
+                        <div class="tableResponsive">
+                            <table class="table_design_new CommonTable_NP design_Main_listTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Sr. No.</th>
+                                        <th>Date</th>
+                                        <th>Campaign name</th>
+                                        <th class="text-center">Updated By</th>
+                                        <th>Status</th>
+                                        <!-- <th>Converted Value</th>-->
+                                        <th>Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container
+                                        *ngIf="paginatedDisplayAuditData && paginatedDisplayAuditData?.length > 0;else noData">
+                                        <tr *ngFor="let item of paginatedDisplayAuditData;let i=index">
+                                            <td class="text-center">{{ startIndex+i+1 }}</td>
+                                            <td>{{ getUpdatedDate(item?.updatedDate) || '-' }}</td>
+                                            <td>{{ item?.campaignName || '-' }}</td>
+                                            <td>{{ auditData?.rmName || '-' }}</td>
+                                            <td [ngClass]="getStatusValue(item)">{{ item?.convertRejectStatus || '-' }}
+                                            </td>
+                                            <td>{{ item?.remark || '-' }}</td>
+                                            <!-- <td> {{ item?.convertedValue || '-' }}</td>
+                                                <td [ngClass]="{'text-center': !item?.remark || item?.remark === '-'}"> {{ item?.remark || '-' }}</td> -->
+                                        </tr>
+                                    </ng-container>
+                                    <ng-template #noData>
+                                        <tr>
+                                            <td colspan="6" class="text-center">
+                                                <app-no-data-found
+                                                    message="No status updated yet for this customer in any campaign." />
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div class="pagination-table NP_LeftPagintion"
+                            *ngIf="paginatedDisplayAuditData != null || paginatedDisplayAuditData != undefined || paginatedDisplayAuditData?.length != 0">
+                            <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                <div class="dataTables_info" role="status" aria-live="polite">
+                                    Showing {{ paginatedDisplayAuditData?.length }} rows from {{ displayAuditData.length
+                                    }}
+                                    <div class="dataTables_length">
+                                        <div class="NP_HSBC_ComInput select-field">
+                                            <mat-form-field appearance="outline">
+                                                <mat-select [(value)]="selectedRowsPerPage"
+                                                    (selectionChange)="changePageSize($event.value)"
+                                                    [panelClass]="'pagination_select'">
+                                                    <mat-option *ngFor="let option of pageSizeOptions" [value]="option">
+                                                        {{ option }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <span class="grey_text">row per page</span>
+                                </div>
+                                <div class="text-md-right float-md-right pagination-rounded">
+                                    <ul class="pagination pagination-rounded psb-flex-end my-2">
+                                        <ngb-pagination [collectionSize]="displayAuditData.length" [maxSize]="3"
+                                            [(page)]="currentPage" [rotate]="true" [boundaryLinks]="true"
+                                            [pageSize]="selectedRowsPerPage"></ngb-pagination>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-dialog-content>
+            <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                <button mat-flat-button color="primary" matDialogClose>Ok</button>
+            </mat-dialog-actions>
+        </mat-card-content>
+    </div>
+</section>
+
+
+
+<section class="popup_design max-1000 HSBC_Common_Pages op_exp" style="display: none;">
+    <div class="popup_header" mat-dialog-title>
+        <h3>Audit log</h3>
+        <a class="modal_closeicn_btn" href="javascript:void(0)">
+            <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+        </a>
+    </div>
+    <div class="pop_up_container">
+        <mat-card-content>
+            <mat-dialog-content class="px-0 pt-0">
+                <div class="pop_up_container">
+                    <div class="popup_body">
+                        <div class="tableResponsive">
+                            <table class="table_design_new CommonTable_NP design_Main_listTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" width="5%">Sr. No.</th>
+                                        <th width="20%">Date & Time</th>
+                                        <th width="20%">Event Type</th>
+                                        <th width="20%">Performed By</th>
+                                        <th>Event Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>23-03-2026 10:51:12</td>
+                                        <td>Client Add to Campaign</td>
+                                        <td>Ananya Verma</td>
+                                        <td>Customer ABC Ltd added to campaign Q1 Growth Campaign by Ananya Verma</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>23-03-2026 10:51:12</td>
+                                        <td>Client Add to Campaign</td>
+                                        <td>Ananya Verma</td>
+                                        <td>System fetched latest revenue for ABC Ltd (selected products); recorded as
+                                            baseline</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>23-03-2026 10:51:12</td>
+                                        <td>Client Add to Campaign</td>
+                                        <td>Ananya Verma</td>
+                                        <td>Customer ABC Ltd added to campaign Q1 Growth Campaign by Ananya Verma</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">4</td>
+                                        <td>23-03-2026 10:51:12</td>
+                                        <td>Client Add to Campaign</td>
+                                        <td>Ananya Verma</td>
+                                        <td>Customer ABC Ltd segmented as Existing Revenue based on product-level
+                                            revenue</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">5</td>
+                                        <td>23-03-2026 10:51:12</td>
+                                        <td>Client Add to Campaign</td>
+                                        <td>Ananya Verma</td>
+                                        <td>Target ₹50,00,000 assigned to ABC Ltd using product-based method</td>
+                                    </tr>
+                                    <!-- <tr>
+                                                <td colspan="5" class="text-center">
+                                                    <app-no-data-found message="No status updated yet for this customer in any campaign." />
+                                            </tr> -->
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div class="pagination-table NP_LeftPagintion"
+                            *ngIf="paginatedDisplayAuditData != null || paginatedDisplayAuditData != undefined || paginatedDisplayAuditData?.length != 0">
+                            <div class="pagination-table NP_LeftPagintion mt_mb_20px p-0 border-0">
+                                <div class="dataTables_info" role="status" aria-live="polite">
+                                    Showing {{ paginatedDisplayAuditData?.length }} rows from {{ displayAuditData.length
+                                    }}
+                                    <div class="dataTables_length">
+                                        <div class="NP_HSBC_ComInput select-field">
+                                            <mat-form-field appearance="outline">
+                                                <mat-select [(value)]="selectedRowsPerPage"
+                                                    (selectionChange)="changePageSize($event.value)"
+                                                    [panelClass]="'pagination_select'">
+                                                    <mat-option *ngFor="let option of pageSizeOptions" [value]="option">
+                                                        {{ option }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <span class="grey_text">row per page</span>
+                                </div>
+                                <div class="text-md-right float-md-right pagination-rounded">
+                                    <ul class="pagination pagination-rounded psb-flex-end my-2">
+                                        <ngb-pagination [collectionSize]="displayAuditData.length" [maxSize]="3"
+                                            [(page)]="currentPage" [rotate]="true" [boundaryLinks]="true"
+                                            [pageSize]="selectedRowsPerPage"></ngb-pagination>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-dialog-content>
+            <!-- <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                        <button mat-flat-button color="primary" matDialogClose>Ok</button>
+                    </mat-dialog-actions> -->
+        </mat-card-content>
+    </div>
+</section>

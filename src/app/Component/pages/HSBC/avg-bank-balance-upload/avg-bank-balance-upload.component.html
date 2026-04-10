@@ -1,0 +1,182 @@
+<div class="container-fluid HSBC_Common_Pages">
+  <div class="__main_Container">
+    <form class="NP_Form"  autocomplete="off">
+      <div class="page_Title_sec">
+        <div class="page_Title_left">
+          <h4 class="cursor_pointer">
+          ABB of Current Accounts and TD
+          </h4>
+        </div>
+        <div class="page_Title_Right">
+          <div ngbDropdown container="body" class="dropdown d-inline">
+            <button mat-flat-button ngbDropdownToggle color="primary"
+            download>Download Template <i class="fas fa-caret-down ml-2"></i></button>
+         <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover download_template">
+                     <a ngbDropdownItem href="assets/files/Current_accounts.xlsx">
+                          Current Account
+                     </a>
+                     <a ngbDropdownItem href="assets/files/Term_Deposit.xlsx">
+                       Term Deposit
+                     </a>
+             </div>
+         </div>
+        </div>
+      </div>
+      <div class="page_Details">
+        <div class="box_design mb-3 p-3">
+          <div class="left_box">
+      <fieldset>
+        <div class="custom_month_picker" [ngClass]="{ disabled: disableOtherOptions }">
+          <div class="form_box">
+            <i class="fas fa-calendar-alt"></i>
+            <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date" bsDatepicker
+                   [disabled]="disableOtherOptions" [bsConfig]="bsConfig"
+                   (onShown)="onOpenCalendar($event)" readonly onkeydown="return false;">
+            <i class="fas fa-caret-down"></i>
+          </div>
+        </div>
+      </fieldset>
+
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedFileType" (change)="onFileTypeChange($event)" name="fileType">
+            <mat-radio-button value="2">Current account</mat-radio-button>
+            <mat-radio-button value="1">Term Deposit</mat-radio-button>
+            <mat-radio-button value="3" (click)="resetDate()" >One Time Upload</mat-radio-button>
+        </mat-radio-group>
+          </div>
+          <div class="NP_Com_Group">
+            <div class="dragDrop-Common" appDragDrop *ngIf="files.length == 0">
+              <div class="Input-text-Fill-Cutome">
+                 <input class="File-input-common" type="file"
+                    accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
+                    #fileDropRef id="fileUpload" name="fileUpload"
+                    (change)="fileBrowseHandler($event.target.files)" required />
+                <div class="Input-text-File">
+                  <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                  <p class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop <br />
+                    XLS or XLSX
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="files-list" *ngIf="files.length > 0">
+              <h2 class="file_list">Upload File <Span class="bedge">{{files.length}}</Span></h2>
+              <div class="single-file" *ngFor="let file of files; let i = index">
+                <div class="File-Progress">
+                  <div class="file-icon">
+                    <img src="assets/images/hsbc/FileUpload_Icon.svg" alt="File Icon">
+                  </div>
+                  <div class="info">
+                    <h4 class="name">
+                      {{ file?.name }}
+                    </h4>
+                  </div>
+                  <div class="delete" (click)="deleteFile(i)">
+                    <em class="fmdi fmdi-delete IC-red mr-2"></em> Remove
+                  </div>
+                </div>
+                <mat-progress-bar class="Progreebar-File" mode="determinate" value="{{file.progress}}" [max]="100">
+                </mat-progress-bar>
+              </div>
+              <div class="__Btn_Group __MT15px __JcEnd">
+                <button mat-stroked-button color="primary" class="btn_design"
+                  (click)='uploadata()'><mat-icon>arrow_upward_alt</mat-icon> Upload File</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="box_design">
+          <div class="box_design_ttl_bar">
+            <div class="box_design_ttl_bar_left">
+              <h4>File Uploads History</h4>
+            </div>
+          </div>
+          <div class="box_design_details p-0">
+            <div class="tableResponsive" appTableScroll>
+              <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap no_sticky_table">
+                <thead>
+                  <tr class="tr_lightred_bg">
+                    <th width="5%">Sr. No.</th>
+                    <th>File Name</th>
+                    <th>Uploaded On</th>
+                    <th>File Type</th>
+                    <th>Month/Year</th>
+                    <th>Status</th>
+                    <th class="text-right">Successful Entries</th>
+                    <th class="text-right">Failed Entries</th>
+                    <th class="text-right pr-3">Total Entries</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="bulkUploadHistory">
+                    <tr *ngFor="let historyData of bulkUploadHistory; let i=index">
+                      <td data-label="Sr. No."> {{ startIndex + i + 1 }}</td>
+                      <td data-label="File Name">{{historyData?.fileName}}  <span> <i class="fas fa-info-circle red_text mr-1" matTooltip="{{historyData?.fileUploadFailureReason}}" *ngIf="historyData?.stage_id == 3"></i>
+                       </span> </td>
+
+                      <td data-label="Uploaded On">{{historyData?.createdDate |
+                        date:'dd MMM yyyy hh:mm:ss'}}</td>
+                        <td>{{ getLabelByValue(historyData?.fileType) }}</td>
+                        <td>{{getMonthName(historyData?.UploadedFileMonth) }} - {{historyData?.UploadedFileYear}}</td>
+                        <td><span [ngClass]="{
+                          'orange_badge': historyData?.stage_id === 1,
+                          'green_badge': historyData?.stage_id === 2,
+                          'lightred_badge': historyData?.stage_id === 3,
+                      }">{{getStatus(historyData?.stage_id)}}</span>
+                      </td>
+                      <td data-label="Successful Entries" class="text-right">{{historyData?.successEntries}} <a
+                          href="javscript:void(0)" (click)="getData(1,historyData)" ><i
+                            class="fas fa-download green_text cursor_pointer ml-1"></i></a></td>
+                      <td data-label="Failed Entries" class="text-right">{{historyData?.failEntries}} <a
+                          href="javscript:void(0)" (click)="getData(2,historyData)"><i
+                            class="fas fa-download red_text cursor_pointer ml-1"></i></a></td>
+                      <td data-label="Total Entries" class="text-right pr-3">{{historyData?.totalEntries}} <a
+                          href="javscript:void(0)" (click)="getData(3,historyData)" ><i
+                            class="fas fa-download grey_l_text cursor_pointer ml-1"></i></a></td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="pagination-table NP_LeftPagintion">
+            <div class="col-sm-12 col-md-5">
+              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                Showing
+                {{(startIndex+1)}} to
+                {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                {{totalSize}}
+                row
+                <div class="dataTables_length" id="tickets-table_length">
+                  <div class="NP_HSBC_ComInput select-field">
+                    <mat-form-field appearance="outline">
+                      <mat-select [(ngModel)]="pageSize" id="pagesizee" #pagesizee [panelClass]="'pagination_select'"
+                        (change)="pageSizeChange(pagesizee.value,page) ;onChangePage(page);" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                          {{pages.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-right float-md-right pagination-rounded">
+
+                <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                  <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                    [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                  </ngb-pagination>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

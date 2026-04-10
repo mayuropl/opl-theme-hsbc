@@ -1,0 +1,13 @@
+.files-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .file_list{
+        margin: 0;
+    }
+}
+.number_list{
+    font-size: 14px;   
+    color: #000;
+}

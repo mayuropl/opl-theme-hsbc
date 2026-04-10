@@ -1,0 +1,45 @@
+//
+// Premium font - Cerebri Sans
+//
+$CerebriSans: "../../../fonts/" !default;
+
+@font-face {
+  font-family: "Cerebri Sans,sans-serif";
+  src: url("#{$CerebriSans}cerebrisans-light.eot");
+  src: local("Cerebri-sans Light"),
+  url("#{$CerebriSans}cerebrisans-light.woff") format("woff");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Cerebri Sans,sans-serif";
+  src: url("#{$CerebriSans}cerebrisans-regular.eot");
+  src: local("Cerebri-sans Regular"),
+  url("#{$CerebriSans}cerebrisans-regular.woff") format("woff");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Cerebri Sans,sans-serif";
+  src: url("#{$CerebriSans}cerebrisans-medium.eot");
+  src: local("Cerebri-sans Medium"),
+  url("#{$CerebriSans}cerebrisans-medium.woff") format("woff"),
+  url("#{$CerebriSans}cerebrisans-medium.woff2") format("woff2");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Cerebri Sans,sans-serif";
+  src: url("#{$CerebriSans}cerebrisans-semibold.eot");
+  src: local("Cerebri-sans Semibold"),
+  url("#{$CerebriSans}cerebrisans-semibold.woff") format("woff");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Cerebri Sans,sans-serif";
+  src: url("#{$CerebriSans}cerebrisans-bold.eot");
+  src: local("Cerebri-sans Bold"),
+  url("#{$CerebriSans}cerebrisans-bold.woff") format("woff");
+  font-weight: 700;
+}

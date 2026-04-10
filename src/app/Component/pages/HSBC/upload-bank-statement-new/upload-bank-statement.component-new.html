@@ -1,0 +1,193 @@
+<div class="container-fluid HSBC_Common_Pages designUpdate_page">
+  <div class="__main_Container">
+    <form class="NP_Form" [formGroup]="uploadForm">
+
+      <div class="page_Title_sec auto_set_top">
+        <div class="page_Title_left">
+          <h4 class="cursor_pointer" (click)="navBack();">
+            <em class="fa fa-arrow-left mr-2"></em>
+            Upload Bank Statement
+          </h4>
+          <p class="note_text"> <span class="red_text mr-1">Note:</span>External Bank Statement Analysis for scanned pdf
+            may take approximately 2–3 hours to complete. You will be notified once the report is ready.</p>
+        </div>
+
+        <div class="page_Title_right">
+          <div class="date_top_right" formGroupName="header">
+
+            <!-- Status Badge -->
+            <div class="d-flex align-items-center" *ngIf="header.get('status')?.value">
+              <span *ngIf="header.get('status')?.value === '2'">
+                <i class="fas fa-info-circle red_text mr-1" [matTooltip]="header.get('message')?.value"></i>
+              </span>
+              <span *ngIf="header.get('status')?.value === '1'" class="green_badge suess_text mr-2">
+                <i class="fas fa-check-circle mr-1"></i>Success
+              </span>
+              <span *ngIf="header.get('status')?.value === '0'" class="orange_badge pending_text mr-2">
+                <i class="fas fa-check-circle mr-1"></i>Pending
+              </span>
+              <span *ngIf="header.get('status')?.value === '2'" class="lightred_badge fail_text mr-2">
+                <i class="fas fa-check-circle mr-1"></i>Failed
+              </span>
+            </div>
+
+            <!-- FROM Month -->
+            <fieldset>
+              <div class="custom_month_picker">
+                <div class="form_box">
+                  <input formControlName="fromMonth" autocomplete="off" class="form-control" name="date"
+                    placeholder="From Date" bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'MM/YYYY', maxDate: header?.get('toMonth')?.value ? header?.get('toMonth')?.value : maxDate }"
+                    (onShown)="onOpenCalendar($event)">
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- TO Month -->
+            <fieldset>
+              <div class="custom_month_picker">
+                <div class="form_box">
+                  <input formControlName="toMonth" autocomplete="off" class="form-control" name="date" bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'MM/YYYY', maxDate: maxDate ,minDate: header?.get('fromMonth')?.value }"
+                    placeholder="To Date" (onShown)="onOpenCalendar($event)">
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="filter_details checkbox_lists">
+              <mat-checkbox formControlName="isScanned">Request has scanned pdf</mat-checkbox>
+            </div>
+
+          </div> <!-- end header group -->
+        </div>
+      </div>
+
+      <!-- Uploads Array -->
+      <ng-container formArrayName="uploads">
+        <div *ngFor="let group of uploads.controls; let i = index" [formGroupName]="i" class="mb-4">
+          <div class="page_Details">
+            <mat-card class="box_design with_padding">
+
+              <div class="upload_bank_mange">
+
+                <!-- Bank Select -->
+                <fieldset [disabled]="disableFields(i)">
+                  <div class="input_field">
+                    <mat-form-field appearance="outline" class="full-width">
+                      <mat-label>Select Bank name</mat-label>
+
+                      <input type="text" matInput placeholder="Bank" [matAutocomplete]="auto" formControlName="bank"
+                        required>
+
+                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onBankSelected($event, i)">
+                        <mat-option *ngFor="let bank of filteredOptionsList[i] | async" [value]="bank.id">
+                          {{ bank.bankName }}
+                        </mat-option>
+                      </mat-autocomplete>
+
+                      <button matSuffix mat-icon-button tabindex="-1">
+                        <mat-icon>arrow_drop_down</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                </fieldset>
+
+                <fieldset [disabled]="disableFields(i)">
+                  <div class="custom_month_picker"></div>
+                </fieldset>
+
+                <fieldset [disabled]="disableFields(i)">
+                  <div class="custom_month_picker"></div>
+                </fieldset>
+
+                <fieldset>
+                  <input type="file" accept="application/pdf" hidden #fileInput (change)="onFileSelected($event, i)"
+                    multiple />
+                  <button mat-flat-button class="btn_design mat-primary" (click)="openFileDialog(fileInput)">
+                    <i class="fas fa-arrow-up mr-2"></i>Upload File
+                  </button>
+                </fieldset>
+
+                <div class="delete_Icon">
+                  <mat-icon class="blckTxt cursor_pointer ml-2" style="margin-left: 8px; margin-top: 13px;"
+                    *ngIf="getFiles(i).length <= 0"
+                    (click)="removeUploadGroup(i, uploads.at(i).get('isSaved')?.value, uploads.at(i).get('accId')?.value)">cancel</mat-icon>
+                </div>
+
+              </div>
+            </mat-card>
+
+            <mat-card class="box_design with_padding mt-2" *ngIf="getFiles(i)?.length">
+              <div class="files-list">
+                <h2 class="file_list">{{ uploads.at(i).get('bank')?.value || 'Bank' }} Uploaded File <span
+                    class="bedge">{{ getFiles(i)?.length }}</span></h2>
+                <div class="right_side">
+                  <span class="error_text mr-2" *ngIf="isScannedLimitExceeded(i)">only 12 scanned files allowed
+                    per bank</span>
+                  <button
+                    [disabled]="uploads.at(i).get('isSaved')?.value === true || !uploads.at(i).valid || isScannedLimitExceeded(i)"
+                    mat-flat-button class="btn_design green_btn ln_40" (click)="submit(i)">Save</button>
+                  <button [disabled]="disabled()" mat-flat-button class="btn_design mat-primary ln_40 ml-2"
+                    (click)="removeUploadGroup(i,uploads.at(i).get('isSaved')?.value,uploads.at(i).get('accId')?.value)">
+                    Remove
+                  </button>
+                </div>
+              </div>
+
+              <div class="files_list_Grp tableResponsive">
+                <div *ngFor="let fileCtrl of getFiles(i).controls; let j = index" class="singlefile_View"
+                  [formGroup]="fileCtrl">
+                  <div class="fileProgress">
+                    <div class="FileName_IconUpload">
+                      <span class="number_list">{{ j + 1 }}</span>
+
+                      <div class="file_Icon green_text">
+                        <mat-icon>description</mat-icon>
+                      </div>
+
+                      <div class="info">
+                        <h4 class="fileName mb-1">{{ fileCtrl.get('file')?.value?.name }}</h4>
+                        <div class="Progreebar">
+                          <mat-progress-bar [value]="fileCtrl.get('progress')?.value"></mat-progress-bar>
+                        </div>
+                      </div>
+
+                      <div class="password_View">
+                        <mat-form-field>
+                          <input matInput type="password" placeholder="Password" formControlName="password">
+                        </mat-form-field>
+                      </div>
+
+                      <div class="delete_Icon">
+                        <mat-icon class="primary lightGreentxt">check_circle</mat-icon>
+                        <mat-icon class="blckTxt" [class.disabled]="disabled()"
+                          (click)="removeFile(i, j, uploads.at(i).get('isSaved')?.value, fileCtrl.get('id')?.value)">
+                          cancel
+                        </mat-icon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </mat-card>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Submit Buttons -->
+      <div class="Btn_Common_Grp __Btn_Group mt-4 jc-end">
+        <button mat-stroked-button color="secondary" class="btn_design"
+          [disabled]="!addMoreButtonDisable() || disabled()" (click)="addUploadGroup()">
+          <i class="fas fa-plus-circle mr-1"></i> Add Another Bank Account
+        </button>
+        <button [disabled]="submitDisabled()" (click)="submitAccounts()" type="button" mat-flat-button color="primary">
+          Submit
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

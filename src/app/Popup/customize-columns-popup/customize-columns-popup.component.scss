@@ -1,0 +1,76 @@
+.HSBC_Common_Pages{
+    flex-direction: column;
+}
+
+.outside_label{
+    font-size: 14px !important;
+    color: #000 !important;
+    font-weight: 500 !important;
+    margin-bottom: 5px;
+}
+
+.left_side{
+    display: flex;
+    flex-direction: column;
+}
+
+.msg_text{
+    font-size: 12px;
+    color: #6f6f6f;
+     display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 0;
+    i{
+        margin-bottom: -2px;
+        line-height: 100%;
+    }
+}
+
+.list_check_text {
+    mat-checkbox.mandatory_column {
+        opacity: 0.7;
+        
+        ::ng-deep .mdc-checkbox {
+            pointer-events: none;
+        }
+        
+        ::ng-deep .mdc-label {
+            color: #6B7280;
+        }
+    }
+    
+    .mandatory_badge {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 2px 8px;
+        background: #FEF3C7;
+        color: #92400E;
+        font-size: 10px;
+        font-weight: 600;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+}
+
+
+.no-results {
+    color: #999;
+    font-size: 13px;
+    text-align: center;
+    padding: 15px;
+    margin: 0;
+}
+
+.customizedrag_list {
+    overflow: hidden;
+}
+
+.searchBox_input{
+    padding-bottom: 10px;
+}
+.drag_listwrap{
+    max-height: 350px;
+    overflow-y: auto;
+}

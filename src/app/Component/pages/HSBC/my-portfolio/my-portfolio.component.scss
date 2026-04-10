@@ -1,0 +1,536 @@
+.with_filtertop{
+  gap: 10px;
+}
+.light_badge{
+  background: #fcebec;
+  border: 1px solid #FEC2C2;
+  border-radius: 30px;
+  color: #32327F;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  justify-content: center;
+}
+// Corporate Action & News tab - full page static layout
+.corporate-action-page {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+   padding: 0;
+}
+
+.corporate-action-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.corporate-action-sidebar {
+  flex-shrink: 0;
+  width: 300px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.corporate-action-sidebar-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  color: #262626;
+}
+
+
+.corporate-action-category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.corporate-action-category-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px;
+  font-size: 13px;
+  color: #424242;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  &:hover {
+    background: #EDF2F4B0;
+    border-left-color: #32327F;
+  }
+
+  &.active {
+    color: #000000;
+    font-weight: 600;
+    border-left-color: #32327F;
+    background: #EDF2F4B0;
+  }
+}
+
+.top_tab_section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  gap: 10px;
+  .left_side_btn {
+    ul {
+      display: flex;
+      align-items: center;
+      background: #FFFFFF;
+      box-shadow: 0px 3px 12px #0000000A;
+      border: 1px solid #09111D1F;
+      border-radius: 8px;
+      padding: 5px;
+      margin: 0;
+      li {
+        list-style: none;
+        color: #000;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 5px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        &+li{
+          margin-left: 10px;
+        }
+        &.active{
+          background: #32327F;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .right_side_btn {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    .input_field{
+      max-width: 150px;;
+    }
+  }
+}
+
+.corporate-action-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+}
+
+.corporate-action-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  max-height: calc(100vh - 330px);
+}
+
+.corporate-action-news-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.corporate-action-news-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #EDF2F47F;
+  border-bottom: 1px solid #E1E2E3;
+  padding: 15px;
+}
+
+.corporate-action-news-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.corporate-action-news-content {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rounded_icon {
+  background: #fff;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  line-height: 40px;
+  border: 1px solid #DBE6E9;
+  color: #00847F;
+  border-radius: 100%;
+  font-size: 16px;
+}
+
+.corporate-action-news-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 10px 0 0;
+  color: #262626;
+  line-height: 1.35;
+}
+
+.corporate-action-news-title-link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .corporate-action-news-title {
+    color: #00847F;
+  }
+}
+
+.corporate-action-news-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+}
+
+.corporate-action-news-desc {
+  font-size: 13px;
+  color: #616161;
+  line-height: 1.5;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+}
+.list_design {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  max-width: 80%;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 20px;
+  li {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #6B7280;
+    width: 15%;
+    span {
+      font-size: 13px;
+      font-weight: 500;
+      color: #262626;
+    }
+  }
+}
+.corporate-action-news-meta {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #97A4B7;
+    font-size: 12px;
+
+    &+li {
+      margin-left: 25px;
+      list-style: disc;
+    }
+  }
+}
+
+::ng-deep {
+  .tab_without_bg {
+    .mat-mdc-tab-header {
+      background: transparent !important;
+      border: 0 !important;
+      border-bottom: 1px solid #DCDFE0 !important;
+    }
+
+    .mat-mdc-tab.mdc-tab--active {
+      box-shadow: none !important;
+    }
+  }
+}
+
+.custom_daterange_picker {
+  .inner_inp_box {
+    border: 1px solid #DBE6E9;
+    border-radius: 30px;
+    color: #8188A5;
+    height: 40px;
+    position: relative;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    .calendar-label {
+      white-space: nowrap;
+      pointer-events: none;
+      color: #333333;
+      font-size: 13px;
+      font-weight: 500;
+      z-index: 1;
+    }
+
+    .calendar-input-hidden {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    ::ng-deep {
+      &::placeholder {
+        color: #8188A5;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    .form-control {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      height: 100%;
+      min-width: 180px;
+    }
+  }
+  ::ng-deep {
+    .md-drppicker {
+      width: max-content !important;
+      min-width: unset !important;
+      margin-top: 30px;
+      padding-bottom: 55px !important;
+       td.available {
+        color: #000 !important;
+      }
+
+      td.off {
+        color: #bababa !important;
+      }
+
+      td.off.disabled {
+        text-decoration: none !important;
+        color: #e0e0e0 !important;
+        pointer-events: none;
+      }
+
+      td.active,
+      td.start-date,
+      td.end-date {
+        background-color: #00847F !important;
+        color: #fff !important;
+        border-radius: 4px;
+        border-color: transparent !important;
+      }
+
+       td.in-range:not(.start-date):not(.end-date) {
+        background-color: rgba(0, 132, 127, 0.15) !important;
+        color: #000 !important;
+      }
+
+      .calendar.right {
+        display: none !important;
+      }
+
+      .buttons_input {
+        position: absolute !important;
+        bottom: 10px !important;
+        left: 10px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        gap: 10px;
+        flex-direction: row-reverse !important; // HTML: [Clear] [Apply] -> Reverse it visually
+        justify-content: flex-end !important; // Stick them left together
+        width: 100%;
+
+        .btn {
+          border-radius: 4px !important;
+          min-width: 80px;
+          font-weight: 600;
+          height: 32px;
+          font-size: 13px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 !important;
+          text-transform: uppercase;
+
+          svg {
+            display: none;
+          }
+        }
+
+        .btn.clear {
+          background-color: transparent !important;
+          color: #32327F !important;
+          border: 1px solid #32327F !important;
+        }
+
+        .btn:not(.clear) {
+          background-color: #32327F !important;
+          color: #fff !important;
+          border: 1px solid #32327F !important;
+          display: flex !important; // Override the global hide
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .corporate_inner_tab {
+    .mat-mdc-tab-header {
+      .mat-mdc-tab-label-container {
+        max-width: 55%;
+      }
+    }
+
+  }
+}
+
+.corporate_inner_tab_wrapper {
+  position: relative;
+}
+
+::ng-deep .corporate_inner_tab_wrapper {
+  .corporate_inner_tab_more_count {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    height: 48px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+}
+
+// Custom header: visible tab labels + "More N" dropdown (like reference image)
+.corporate_inner_tab_header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  min-height: 48px;
+
+  .corporate_inner_tab_visible {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .corporate_inner_tab_btn {
+    padding: 0 16px;
+    min-width: 64px;
+    height: 48px;
+    border: none;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+  }
+
+  .corporate_inner_tab_more_btn {
+    padding: 0 16px;
+    height: 48px;
+    border: none;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+    .fa-chevron-down {
+      font-size: 12px;
+    }
+  }
+}
+
+
+.small_icon_btn{
+  font-size: 11px;
+ }
+
+::ng-deep{
+  .reset-option{
+    position: sticky !important;
+    bottom: -8px !important;
+    background: #fff !important;
+    padding: 10px 0 !important;
+    border-top: 1px solid #DBE6E9;
+    button{
+      min-width: 70px !important;
+      font-size: 12px;
+      line-height: 30px;
+    }
+    .mdc-list-item__primary-text{
+      margin-left: auto;
+      margin-right: 10px !important;
+    }
+    .mat-pseudo-checkbox{
+      display: none !important;
+    }
+  }
+  .design_select{
+    min-width: 220px;
+  }
+ }
+
+
+
+ .inp_calender{
+  border: 0;
+  font-size: 12px;
+  min-width: 150px;
+  outline: none;
+ }
+
+

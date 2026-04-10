@@ -1,0 +1,352 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+        <div class="page_Title_sec">
+            <div class="page_Title_left">
+                <h4 class="cursor_pointer">
+                    CRIF Commercial PR Data
+                </h4>
+            </div>
+
+            <div class="page_Title_Right d-flex">
+                <div class="input_field mr-2">
+                    <mat-form-field appearance="outline" class="w-200px">
+                      <mat-label>Download Customers</mat-label>
+                      <mat-select placeholder="Download Input File">
+                        <mat-option (click)="submit(4)" value="1">Download All Customer</mat-option>
+                        <mat-option (click)="UploadCustomer_popup()" value="2">Download Selected Customer</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="input_field" *ngIf="false">
+                    <mat-form-field appearance="outline" class="w-200px mr-2">
+                      <mat-label>Module</mat-label>
+                      <mat-select [(ngModel)]="selectedModule" placeholder="Download Input File" (ngModelChange)="onModuleChange()">
+                        <mat-option value="1">PR Data File</mat-option>
+                        <mat-option value="2">PR Status File</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="input_field">
+                    <mat-form-field appearance="outline" class="w-200px mr-2">
+                      <mat-label>File ID</mat-label>
+                      <mat-select [(ngModel)]="selectedFileId" placeholder="Select File ID">
+                        <mat-option *ngFor="let file of filteredFileIdDropdown" [value]="file.fileId">
+                            {{file?.fileName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+                <div ngbDropdown class="dropdown d-inline">
+                    <button type="submit" mat-flat-button color="primary" class="br_8" ngbDropdownToggle>
+                        Download Template <i class="fas fa-caret-down ml-2"></i>
+                    </button>
+                    <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover download_template">
+                        <a ngbDropdownItem href="assets/files/account_file_template.xlsx" download>
+                            Account
+                        </a>
+                        <a ngbDropdownItem href="assets/files/inquiry_file_template.xlsx" download>
+                            Inquiry
+                        </a>
+                        <a ngbDropdownItem href="assets/files/summary_file_template.xlsx" download>
+                            Summary
+                        </a>
+                        <a ngbDropdownItem href="assets/files/ioi_file_template.xlsx" download>
+                            IOI
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page_Details">
+            <!-- File Upload Section -->
+            <div class="box_design mb-3 p-3">
+             <div class="NP_Com_Group">
+                <div class="upload_file_box w-100">
+                    <h3 class="file_title">Account</h3>
+                    <div class="file-upload" [ngClass]="{'light_green_bg': accountFile}">
+                        <div class="file_inside_group">
+                            <div class="left_side_box" *ngIf="!accountFile">
+                                <label class="file-upload-label" for="accountFileInput">
+                                    <mat-icon>upload</mat-icon> Choose File
+                                </label>
+                                <input type="file" id="accountFileInput" (change)="onFileSelected($event, 'account')" accept=".xls,.xlsx,.csv"/>
+                                <span class="no_file_selected">No File Chosen</span>
+                            </div>
+                            <div class="file_name_list" *ngIf="accountFile">
+                                <span class="selected_file">
+                                    {{accountFile.name}}
+                                    <a class="remove-link red_text ml-1" (click)="removeFile('account')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="upload_file_box w-100">
+                    <h3 class="file_title">Inquiry</h3>
+                    <div class="file-upload" [ngClass]="{'light_green_bg': inquiryFile}">
+                        <div class="file_inside_group">
+                            <div class="left_side_box" *ngIf="!inquiryFile">
+                                <label class="file-upload-label" for="inquiryFileInput">
+                                    <mat-icon>upload</mat-icon> Choose File
+                                </label>
+                                <input type="file" id="inquiryFileInput" (change)="onFileSelected($event, 'inquiry')" accept=".xls,.xlsx,.csv"/>
+                                <span class="no_file_selected">No File Chosen</span>
+                            </div>
+                            <div class="file_name_list" *ngIf="inquiryFile">
+                                <span class="selected_file">
+                                    {{inquiryFile.name}}
+                                    <a class="remove-link red_text ml-1" (click)="removeFile('inquiry')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="upload_file_box w-100">
+                    <h3 class="file_title">Summary</h3>
+                    <div class="file-upload" [ngClass]="{'light_green_bg': summaryFile}">
+                        <div class="file_inside_group">
+                            <div class="left_side_box" *ngIf="!summaryFile">
+                                <label class="file-upload-label" for="summaryFileInput">
+                                    <mat-icon>upload</mat-icon> Choose File
+                                </label>
+                                <input type="file" id="summaryFileInput" (change)="onFileSelected($event, 'summary')" accept=".xls,.xlsx,.csv"/>
+                                <span class="no_file_selected">No File Chosen</span>
+                            </div>
+                            <div class="file_name_list" *ngIf="summaryFile">
+                                <span class="selected_file">
+                                    {{summaryFile.name}}
+                                    <a class="remove-link red_text ml-1" (click)="removeFile('summary')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="upload_file_box w-100">
+                    <h3 class="file_title">IOI</h3>
+                    <div class="file-upload" [ngClass]="{'light_green_bg': ioiFile}">
+                        <div class="file_inside_group">
+                            <div class="left_side_box" *ngIf="!ioiFile">
+                                <label class="file-upload-label" for="ioiFileInput">
+                                    <mat-icon>upload</mat-icon> Choose File
+                                </label>
+                                <input type="file" id="ioiFileInput" (change)="onFileSelected($event, 'ioi')" accept=".xls,.xlsx,.csv"/>
+                                <span class="no_file_selected">No File Chosen</span>
+                            </div>
+                            <div class="file_name_list" *ngIf="ioiFile">
+                                <span class="selected_file">
+                                    {{ioiFile.name}}
+                                    <a class="remove-link red_text ml-1" (click)="removeFile('ioi')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="__Btn_Group __MT15px __JcEnd">
+                    <button mat-flat-button color="primary" class="br_8" [disabled]="btnDisabled || !selectedFileId || !accountFile || !inquiryFile || !summaryFile || !ioiFile" (click)="procced()">Submit</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- History Table -->
+        <div class="box_design">
+            <div class="box_design_ttl_bar">
+                <div class="box_design_ttl_bar_left">
+                    <h4>File Uploads History</h4>
+                </div>
+            </div>
+            <div class="box_design_details p-0">
+                <div class="tableResponsive" appTableScroll>
+                    <table class="CommonTable_NP NP_BGBHSBC Mobile_table_View_NP no_stripe_borderX_table">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                                <th width="6.5%">Sr. No.</th>
+                                <th>File Name</th>
+                                <th>Download Status</th>
+                                <th>Input Download Date</th>
+                                <th>File Upload Date</th>
+                                <th>Successful Entries</th>
+                                <!-- <th>Error</th>
+                                <th>No-Hit Cases</th> -->
+                                <th>Data Not Received</th>
+                                <th>Total Customer</th>
+                                <th>Upload Status Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loading -->
+                            <tr *ngIf="isLoading">
+                                <td colspan="11" class="text-center p-3">Loading...</td>
+                            </tr>
+
+                            <!-- Data rows -->
+                            <ng-container *ngFor="let item of uploadHistory; let i = index">
+                                <tr>
+                                    <td>
+                                        <button mat-icon-button class="matIcon red_icn mr-2" (click)="toggleDetails(item.fileId)"
+                                            [ngClass]="{'rotate_icon': expandedFileId === item.fileId}">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                        {{(page - 1) * pageSize + (i + 1)}}
+                                    </td>
+                                    <td>{{item.fileName || '-'}}</td>
+                                    <td>
+                                        <span class="badge" [ngClass]="getStatusClass(item.statusCode)">
+                                            {{getStatusLabel(item.statusCode)}}
+                                        </span>
+                                    </td>
+                                    <td>{{item.inputDownloadDate ? (item.inputDownloadDate | date:'dd MMM yyyy HH:mm:ss') : '-'}}</td>
+                                    <td>{{item.fileUploadDate ? (item.fileUploadDate | date:'dd MMM yyyy HH:mm:ss') : '-'}}</td>
+                                    <td>
+                                        {{item.successEntries || 0}}
+                                        <i class="fas fa-download green_text cursor_pointer ml-1"
+                                           *ngIf="item.successEntries > 0"
+                                           (click)="downloadData(item.fileId, 2, item.fileName + '_success')"></i>
+                                    </td>
+                                    <!-- <td>
+                                        {{item.errorCount || '-'}}
+                                        <i class="fas fa-download red_text cursor_pointer ml-1"
+                                           *ngIf="item.errorCount > 0"
+                                           (click)="downloadData(item.fileId, 2, item.fileName + '_error')"></i>
+                                    </td>
+                                    <td>
+                                        {{item.noHitCases || 0}}
+                                        <i class="fas fa-download green_text cursor_pointer ml-1"
+                                           *ngIf="item.noHitCases > 0"
+                                           (click)="downloadData(item.fileId, 4, item.fileName + '_nohit')"></i>
+                                    </td> -->
+                                    <td>
+                                        {{item.dataNotReceived || 0}}
+                                        <i class="fas fa-download green_text cursor_pointer ml-1"
+                                           *ngIf="item.dataNotReceived > 0"
+                                           (click)="downloadData(item.fileId, 3, item.fileName + '_not_received')"></i>
+                                    </td>
+                                    <td>
+                                        {{item.totalCustomer || 0}}
+                                        <i class="fas fa-download cursor_pointer ml-1"
+                                           *ngIf="item.totalCustomer > 0"
+                                           (click)="downloadData(item.fileId, 1, item.fileName + '_total')"></i>
+                                    </td>
+                                    <td>
+                                        <span class="green_badge cursor_pointer" *ngIf="item.statusCode === 2 && !item.completed"
+                                              (click)="markFileComplete(item.fileId)">
+                                            Mark File ID Complete
+                                        </span>
+                                        <span class="green_badge disabled_badge" *ngIf="item.completed">
+                                            Mark File ID Complete <i class="fas fa-check-circle ml-2 mr-0"></i>
+                                        </span>
+                                        <span class="red_badge" *ngIf="item.statusCode === 3">
+                                            Failed
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Expandable detail row -->
+                                <tr class="collapsing_tr" *ngIf="expandedFileId === item.fileId && item.fileWiseData?.length > 0">
+                                    <td colspan="11">
+                                        <div class="box_design">
+                                            <div class="tableResponsive inside_table">
+                                                <table class="bordered_table w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr.No</th>
+                                                            <th>File Type</th>
+                                                            <th>Upload Date & Time</th>
+                                                            <th>Status</th>
+                                                            <th>Successful Entries</th>
+                                                            <th>Failed Entries</th>
+                                                            <th>Total Entries</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let detail of item.fileWiseData; let j = index">
+                                                            <td>{{j + 1}}</td>
+                                                            <td>{{detail.fileType || '-'}}</td>
+                                                            <td>{{detail.createdDate ? (detail.createdDate | date:'dd MMM yyyy HH:mm:ss') : '-'}}</td>
+                                                            <td>{{detail.stageId === 2 ? 'Success' : detail.stageId === 3 ? 'Failed' : 'Pending'}}
+                                                                 <span *ngIf="detail.stageId === 3 && detail?.fileUploadFailureReason">
+                                                                <i class="fas fa-info-circle red_text ml-1"
+                                                                matTooltip="{{detail?.fileUploadFailureReason}}">
+                                                                </i>
+                                                            </span>
+                                                            </td>
+                                                            <td>
+                                                                {{detail.successEntries || 0}}
+                                                                <i class="fas fa-download green_text cursor_pointer ml-1"
+                                                                   *ngIf="detail.successEntries > 0"
+                                                                   (click)="downloadSubListData(detail.id, 1, detail.fileType + '_success')"></i>
+                                                            </td>
+                                                            <td>
+                                                                {{detail.failEntries || 0}}
+                                                                <i class="fas fa-download red_text cursor_pointer ml-1"
+                                                                   *ngIf="detail.failEntries > 0"
+                                                                   (click)="downloadSubListData(detail.id, 0, detail.fileType + '_failed')"></i>
+                                                            </td>
+                                                            <td>
+                                                                {{detail.totalEntries || 0}}
+                                                                <i class="fas fa-download cursor_pointer ml-1"
+                                                                   *ngIf="detail.totalEntries > 0"
+                                                                   (click)="downloadSubListData(detail.id, 1, detail.fileType + '_total')"></i>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+
+                            <!-- No data -->
+                            <tr *ngIf="!isLoading && uploadHistory.length === 0">
+                                <td colspan="11" class="text-center p-3">No records found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-table NP_LeftPagintion" *ngIf="totalSize > 0">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info mb-2" role="status" aria-live="polite">
+                        Showing {{startIndex + 1}} to
+                        {{(pageSize * page) > totalSize ? totalSize : (pageSize * page)}} of
+                        {{totalSize}} row
+                        <div class="dataTables_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select [(ngModel)]="pageSize"
+                                                [panelClass]="'pagination_select'"
+                                                (ngModelChange)="pageSizeChange($event)">
+                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                            {{pages.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5">
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page"
+                                            [rotate]="true" [boundaryLinks]="true" [pageSize]="pageSize"
+                                            (pageChange)="onChangePage($event)">
+                            </ngb-pagination>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

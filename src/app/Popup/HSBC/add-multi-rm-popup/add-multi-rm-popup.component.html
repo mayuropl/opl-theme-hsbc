@@ -1,0 +1,88 @@
+<section class="popup_design max-500 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <div class="lottie_icn">
+                <lottie-player class="__HSBC_lotties_Not" src="../assets/images/Json/userid.json"
+                    background="transparent" speed="1" loop autoplay></lottie-player>
+            </div>
+            <h3 class="mt-2">Please select the User id to whom <br> you want to share this customer</h3>
+        </div>
+
+        <mat-dialog-content class="px-0">
+            <form [formGroup]="rmForm">
+              <div class="popup_body">
+                <div class="max_center_box">
+                  <div formArrayName="rmList">    
+                    <div *ngFor="let rm of rmList.controls; let i = index" [formGroupName]="i" class="box_wrap mt-2">
+                      <div class="form_content">
+                        <fieldset class="mn_select input_field">
+                          <mat-form-field appearance="outline" class="w-100" [hideRequiredMarker]="true">
+                            <mat-label>RM ID</mat-label>
+
+                            <input type="text"
+                               placeholder="Enter RM ID"
+                               aria-label="Number"
+                               matInput
+                               formControlName="rmId"
+                               maxlength="8"
+                               inputmode="numeric"
+                               pattern="[0-9]*"   (input)="onRmIdChange(i)"
+                               (blur)="onRmIdBlur(i)"  
+                               (optionSelected)="onRmIdSelected($event, i)" 
+                               [matAutocomplete]="autoId">
+                               
+                               <mat-autocomplete autoActiveFirstOption #autoId="matAutocomplete" (optionSelected)="onRmIdSelected($event, i)">
+                                <mat-option *ngFor="let option of optionsRmIds" [value]="option">
+                                    {{ option }}
+                                  </mat-option>
+                              </mat-autocomplete>
+                          </mat-form-field>
+                        </fieldset>
+          
+                        <fieldset class="mn_select ml-2 input_field">
+                          <mat-form-field appearance="outline" class="w-100" [hideRequiredMarker]="true">
+                            <mat-label>RM Name</mat-label>
+
+                            <input type="text"
+                            placeholder="Enter RM Name"
+                            aria-label="Number"
+                            matInput
+                            formControlName="rmName" (input)="onRmNameChange(i)"
+                            (optionSelected)="onRmNameSelected($event, i)" 
+                            [matAutocomplete]="autoName">
+
+                     <mat-autocomplete autoActiveFirstOption #autoName="matAutocomplete" (optionSelected)="onRmNameSelected($event, i)">
+                       <mat-option *ngFor="let option of optionsNames" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                     </mat-autocomplete>  
+                        </mat-form-field>
+                        </fieldset>
+          
+                        <a *ngIf="i > 0" class="ml-1 close_button" (click)="removeRM(i)">
+                          <i class="fi fi-rr-cross-small"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div 
+                    *ngIf="rmList.length < maxUsers"
+                    class="add_link_wrapper mt-2">
+                    <a *ngIf="rmList.length < maxUsers" (click)="addRM()" class="red_text add_link mt-2" style="cursor: pointer; display: inline-block;"> + Add More </a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-dialog-content>
+          
+
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" [disabled]="isShareDisabled" (click)="submit()">Share</button>
+            <button mat-stroked-button color="primary" [mat-dialog-close]="true">Cancel</button>
+        </mat-dialog-actions>
+    </div>
+</section>

@@ -1,0 +1,938 @@
+<div class="container-fluid HSBC_Common_Pages leftMenu">
+  <!-- (scroll)="onWindowScroll($event)" -->
+  <app-page-title title="Bureau Configuration" ></app-page-title>
+<!--                  [breadcrumbItems]="breadCrumbItems"-->
+
+<mat-tab-group class="tabbing_design tab_auto" [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
+
+  <mat-tab label="Bureau Configuration">
+    <mat-card-content class="px-0">
+    <div class="__main_Container">
+      <div class="card-box" *ngIf="hide == true">
+        <div class="__Top_Heading_GRP" id="stick-headerN">
+          <div class="Top_Heading_Txt_left">
+            <h4 class="Heading__H4">
+              Take actions for your configuration from here
+            </h4>
+          </div>
+          <div class="Top_Heading__Right __Btn_Cont __MWidth20">
+            <button mat-stroked-button color="primary" (click)="Bureau_Confirm_Popup()">Exit</button>
+            <button mat-flat-button color="primary" (click)="Bureau_Confirm_Popup()">Save & Active</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-box">
+        <div class="__Top_Heading_GRP __PB_20">
+          <div class="Top_Heading_Txt_left">
+            <h4 class="Heading__H4">Bureau Preferences</h4>
+            <p class="Heading__P">Set the preferences for bureau configuration. So that you can access the Bureau
+              database.</p>
+          </div>
+        </div>
+        <div class="Common_flag_group cal_normal">
+          <div class="Common_flag_group_sub">
+            <div class="common_flag_heding">
+              <div class="common_txt_switch">
+                <h4 class="h4_Heading">CIBIL Base version</h4>
+                <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+              </div>
+              <span class="text-muted">Active Since {{modifiedDate | date: 'dd MMM yyyy HH:mm:ss'}}</span>
+            </div>
+            <div class="Common_cont_flag_group">
+              <div class="common_flag_link_grp">
+                <span class="icon_txt_common dangerColor" *ngIf="!commercialActive"> <em class="fmdi fmdi-info"> </em>Commercial</span>
+                <span class="icon_txt_common successColor" *ngIf="commercialActive"> <em class="fmdi fmdi-shield-check"> </em>Commercial</span>
+                <div class="common_flag_link">
+                  <a *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.UPDATE)"
+                    href="javascript:void(0);" (click)="Bureau_Change_Popup(1)" [ngStyle]="{'pointer-events': isConfigViewMode ? 'none': 'auto'}" >Update</a>
+                  <!-- <a href="javascript:void(0);" (click)="Bureau_Status_Popup()">Status</a> -->
+                  <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+                  <ui-switch  *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.ACTIVE_INAVTIVE)" class="switch_NP" [disabled] = "isConfigViewMode==true" [(ngModel)]="isCibilCheck"
+                (click)="updateSource()"
+                size="small"  ></ui-switch>
+                </div>
+              </div>
+              <div class="common_flag_link_grp">
+                <span class="icon_txt_common dangerColor" *ngIf="!consumerActive"> <em class="fmdi fmdi-info"></em>Consumer</span>
+                <span class="icon_txt_common successColor" *ngIf="consumerActive"> <em class="fmdi fmdi-shield-check"></em>Consumer</span>
+                <div class="common_flag_link">
+                  <a *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.UPDATE)"
+                    href="javascript:void(0);" (click)="Bureau_Change_Popup(2)" [ngStyle]="{'pointer-events': isConfigViewMode ? 'none': 'auto'}">Update</a>
+                  <!-- <a href="javascript:void(0);" (click)="Bureau_Status_Popup()">Status</a> -->
+                  <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+
+                  <!-- Open when Layer 7 is developed for consumer -->
+                  <!-- <ui-switch  *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.ACTIVE_INAVTIVE)" class="switch_NP" [disabled] = "isConfigViewMode==true" [(ngModel)]="isCibilCheck"
+                (click)="updateSource()"
+                size="small"  ></ui-switch> -->
+                <ui-switch
+                    *ngIf="commonService.isActionAvailable(pageData, consValue.pageMaster.CONFIGURATIONS, consValue.PageActions.ACTIVE_INAVTIVE)"
+                    class="switch_NP"
+                    [disabled]="true"
+                    size="small"
+                    [(ngModel)]="isCheckedConsumer">
+                  </ui-switch>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="Common_flag_group_sub">
+            <div class="common_flag_heding">
+              <div class="common_txt_switch">
+                <h4 class="h4_Heading"> CIBIL Layer7</h4>
+
+                <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+              </div>
+              <!-- <span class="text-muted">Active Since {{modifiedDate | date: 'dd MMM yyyy HH:mm:ss'}}</span> -->
+            </div>
+            <div class="Common_cont_flag_group">
+              <div class="common_flag_link_grp">
+                <span class="icon_txt_common dangerColor" *ngIf="!commercialActive"> <em class="fmdi fmdi-info"> </em>Commercial</span>
+                <span class="icon_txt_common successColor" *ngIf="commercialActive"> <em class="fmdi fmdi-shield-check"> </em>Commercial</span>
+                <div class="common_flag_link">
+                  <a *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.UPDATE)"
+                    href="javascript:void(0);" (click)="layer7_change_Popup(1)" [ngStyle]="{'pointer-events': isConfigViewMode ? 'none': 'auto'}" >Update</a>
+                  <!-- <a href="javascript:void(0);" (click)="Bureau_Status_Popup()">Status</a> -->
+                  <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+                  <ui-switch  *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.ACTIVE_INAVTIVE)" class="switch_NP" [disabled] = "isConfigViewMode==true" [(ngModel)]="isCibilLayer7Check"
+                (click)="updateSource()"
+                size="small"  ></ui-switch>
+                </div>
+              </div>
+              <div class="common_flag_link_grp">
+                <span class="icon_txt_common dangerColor" *ngIf="!consumerActive"> <em class="fmdi fmdi-info"></em>Consumer</span>
+                <span class="icon_txt_common greyColor" *ngIf="consumerActive"> <em class="fmdi fmdi-shield-check"></em>Consumer</span>
+                <div class="common_flag_link">
+                  <a *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.UPDATE)"
+                    href="javascript:void(0);" (click)="layer7_change_Popup(2)" [ngStyle]="{'pointer-events': isConfigViewMode ? 'none': 'auto'}">Update</a>
+                  <!-- <a href="javascript:void(0);" (click)="Bureau_Status_Popup()">Status</a> -->
+                  <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+
+                  <!-- Open when Layer 7 is developed for consumer -->
+                  <ui-switch  *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.ACTIVE_INAVTIVE)" class="switch_NP" [disabled] = "true"
+                size="small"  ></ui-switch>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="Common_flag_group_sub" *ngIf="hide ==true">
+            <div class="common_flag_heding">
+              <div class="common_txt_switch">
+                <h4 class="h4_Heading">Experian</h4>
+                <ui-switch class="switch_NP" size="small"></ui-switch>
+              </div>
+              <span class="text-muted">Active since 20 march 2020 2:30 PM</span>
+            </div>
+            <div class="Common_cont_flag_group">
+              <div class="common_flag_link_grp">
+                <span class="icon_txt_common dangerColor"> <em class="fmdi fmdi-info"> </em>Commercial</span>
+                <div class="common_flag_link">
+                  <a href="javascript:void(0);" (click)="Bureau_Change_Popup()">Update</a>
+                  <!-- <a href="javascript:void(0);" (click)="Bureau_Status_Popup()">Status</a> -->
+                  <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+                </div>
+              </div>
+              <div class="common_flag_link_grp">
+                <span class="icon_txt_common successColor"> <em class="fmdi fmdi-shield-check">
+                  </em>Consumer</span>
+                <div class="common_flag_link">
+                  <a href="javascript:void(0);" (click)="Bureau_Change_Popup()">Update</a>
+                  <!-- <a href="javascript:void(0);" (click)="Bureau_Status_Popup()">Status</a> -->
+                  <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+                <div class="Common_flag_group_sub" *ngIf="hide ==true">
+                  <div class="common_flag_heding">
+                    <div class="common_txt_switch">
+                      <h4 class="h4_Heading">Crif Highmark</h4>
+                      <ui-switch class="switch_NP" size="small"></ui-switch>
+                    </div>
+                    <span class="text-muted">Active since 20 march 2020 2:30 PM</span>
+                  </div>
+                  <!-- <div class="Common_cont_flag_group cirf_highmark">
+                    <span>Please activate to use services from Crif Highmark</span>
+                  </div> -->
+                  <div class="Common_cont_flag_group">
+                    <div class="common_flag_link_grp">
+                      <span class="icon_txt_common dangerColor"> <em class="fmdi fmdi-info"> </em>Commercial</span>
+                      <div class="common_flag_link">
+                        <a href="javascript:void(0);" (click)="Bureau_Change_Popup()">Update</a>
+                        <!-- <a href="javascript:void(0);" (click)="Bureau_Status_Popup()">Status</a> -->
+                        <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+                      </div>
+                    </div>
+                    <div class="common_flag_link_grp">
+                      <span class="icon_txt_common successColor"> <em class="fmdi fmdi-shield-check">
+                        </em>Consumer</span>
+                      <div class="common_flag_link">
+                        <a href="javascript:void(0);" (click)="Bureau_Change_Popup()">Update</a>
+                        <!-- <a href="javascript:void(0);" (click)="Bureau_Status_Popup()">Status</a> -->
+                        <!-- <ui-switch class="switch_NP" size="small"></ui-switch> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="__main_Container">
+              <div class="card-box" *ngIf="hide == true">
+                <div class="__Top_Heading_GRP" id="stick-headerN">
+                  <div class="Top_Heading_Txt_left">
+                    <h4 class="Heading__H4">
+                      Take actions for your configuration from here
+                    </h4>
+                  </div>
+                  <div class="Top_Heading__Right __Btn_Cont __MWidth20">
+                    <button mat-stroked-button color="primary" (click)="Bureau_Confirm_Popup()">Exit</button>
+                    <button mat-flat-button color="primary" (click)="Bureau_Confirm_Popup()">Save & Active</button>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="card-box">
+                <div class="__Top_Heading_GRP __PB_20">
+                  <div class="Top_Heading_Txt_left">
+                    <h4 class="Heading__H4">Rejection Remark</h4>
+                  </div>
+                </div>
+                <div class="Common_flag_group cal_normal">
+                  <div class="Common_flag_group_sub ">
+
+    <div class="common_flag_heding">
+      <div class="common_txt_switch">
+        <h4 class="h4_Heading">Rejection Remark</h4>
+      </div>
+
+    </div>
+
+    <mat-form-field appearance="outline" class="mt-2">
+      <mat-select required placeholder="Select Remark" [(ngModel)]="selectedRejectionReason">
+        <mat-option *ngFor="let reason of rejectionReasonList" [value]="reason">
+          {{ reason.reasonName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="mt-3"></div>
+    <div class="mt-1" appearance="outline">
+
+        <button mat-stroked-button
+            color="primary"
+            (click)="Rejection_Remark_Popup()"
+            >
+      Add
+    </button>
+      </div>
+    <div class="Common_cont_flag_group" *ngIf="selectedRejectionReason">
+      <div class="common_flag_link_grp">
+        <span class="icon_txt_common successColor">
+          {{ selectedRejectionReason?.reasonName }}
+        </span>
+
+                        <div class="common_flag_link">
+                          Update Button
+                          <a href="javascript:void(0);" class="mr-2"
+                            (click)="Rejection_Remark_Popup(selectedRejectionReason?.id, selectedRejectionReason?.reasonName)"
+                            [ngStyle]="{'pointer-events': isConfigViewMode ? 'none': 'auto'}">Update</a>
+
+                          Delete Button
+                          <a href="javascript:void(0);" (click)="deleteRejectionReasonList(selectedRejectionReason?.id)"
+                            [ngStyle]="{'pointer-events': isConfigViewMode ? 'none': 'auto'}">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <div class="card-box" *ngIf="hide ==true">
+              <div class="__Top_Heading_GRP __PB_20">
+                <div class="Top_Heading_Txt_left">
+                  <h4 class="Heading__H4">Bureau Priority</h4>
+                  <p class="Heading__P">Set the preferences for bureau configuration. So that you can access the Bureau
+                    database.</p>
+                </div>
+              </div>
+              <div class="Common_flag_group_NP cal_normal">
+                <div class="Common_flag_from_grp">
+                  <div class="common_flag_heding">
+                    <h4 class="h4_Heading">Choose Primary Bureau</h4>
+                    <span class="text-muted">This will be used as primary bureau. </span>
+                  </div>
+                  <div class="Common_cont_flag_group">
+                    <div class="common_flag_link_grp">
+                      <ng-select placeholder="Select" [items]="selectValue"> </ng-select>
+                    </div>
+                    <div class="common_flag_link_grp Bureau_Radio">
+                      <p>Do you want to configure secondary bureau in case of no information available ?</p>
+                      <div class="btn-group btn-group-toggle" ngbRadioGroup name="BillingAddress">
+                        <label ngbButtonLabel class="btn tab-product-name">
+                          <input ngbButton type="radio" [value]="1"> Yes
+                        </label>
+                        <label ngbButtonLabel class="btn tab-product-name">
+                          <input ngbButton type="radio" value="2"> No
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="Common_flag_from_grp">
+                  <div class="common_flag_heding">
+                    <h4 class="h4_Heading">Choose Secondary bureau</h4>
+                    <span class="text-muted">In case of No information available</span>
+                  </div>
+                  <div class="Common_cont_flag_group">
+                    <div class="common_flag_link_grp NO_SE">
+                      <span class="select_number">1</span>
+                      <ng-select placeholder="Experian" [items]="selectValue"> </ng-select>
+                    </div>
+                    <div class="common_flag_link_grp NO_SE">
+                      <span class="select_number">2</span>
+                      <ng-select placeholder="Crif Highmark" [items]="selectValue"> </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="Common_flag_from_grp">
+                  <div class="common_flag_heding">
+                    <h4 class="h4_Heading">In case of Technical error</h4>
+                    <span class="text-muted">In Case Primary Bureau is unable to find result. We will use this backup
+                      option.</span>
+                  </div>
+                  <div class="Common_cont_flag_group">
+                    <div class="common_flag_link_grp NO_SE">
+                      <span class="select_number">1</span>
+                      <ng-select placeholder="Experian" [items]="selectValue"> </ng-select>
+                    </div>
+                    <div class="common_flag_link_grp NO_SE">
+                      <span class="select_number">2</span>
+                      <ng-select placeholder="Crif Highmark" [items]="selectValue"> </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </mat-card-content>
+    </mat-tab>
+
+    <mat-tab label="Client Update"  *ngIf="(commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.CLIENT_UPDATE))">
+      <mat-card-content class="px-0">
+        <div class="__main_Container">
+          <div class="card-box">
+            <div class="__Top_Heading_GRP __PB_20 border_bottom">
+              <div class="Top_Heading_Txt_left">
+                <h4 class="Heading__H4">Manage Client Updates</h4>
+                <p class="Heading__P">Set the client status values used to track updates.</p>
+              </div>
+              <div class="searchBox_design">
+                <div class="searchBox_input">
+                  <div class="input_field serch_refresh">
+                    <mat-form-field appearance="outline">
+                      <input type="text" matInput placeholder="Enter New Updates" [(ngModel)]="clientUpdate"
+         name="clientUpdate"
+         maxlength="35"
+          (input)="onInputChange()" #clientUpdateInput="ngModel">
+                    </mat-form-field>
+                    <div class="error-message-overlay" *ngIf="clientUpdate && clientUpdate.length === 35">
+                      <small class="text-danger">Maximum 35 characters allowed</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="searchBox_btn ml-2">
+                  <button type="button" class="ln_40" mat-flat-button color="primary"
+                    (click)="saveClientUpdateRejectionDetails('CLIENT_UPDATE')" [disabled]="!isValidReason(clientUpdate)"
+>
+                    <i class="fas fa-plus-square mr-1"></i> Add Update
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="Common_flag_group cal_normal">
+               <div class="no_data_found_container" *ngIf="clientUpdateList.length === 0">
+                <app-no-data-found message="No data found"></app-no-data-found>
+              </div>
+               <div class="box_design box-shadow-0" *ngIf="clientUpdateList.length > 0">
+                <div class="box_design_ttl_bar border_bottom">
+                  <div class="box_design_ttl_bar_left">
+                    <h4>Client Update Details</h4>
+                  </div>
+                </div>
+                <div class="tableResponsive">
+                  <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table table_wrap">
+                    <thead>
+                      <tr class="tr_lightred_bg">
+                        <th width="5%">Sr.No</th>
+                        <th width="80%" >Client Update</th>
+                        <th width="15%" class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let update of paginatedClientUpdateList; let i = index">
+<td><b>{{ clientStartIndex + i + 1 }}</b></td>
+                        <td><b>{{ update.reasonName }}</b></td>
+                        <td class="text-center">
+                          <div class="table_action_toogle">
+                            <a href="javascript:void(0);"
+                            [ngClass]="update.isActive ? 'darkblue_text' : 'grey_text'"
+                              [ngStyle]="{'pointer-events': isConfigViewMode ? 'none': 'auto'}"
+                              class="link_text">{{ update.isActive ? 'Active' : 'Inactive' }}</a>
+                            <ui-switch class="switch_NP ml-2" size="small"
+                              [(ngModel)]="update.isActive"  (change)="toggleStatus($event, update)"
+                             ></ui-switch>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px">
+                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+{{ clientStartIndex + 1 }} to
+{{ (clientPage * clientPageSize) > clientTotalSize
+    ? clientTotalSize
+    : (clientPage * clientPageSize) }}
+of {{ clientTotalSize }} rows
+
+
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                               <mat-form-field appearance="outline">
+  <mat-select
+    [(ngModel)]="clientPageSize"
+    (ngModelChange)="onClientPageSizeChange($event)"
+    [panelClass]="'pagination_select'">
+
+    <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+      {{ pages.value }}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+
+                            </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                    </div>
+                     <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                           <ngb-pagination
+  [(page)]="clientPage"
+  [pageSize]="clientPageSize"
+  [collectionSize]="clientTotalSize"
+  (pageChange)="onClientPageChange($event)"
+  [maxSize]="3"
+  [rotate]="true"
+  [boundaryLinks]="true">
+</ngb-pagination>
+
+                        </ul>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-tab>
+
+    <mat-tab label="Customer Rejection Reasons" *ngIf="(commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.CUSTOMER_REJECTION_REASONS))">
+      <mat-card-content class="px-0">
+        <div class="__main_Container">
+          <div class="card-box">
+            <div class="__Top_Heading_GRP __PB_20 border_bottom">
+              <div class="Top_Heading_Txt_left">
+                <h4 class="Heading__H4">Customer Rejection Reasons</h4>
+                <p class="Heading__P">Configure the list of customer rejection reasons</p>
+              </div>
+              <div class="searchBox_design">
+                <div class="searchBox_input">
+                  <div class="input_field serch_refresh">
+ <mat-form-field appearance="outline">
+  <input matInput
+         placeholder="Enter New Reason"
+         [(ngModel)]="rejectionReason"
+         name="rejectionReason"
+         maxlength="35"
+         (input)="onInputChange()"
+         #reasonInput="ngModel">
+</mat-form-field>
+<div class="error-message-overlay" *ngIf="rejectionReason && rejectionReason.length === 35">
+  <small class="text-danger">Maximum 35 characters allowed</small>
+</div>
+
+                  </div>
+                </div>
+                <div class="searchBox_btn ml-2">
+    <button type="button"
+        mat-flat-button
+        color="primary"
+        (click)="saveClientUpdateRejectionDetails('REJECT_REASON')"
+        [disabled]="!isValidReason(rejectionReason)">
+  <i class="fas fa-plus-square mr-1"></i> Add Reason
+</button>
+                </div>
+              </div>
+            </div>
+            <div class="Common_flag_group cal_normal">
+               <div class="no_data_found_container" *ngIf="rejectionReasonList.length === 0">
+                <app-no-data-found message="No data found"></app-no-data-found>
+              </div>
+               <div class="box_design box-shadow-0" *ngIf="rejectionReasonList.length > 0">
+                <div class="box_design_ttl_bar border_bottom">
+                  <div class="box_design_ttl_bar_left">
+                    <h4>Rejection Details</h4>
+                  </div>
+                </div>
+                <div class="tableResponsive">
+                  <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table table_wrap">
+                    <thead>
+                      <tr class="tr_lightred_bg">
+                        <th width="5%">Sr.No</th>
+                        <th width="80%" >Rejection Reason</th>
+                        <th width="15%" class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let reason of paginatedRejectionList; let i = index">
+<td><b>{{ rejectionStartIndex + i + 1 }}</b></td>
+                        <td><b>{{ reason.reasonName}}</b></td>
+                        <td class="text-center">
+                          <div class="table_action_toogle">
+                            <a href="javascript:void(0);"
+                            [ngClass]="reason.isActive ? 'darkblue_text' : 'grey_text'"
+                              [ngStyle]="{'pointer-events': isConfigViewMode ? 'none': 'auto'}"
+                              class="link_text">{{ reason.isActive ? 'Active' : 'Inactive' }}</a>
+                            <ui-switch class="switch_NP ml-2" size="small"
+                              [(ngModel)]="reason.isActive" (change)="toggleStatus($event, reason)"
+                              [disabled]="isConfigViewMode"></ui-switch>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+                <div class="pagination-table NP_LeftPagintion mt_mb_20px">
+                    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                        Showing
+{{ rejectionStartIndex + 1 }} to
+{{ (rejectionPage * rejectionPageSize) > rejectionTotalSize
+    ? rejectionTotalSize
+    : (rejectionPage * rejectionPageSize) }}
+of {{ rejectionTotalSize }} rows
+
+                        <div class="dataTables_length" id="tickets-table_length">
+                            <div class="NP_HSBC_ComInput select-field">
+                                <mat-form-field appearance="outline">
+                                    <mat-select
+  [(ngModel)]="rejectionPageSize"
+  (ngModelChange)="onRejectionPageSizeChange($event)">
+  <mat-option *ngFor="let p of PageSelectNumber" [value]="p.value">
+    {{ p.value }}
+  </mat-option>
+</mat-select>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <span class="grey_text">row per page</span>
+                    </div>
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                            <ngb-pagination
+  [(page)]="rejectionPage"
+  [pageSize]="rejectionPageSize"
+  [collectionSize]="rejectionTotalSize"
+  (pageChange)="onRejectionPageChange($event)"
+  [maxSize]="3"
+  [rotate]="true"
+  [boundaryLinks]="true">
+</ngb-pagination>
+
+                        </ul>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-tab>
+
+    <mat-tab label="Staff Hierarchy Roles" >
+      <mat-card-content class="px-0">
+        <div class="__main_Container">
+          <div class="card-box">
+            <div class="__Top_Heading_GRP __PB_20 border_bottom">
+              <div class="Top_Heading_Txt_left">
+                <h4 class="Heading__H4">Manage Staff Hierarchy Roles</h4>
+                <p class="Heading__P">Configure the role types used in the hierarchy filter.</p>
+              </div>
+            </div>
+            <div class="Common_flag_group cal_normal">
+              <!-- Loading State -->
+              <div class="text-center py-4" *ngIf="staffHierarchyRolesLoading">
+                <mat-spinner diameter="40" class="mx-auto"></mat-spinner>
+                <p class="mt-2 text-muted">Loading hierarchy roles...</p>
+              </div>
+
+              <!-- Error State -->
+              <div class="no_data_found_container" *ngIf="!staffHierarchyRolesLoading && staffHierarchyRolesError">
+                <app-no-data-found [message]="staffHierarchyRolesError"></app-no-data-found>
+                <button mat-stroked-button color="primary" class="mt-2" (click)="loadStaffHierarchyRoles()">
+                  <i class="fas fa-sync-alt mr-1"></i> Retry
+                </button>
+              </div>
+
+              <!-- No Data State -->
+              <div class="no_data_found_container" *ngIf="!staffHierarchyRolesLoading && !staffHierarchyRolesError && staffHierarchyRoles.length === 0">
+                <app-no-data-found message="No hierarchy roles found"></app-no-data-found>
+              </div>
+
+              <!-- Data Table -->
+              <div class="box_design box-shadow-0" *ngIf="!staffHierarchyRolesLoading && !staffHierarchyRolesError && staffHierarchyRoles.length > 0">
+                <div class="box_design_ttl_bar border_bottom">
+                  <div class="box_design_ttl_bar_left">
+                    <h4>Hierarchy Role Details</h4>
+                  </div>
+                </div>
+                <div class="tableResponsive">
+                  <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table table_wrap">
+                    <thead>
+                      <tr class="tr_lightred_bg">
+                        <th width="5%">Sr.No</th>
+                        <th width="25%">RM Type</th>
+                        <th width="45%">RM Role</th>
+                        <th width="25%" class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let role of paginatedStaffRoles; let i = index">
+                        <td><b>{{ staffRoleStartIndex + i + 1 }}</b></td>
+                        <!-- RM Type Column - Display Only (Not Editable) -->
+                        <td>
+                          <span>{{ role.rmType }}</span>
+                        </td>
+                        <!-- RM Role Column with Inline Edit -->
+                        <td>
+                          <ng-container *ngIf="!isEditing(role, 'rmRole')">
+                            <span class="editable-text" (click)="startEditing(role, 'rmRole')"
+                                  [ngStyle]="{'cursor': isConfigViewMode ? 'default' : 'pointer'}">
+                              {{ role.rmRole }}
+                              <i class="fas fa-pencil-alt ml-2 edit-icon" *ngIf="!isConfigViewMode"></i>
+                            </span>
+                          </ng-container>
+                          <ng-container *ngIf="isEditing(role, 'rmRole')">
+                            <mat-form-field appearance="outline" class="inline-edit-field">
+                              <input matInput [(ngModel)]="editingValue"
+                                     (blur)="onEditBlur(role)"
+                                     (keydown)="onEditKeydown($event, role)"
+                                     maxlength="50"
+                                     autofocus>
+                            </mat-form-field>
+                          </ng-container>
+                        </td>
+                        <!-- Action Column -->
+                        <td class="text-center">
+                          <div class="table_action_toogle justify-content-center">
+                            <span class="cursor_pointer"
+                                  [ngClass]="role.isActive ? 'darkblue_text' : 'grey_text'">
+                              {{ role.isActive ? 'Active' : 'Inactive' }}
+                            </span>
+                            <ui-switch class="switch_NP ml-2" size="small"
+                              [(ngModel)]="role.isActive"
+                              (change)="toggleStaffRoleStatus(role, $event)"
+                              [disabled]="isConfigViewMode || !role.rmRole"></ui-switch>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <div class="pagination-table NP_LeftPagintion mt_mb_20px" *ngIf="!staffHierarchyRolesLoading && staffHierarchyRoles.length > 0">
+                <div class="dataTables_info" id="staff-role-table_info" role="status" aria-live="polite">
+                  Showing {{ staffRoleStartIndex + 1 }} to
+                  {{ (staffRolePage * staffRolePageSize) > staffRoleTotalSize ? staffRoleTotalSize : (staffRolePage * staffRolePageSize) }}
+                  of {{ staffRoleTotalSize }} rows
+                  <div class="dataTables_length" id="staff-role-table_length">
+                    <div class="NP_HSBC_ComInput select-field">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="staffRolePageSize" (ngModelChange)="onStaffRolePageSizeChange($event)">
+                          <mat-option *ngFor="let p of PageSelectNumber" [value]="p.value">
+                            {{ p.value }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <span class="grey_text">row per page</span>
+                </div>
+                <div class="text-md-right float-md-right pagination-rounded">
+                  <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                    <ngb-pagination
+                      [(page)]="staffRolePage"
+                      [pageSize]="staffRolePageSize"
+                      [collectionSize]="staffRoleTotalSize"
+                      (pageChange)="onStaffRolePageChange($event)"
+                      [maxSize]="3"
+                      [rotate]="true"
+                      [boundaryLinks]="true">
+                    </ngb-pagination>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-tab>
+
+    <mat-tab label="Preapproval Threshold" *ngIf="(commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.THRESHOLD_CONFIGURE))">
+      <mat-card-content class="px-0">
+        <div class="__main_Container">
+          <div class="card-box">
+            <div class="__Top_Heading_GRP __PB_20 border_bottom">
+              <div class="Top_Heading_Txt_left">
+                <h4 class="Heading__H4">Preapproval Threshold</h4>
+                <p class="Heading__P">Configure customer preapproval thresholds for bulk preapproval.</p>
+              </div>
+              <div class="Top_Heading__Right __Btn_Cont">
+                <div class="input_field">
+                  <mat-form-field appearance="outline" class="w-auto">
+                    <input type="text" placeholder="Enter threshold value" matInput
+                           [(ngModel)]="thresholdValue"
+                           (input)="onThresholdInput($event)"
+                           maxlength="10">
+                   </mat-form-field>
+                </div>
+                 <button type="button" mat-flat-button color="primary"
+                         (click)="saveClientUpdateRejectionDetails('BULK_PREAPPROVAL_THRESHOLD')"
+                         [disabled]="!thresholdValue || thresholdValue.length === 0">
+                   <i class="fas fa-plus-square mr-1"></i> Add Threshold
+                 </button>
+              </div>
+
+            </div>
+            <div class="Common_flag_group cal_normal border_top">
+               <!-- <div class="no_data_found_container">
+                <app-no-data-found message="No data found"></app-no-data-found>
+              </div> -->
+                 <h4 class="box_text"><i class="fi fi-sr-check-circle red_text vr_2 mr-1"></i> Customer threshold for bulk approval is set to <span class="red_text ml-1">{{ activeThresholdValue||0 }} Customers</span></h4>
+           </div>
+        </div>
+        </div>
+      </mat-card-content>
+    </mat-tab>
+
+    <mat-tab label="Receivable Finance - Configuration"  *ngIf="(commonService.isActionAvailable(pageData,consValue.pageMaster.CONFIGURATIONS,consValue.PageActions.RF_CONFIGURATIONS))">
+      <mat-card-content class="px-0">
+          <mat-tab-group mat-align-tabs="start" class="tabbing_design3">
+            <mat-tab label="Authorization Matrix">
+              <mat-card-content class="px-0">
+                <div class="box_design custom-red-outline mt-2">
+                  <mat-accordion class="accordion_design1 accordion_design2" [multi]="true">
+                      <mat-expansion-panel [expanded]="true">
+                          <mat-expansion-panel-header >
+                              <mat-panel-title><i class="fas fa-coins title_icon"></i>Authorization Matrix</mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <div class="accordion_content">
+
+                            <form  [formGroup]="authorizationMatrixForm" *ngIf="authorizationMatrixForm">
+                              <div class="tableResponsive">
+                                <table class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table table_wrap">
+                                  <tbody formArrayName="levels">
+                                   <tr *ngFor="let level of levelsFormArray.controls; let i = index" [formGroupName]="i">
+   
+                                     <td width="10%" class="red_text"><b>{{ level.get('ruleName')?.value }}</b></td>
+                                     <td width="45%"><b>{{ level.get('ruleDetails.parameterValue')?.value }}</b></td>
+   
+                                     <td width="45%" class="text-right" colspan="2">
+   
+                                       <mat-radio-group formControlName="limitType" (change)="onLimitTypeChange(i, $event.value)" class="d-flex align-items-center justify-content-start">
+                                         <div class="d-flex align-items-center">
+                                           <mat-radio-button value="amount"></mat-radio-button>
+   
+                                           <span class="grey_badge ml-2 mr-2 ln_30">
+                                             <span class="red_text p-0 fw-800 no_wrap"><= </span>
+                                           </span>
+   
+                                           <div class="input_field" formGroupName="ruleDetails">
+                                             <mat-form-field appearance="outline">
+   
+                                               <input matInput type="text" placeholder="Enter Amount" formControlName="value"/>
+                                               <mat-error *ngIf="level.get('ruleDetails.value')?.invalid && level.get('ruleDetails.value')?.touched && level.get('limitType')?.value !== 'noLimit'">
+                                                 <p class="error_text">Please enter a valid amount</p>
+                                               </mat-error>
+   
+                                               <mat-select matPrefix class="currency_select" panelClass="small_select" formControlName="subValue">
+                                                 <mat-select-trigger>
+                                                   {{getLevelCurrencySymbol(i)}}
+                                                 </mat-select-trigger>
+                                                 <mat-option *ngFor="let item of configMasteListRes?.CURRENCY" [value]="item.key">
+                                                   {{item.value}}
+                                                 </mat-option>
+                                               </mat-select>
+   
+                                               <mat-error *ngIf="level.get('ruleDetails.subValue')?.invalid && level.get('ruleDetails.subValue')?.touched && level.get('limitType')?.value !== 'noLimit'">
+                                                 <p class="error_text">Please enter a valid amount</p>
+                                               </mat-error>
+   
+                                             </mat-form-field>
+                                           </div>
+                                         </div>
+   
+                                         <div class="no-limit-option" *ngIf="canShowNoLimitOption(i)">
+                                           <mat-radio-button value="noLimit" [disabled]="!canShowNoLimitOption(i)">No Limit</mat-radio-button>
+                                         </div>
+                                       </mat-radio-group>
+                                     </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </form>
+                           </div>
+                      </mat-expansion-panel>
+                  </mat-accordion>
+
+                  <div class="mat-action">
+                      <div class="left_action">
+                      </div>
+                      <div class="right_action">
+                          <button type="button" mat-stroked-button color="primary" class="btn_design br_8"(click)="removeLatestLevel()"[disabled]="levelsFormArray.length <= 1">- Remove Latest level</button>
+                          <button type="button" mat-stroked-button color="primary" class="btn_design br_8 ml-2"(click)="addMoreLevel()"[disabled]="isAddMoreLevelDisabled()"> + Add More Level</button>
+                       </div>
+                  </div>
+              </div>
+
+              <div class="mat-action mt-4">
+                <div class="left_action"></div>
+                <div class="right_action">
+                    <button type="button" mat-stroked-button color="primary" class="btn_design br_8" (click)="cancelAuthorizationMatrix()">Cancel</button>
+                    <button type="button" mat-stroked-button color="primary" class="btn_design br_8 ml-2" (click)="saveAuthorizationMatrix()">
+                      <mat-icon class="material-symbols-outlined">save </mat-icon>Save</button>
+                 </div>
+            </div>
+              </mat-card-content>
+            </mat-tab>
+
+            <!-- <mat-tab label="HSBC Master Policy">
+              <mat-card-content class="px-0">
+                <div class="box_design custom-red-outline mt-2">
+                  <mat-accordion class="accordion_design1 accordion_design2" [multi]="true">
+                      <mat-expansion-panel [expanded]="true">
+                          <mat-expansion-panel-header >
+                              <mat-panel-title><i class="fas fa-coins title_icon"></i>HSBC Master Policy</mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <div class="accordion_content">
+                              <div class="input-box">
+                                <div class="input_field">
+                                  <mat-label><span>Insurer Name</span></mat-label>
+                                  <mat-form-field appearance="outline">
+                                    <input matInput type="text" placeholder="Enter Policy Name"/>
+                                  </mat-form-field>
+                                </div>
+                                <div class="input_field">
+                                  <mat-label><span>Reinsurer name</span></mat-label>
+                                  <mat-form-field appearance="outline">
+                                    <input matInput type="text" placeholder="Enter Policy Name"/>
+                                  </mat-form-field>
+                                </div>
+                                <div class="input_field">
+                                  <mat-label><span>Maximum Liability <i class="fas fa-info-circle ml-1"></i></span></mat-label>
+                                  <mat-form-field appearance="outline">
+                                    <input matInput type="text" placeholder="Enter Amount"/>
+                                    <mat-select matPrefix value="INR" class="currency_select" panelClass="slect_inp_new w-60">
+                                      <mat-option value="INR">₹</mat-option>
+                                      <mat-option value="USD">$</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="input_field">
+                                  <mat-label><span>Maximum Payment Terms <i class="fas fa-info-circle ml-1"></i></span></mat-label>
+                                  <mat-form-field appearance="outline">
+                                    <mat-select>
+                                      <mat-option value="1">1 Year</mat-option>
+                                      <mat-option value="2">2 Years</mat-option>
+                                      <mat-option value="3">3 Years</mat-option>
+                                      <mat-option value="4">4 Years</mat-option>
+                                      <mat-option value="5">5 Years</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="input_field">
+                                  <mat-label><span>Maximum Extension Period <i class="fas fa-info-circle ml-1"></i></span></mat-label>
+                                  <mat-form-field appearance="outline">
+                                    <mat-select>
+                                      <mat-option value="1">1 Year</mat-option>
+                                      <mat-option value="2">2 Years</mat-option>
+                                      <mat-option value="3">3 Years</mat-option>
+                                      <mat-option value="4">4 Years</mat-option>
+                                      <mat-option value="5">5 Years</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="input_field">
+                                  <mat-label><span>Non-Payment Notification Period</span></mat-label>
+                                  <mat-form-field appearance="outline">
+                                    <mat-select>
+                                      <mat-option value="1">1 Year</mat-option>
+                                      <mat-option value="2">2 Years</mat-option>
+                                      <mat-option value="3">3 Years</mat-option>
+                                      <mat-option value="4">4 Years</mat-option>
+                                      <mat-option value="5">5 Years</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="input_field">
+                                  <mat-label><span>Indemnity % <i class="fas fa-info-circle ml-1"></i></span></mat-label>
+                                  <mat-form-field appearance="outline">
+                                    <mat-select>
+                                      <mat-option value="1">1 Year</mat-option>
+                                      <mat-option value="2">2 Years</mat-option>
+                                      <mat-option value="3">3 Years</mat-option>
+                                      <mat-option value="4">4 Years</mat-option>
+                                      <mat-option value="5">5 Years</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="input_field">
+                                  <mat-label><span>Non-Qualifying Loss <i class="fas fa-info-circle ml-1"></i></span></mat-label>
+                                  <mat-form-field appearance="outline">
+                                    <input matInput type="text" placeholder="Enter Amount"/>
+                                    <mat-select matPrefix value="INR" class="currency_select" panelClass="slect_inp_new w-60">
+                                      <mat-option value="INR">₹</mat-option>
+                                      <mat-option value="USD">$</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                           </div>
+                      </mat-expansion-panel>
+                  </mat-accordion>
+
+                </div>
+                <div class="mat-action mt-4">
+                    <div class="left_action">
+                    </div>
+                    <div class="right_action">
+                        <button type="button" mat-stroked-button color="primary" class="btn_design br_8">Cancel</button>
+                        <button type="button" mat-stroked-button color="primary" class="btn_design br_8 ml-2"><mat-icon class="material-symbols-outlined">save </mat-icon>Save</button>
+                     </div>
+                </div>
+              </mat-card-content>
+            </mat-tab> -->
+
+          </mat-tab-group>
+      </mat-card-content>
+    </mat-tab>
+  </mat-tab-group>
+
+
+</div>

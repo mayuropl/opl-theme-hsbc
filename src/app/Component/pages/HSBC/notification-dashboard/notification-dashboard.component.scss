@@ -1,0 +1,71 @@
+.template-json-cell {
+  max-width: 300px;
+  
+  .json-preview {
+    word-break: break-word;
+    white-space: pre-wrap;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    background-color: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
+}
+
+.form_design {
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  textarea {
+    min-height: 80px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+  }
+}
+
+.page_Actions {
+  margin-top: 20px;
+  
+  button {
+    min-width: 100px;
+  }
+}
+
+.action_menu_btn {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+}
+
+.pagination-table {
+  margin-top: 20px;
+  
+  .dataTables_info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    .dataTables_length {
+      .mat-form-field {
+        width: 80px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .template-json-cell {
+    max-width: 200px;
+    
+    .json-preview {
+      font-size: 11px;
+    }
+  }
+}

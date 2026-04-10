@@ -1,0 +1,486 @@
+<section class="popup_design max-1000 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <mat-tab-group mat-align-tabs="start" class="tabs-design" animationDuration="0ms" #tabGroup>
+        <mat-tab label="Credit Rating Detail">
+            <mat-card-content>
+                <div class="pop_up_container">
+                    <!-- <div class="popup_header" mat-dialog-title>
+                        <h3>Credit Rating Details</h3>
+                    </div> -->
+                    <mat-dialog-content class="px-0">
+                        <div class="popup_body">
+                            <div class="table_sec">
+                                <div class="tableResponsive ">
+                                    <table
+                                        class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table ">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Rating Date
+                                                    <!-- <span class="shorting" (click)="toggleSort('ratingDate',true)">
+                                                        <mat-icon
+                                                            *ngIf="currentSortField !== 'ratingDate'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                            *ngIf="currentSortField === 'ratingDate' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                            *ngIf="currentSortField === 'ratingDate' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span> -->
+                                                    <span class="sort-container">
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-up"
+                                                            [class.active]="currentSortField === 'ratingDate' && sortDirection === 'ASC'"
+                                                            (click)="toggleSort('ratingDate', 'ASC', true)"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleSort('ratingDate', 'ASC', true)"
+                                                            (keydown.space)="toggleSort('ratingDate', 'ASC', true)"
+                                                            attr.aria-label="Sort by rating date ascending">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-down"
+                                                            [class.active]="currentSortField === 'ratingDate' && sortDirection === 'DESC'"
+                                                            (click)="toggleSort('ratingDate', 'DESC', true)"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleSort('ratingDate', 'DESC', true)"
+                                                            (keydown.space)="toggleSort('ratingDate', 'DESC', true)"
+                                                            attr.aria-label="Sort by rating date descending">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                                <th>Agency</th>
+                                                <th>Instrument Category</th>
+                                                <th>Instrument Details</th>
+                                                <th>Amount
+                                                    <!-- <span class="shorting" (click)="toggleSort('Amount',true)">
+                                                        <mat-icon
+                                                            *ngIf="currentSortField !== 'Amount'">unfold_more</mat-icon>
+                                                        <mat-icon
+                                                            *ngIf="currentSortField === 'Amount' && sortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon
+                                                            *ngIf="currentSortField === 'Amount' && sortDirection === 'DESC'">south</mat-icon>
+                                                    </span> -->
+                                                    <span class="sort-container">
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-up"
+                                                            [class.active]="currentSortField === 'Amount' && sortDirection === 'ASC'"
+                                                            (click)="toggleSort('Amount', 'ASC', true)"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleSort('Amount', 'ASC', true)"
+                                                            (keydown.space)="toggleSort('Amount', 'ASC', true)"
+                                                            attr.aria-label="Sort by amount ascending">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-down"
+                                                            [class.active]="currentSortField === 'Amount' && sortDirection === 'DESC'"
+                                                            (click)="toggleSort('Amount', 'DESC', true)"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleSort('Amount', 'DESC', true)"
+                                                            (keydown.space)="toggleSort('Amount', 'DESC', true)"
+                                                            attr.aria-label="Sort by amount descending">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                                <th>Unit</th>
+                                                <th>Rating</th>
+                                                <th>Development</th>
+                                                <th>Outlook</th>
+                                                <th>Link</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (creditRating of creditRatingProxy | slice: (creditRatingProxyPag.page()-1) *
+                                            creditRatingProxyPag.pageSize() : (creditRatingProxyPag.page()-1) *
+                                            creditRatingProxyPag.pageSize() + creditRatingProxyPag.pageSize() ; track $index) {
+                                            <tr>
+                                                <td data-label="Rating Date">{{creditRating.ratingDate || "-"}}</td>
+                                                <td data-label="Agency">{{creditRating.Agency || "-"}}</td>
+                                                <td data-label="Instrument Category">{{creditRating.Instrument_Category || "-"}}
+                                                </td>
+                                                <td data-label="Instrument Details">{{creditRating.Instrument_Detail || "-"}}</td>
+                                                <td data-label="Amount (INR)">{{creditRating.Amount || "-"}}</td>
+                                                <td data-label="Unit">{{creditRating?.Unit || "-"}}</td>
+                                                <td data-label="Rating">{{creditRating.Rating || "-"}}</td>
+                                                <td data-label="Development">{{creditRating.Development || "-"}}</td>
+                                                <td data-label="Outlook">{{creditRating.Outlook || "-"}}</td>
+                                                <td data-label="Link">
+                                                    <ng-container *ngIf="creditRating.Link; else elseTemplate">
+                                                        <a [href]="getCleanedLink(creditRating.Link)" target="_blank"
+                                                            class="view_link_btn">{{creditRating.Link}}</a>
+                                                    </ng-container>
+                                                    <ng-template #elseTemplate>
+                                                        -
+                                                    </ng-template>
+                                                </td>
+                                            </tr>
+
+                                            } @empty {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <app-no-data-found message="No record found" />
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                        Showing
+                                        {{(creditRatingProxyPag.startIndex()+1)}} to
+                                        {{(creditRatingProxyPag.pageSize()*creditRatingProxyPag.page()) >
+                                        (creditRatingProxyPag.totalSize) ? (creditRatingProxyPag.totalSize) :
+                                        (creditRatingProxyPag.pageSize()*creditRatingProxyPag.page())}} of
+                                        {{creditRatingProxyPag.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="creditRatingProxyPag.pageSize"
+                                                        [panelClass]="'pagination_select'">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="creditRatingProxyPag.totalSize" [maxSize]="3"
+                                                [(page)]="creditRatingProxyPag.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="creditRatingProxyPag.pageSize()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-dialog-content>
+                    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                        <button mat-flat-button color="primary" matDialogClose="">OK</button>
+                    </mat-dialog-actions>
+                </div>
+            </mat-card-content>
+        </mat-tab>
+        <mat-tab label="Company Level Rating (CRISIL)" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CUSTOMER_PROFILE,consValue.PageActions.COMPANAY_LEVEL_RATING)">
+            <mat-card-content>
+                <div class="pop_up_container">
+                    <!-- <div class="popup_header" mat-dialog-title>
+                        <h3>Credit Rating Details</h3>
+                    </div> -->
+                    <mat-dialog-content class="px-0">
+                        <div class="popup_body">
+                            <div class="table_sec">
+                                <div class="tableResponsive ">
+                                    <table
+                                        class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table ">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Rating Date
+                                                    <!-- <span class="shorting" (click)="toggleCompanySort('ratingDate')">
+                                                        <mat-icon *ngIf="companySortField !== 'ratingDate'">unfold_more</mat-icon>
+                                                        <mat-icon *ngIf="companySortField === 'ratingDate' && companySortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon *ngIf="companySortField === 'ratingDate' && companySortDirection === 'DESC'">south</mat-icon>
+                                                    </span> -->
+                                                    <span class="sort-container">
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-up"
+                                                            [class.active]="companySortField === 'ratingDate' && companySortDirection === 'ASC'"
+                                                            (click)="toggleCompanySort('ratingDate', 'ASC')"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleCompanySort('ratingDate', 'ASC')"
+                                                            (keydown.space)="toggleCompanySort('ratingDate', 'ASC')"
+                                                            attr.aria-label="Sort by rating date ascending">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-down"
+                                                            [class.active]="companySortField === 'ratingDate' && companySortDirection === 'DESC'"
+                                                            (click)="toggleCompanySort('ratingDate', 'DESC')"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleCompanySort('ratingDate', 'DESC')"
+                                                            (keydown.space)="toggleCompanySort('ratingDate', 'DESC')"
+                                                            attr.aria-label="Sort by rating date descending">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                                <th>Agency</th>
+                                                <th>Instrument Category</th>
+                                                <th>Amount (INR)
+                                                    <!-- <span class="shorting" (click)="toggleCompanySort('Amount (INR)')">
+                                                        <mat-icon *ngIf="companySortField !== 'Amount (INR)'">unfold_more</mat-icon>
+                                                        <mat-icon *ngIf="companySortField === 'Amount (INR)' && companySortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon *ngIf="companySortField === 'Amount (INR)' && companySortDirection === 'DESC'">south</mat-icon>
+                                                    </span> -->
+                                                    <span class="sort-container">
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-up"
+                                                            [class.active]="companySortField === 'Amount (INR)' && companySortDirection === 'ASC'"
+                                                            (click)="toggleCompanySort('Amount (INR)', 'ASC')"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleCompanySort('Amount (INR)', 'ASC')"
+                                                            (keydown.space)="toggleCompanySort('Amount (INR)', 'ASC')"
+                                                            attr.aria-label="Sort by amount ascending">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-down"
+                                                            [class.active]="companySortField === 'Amount (INR)' && companySortDirection === 'DESC'"
+                                                            (click)="toggleCompanySort('Amount (INR)', 'DESC')"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleCompanySort('Amount (INR)', 'DESC')"
+                                                            (keydown.space)="toggleCompanySort('Amount (INR)', 'DESC')"
+                                                            attr.aria-label="Sort by amount descending">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                                <th>Unit</th>
+                                                <th>Rating</th>
+                                                <th>Development</th>
+                                                <th>Outlook</th>
+                                                <th>Conservative Rating</th>
+                                                <th>Link</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (data of paginatedFilteredCompanyData; track $index) {
+                                                <tr>
+                                                <td data-label="Rating Date">{{ dateConvert(data?.['PR_DATE']) || "-" }}</td>
+                                                <td data-label="Agency">{{ data?.['RAT_AG_NAME'] || "-" }}</td>
+                                                <td data-label="Instrument Category">
+                                                    {{ data?.type === 'LT' ? 'Long Term' : 'Short Term' }}
+                                                </td>
+                                                <td data-label="Amount (INR)">{{ data?.['amount'] || "-" }}</td>
+                                                <td data-label="Unit">{{ data?.['UNIT'] || "-" }}</td>
+                                                <td data-label="Rating">{{ data?.['rating'] || "-" }}</td>
+                                                <td data-label="Development">{{ data?.['RATING_ACTION'] || "-" }}</td>
+                                                <td data-label="Outlook">{{ data?.['RATING_OUTLOOK'] || "-" }}</td>
+                                                <td data-label="Conservative Rating">{{ data?.['COMP_CONSV_RAT'] || "-" }}</td>
+                                                <td data-label="Link">
+                                                    <ng-container *ngIf="data?.['PRLINK']; else elseTemplate">
+                                                    <a [href]="getCleanedLink(data?.['PRLINK'])" target="_blank" class="view_link_btn">
+                                                        View
+                                                    </a>
+                                                    </ng-container>
+                                                    <ng-template #elseTemplate>-</ng-template>
+                                                </td>
+                                                </tr>
+                                            } @empty {
+                                                <tr>
+                                                <td colspan="10">
+                                                    <app-no-data-found message="No record found" />
+                                                </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                        Showing
+                                        {{(crisilCompanyLevelRatingPage.startIndex()+1)}} to
+                                        {{(crisilCompanyLevelRatingPage.pageSize()*crisilCompanyLevelRatingPage.page()) >
+                                        (crisilCompanyLevelRatingPage.totalSize) ? (crisilCompanyLevelRatingPage.totalSize) :
+                                        (crisilCompanyLevelRatingPage.pageSize()*crisilCompanyLevelRatingPage.page())}} of
+                                        {{crisilCompanyLevelRatingPage.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="crisilCompanyLevelRatingPage.pageSize"
+                                                        [panelClass]="'pagination_select'">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="crisilCompanyLevelRatingPage.totalSize" [maxSize]="3"
+                                                [(page)]="crisilCompanyLevelRatingPage.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="crisilCompanyLevelRatingPage.pageSize()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-dialog-content>
+                    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                        <button mat-flat-button color="primary" matDialogClose="">OK</button>
+                    </mat-dialog-actions>
+                </div>
+            </mat-card-content>
+        </mat-tab>
+        <mat-tab label="Banker Level Rating (CRISIL)" *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.CUSTOMER_PROFILE,consValue.PageActions.BANKER_LEVELE_RATING)">
+            <mat-card-content>
+                <div class="pop_up_container">
+                    <!-- <div class="popup_header" mat-dialog-title>
+                        <h3>Credit Rating Details</h3>
+                    </div> -->
+                    <mat-dialog-content class="px-0">
+                        <div class="popup_body">
+                            <div class="table_sec">
+                                <div class="tableResponsive ">
+                                    <table
+                                        class="CommonTable_FixedScroll table_left_align no_stripe_borderX_table compressed_table">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>Banker Name</th>
+                                                <!-- <th>Instrument Category</th> -->
+                                                <th>Instrument Details</th>
+                                                <th>Amount (INR)
+                                                    <!-- <span class="shorting" (click)="toggleBankerSort('Amount')">
+                                                        <mat-icon *ngIf="bankerSortField !== 'Amount'">unfold_more</mat-icon>
+                                                        <mat-icon *ngIf="bankerSortField === 'Amount' && bankerSortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon *ngIf="bankerSortField === 'Amount' && bankerSortDirection === 'DESC'">south</mat-icon>
+                                                    </span> -->
+                                                    <span class="sort-container">
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-up"
+                                                            [class.active]="bankerSortField === 'Amount' && bankerSortDirection === 'ASC'"
+                                                            (click)="toggleBankerSort('Amount', 'ASC')"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleBankerSort('Amount', 'ASC')"
+                                                            (keydown.space)="toggleBankerSort('Amount', 'ASC')"
+                                                            attr.aria-label="Sort by amount ascending">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-down"
+                                                            [class.active]="bankerSortField === 'Amount' && bankerSortDirection === 'DESC'"
+                                                            (click)="toggleBankerSort('Amount', 'DESC')"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleBankerSort('Amount', 'DESC')"
+                                                            (keydown.space)="toggleBankerSort('Amount', 'DESC')"
+                                                            attr.aria-label="Sort by amount descending">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                                <th>Unit</th>
+                                                <th>Rating Date
+                                                    <!-- <span class="shorting" (click)="toggleBankerSort('ratingDate')">
+                                                        <mat-icon *ngIf="bankerSortField !== 'ratingDate'">unfold_more</mat-icon>
+                                                        <mat-icon *ngIf="bankerSortField === 'ratingDate' && bankerSortDirection === 'ASC'">north</mat-icon>
+                                                        <mat-icon *ngIf="bankerSortField === 'ratingDate' && bankerSortDirection === 'DESC'">south</mat-icon>
+                                                    </span> -->
+                                                    <span class="sort-container">
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-up"
+                                                            [class.active]="bankerSortField === 'ratingDate' && bankerSortDirection === 'ASC'"
+                                                            (click)="toggleBankerSort('ratingDate', 'ASC')"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleBankerSort('ratingDate', 'ASC')"
+                                                            (keydown.space)="toggleBankerSort('ratingDate', 'ASC')"
+                                                            attr.aria-label="Sort by rating date ascending">
+                                                            arrow_drop_up
+                                                        </mat-icon>
+                                                        <mat-icon 
+                                                            class="sort-icon sort-icon-down"
+                                                            [class.active]="bankerSortField === 'ratingDate' && bankerSortDirection === 'DESC'"
+                                                            (click)="toggleBankerSort('ratingDate', 'DESC')"
+                                                            role="button"
+                                                            tabindex="0"
+                                                            (keydown.enter)="toggleBankerSort('ratingDate', 'DESC')"
+                                                            (keydown.space)="toggleBankerSort('ratingDate', 'DESC')"
+                                                            attr.aria-label="Sort by rating date descending">
+                                                            arrow_drop_down
+                                                        </mat-icon>
+                                                    </span>
+                                                </th>
+                                                <th>Agency</th>
+                                                <th>Rating</th>
+                                                <th>Development</th>
+                                                <th>Outlook</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (data of paginatedFilteredData; track $index) {
+                                                <tr>
+                                                <td data-label="Banker Name" class="max-w-100">{{ data?.['bankerName'] || "-" }}</td>
+                                                <!-- <td data-label="Instrument Category">
+                                                    {{ data?.type === 'LT' ? 'Long Term' : 'Short Term' }}
+                                                </td> -->
+                                                <td data-label="Instrument Details">{{ data?.['instrumentName'] || "-" }}</td>
+                                                <td data-label="Amount (INR)">{{ data?.['ratedBankerAmount'] || "-" }}</td>
+                                                <td data-label="Unit">Crore</td>
+                                                <td data-label="Rating Date">{{ dateConvert(data?.['prDate']) || "-" }}</td>
+                                                <td data-label="Agency">{{ data?.['ratingAgencyName'] || "-" }}</td>
+                                                <td data-label="Rating">{{ data?.['longTermRating'] || data?.['shortTermRating'] || "-" }}</td>
+                                                <td data-label="Development">{{ data?.['ratingAction'] || "-" }}</td>
+                                                <td data-label="Outlook">{{ data?.['ratingOutlook'] || "-" }}</td>
+                                                </tr>
+                                            } @empty {
+                                                <tr>
+                                                <td colspan="9">
+                                                    <app-no-data-found message="No record found" />
+                                                </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                        Showing
+                                        {{(crisilBankerLevelRatingPage.startIndex()+1)}} to
+                                        {{(crisilBankerLevelRatingPage.pageSize()*crisilBankerLevelRatingPage.page()) >
+                                        (crisilBankerLevelRatingPage.totalSize) ? (crisilBankerLevelRatingPage.totalSize) :
+                                        (crisilBankerLevelRatingPage.pageSize()*crisilBankerLevelRatingPage.page())}} of
+                                        {{crisilBankerLevelRatingPage.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="crisilBankerLevelRatingPage.pageSize"
+                                                        [panelClass]="'pagination_select'">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber" [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="crisilBankerLevelRatingPage.totalSize" [maxSize]="3"
+                                                [(page)]="crisilBankerLevelRatingPage.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="crisilBankerLevelRatingPage.pageSize()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-dialog-content>
+                    <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+                        <button mat-flat-button color="primary" matDialogClose="">OK</button>
+                    </mat-dialog-actions>
+                </div>
+            </mat-card-content>
+        </mat-tab>
+    </mat-tab-group>
+</section>

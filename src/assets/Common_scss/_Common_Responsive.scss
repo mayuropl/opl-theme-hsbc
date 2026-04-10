@@ -1,0 +1,2479 @@
+// min-max-width @media Query Start
+@media only screen and (min-width:1200px) and (max-width:1680px) {
+
+  .psb-col-4,
+  .psb-col-8 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%
+  }
+
+  .dr-text {
+    text-align: center !important;
+    padding-top: .5rem;
+
+    p {
+      margin: 0 !important;
+    }
+  }
+
+  .avatar-lg {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin: 0 auto;
+
+    &.sa-lNP {
+      height: 4.5rem;
+      width: 4.5rem;
+      margin: 0;
+    }
+  }
+}
+
+@media only screen and (max-width:1900px) and (min-width:768px) {
+
+  // @media only screen and (max-width:1540px) and (min-width:768px) {
+  body {
+    font-size: $fs-12;
+  }
+
+  .NP_FGI {
+    min-height: 4.7rem;
+  }
+
+  // Font .75rem All Small Desktop NP
+  .link-btn {
+    font-size: $fs-12;
+  }
+
+  .ng5-slider .ng5-slider-bubble {
+    font-size: $fs-12 !important;
+  }
+
+  // validation Cutomer Css
+  .text-danger {
+    font-size: $fs-12;
+    font-weight: 400;
+  }
+
+  .page-title-box {
+    .page-title {
+      font-size: $fs-16;
+      line-height: 60px;
+    }
+
+    .page-title-right {
+      .breadcrumb {
+        > {
+          a {
+            font-size: $fs-12;
+          }
+        }
+      }
+    }
+  }
+
+  //  ngbTolltip Css 
+  .PSNP-tooltip {
+    .tooltip-inner {
+      max-width: 450px;
+      text-align: left;
+      font-size: $fs-12;
+    }
+  }
+
+  .dr-text {
+    h3 {
+      font-size: $fs-18;
+    }
+
+    p {
+      font-size: $fs-12;
+    }
+  }
+
+  // scorign radio @NP
+  .RMR-1 {
+    padding-left: 0.40rem;
+  }
+
+  .Common-ps-SE-NP {
+
+    thead,
+    tbody {
+      tr {
+
+        th,
+        td {
+          font-size: $fs-12;
+        }
+      }
+    }
+  }
+
+  // .card-box{
+  //   padding: 1.5rem;
+  // }
+
+  // Common Css For All Pages Start
+  .widget-rounded-circle {
+    .text-muted {
+      font-weight: 400;
+    }
+  }
+
+  .copy-paste-content-scoring,
+  .Proportionate-over-score {
+    .main-text-heading {
+      font-size: $fs-15;
+    }
+
+    span,
+    .text-muted {
+      @include font-0-81254;
+    }
+  }
+
+  .Main-heading-dual-Cont {
+    padding-bottom: .75rem;
+
+    .text-heading-cards,
+    .text-ones,
+    .tab-text-hading {
+
+      .main-text-heading,
+      h4 {
+        font-size: $fs-15;
+      }
+
+      .text-muted {
+        @include font-0-81254;
+      }
+    }
+
+    .text-heading-cards {
+      width: 60%;
+    }
+
+    .Btn-Drop_Down-dual-Cont {
+      width: 40%;
+
+      h4 {
+        font-size: $fs-14;
+      }
+
+      .form-group-select {
+        .S-lable {
+          font-size: $fs-12;
+        }
+      }
+
+      .mobile-dropdown {
+        &.NP_DRP {
+          width: 44%;
+
+          .dropdown-menu {
+            z-index: 9;
+          }
+        }
+      }
+    }
+  }
+
+  .psb-collapse-a {
+    font-size: 1rem;
+
+    &:hover {
+      color: #00000040;
+    }
+  }
+
+  .text-collapse,
+  .number-collapse {
+
+    .main-text-heading,
+    h4 {
+      font-size: $fs-14;
+    }
+
+    .text-muted,
+    span {
+      @include font-0-81254;
+    }
+  }
+
+  .text-collapse {
+    &.LA-two {
+      width: 70%
+    }
+
+    .clearfix {
+      &.pb-1-5 {
+        padding: .75rem;
+      }
+    }
+
+    &.retails-count-Concession {
+      width: 30%;
+    }
+  }
+
+  .number-collapse {
+    &.LA-two {
+      width: 30%;
+    }
+
+    &.retails-count-Concession-width {
+      width: 70%
+    }
+  }
+
+  .psb-tab-content {
+    float: left;
+    width: 70%;
+
+    &.SA-tabs {
+      @include Com-fw;
+    }
+  }
+
+  // Scroll Top Css Start
+
+  .Np_tab-heading {
+    .tab-Scroll_Np {
+      width: 80%;
+    }
+  }
+
+  // Comon Btn  Css Start
+  .single-user-um {
+    .NP_Hight {
+      height: 3.60rem;
+    }
+
+    .btn {
+      &.NP_Btn_CEA {
+        padding: 0.2rem 0.9rem;
+      }
+    }
+  }
+
+  .btn-psb,
+  .btn-group-psb>.btn {
+    padding: 0.5rem 1rem;
+    @include font-756;
+  }
+
+  .btn-group-psb>.btn {
+    margin-left: 1rem !important;
+
+    &:first-of-type {
+      margin-left: 0 !important;
+    }
+
+    &.dropdown-item-NP {
+      margin-left: 0 !important;
+    }
+  }
+
+  .Btn-NP-PS {
+
+    .btn-psb,
+    .btn-group-psb>.btn {
+      margin-left: .7rem !important;
+
+      &:first-of-type {
+        margin-left: 0 !important;
+      }
+    }
+
+    &.NP_BTNPS {
+
+      .btn-psb,
+      .btn-group-psb>.btn {
+        margin-left: .0 !important;
+      }
+    }
+  }
+
+  // Start Nav Tab Css
+  .main-dash-Cont {
+    .nav-bordered {
+      &.dash-tab-Np {
+        .nav-item {
+          width: 15%;
+        }
+
+        &.NP_tab_Flex {
+          .nav-item {
+            width: auto;
+            flex: auto;
+          }
+        }
+      }
+    }
+  }
+
+  .nav-tabs,
+  .nav-pills {
+    > {
+      li {
+        > {
+          a {
+            font-size: $fs-12;
+            padding-bottom: .5rem;
+          }
+        }
+      }
+    }
+  }
+
+  .Np_tab-heading {
+    .nav-tabs {
+      > {
+        li {
+          > {
+            a {
+              font-size: $fs-12;
+              padding-bottom: .5rem;
+              // margin: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .tab-Scroll_Np {
+      .nav-tabs {
+        > {
+          li {
+            > {
+              a {
+                font-size: $fs-14;
+                padding-bottom: .5rem;
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .Rp-D_card {
+    h4 {
+      font-size: $fs-14;
+    }
+  }
+
+  .product-text {
+    p {
+      font-size: $fs-12;
+    }
+
+    h2 {
+      font-size: $fs-16;
+    }
+  }
+
+  .psb-tab-content {
+    &.SA-tabs {
+      .tab-product-name {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .btn {
+
+    &.tab-product-name,
+    &.tab-Radio_NP {
+      min-height: 30px;
+      font-size: $fs-12;
+      font-weight: $f-w600;
+    }
+  }
+
+  // Icon  Font Style 
+  .icon-center {
+
+    .mdi-dots-vertical,
+    .mdi-close {
+      font-size: 1rem;
+    }
+  }
+
+  .Com-hading-tab-np {
+    .psb-tab-content {
+      width: 20%;
+
+      .btn-group {
+        width: 100%;
+      }
+    }
+  }
+
+  .Com-pe-main-content {
+    .check-pe-text {
+      &.input-text-pe {
+        .main-heading {
+          h4 {
+            font-size: $fs-14;
+          }
+
+          span {
+            font-weight: 400;
+          }
+        }
+
+        .Common-pe-check-yes-no {
+          width: 20%
+        }
+      }
+    }
+  }
+
+  // .input-text-check-auto {}
+  // popup 1366 px css change
+  .popup-650 {
+    .modal-dialog {
+      @include popup-500px;
+    }
+  }
+
+  .Common-PS-Para {
+    .modal-header {
+      &.padding-2 {
+        padding: 1rem 1.5rem;
+      }
+
+      &.NP_Scoring_Heding {
+        .modal-title {
+          width: 230px;
+          line-height: 1.5;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 0;
+
+      .popup-sub-parameter {
+        padding: .5rem 1rem;
+      }
+
+      &.NP_Scoring_Body {
+        .checkbox-parameters-m {
+          .form-check-inline {
+            width: 80%;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .Modal-scroll {
+    height: 410px;
+  }
+
+  .modal-header {
+    padding: .75rem;
+    padding-bottom: 0;
+
+    .modal-title {
+      font-size: $fs-15;
+    }
+
+    // &.title-subtitle{
+    // }
+  }
+
+  .modal-body {
+    padding: .75rem;
+
+    &.Modal-scroll_NP {
+      padding: 1.5rem 0 0 0;
+    }
+
+    span {
+      font-size: $fs-12;
+    }
+  }
+
+  .modal-footer {
+    padding: .75rem;
+
+    &.footer-text-m {
+      span {
+        font-size: $fs-12;
+      }
+    }
+  }
+
+  .check-drop-arrow {
+    padding: .5rem;
+    padding-left: 1.5rem;
+  }
+
+  .symbole-input {
+    &.Tvs_Dash {
+
+      i,
+      em {
+        padding: 3px 0;
+        padding-left: 8px;
+      }
+    }
+
+    i,
+    em {
+      padding: 0;
+      padding-left: 8px;
+    }
+  }
+
+  .REPO-MCLR-View-table,
+  .REPO-MCLR-View-td {
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  .modal-lg {
+    max-width: 650px;
+  }
+
+  .DetailsCard-teaserView {
+    .teaserView-complney-details {
+      .TeaserView-company-details {
+        &.sub-width-tsv {
+          padding: 0.5rem 1rem;
+          min-height: 13rem;
+        }
+
+        .card-title {
+          font-size: $fs-16;
+        }
+
+        span {
+          font: 500 13px/10px "Nunito Sans", sans-serif;
+          line-height: 1.5;
+
+          &:nth-child(3) {
+            font-size: $fs-12;
+            line-height: 1.5;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  // Common Css For Mandetory Start  16-02-2012
+  .ng-select {
+    font-size: $fs-12;
+
+    &.ng-select-single {
+
+      // &.ng-select-multiple
+      .ng-select-container {
+        height: calc(1.2em + 0.9rem + 2px) !important;
+        min-height: auto;
+      }
+    }
+  }
+
+  .tab-mandatory-Parameters {
+    .ng-select {
+      &.ng-select-single {
+
+        // &.ng-select-multiple 
+        .ng-select-container {
+          height: calc(1.66em + 0.9rem + 2px) !important;
+        }
+      }
+
+      &.tab-select-NP {
+        width: 15%;
+      }
+    }
+  }
+
+  .form-control {
+    height: calc(1.2em + 0.9rem + 2px);
+    font-size: 0.75rem;
+  }
+
+  .input-group,
+  .datepicker-input,
+  .psb-input-group {
+    .form-control {
+      height: calc(1.2em + 0.9rem + 2px);
+      font-size: 0.75rem;
+    }
+
+    .input-group-text,
+    .psb-input-group-text {
+      padding: 0.2rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .psb-input-group-text {
+      height: calc(1.2em + 0.9rem + 2px);
+    }
+  }
+
+  .datepicker-input {
+    .input-group-append {
+      height: calc(1.2em + 0.9rem + 2px);
+    }
+  }
+
+  .score-Proportionate {
+    .Check-text-PS {
+      .Input-ps-group {
+        .group-label-input-score {
+          .form-control {
+            &.total-Proportionate-score {
+              font-size: $fs-24;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Common Css For Mandetory End  16-02-2012
+  // Setup Interest Rates Css Start 17-Feb-2021
+  .Com-count-link-Rate {
+    margin-top: 1rem;
+
+    .dual-content-psb {
+      padding: 0.5rem 2rem;
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      span {
+        font-size: $fs-12;
+        font-weight: 500;
+      }
+    }
+
+    .Common-link {
+      width: 30%;
+
+      span {
+        font-size: $fs-12;
+        font-weight: 500;
+      }
+
+      a {
+        font-size: $fs-12;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .Common-Requested {
+    align-items: flex-start;
+
+    &.mt-1-5 {
+      margin-top: 1rem;
+    }
+
+    span {
+      font-size: $fs-15;
+    }
+
+    .Common-Requested-txt {
+      width: 50%;
+      flex-wrap: wrap;
+
+      span {
+        @include font-0-81255;
+
+        p {
+          @include font-0-81256;
+        }
+      }
+    }
+
+    .Common-req-txt {
+      span {
+        font-size: $fs-12;
+
+        p {
+          font-size: $fs-12;
+        }
+      }
+    }
+
+    .checekr-approve-reject {
+      flex-direction: column;
+      display: flex;
+
+      .Common-Requested-txt {
+        flex-wrap: nowrap;
+        width: 100%;
+
+        .Checker-text-App-Rj {
+          &:nth-child(1) {
+            width: 45%;
+
+            span {
+              text-align: left;
+              justify-content: flex-start;
+            }
+          }
+
+          &:nth-child(2),
+          &:nth-child(3) {
+            width: 30%;
+          }
+
+          h2 {
+            font-size: 1.25rem;
+          }
+
+          span {
+            width: 100%;
+            justify-content: $jc-center;
+          }
+        }
+      }
+    }
+
+    .Checker-Approve-Reject {
+      .btn {
+        padding: 0.5rem 1rem;
+      }
+    }
+  }
+
+  // Setup Interest Rates Css End 17-Feb-2021
+  // Bureau Configuration  Page Start Css 30-Jun-2021
+  .Common-flag-group-b {
+    .common-flag-heding {
+      .common-text-switch {
+        .main-text-heading {
+          font-size: $fs-14;
+        }
+      }
+    }
+  }
+
+  .Common-flag-group-From {
+    .common-flag-heding {
+      h4 {
+        font-size: $fs-14;
+      }
+    }
+
+    .Common-content-flag-group {
+      .common-flag-link-group {
+        &.Bureau_Radio {
+          p {
+            font-size: $fs-14;
+          }
+        }
+      }
+    }
+  }
+
+  // Bureau Configuration  Page Start Css 30-Jun-2021
+  // Start Branch User View Pages Css Start 17-Feb-2021
+  .card-box {
+    &.btn-tabs {
+      &.main-dash-Cont {
+        padding: 1.875rem;
+      }
+    }
+
+    &.main-dash-Cont {
+      padding-top: 1.875rem;
+    }
+  }
+
+  .main-dash-Cont {
+    .main-text-heading {
+      a {
+        font: 700 20px/18px "Nunito Sans", sans-serif;
+      }
+    }
+
+    .nav-bordered {
+      .nav-tabs {
+        .nav-link {
+          p {
+            font-size: 1.5rem
+          }
+
+          span {
+            &.number-text {
+              font-size: $fs-12;
+              font-weight: 600;
+            }
+
+            &.noti-icon-badge {
+              font-size: $fs-12;
+              font-weight: 600;
+              top: -5px;
+              right: 60px;
+              display: flex;
+              width: 1.25rem;
+              height: 1.25rem;
+            }
+          }
+        }
+      }
+    }
+
+    .dash-count {
+      width: 70%;
+
+      .nav-tabs {
+        .nav-item {
+          width: 30%;
+        }
+      }
+    }
+
+    .dash-forms {
+      width: 50%;
+
+      .Ext-data {
+        width: 26%;
+        margin: 0;
+        margin-left: 1rem;
+
+        &:first-of-type {
+          margin-left: 0;
+          width: 35%;
+        }
+      }
+    }
+
+    .dash-tab-Np {
+      .nav-tabs {
+        .nav-link {
+          span {
+            &.noti-icon-badge {
+              right: 15px;
+              width: 1.50rem;
+              height: 1.50rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .dash-tables {
+    .Main-heading-dual-Cont {
+      .text-heading-cards {
+        width: 50%;
+      }
+    }
+
+    .Btn-Drop_Down-dual-Cont {
+      &.btn-drop {
+        width: 35%;
+
+        .form-group-select {
+          width: 60%;
+
+          &.jc-end-mr-0 {
+            .ng-select {
+              width: 70%;
+            }
+          }
+        }
+
+        .dash-Download {
+          width: 35%;
+
+          .btn {
+            width: 100%;
+            padding: 0.2rem 0.9rem;
+          }
+        }
+      }
+    }
+  }
+
+  .download-link {
+    img {
+      width: .75rem;
+    }
+  }
+
+  // Loan  Application  View Page Css Start 
+  .main-dash-View {
+    .sub-main-dash {
+      .teaser-Center-view {
+        .teaserView-text {
+          padding: 0 1rem;
+          width: 20%;
+
+          &:last-of-type {
+            width: 20%;
+          }
+
+          span {
+            &:nth-child(1) {
+              font-size: $fs-12;
+              padding-bottom: .25rem;
+            }
+
+            &:nth-child(2) {
+              @include font-0-81256;
+            }
+          }
+        }
+
+        .teaserView-Barnchtext {
+          span {
+            font-size: $fs-12;
+            font-weight: 500;
+
+            &.TeaserView-text-code {
+
+              p,
+              a {
+                font: 500 12px/18px "Nunito Sans", sans-serif;
+              }
+
+              a {
+                padding: 5px 8px;
+              }
+            }
+          }
+        }
+      }
+
+      .TeaserView-Datalink {
+        a {
+          font: 500 12px/22px "Nunito Sans", sans-serif;
+        }
+      }
+    }
+  }
+
+  .btn-atm-tab {
+    padding: 0.85rem 0 0;
+
+    .nav-bordered {
+      .nav-tabs {
+        .nav-item {
+          margin-bottom: 0;
+        }
+      }
+
+      .nav-tabs {
+        > {
+          li {
+            > {
+              a {
+                font-size: $fs-12;
+
+                img {
+                  width: .75rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .btn-secondery-teaser,
+  .btn-reject-teaser,
+  .btn-hold-teaser,
+  .btn-Sanction-teaser {
+    padding: .7rem 1rem;
+    font: 500 14px/11px "Nunito Sans", sans-serif;
+  }
+
+  // Loan  Application  View Page Css End 
+  // Start Branch User View Pages Css End 17-Feb-2021
+  // Common Css For All Pages End
+  // scroing-RSitr-table Start 
+  //.Common-ps-SS-NP
+  .scroing-RSitr-table {
+
+    thead,
+    tbody {
+      tr {
+
+        th,
+        td {
+          @include thtd-f12p;
+        }
+      }
+    }
+
+    thead {
+      tr {
+        align-items: flex-start;
+      }
+    }
+  }
+
+  // scroing-RSitr-table End 
+  // mandatory Parameters table  Responsive View 09-Feb-2021 Start
+  .mandatory-Parameters-table {
+
+    thead,
+    tbody {
+      tr {
+        &.align-td {
+          td {
+            align-items: flex-start;
+          }
+        }
+
+        th,
+        td {
+          padding: 0.85rem 0.5rem;
+          font-size: $fs-12;
+          align-items: flex-start;
+
+          &:nth-child(4) {
+            width: 5%;
+          }
+
+          .One-Value {
+            span {
+              width: 50%;
+            }
+          }
+        }
+
+        td {
+          &:nth-child(3) {
+            &.jc-FEND {
+              &.Cibil-Row {
+                flex-direction: column-reverse;
+                align-items: flex-end;
+
+                .Cibil_Row_NP {
+                  flex-direction: column;
+                }
+              }
+            }
+          }
+
+          .Lb-Input-PS {
+            width: 100%;
+          }
+
+          .sub-man-para-number {
+            .main-content {
+              &.SE-check {
+                .checkbox {
+                  &.form-check-inline {
+                    label {
+                      font-size: $fs-12;
+                      padding-left: 7px;
+
+                      &::before {
+                        width: 16px;
+                        height: 16px;
+                        top: 1px;
+                      }
+                    }
+
+                    input[type=checkbox]:checked+label {
+                      &::after {
+                        top: 3px;
+                        left: 9px;
+                        width: 6px;
+                        height: 10px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            p {
+              &.ctsp-Common {
+                align-items: flex-start;
+                font-size: $fs-12;
+                font-weight: 600;
+              }
+            }
+          }
+
+          .mandatory-Parameters-number {
+            flex-direction: column;
+            align-items: flex-end;
+
+            .sub-man-para-number {
+              width: 70%;
+
+              // .rp-lable{
+              //  @include Com-fw;
+              // }
+              // label{
+              //   @include Com-fw;
+              // }
+              &.mr-3 {
+                margin-right: 0 !important;
+              }
+
+              .form-group {
+                &.input-number-s {
+                  width: 100%;
+
+                  .mandatory-input {
+                    justify-content: flex-start;
+
+                    .input-width-45 {
+                      width: 100%;
+                    }
+
+                    .input-width-21-5 {
+                      width: 100%;
+                    }
+                  }
+                }
+              }
+
+              .input-Group-spl-np {
+                align-items: center;
+                justify-content: flex-end;
+
+                .ng-select {
+                  width: 63%;
+                }
+              }
+            }
+
+            .mandatory-input {
+              .input-width-21-5 {
+                width: 33%;
+              }
+            }
+
+            .form-group {
+              &.input-number-s {
+                width: 70%;
+
+                .mandatory-input {
+                  justify-content: flex-start;
+
+                  .input-width-21-5,
+                  .input-width-45 {
+                    width: 100%;
+                  }
+                }
+              }
+            }
+
+            // Range Slider Content Responsive View Start
+            .rang-parameter,
+            .rang-mandatory-input {
+              width: 50%;
+            }
+
+            // Range Slider Content Responsive View End
+            //  Cibil Content Responsive View Start
+            .check-cibil-score {
+              flex-direction: column;
+              align-items: flex-end;
+
+              .cibil-score-checkbox {
+                &.CBS-RW {
+                  width: 79%;
+                }
+
+                .inline-cibil-checkbox {
+                  justify-content: flex-end;
+                }
+
+                .form-group {
+                  &.input-number-cibil {
+                    justify-content: flex-end;
+
+                    .mandatory-input {
+                      &.cibil-mr {
+                        width: 90%;
+                        margin-right: 0;
+                        align-items: flex-end;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            //  Cibil Content Responsive View End
+          }
+
+          // tab Conatent For mandatory Parameters Start
+          .mandatory-Parameters-tab {
+            .input-width-25 {
+              width: 35%;
+            }
+
+            .mandatory-Parameters-text {
+              width: 70%;
+            }
+
+            // tab content Responsive View
+            .tab-mandatory-Parameters {
+              width: 40%;
+
+              &.Tw-100 {
+                width: 35%;
+              }
+
+              .btn-group,
+              .btn-group-vertical {
+                &.btn-radio-select {
+                  width: 358px;
+                }
+
+                // &.btn-radio-select-edit {
+                //     flex-direction: column;
+                //     align-items: flex-end;
+                //     width: 100%;
+                //     &.btn-two-radio {
+                //         width: 100%;
+                //     }
+                //     &.fd-row {
+                //         flex-direction: row;
+                //         .tab-product-name {
+                //             margin-right: 1.5rem;
+                //             margin-bottom: 0;
+                //             width: 100%;
+                //             font-size: $fs-12;
+                //             &:last-of-type {
+                //                 margin-right: 0;
+                //             }
+                //         }
+                //     }
+                //     .tab-product-name {
+                //         margin-right: 0;
+                //         margin-bottom: .5rem;
+                //         width: 100%;
+                //         font-size: $fs-12;
+                //     }
+                // }
+              }
+            }
+          }
+
+          // Text Content For mandatory Parameters
+          .mandatory-Parameters-text {
+
+            // width: 70%;
+            .text-mandatory {
+              a {
+                font-size: $fs-12;
+              }
+            }
+
+            &.RPS_check-Column {
+              flex-direction: column;
+              align-items: flex-end;
+
+              .checkbox {
+                &.form-check-inline {
+                  margin: 0;
+                  margin-bottom: .5rem;
+                }
+              }
+            }
+
+            .checkbox {
+              &.form-check-inline {
+                align-items: flex-start;
+              }
+
+              label {
+                font-size: $fs-12;
+              }
+            }
+          }
+
+          // tab Conatent For mandatory Parameters End
+        }
+
+        //  Cibil Content Sub Responsive View Start
+        > {
+          .cibil-score-sub-table {
+            tbody {
+              tr {
+                &:nth-child(2) {
+                  td {
+                    &:nth-child(2) {
+                      width: 9%;
+                    }
+                  }
+
+                  .cibil-scoring-table {
+                    tbody {
+                      tr {
+                        td {
+                          .mandatory-Parameters-number {
+                            .sub-man-para-number {
+                              width: 80%;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+
+                td {
+                  .mandatory-Parameters-number {
+                    .sub-man-para-number {
+                      width: 70%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        //  Cibil Content Sub Responsive View End
+      }
+    }
+  }
+
+  // mandatory Parameters table  Responsive View 09-Feb-2021 End
+  // Common Parameter Table Responisve View  15-Feb-2021 Start
+  .Common-Parameters-check-table {
+
+    thead,
+    tbody {
+      tr {
+
+        th,
+        td {
+          @include thtd-f12p;
+
+          &:nth-child(1),
+          &:nth-child(2) {
+            width: 5%;
+          }
+
+          &:nth-child(4) {
+            width: 45%;
+          }
+
+          h5 {
+            font-size: $fs-15;
+            line-height: 1.5;
+          }
+
+          span {
+            font-size: $fs-12;
+          }
+
+          // tab Conatent For mandatory Parameters Start
+          .mandatory-Parameters-tab {
+            .input-width-25 {
+              width: 45%;
+            }
+
+            // tab content Responsive View
+            .tab-mandatory-Parameters {
+              width: 35%;
+
+              &.dtab-column {
+                flex-direction: column;
+
+                .ml-03 {
+                  margin-left: 0;
+                }
+              }
+
+              .btn-group,
+              .btn-group-vertical {
+                &.btn-radio-select-edit {
+                  flex-direction: column;
+                  align-items: flex-end;
+                  width: 100%;
+
+                  &.btn-two-radio {
+                    width: 100%;
+                  }
+
+                  &.fd-row {
+                    flex-direction: row;
+
+                    .tab-product-name {
+                      margin-right: 1.5rem;
+                      margin-bottom: 0;
+                      width: 100%;
+                      font-size: $fs-12;
+
+                      &:last-of-type {
+                        margin-right: 0;
+                      }
+                    }
+                  }
+
+                  .tab-product-name {
+                    margin-right: 0;
+                    margin-bottom: .5rem;
+                    width: 100%;
+                    font-size: $fs-12;
+                  }
+                }
+
+                &.btn-radio-select {
+                  flex-direction: column;
+                  align-items: flex-end;
+                  width: 100%;
+
+                  .tab-product-name {
+                    margin-right: 0;
+                    margin-bottom: .5rem;
+                    width: 100%;
+                    font-size: $fs-12;
+                  }
+                }
+              }
+            }
+          }
+
+          // Text Content For mandatory Parameters
+          .mandatory-Parameters-text {
+            width: 70%;
+
+            .text-mandatory {
+              a {
+                font-size: $fs-12;
+              }
+            }
+
+            &.RPS_check-Column {
+              flex-direction: column;
+              align-items: flex-end;
+
+              .checkbox {
+                &.form-check-inline {
+                  margin: 0;
+                  margin-bottom: .5rem;
+                }
+              }
+            }
+
+            .checkbox {
+              &.form-check-inline {
+                align-items: flex-start;
+              }
+
+              label {
+                font-size: $fs-12;
+              }
+            }
+          }
+
+          // tab Conatent For mandatory Parameters End
+        }
+      }
+    }
+  }
+
+  // Common Parameter Table Responisve View  15-Feb-2021 End
+  // Cibil Content @ Check All
+  .check-cibil-score {
+    .cibil-score-checkbox {
+      .input-number-cibil {
+        .cibil-mr {
+          .cibil-score-true {
+            .cibil-score-number {
+              .cibil-content-number {
+                padding: 0.3rem .8rem;
+              }
+
+              .active-img {
+                margin-left: 1.5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Product and Scoring View Common tables Css Start 16-Feb-2021
+  .Product-Config-View-table,
+  .Product-Config-View-td {
+    span {
+      &:nth-child(1) {
+        width: 35%;
+      }
+
+      &:nth-child(2) {
+        width: 54%;
+      }
+    }
+  }
+
+  .view-table-product {
+
+    thead,
+    tbody {
+      tr {
+
+        th,
+        td {
+          @include thtd-f12p;
+        }
+      }
+    }
+  }
+
+  .Eligiblity-view-table {
+    tbody {
+      tr {
+        td {
+          @include thtd-f12p;
+
+          &.NP-Scorign-view {
+            tr {
+              &:nth-child(1) {
+                td {
+                  &:nth-child(+n) {
+                    width: 50%
+                  }
+                }
+              }
+
+              td {
+                @include thtd-f12p;
+
+                &:nth-child(1) {
+                  width: 80%;
+                }
+
+                &:nth-child(2) {
+                  width: 30%;
+
+                  span {
+                    display: block;
+
+                    strong {
+                      @include Com-fw;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .scroing-RSitr-table {
+
+    thead,
+    tbody {
+      tr {
+
+        th,
+        td {
+          @include thtd-f12p;
+        }
+      }
+    }
+  }
+
+  .scroingModel-RSitr-table {
+    tbody {
+      tr {
+        td {
+          p {
+            &.ctsp-Common {
+              font-weight: $f-w600;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .table-EBLR-MCLR {
+
+    thead,
+    tbody {
+      tr {
+
+        th,
+        td {
+          @include thtd-f12p;
+
+          .Reject-update-count-EBLR-MCLR {
+            flex-wrap: wrap;
+
+            span {
+              &:nth-child(3) {
+                width: 100%
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Product and Scoring View Common tables Css Start 16-Feb-2021
+  // User management Responsive table View @Nikul 16-April-2021
+  .main-heding-name-m {
+    @include Com-fw;
+
+    p {
+      padding: 8px 0;
+    }
+
+    .btn-links {
+      font-size: $fs-13;
+    }
+  }
+
+  .main-Count-m {
+    .Txt-View {
+      h4 {
+        font-size: $fs-16;
+      }
+
+      span {
+        font-size: $fs-13;
+      }
+    }
+  }
+
+  .user-profile-align-1 {
+    .user-profile-collpase {
+
+      .user-profile-wd-1,
+      .user-profile-wd-2 {
+        font-size: $fs-13;
+      }
+    }
+  }
+
+  .btn-tabs-Fix-NP {
+    .nav-bordered {
+      h4 {
+        font-size: $fs-16;
+      }
+    }
+  }
+
+  .green-dot,
+  .red-dot,
+  .Success-Dot,
+  .Danger-Dot,
+  .gray-circle,
+  .green-circle {
+    width: 7px;
+    height: 7px;
+  }
+
+  .dragDrop-Common {
+    .Input-text-Fill-Cutome {
+      min-height: 6rem;
+    }
+
+  }
+
+  //  nikul All Common Table Font and Icon Css Start 21-May_2021
+  .Common-tsv-NPtable {
+
+    thead,
+    tbody {
+      tr {
+
+        th,
+        td {
+          @include thtd-f12p;
+
+          a {
+            &.Action-BU {
+              em {
+                font-size: $fs-14;
+              }
+            }
+
+            em {
+              font-size: $fs-14;
+            }
+          }
+
+          &:nth-child(9),
+          &:nth-child(6) {
+            &.Action-BU {
+              a {
+                em {
+                  font-size: $fs-14;
+                }
+              }
+            }
+
+            .Action-BU {
+              em {
+                font-size: $fs-14;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //  nikul All Common Table Font and Icon Css Start 21-May_2021
+
+  // Common Filter Top Text Font
+  .filter-value-tab {
+    .filter-group {
+
+      .btn-ar-text,
+      .btn {
+        font-size: $fs-12;
+      }
+    }
+  }
+
+  // Common Tabel Font-Size For 1540 to 768 Nikul Start
+  // .CommonTable_NP,
+  // .Common-ps-SS-NP,
+  // .scroingModel-RSitr-table,
+  // .table-EBLR-MCLR,
+  // .table-Com-scroing,
+  // .scroing-sub-table,
+  // .scroing-FourColumn-table,
+  // .scroing-Matrix-sub-table,
+  // .scroing-RSitr-table,
+  // .view-table-product,
+  // .Eligiblity-view-table,
+  // .scroingModel-RSitr-table,
+  // .scoring-collapse-table,
+  // .view-table-scoring,
+  // .mandatory-Parameters-table,
+  // .Common-tsv-NPtable {
+
+  //   thead,
+  //   tbody {
+  //     tr {
+
+  //       th,
+  //       td {
+  //         // @include thtd-f12p;
+  //         // @include thtd-f14p;
+  //       }
+  //     }
+  //   }
+  // }
+
+  // Common Tabel Font-Size For 1540 to 768 Nikul End
+  // Scoring Css Change For 125% End 12-3-2015
+  .btn {
+    font-size: $fs-12;
+  }
+
+  .card-box {
+    padding: 1.25rem;
+
+    h4 {
+      &.card-title {
+        font-size: $fs-15;
+      }
+    }
+  }
+
+  .Com-No-data-Found-NP {
+    .No-Data-pad-2 {
+      font-size: $fs-18;
+    }
+  }
+
+  .lendingPage_schemes_sec {
+    .lp_schemes_list {
+      .lp_schemes_list_wrapper {
+        .loan_schemes_box {
+          h3 {
+            font-size: $fs-16;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width:1540px) and (min-width:768px) {
+
+  // Scroll Top Css Start
+  .content-page {
+    .fix-to-top {
+      left: 200px;
+      width: calc(100% - 200px);
+      padding: .5rem 1rem;
+      padding-bottom: .1rem;
+    }
+
+  }
+}
+
+@media only screen and (max-width:1366px) and (min-width:768px) {
+  body {
+    font-size: $fs-12;
+  }
+
+  .psb-col-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%
+  }
+
+  .footer {
+    .text-xl-left {
+      &.footer-links {
+        a {
+          &:nth-child(4) {
+            width: 100%;
+            float: left;
+            text-align: left;
+            margin-left: 0;
+          }
+        }
+      }
+    }
+
+    .text-xl-right {
+      &.footer-links {
+        a {
+          &:nth-child(3) {
+            width: 100%;
+            float: left;
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .checkbox-text a {
+    font-size: 14px;
+  }
+
+  .Com-No-data-Found-NP {
+    font-size: 16px;
+    padding: 2.5rem 1.5rem;
+
+    img {
+      width: 6%;
+    }
+
+    .No-Data-pad-2 {
+      padding: 1rem 0;
+      font-size: 1rem;
+    }
+  }
+
+  // Common Tabel Font-Size For 1366 to 768 Nikul start
+  .Common-ps-SS-NP,
+  .scroingModel-RSitr-table,
+  .table-EBLR-MCLR,
+  .Common-tsv-NPtable {
+
+    thead,
+    tbody {
+      tr {
+
+        th,
+        td {
+          @include thtd-f12p;
+        }
+      }
+    }
+  }
+
+  // Common Tabel Font-Size For 1366 to 768 Nikul End
+  .Main-heading-dual-Cont {
+    .Btn-Drop_Down-dual-Cont {
+      .mobile-dropdown {
+        &.NP_DRP {
+          width: 35%;
+        }
+      }
+    }
+  }
+
+  .tab-btn-media {
+    &.NP_DROP_BTN {
+      .Btn-NP-PS {
+        &.NP_BTNPS {
+          .mobile-dropdown {
+            &.NP_DRP {
+              width: 45%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// min-max-width @media Query End
+// min-width @media Query Start
+@media (min-width: 1200px) {
+  .col-xl-20 {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    margin: 6rem auto;
+  }
+
+  .modal-sm {
+    max-width: 350px;
+  }
+}
+
+// min-width @media Query End
+// max-width @media Query Start
+@media (max-width:1650px) {
+
+  // Start Table Responsive SCSS && JS and Scroll Css @Nikul
+  .Scroll-table {
+    width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .table-wrap {
+      @include table-Scroll;
+    }
+
+    .Common-ps-SS-NP {
+      @include table-Scroll;
+
+      thead,
+      tbody {
+        tr {
+          width: 80rem;
+
+          th,
+          td {
+            &:nth-child(1) {
+              width: 3.75rem;
+            }
+
+            &:nth-child(2) {
+              width: 31rem;
+            }
+
+            &:nth-child(3) {
+              width: 12.75rem;
+            }
+
+            &:nth-child(4) {
+              width: 8.75rem;
+
+              &.RequestType-PS {
+                width: 10.75rem;
+              }
+            }
+
+            &:nth-child(5) {
+              width: 15rem;
+
+              &.Vesion-PS {
+                width: 6.75rem;
+              }
+            }
+
+            &:nth-child(6) {
+              width: 8.75rem;
+
+              &.LastOfTypedate-PS {
+                width: 15.75rem;
+              }
+            }
+
+            &:nth-child(7) {
+              width: 8.75rem;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  // mandatory Parameters table  Responsive View 09-Feb-2021 Start
+  .mandatory-Parameters-table {
+
+    thead,
+    tbody {
+      tr {
+        &.align-td {
+          td {
+            align-items: flex-start;
+          }
+        }
+
+        td {
+          .sub-man-para-number {
+            p {
+              &.ctsp-Common {
+                align-items: flex-start;
+              }
+            }
+          }
+
+          .mandatory-Parameters-number {
+            flex-direction: column;
+            align-items: flex-end;
+
+            .sub-man-para-number {
+              width: 80%;
+
+              // .rp-lable{
+              //  @include Com-fw;
+              // }
+              // label{
+              //   @include Com-fw;
+              // }
+              &.mr-3 {
+                margin-right: 0 !important;
+              }
+
+              .form-group {
+                &.input-number-s {
+                  width: 100%;
+
+                  .mandatory-input {
+                    justify-content: flex-start;
+
+                    .input-width-45 {
+                      width: 100%;
+                    }
+                  }
+                }
+              }
+
+              .input-Group-spl-np {
+                align-items: center;
+                justify-content: flex-end;
+
+                .ng-select {
+                  width: 63%;
+                }
+              }
+            }
+
+            .form-group {
+              &.input-number-s {
+                width: 80%;
+
+                .mandatory-input {
+                  justify-content: flex-start;
+
+                  .input-width-21-5,
+                  .input-width-45 {
+                    width: 100%;
+                  }
+                }
+              }
+            }
+
+            // Range Slider Content Responsive View Start
+            .rang-parameter,
+            .rang-mandatory-input {
+              width: 60%;
+            }
+
+            // Range Slider Content Responsive View End
+            //  Cibil Content Responsive View Start
+            .check-cibil-score {
+              flex-direction: column;
+              align-items: flex-end;
+
+              .cibil-score-checkbox {
+                &.CBS-RW {
+                  width: 79%;
+                }
+
+                .inline-cibil-checkbox {
+                  justify-content: flex-end;
+                }
+
+                .form-group {
+                  &.input-number-cibil {
+                    justify-content: flex-end;
+
+                    .mandatory-input {
+                      &.cibil-mr {
+                        width: 90%;
+                        margin-right: 0;
+                        align-items: flex-end;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            //  Cibil Content Responsive View End
+          }
+
+          &:nth-child(3) {
+            &.jc-FEND {
+              justify-content: flex-end;
+              flex-wrap: wrap;
+
+              &.Cibil-Row {
+                justify-content: flex-end;
+                flex-wrap: wrap;
+                align-items: flex-end;
+
+                .Cibil_Row_NP {
+                  width: 50%;
+                  flex-direction: column;
+
+                  .sub-man-para-number {
+                    &.NP-CBI_W {
+                      margin-left: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          // tab Conatent For mandatory Parameters Start
+          .mandatory-Parameters-tab {
+            .input-width-25 {
+              width: 45%;
+            }
+
+            // tab content Responsive View
+            .tab-mandatory-Parameters {
+
+              .btn-group,
+              .btn-group-vertical {
+                &.btn-radio-select {
+                  flex-direction: column;
+                  align-items: flex-end;
+                  width: 45%;
+
+                  &.btn-two-radio {
+                    width: 64%;
+                  }
+
+                  &.fd-row {
+                    flex-direction: row;
+
+                    .tab-product-name {
+                      margin-right: 1.5rem;
+                      margin-bottom: 0;
+                      width: 100%;
+
+                      &:last-of-type {
+                        margin-right: 0;
+                      }
+                    }
+                  }
+
+                  .tab-product-name {
+                    margin-right: 0;
+                    margin-bottom: .5rem;
+                    width: 100%;
+                  }
+                }
+              }
+            }
+          }
+
+          // tab Conatent For mandatory Parameters End
+        }
+
+        //  Cibil Content Sub Responsive View Start
+        > {
+          .cibil-score-sub-table {
+            tbody {
+              tr {
+                &:nth-child(2) {
+                  td {
+                    &:nth-child(2) {
+                      width: 9%;
+                    }
+                  }
+                }
+
+                td {
+                  .mandatory-Parameters-number {
+                    .sub-man-para-number {
+                      width: 80%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        //  Cibil Content Sub Responsive View End
+      }
+    }
+  }
+
+  .sub-man-para-number {
+    &.jc-end-LI {
+      width: 60%;
+    }
+
+    &.jc-start-LI {
+      width: 60%
+    }
+  }
+
+  // mandatory Parameters table  Responsive View 09-Feb-2021 End
+  // End Table Responsive SCSS && JS and Scroll Css @Nikul
+  // Common Responsive View Css Start 18_08_2021
+  .checkbox {
+    label {
+      font-size: $fs-12;
+      margin-bottom: .5rem;
+    }
+  }
+
+  .input-PS-Valid {
+    &.IN-C-NP {
+      width: 35%;
+    }
+  }
+
+  // Common Responsive View Css End 18_08_2021
+}
+
+
+@media (max-width: 1450px) {
+  .footer {
+    .footer-links {
+      a {
+        margin-left: .5rem;
+
+        &.Copyright-1024 {
+          float: left;
+          width: 100%;
+          margin-left: 0;
+        }
+
+        &.mail-1024 {
+          float: left;
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  // Common-Hading Css-05-02-FEB
+  .Main-heading-dual-Cont {
+    &.mw_14 {
+      .text-heading-cards {
+        width: 100%;
+      }
+    }
+  }
+
+  // Common Css For All Pages Start
+  .psb-tab-content {
+    @include Com-fw-80;
+
+    &.SA-tabs {
+      @include Com-fw;
+    }
+  }
+
+  // Common Css For All Pages End
+  // Product New Page Responsive.5-Feb-2021
+  .Com-pe-check {
+    .form-check-inline {
+      margin-bottom: 1rem;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 1366px) {
+  .psb-mr-1 {
+    margin: 0;
+  }
+
+  .container-fluid {
+    padding: 0;
+  }
+}
+
+@media (max-width: 1300px) {
+  .mandatory-Parameters-table {
+
+    thead,
+    tbody {
+      tr {
+        td {
+          .mandatory-Parameters-number {
+
+            .rang-parameter,
+            .rang-mandatory-input {
+              width: 65%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .sub-man-para-number {
+
+    &.jc-start-LI,
+    &.jc-end-LI {
+      width: 65%;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .mandatory-Parameters-table {
+    tbody {
+      tr {
+        td {
+
+          // &:nth-child(4) {
+          //   width: 10%;
+          //   .sub-man-para-number {
+          //     p {
+          //       &.ctsp-Common {
+          //         .width-15 {
+          //           width: 45%
+          //         }
+          //       }
+          //     }
+          //   }
+          // }
+          > {
+            .cibil-score-sub-table {
+              tbody {
+                tr {
+                  &:nth-child(2) {
+                    td {
+                      &:nth-child(2) {
+                        display: none;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // tab Content Scroll Part Resposive View
+    .tab-text-hading {
+      &.Np_tab-heading {
+        width: 40%;
+
+        .tab-Scroll_Np {
+          width: 100%;
+        }
+      }
+    }
+
+    // Sidnav Small Css Working
+    body.enlarged {
+
+      // tab Content Scroll Part Resposive View
+      .tab-text-hading {
+        &.Np_tab-heading {
+          width: 40%;
+
+          .tab-Scroll_Np {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .mandatory-Parameters-table {
+    thead {
+      display: none;
+    }
+
+    tbody {
+      tr {
+        flex-direction: column;
+        border-bottom: 0;
+        border: 1px solid $opl-bc;
+        margin-bottom: 1rem;
+
+        td {
+          label {
+            &.ps-label {
+              display: flex;
+            }
+          }
+
+          &:nth-child(+n) {
+            width: 100%;
+            @include bb-1;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .sub-man-para-number {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+              width: 62%;
+
+              p {
+                &.ctsp-Common {
+                  justify-content: flex-end;
+                }
+              }
+
+              .main-content {
+                &.SE-check {
+                  justify-content: flex-end;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// max-width @media Query End
+// Responsive @media Query SCSS Start Point 22-12-2020 Change

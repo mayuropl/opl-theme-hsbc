@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <app-page-title title="Encryption Decryption" ></app-page-title>
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="NP_Group_Ecry_Decry">
+        <div class="NP_Encryption_Group">
+          <div class="card-box LeftSideCont" *ngIf="tab === 1">
+            <label>Request Encrypted</label>
+            <textarea class="form-control" rows="20" cols="150" [(ngModel)]="request"
+              placeholder="Search Your Application Details"></textarea>
+          </div>
+          <div class="card-box LeftSideCont" *ngIf="tab === 2">
+            <label>Decrypted</label>
+            <textarea class="form-control" rows="20" cols="150" [(ngModel)]="response"
+              placeholder="Search Your Application Details"></textarea>
+          </div>
+          <div class="card-box LeftSideCont" *ngIf="tab === 3">
+            <label>Encrypted URL</label>
+            <textarea class="form-control" rows="20" cols="150" [(ngModel)]="request"
+              placeholder="Search Your Application Details"></textarea>
+          </div>
+          <div class="card-box LeftSideCont" *ngIf="tab === 4">
+            <label>Deecrypted URL</label>
+            <textarea class="form-control" rows="20" cols="150" [(ngModel)]="request"
+              placeholder="Search Your Application Details"></textarea>
+          </div>
+
+        </div>
+        <div class="NP_EncryDecry_btn_grp">
+          <div class="btn_grp_Cont Top_tab_Cont">
+              <button type="button" class="btn btn-psb btn-psbpurple" (click)="convertData(request)">Decrypt Key</button>
+<!--            <button type="button" class="btn btn-psb btn-outline-psbpurple" (click)="activeClick(1)">Decryption</button>-->
+<!--            <button type="button" class="btn btn-psb btn-outline-psbpurple" (click)="activeClick(2)">Ecryption</button>-->
+<!--            <button type="button" class="btn btn-psb btn-outline-psbpurple" (click)="activeClick(3)">URL-->
+<!--              Decryption</button>-->
+<!--            <button type="button" class="btn btn-psb btn-outline-psbpurple" (click)="activeClick(4)">URL-->
+<!--              Encryption</button>-->
+          </div>
+<!--          <div class="btn_grp_Cont Bottom_tab_Cont">-->
+<!--            <button type="button" class="btn btn-psb btn-psbpurple" (click)="convertData(request)"-->
+<!--              *ngIf="tab == 1">Decrypt Key</button>-->
+<!--            <button type="button" class="btn btn-psb btn-psbpurple" (click)="convertDecData(response)"-->
+<!--              *ngIf="tab == 2">Ecrypt Key</button>-->
+<!--            <button type="button" class="btn btn-psb btn-psbpurple" (click)="convertUrlData(request)"-->
+<!--              *ngIf="tab == 3">URL Decrypt</button>-->
+<!--            <button type="button" class="btn btn-psb btn-psbpurple" (click)="decryptUrlData(request)"-->
+<!--              *ngIf="tab == 4">URL Encrypt</button>-->
+<!--          </div>-->
+        </div>
+        <div class="NP_Decryption_Group">
+          <div class="card-box RightSideCont" *ngIf="tab === 1">
+            <label>Request Decrypted <i class="fa fa-clone" aria-hidden="true"
+                (click)="copyToClipBoard(requestData,true)"></i></label>
+            <div class="Cont_View">
+              <pre>{{requestData | json}}</pre>
+            </div>
+          </div>
+          <div class="card-box RightSideCont" *ngIf="tab === 2">
+            <label>Encrypted <i class="fa fa-clone" aria-hidden="true"
+                (click)="copyToClipBoard(responseData,true)"></i></label>
+            <div class="Cont_View">
+              <pre>{{responseData | json}}</pre>
+            </div>
+          </div>
+          <div class="card-box RightSideCont" *ngIf="tab === 3">
+            <label>Decrypted URL <i class="fa fa-clone" aria-hidden="true"
+                (click)="copyToClipBoard(urlRequestData,true)"></i></label>
+            <div class="Cont_View">
+              <pre>{{urlRequestData | json}}</pre>
+            </div>
+          </div>
+           <div class="card-box RightSideCont" *ngIf="tab === 4">
+            <label>Decrypted URL <i class="fa fa-clone" aria-hidden="true"
+                (click)="copyToClipBoard(urlResponseData,true)"></i></label>
+            <div class="Cont_View">
+              <pre>{{urlResponseData | json}}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

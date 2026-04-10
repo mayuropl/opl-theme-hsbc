@@ -1,0 +1,79 @@
+.box_design_ttl_bar{
+    border-bottom: 1px solid #DCDFE0;
+  }
+.pipeline-flow-cards {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 20px 15px;
+  }
+
+  .pipeline-card {
+    flex: 1;
+    min-width: 160px;
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem; 
+    border-radius: 8px;
+     position: relative;
+     border: 1px solid #DCDFE0;
+     box-shadow: 0px 3px 12px #0000000A;
+    &:last-child .pipeline-card__connector {
+      display: none;
+    }
+  }
+
+
+  .filtermenu_actions{
+    justify-content: flex-end !important;
+    gap: 10px;
+  }
+.pipeline-card__icon {
+    flex-shrink: 0;
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    background: #F6F6F6;
+    border-radius: 100%;
+    i {
+        font-size: 18px;
+        color: #32327F;
+      line-height: 100%;
+    }
+    img{
+      max-width: 25px;
+    }
+  }
+
+  
+.pipeline-card__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .pipeline-card__label {
+    font-size: 12px;
+    color: #020817;
+    font-weight: 500;
+  }
+  
+  .pipeline-card__value {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 100%;
+    margin: 5px 0 0;
+    justify-content: space-between;
+    span {
+      font-size: 0.75rem;
+      margin-left: 1rem;
+      font-weight: 500;
+    }
+  }

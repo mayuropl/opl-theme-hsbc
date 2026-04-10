@@ -1,0 +1,99 @@
+<div class="container-fluid HSBC_Common_Pages">
+    <div class="__main_Container">
+      <form class="NP_Form">
+        <div class="page_Title_sec">
+          <div class="page_Title_left">
+            <h4 class="cursor_pointer">
+              Image Upload
+            </h4>
+          </div>
+          <!-- <div class="page_Title_Right" >
+            <a type="button" mat-flat-button class="btn_design with_right_icn" color="secondary"> Download Customer of Disabled RM<mat-icon
+                class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+            <a type="button" mat-flat-button class="btn_design with_right_icn ml-2" color="secondary"
+               href="assets/files/HRMS_DATA_BULK_UPLOAD.xlsx" download >Download Template<mat-icon
+              class="ml-2 mr-0">arrow_downward_alt</mat-icon></a>
+          </div> -->
+        </div>
+        <div class="page_Details">
+          <div class="box_design mb-3 p-3">
+  
+            <div class="NP_Com_Group">
+              <div class="dragDrop-Common" appDragDrop>
+                <!-- <div class="files-list" >
+                  <div class="single-file">
+                    <div class="File-Progress">
+                      <div class="file-icon">
+                        <img src="assets/images/hsbc/FileUpload_Icon.svg" alt="File Icon">
+                      </div>
+                      <div class="info">
+                        <h4 class="name">
+                          aaa
+                        </h4>
+                      </div>
+                      <div class="delete">
+                        <em class="fmdi fmdi-delete IC-red mr-2"></em> Remove
+                      </div>
+                    </div>
+                    <mat-progress-bar class="Progreebar-File" mode="determinate"  [max]="100">
+                    </mat-progress-bar>
+                  </div>
+                </div> -->
+                <div class="Input-text-Fill-Cutome Input-text-Fill-Cutome2">
+                  <input class="File-input-common" type="file"
+                         accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                         #fileDropRef id="fileUpload" name="fileUpload" formControlName="fileUpload"
+                          required />
+                  <div class="Input-text-File">
+                    <i class="fas fa-file-upload"></i>
+                    <span class="file-u-icon"><br> Drop Your File here or <span class="blue_text">browse</span></span>
+                    <p class="Drop-text-common" for="fileDropRef"><span>Pick a file up to 2MB</span>
+                    </p>
+                  </div>
+                </div>
+  
+              </div>
+              
+            </div>
+          </div>
+  
+          <div class="box_design">
+            <div class="box_design_ttl_bar">
+              <div class="box_design_ttl_bar_left">
+                <h4>Image Uploads History</h4>
+              </div> 
+            </div>
+            <div class="box_design_details p-0">
+              <div class="tableResponsive">
+                <table class="CommonTable_NP NP_BGBHSBC Mobile_table_View_NP no_stripe_borderX_table">
+                  <thead>
+                  <tr class="tr_lightred_bg">
+                    <th width="5%">Sr. No.</th>
+                    <th width="75%">Image Name</th>
+                    <th width="10%">Date</th> 
+                    <th width="10%" class="text-center pr-3">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                   
+                     <tr>
+                      <td data-label="Sr. No.">1</td>                     
+                      <td data-label="Image Name">xyx.jpg</td>                     
+                      <td data-label="Date">3 Jul, 2024</td>
+                      <td data-label="Action" class="text-center">
+                        <a mat-icon-button class="matIcon delete_icn">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                   </tbody>
+                </table>
+              </div>
+            </div> 
+          
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

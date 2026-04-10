@@ -1,0 +1,140 @@
+<mat-label *ngIf="label">
+  <i *ngIf="labelIconClass" [class]="labelIconClass"></i> {{ label }} 
+  <i *ngIf="infoTooltip && !usePopup" [matTooltip]="infoTooltip" [class]="infoIconClass" class="cursor_pointer"></i>
+  <i *ngIf="usePopup" (click)="onInfoIconClick($event)" [class]="infoIconClass" class="cursor_pointer"></i>
+</mat-label>
+
+<div class="common-select-wrapper">
+  <!-- Overlay for min/max display when no options selected -->
+  <span class="minmax-overlay" *ngIf="showMinCount && !hasOptionsSelected() && hasMinMaxValue() && !isDropdownOpen">
+    <span *ngIf="getRadioLabel()" class="radio-label-bold">{{ getRadioLabel() }} - </span>({{ minCount !== null && minCount !== '' ? minCount : 0 }}min-{{ maxCount !== null && maxCount !== '' ? maxCount : 100 }}max)
+  </span>
+  <mat-form-field appearance="outline" [class]="controlClass">
+    <mat-select
+      [multiple]="isMultiple"
+      [(value)]="selectedValue"
+      (selectionChange)="onSelectionChanged($event)"
+      (openedChange)="onDropdownOpened($event)"
+      [placeholder]="getPlaceholderText()"
+    >
+    <mat-select-trigger *ngIf="isMultiple || showMinCount">
+      <span class="select-trigger-content" matTooltipPosition="below" [matTooltipPositionAtOrigin]="true"  matTooltipClass="multiline-tooltip" [matTooltip]="getTooltipText()">
+        <ng-container *ngIf="getRadioLabel()">
+          <span class="radio-label-bold">{{ getRadioLabel() }}</span>
+          <span *ngIf="getTriggerText()"> - </span>
+        </ng-container>
+        <ng-container *ngIf="hasOptionsSelected()">{{ getOptionsText() }}</ng-container>
+        <ng-container *ngIf="!hasOptionsSelected() && hasMinMaxValue()">{{ minCount !== null && minCount !== '' ? minCount : 0 }}min-{{ maxCount !== null && maxCount !== '' ? maxCount : 100 }}max</ng-container>
+      </span>
+    </mat-select-trigger>
+    <!-- Radio group inside a mat-option -->
+    <mat-option *ngIf="showRadioGroup" (click)="$event.stopPropagation()" class="sticky_option no_sticky no_ripple_option mt-1" [disableRipple]="true">
+      <div class="radio-group-wrapper small_radio" (click)="$event.stopPropagation()">
+        <mat-radio-group
+          [ngModel]="radioSelection"
+          (ngModelChange)="onRadioChange($event)"
+        >
+          <mat-radio-button
+          *ngFor="let radio of radioOptions"
+          [value]="radio.value"
+          [disableRipple]="true"
+        >
+          {{ radio.label }}
+        </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-option>
+  
+    <!-- Search input -->
+    <mat-option class="sticky_option no_ripple_option" *ngIf="searchEnabled" (click)="$event.stopPropagation()">
+      <div class="filter_select_search" (click)="$event.stopPropagation()">
+        <input
+          type="text"
+          placeholder="Search"
+          class="searchbox_input"
+          [(ngModel)]="searchText"
+          (click)="$event.stopPropagation()"
+          (input)="onSearchInput($event.target.value)"
+          (keydown)="onSearchKeyDown($event)"
+          (keyup)="$event.stopPropagation()"
+        />
+        <em class="fas fa-search searchbox_Icn"></em>
+      </div>
+    </mat-option>
+
+    <!-- Regular Options (non-grouped) -->
+    <ng-container *ngIf="!hasGroupedOptions()">
+      <mat-option *ngFor="let option of filteredOptions()" [value]="getOptionValue(option)" [disabled]="disableOptions" [disableRipple]="true" (click)="onOptionClick(getOptionValue(option))">
+        {{ getOptionLabel(option) }}
+      </mat-option>
+    </ng-container>
+
+    <!-- Grouped Options -->
+    <ng-container *ngIf="hasGroupedOptions()">
+      <!-- All Option -->
+       <!-- *ngIf="showGroupedAll"  -->
+      <mat-option
+        [value]="-1" 
+        [disableRipple]="true"
+        class="grouped-all-option">
+        All
+      </mat-option>
+      <ng-container *ngFor="let group of filteredGroupedOptions()">
+        <!-- Group Header -->
+        <mat-option class="group-header-option" [disableRipple]="true" disabled (click)="$event.stopPropagation()">
+          <span class="group-header-label">{{ group.groupName }}</span>
+        </mat-option>
+        <!-- Group Items -->
+        <mat-option 
+          *ngFor="let option of group.options" 
+          [value]="option.value" 
+          [disabled]="disableOptions" 
+          [disableRipple]="true"
+          class="grouped-option-item">
+          {{ option.label }}
+        </mat-option>
+      </ng-container>
+    </ng-container>
+    <mat-option 
+    class="hide_check no_ripple_option" 
+     *ngIf="showMinCount && !hasOptionsSelected()">
+    <div class="commonselect_count_box">
+      
+      <div class="input_field" (click)="$event.stopPropagation()">
+        <label>Min %</label>
+        <div class="filter_select_search" (click)="$event.stopPropagation()">
+          <input
+            type="text"
+            class="searchbox_input"
+            [(ngModel)]="minCount"
+            (ngModelChange)="onMinOrMaxChange()"
+            (input)="onMinMaxInput()"
+            placeholder="Min (0)"
+            [min]="0"
+            (click)="$event.stopPropagation()"
+          />
+        </div>
+      </div>
+  
+      <div class="input_field" (click)="$event.stopPropagation()">
+        <label>Max %</label>
+        <div class="filter_select_search" (click)="$event.stopPropagation()">
+          <input
+            type="text"
+            class="searchbox_input"
+            [(ngModel)]="maxCount"
+            (ngModelChange)="onMinOrMaxChange()"
+            (input)="onMinMaxInput()"
+            placeholder="Max (100)"
+            [max]="100"
+            (click)="$event.stopPropagation()"
+          />
+        </div>
+      </div>
+  
+    </div>
+  </mat-option>
+  
+  </mat-select>
+  </mat-form-field>
+</div>

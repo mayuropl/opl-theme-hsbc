@@ -1,0 +1,30 @@
+<div class="pdf-viewer-modal">
+  <button class="close-btn" (click)="onClose()">
+    <mat-icon>close</mat-icon>
+  </button>
+  
+  <h2 class="modal-title">{{ data.fileName }}</h2>
+  
+  <div class="loading-overlay" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="loading-text">Loading PDF...</p>
+  </div>
+  
+  <iframe 
+    [src]="safePdfUrl" 
+    type="application/pdf"
+    (load)="onIframeLoad()"
+    class="pdf-iframe">
+  </iframe>
+  
+  <div class="file-info">
+    <div class="info-row">
+      <span class="info-label">Format:</span>
+      <span class="info-value">application/pdf</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Uploaded On:</span>
+      <span class="info-value">{{ data.createdDate | date:'dd MMM yyyy, hh:mm a' }}</span>
+    </div>
+  </div>
+</div>

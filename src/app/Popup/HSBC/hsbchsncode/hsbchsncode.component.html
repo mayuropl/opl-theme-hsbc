@@ -1,0 +1,60 @@
+<!-- <main class="HSBC_Common_popup __Pad0PX">
+  <div class="__HSBC_Popup__header _Icon_TopRight">
+      <p class="HSBC__title">
+          <img src="assets/images/Dashboard/hsbc_Logo.png" alt="HSBC Bank Logo">
+      </p>
+      <button mat-icon-button class="HSBC__Btn_Icon"  (click)="closePopup()" >
+          <mat-icon>close</mat-icon>
+      </button>
+  </div>
+  <div class="HSBC__Popup_Body">
+      <div class="__HSBC_Common_Cont_Popup ConfirmationTxt Flex_Wrap">
+          <div class="__Common_texts _Img_Text_Pop _pd0px">
+              <lottie-player class="__HSBC_lotties_Not" src="./../../../assets/images/Json/barcode.json"
+                  background="transparent" speed="1" loop autoplay></lottie-player>
+                  <lottie-player class="__HSBC_lotties_Not" src="assets/images/Json/barcode.json"
+                  background="transparent" speed="1" loop autoplay></lottie-player>
+              <p class="__ptext">HSN Code</p>
+          </div>
+
+          <div class="__Common_Data_GroupView HSNCCodeCont" >
+            @for (hsnCode of hsnCodes; track $index) {
+              <div class="__Common_texts">
+                <h3 class="Text_h3"><em class="fa fa-barcode"></em> {{hsnCode.code || '-'}}</h3>
+                <span class="Text_span">{{hsnCode.description || '-'}}</span>
+            </div>
+            }
+          </div>
+      </div>
+  </div>
+</main> -->
+
+<div class="popup_design max-700 hsnCode_popup">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial (click)="closePopup()">close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>HSN Code</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">
+                <div class="list_table_design">
+                    @for (hsnCode of hsnCodes; track $index) {
+                    <div class="list_row px-0">
+                        <span class="pr-3">
+                            <span class="skyblue_badge">
+                                <em class="fa fa-barcode mr-2"></em> {{hsnCode.code || '-'}}
+                            </span>
+                        </span>
+                        <p class="text-right hsnCode_description">{{hsnCode.description || '-'}}</p>
+                    </div>
+                    }
+                </div>
+            </div>
+        </mat-dialog-content>
+        <!-- <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions> -->
+    </div>
+</div>

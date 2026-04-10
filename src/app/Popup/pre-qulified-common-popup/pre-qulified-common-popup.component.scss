@@ -1,0 +1,27 @@
+.content_title{
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    margin: 20px 0 10px;
+}
+
+
+
+.small_title{
+    padding: 0 !important;
+    margin: 15px 0 10px !important;
+    font-size: 15px !important;
+}
+
+
+.text_para{
+    text-align: justify;
+    &.sm_title{
+        font-size: 16px !important;
+        font-weight: 600 !important;
+    }
+}
+
+hr{
+    margin: 10px 0;
+}

@@ -1,0 +1,30 @@
+.popup_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.single-file{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .info{
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        width: 80%;
+        h2{
+            white-space: nowrap;
+            margin: 0;
+            font-size: 14px;
+            font-weight: 300;
+        }
+    }
+    .action_text{
+        text-align: right;
+        width: 20%;
+    }
+}
+.dragDrop-Common{
+    margin-bottom: 20px;
+ }

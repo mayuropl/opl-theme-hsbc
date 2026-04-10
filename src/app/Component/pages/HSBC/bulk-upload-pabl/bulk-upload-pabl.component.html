@@ -1,0 +1,214 @@
+<div class="container-fluid HSBC_Common_Pages">
+  <div class="__main_Container">
+    <form class="NP_Form" [formGroup]="bulkUploadDetailsForm" autocomplete="off">
+      <div class="page_Title_sec">
+        <div class="page_Title_left">
+          <h4 class="cursor_pointer" (click)="back();">
+            <em class="fmdi fmdi-arrow-left mr-2"></em>
+            <!-- fmdi fmdi-chevron-left -->
+            Pre-Approved Products
+          </h4>
+        </div>
+        <div class="page_Title_Right">
+          <button type="button" mat-flat-button class="btn_design with_right_icn" color="secondary" *ngIf="isActionAvailforSubpage(constants.pageMaster.PRE_APPROVED_BULK_UPLOAD,constants.PageActions.DOWNLOAD)"
+            (click)="downloadTemplate()" disabled>Download Template<mat-icon
+              class="ml-2 mr-0">arrow_downward_alt</mat-icon></button>
+        </div>
+      </div>
+      <div class="page_Details">
+        <div class="box_design mb-3 p-3">
+          <div class="dragDrop-Common" appDragDrop>
+            <div class="files-list" *ngIf="files.length > 0">
+              <div class="single-file" *ngFor="let file of files; let i = index">
+                <div class="File-Progress">
+                  <div class="file-icon">
+                    <img src="assets/images/hsbc/FileUpload_Icon.svg" alt="File Icon">
+                  </div>
+                  <div class="info">
+                    <h4 class="name">
+                      {{ file?.name }}
+                    </h4>
+                  </div>
+                  <div class="delete" (click)="deleteFile(i)">
+                    <em class="fmdi fmdi-delete IC-red mr-2"></em> Remove
+                  </div>
+                </div>
+                <mat-progress-bar class="Progreebar-File" mode="determinate" value="{{file.progress}}" [max]="100">
+                </mat-progress-bar>
+              </div>
+            </div>
+            <div class="Input-text-Fill-Cutome" *ngIf="files.length == 0">
+              <input class="File-input-common" type="file"
+                accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                #fileDropRef id="fileUpload" name="fileUpload" formControlName="fileUpload"
+                (change)="fileBrowseHandler($event.target.files)" required />
+              <div class="Input-text-File">
+                <span class="file-upload-icon"><mat-icon>arrow_upward_alt</mat-icon> Upload files</span>
+                <p class="Drop-text-common" for="fileDropRef"><span>Browse</span> file or drag and drop <br />CSV or XLS
+                  or XLSX
+                </p>
+              </div>
+            </div>
+
+          </div>
+          <div class="__Btn_Group __MT15px __JcEnd">
+            <button mat-stroked-button color="secondary" class="btn_design"
+              (click)="Read_Instruction_BulkUpload_popup()" disabled><mat-icon>info</mat-icon> Read
+              Instructions </button>
+            <!-- (click)="Read_Instruction_BulkUpload_popup()" -->
+            <button mat-stroked-button color="primary" class="btn_design"  *ngIf="isActionAvailforSubpage(constants.pageMaster.PRE_APPROVED_BULK_UPLOAD,constants.PageActions.UPLOAD)"
+              (click)='submit()'><mat-icon>arrow_upward_alt</mat-icon>
+              Upload File</button>
+          </div>
+        </div>
+        <div class="box_design">
+          <div class="box_design_ttl_bar">
+            <div class="box_design_ttl_bar_left">
+              <h4>File Uploads History</h4>
+            </div>
+            <div class="box_design_ttl_bar_right">
+              <button class="btn_design" mat-stroked-button color="primary">Filter<i
+                  class="fa fa-sort-amount-down ml-2"></i></button>
+            </div>
+          </div>
+          <div class="box_design_details p-0">
+            <div class="tableResponsive" appTableScroll>
+              <table class="CommonTable_NP NP_BGBHSBC Mobile_table_View_NP no_stripe_borderX_table">
+                <thead>
+                  <tr class="tr_lightred_bg">
+                    <th>Sr. No.</th>
+                    <th>File Name</th>
+                    <th>Uploaded On</th>
+                    <th>Successful Entries</th>
+                    <th>Failed Entries</th>
+                    <th>Total Entries</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <ng-container> -->
+                  <!-- <tr class="Mobile_View_Filter_Hide_NP">
+                      <td></td>
+                      <td>
+                          <fieldset class="NP_HSBC_ComInput">
+                              <mat-form-field appearance="outline" floatLabel="never">
+                                  <input matInput placeholder="Enter name">
+                              </mat-form-field>
+                          </fieldset>
+                      </td>
+                      <td>
+                          <fieldset class="NP_HSBC_ComInput">
+                              <mat-form-field appearance="outline" floatLabel="never">
+                                  <input matInput [matDatepicker]="picker" readonly>
+                                  <mat-datepicker-toggle matSuffix
+                                      [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                          </fieldset>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr> -->
+                  <ng-container *ngIf="bulkUploadHistory">
+                    <tr *ngFor="let historyData of bulkUploadHistory; let i=index">
+                      <td data-label="Sr. No."> {{ startIndex + i + 1 }}</td>
+                      <td data-label="File Name">{{historyData?.fileName}}</td>
+                      <td data-label="Uploaded On">{{historyData?.createdDate |
+                        date:'dd MMM yyyy hh:mm:ss'}}</td>
+                      <td data-label="Successful Entries">{{historyData?.success}} <a href="javscript:void(0)" *ngIf="isActionAvailforSubpage(constants.pageMaster.PRE_APPROVED_BULK_UPLOAD,constants.PageActions.DOWNLOAD_SUCCESS_ENTRY)"
+                          (click)="getData(1,historyData?.id)"><img src="assets/images/hsbc/S_Download_Icon.svg"
+                            alt="Successful Entries"></a></td>
+                      <td data-label="Failed Entries">{{historyData?.fail}} <a href="javscript:void(0)" *ngIf="isActionAvailforSubpage(constants.pageMaster.PRE_APPROVED_BULK_UPLOAD,constants.PageActions.DOWNLOAD_FAIL_ENTRY)"
+                          (click)="getData(2,historyData?.id)"><img src="assets/images/hsbc/F_Download_Icon.svg"
+                            alt="Failed Entries"></a></td>
+                      <td data-label="Total Entries">{{historyData?.totalRows}} <a href="javscript:void(0)" *ngIf="isActionAvailforSubpage(constants.pageMaster.PRE_APPROVED_BULK_UPLOAD,constants.PageActions.DOWNLOAD_TOTAL_ENTRY)"
+                          (click)="getData(3,historyData?.id)"><img src="assets/images/hsbc/T_Download_Icon.svg"
+                            alt="Total Entries"></a></td>
+                    </tr>
+                  </ng-container>
+
+                  <!-- </ng-container> -->
+                  <tr *ngIf="bulkUploadHistory == null || bulkUploadHistory == undefined ">
+                    <td colspan="10">
+                      <app-no-data-found />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- <div class="pagination-table NP_LeftPagintion">
+                  <div class="col-sm-12 col-md-5">
+                      <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                       <ng-container *ngIf="counts == 0">
+                        Showing
+                        0 to
+                        {{(pageSize*page) > (counts) ? (counts) :
+                        (pageSize*page)}} of
+                        {{totalCount[0]}}
+                       </ng-container>
+                       <ng-container *ngIf="counts > 0">
+                        Showing
+                        {{((pageSize*(page-1))+1)}} to
+                        {{(pageSize*page) > (counts) ? (counts) :
+                        (pageSize*page)}} of
+                        {{totalCount[0]}}
+                       </ng-container>
+                          row
+                          <div class="dataTables_length" id="tickets-table_length">
+                              <label class="d-inline-flex align-items-center"> <ng-select [clearable]="false"
+                                      name="tickets-table_length" class="hide-clear" aria-controls="tickets-table"
+                                      name="pageSize" [(ngModel)]="pageSize" bindLabel="name" bindValue="value"
+                                      [items]="PageSelectNumber" (ngModelChange)="onChangePage(page)"></ng-select>
+                                  row per page</label>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-5">
+                      <div class="text-md-right float-md-right pagination-rounded">
+                          <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                              <ngb-pagination (pageChange)="onChangePage(page)" [maxSize]="3" [pageSize]="pageSize"
+                                  [(page)]="page" [collectionSize]="counts" [rotate]="true"></ngb-pagination>
+                          </ul>
+                      </div>
+                  </div>
+              </div> -->
+              <div class="pagination-table NP_LeftPagintion">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                    Showing
+                    {{(startIndex+1)}} to
+                    {{(pageSize*page) > (totalSize) ? (totalSize) : (pageSize*page)}} of
+                    {{totalSize}}
+                    row
+                    <div class="dataTables_length" id="tickets-table_length">
+                      <label class="d-inline-flex align-items-center"> <ng-select [clearable]="false"
+                          name="tickets-table_length" class="hide-clear" aria-controls="tickets-table" name="pageSize"
+                          [(ngModel)]="pageSize" bindLabel="name" bindValue="value" [items]="PageSelectNumber"
+                          (ngModelChange)="onChangePage(page)"></ng-select>
+                        row per page</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-5">
+                  <div class="text-md-right float-md-right pagination-rounded">
+
+                    <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                      <ngb-pagination [collectionSize]="totalSize" [maxSize]="3" [(page)]="page" [rotate]="true"
+                        [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="onChangePage($event)">
+                      </ngb-pagination>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

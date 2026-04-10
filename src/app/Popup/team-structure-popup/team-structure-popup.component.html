@@ -1,0 +1,77 @@
+<section class="popup_design max-900 HSBC_Common_Pages team_structure_popup pb-0">
+    <div class="popup_header" mat-dialog-title>
+        <a class="modal_closeicn_btn" href="javascript:void(0)" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+        </a>
+        <h3>Team Structure</h3>
+        <div class="right_fields">
+            <div class="input_field">
+                <mat-form-field appearance="outline" class="w-auto">
+                    <mat-select placeholder="RM Role" [disabled]="isLoading" [(value)]="selectedRmRole" (selectionChange)="onRmRoleChange($event.value)">
+                        <mat-option *ngFor="let role of rmRoleConfigs" [value]="role.roleCode">
+                            {{ role.roleName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="input_field gray_input ml-2">
+                <mat-form-field appearance="outline" class="w-auto">
+                    <input type="text" placeholder="Search" matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)">
+                    <em matSuffix class="fas fa-search searchbox_Icn mr-2"></em>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content>
+            <div class="popup_body team_structure_list pos_rel" [ngClass]="{'subloaderShowing': isLoading}">
+                <div class="table_sep_loader" *ngIf="isLoading">
+                    <div class="loaderoverlay loader_screen">
+                        <div class="loader_screen_center">
+                            <div class="loader_screen_lottie">
+                                <span class="logo_loader">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K"
+                                        alt="">
+                                </span>
+                            </div>
+                            <h3>Please wait data is loading</h3>
+                        </div>
+                    </div>
+                </div>
+                <app-no-data-found message="No team members found" *ngIf="!isLoading && (!hasVisibleNodes || filteredTree.length === 0)"></app-no-data-found>
+                <ul class="team_tree" *ngIf="!isLoading && hasVisibleNodes && filteredTree.length > 0">
+                    <ng-container *ngFor="let node of filteredTree">
+                        <ng-container *ngTemplateOutlet="treeNode; context: { $implicit: node, level: 0 }"></ng-container>
+                    </ng-container>
+                </ul>
+
+                <ng-template #treeNode let-node let-level="level">
+                    <li *ngIf="node.visible" class="team_tree_item" [ngClass]="'level_' + level"
+                        [class.expanded]="node.expanded" [class.collapsed]="!node.expanded">
+                        <div class="team_row" [class.main_row]="level === 0" (click)="toggleExpand(node)">
+                            <span class="chevron" *ngIf="hasChildren(node)"
+                                  [class.expanded]="node.expanded" [class.collapsed]="!node.expanded">
+                                <mat-icon>{{ node.expanded ? 'expand_more' : 'chevron_right' }}</mat-icon>
+                            </span>
+                            <span class="chevron_placeholder" *ngIf="!hasChildren(node)"></span>
+                            <mat-checkbox [checked]="node.selected" (click)="toggleSelection(node, $event)"></mat-checkbox>
+                            <span class="member_name">{{ node.name }}</span>
+                            <span class="report_badge" *ngIf="node.reporteeCount > 0">{{ node.reporteeCount }}</span>
+                            <span class="customer_count">No. of Customer : <span class="customer_badge">{{ node.customerCount }}</span></span>
+                        </div>
+
+                        <ul class="team_tree_children" *ngIf="hasChildren(node) && node.expanded">
+                            <ng-container *ngFor="let child of node.children">
+                                <ng-container *ngTemplateOutlet="treeNode; context: { $implicit: child, level: level + 1 }"></ng-container>
+                            </ng-container>
+                        </ul>
+                    </li>
+                </ng-template>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-end popup_actions_btns">
+            <button mat-flat-button color="primary" (click)="onApply()" [disabled]="!hasSelection">Apply</button>
+            <button mat-stroked-button color="primary" (click)="onReset()">Reset</button>
+        </mat-dialog-actions>
+    </div>
+</section>

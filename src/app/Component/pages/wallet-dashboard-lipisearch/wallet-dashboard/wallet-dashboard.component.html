@@ -1,0 +1,188 @@
+<div class="container-fluid HSBC_Common_Pages mt-2">
+    <div class="__main_Container">
+        <div class="page_Details">
+            <div class="topside_btn" *ngIf="!showComparison">
+                <!-- <div class="input_field small_input_field">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-select placeholder="Select Bureau">
+                            <mat-option value="1">CIBIL</mat-option>
+                            <mat-option value="2">CRIF</mat-option>
+                         </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="input_field small_input_field">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-select placeholder="Type of Customers">
+                            <mat-option value="1">ETB</mat-option>
+                            <mat-option value="2">Target or Prospects</mat-option>
+                         </mat-select>
+                    </mat-form-field>
+                </div> -->
+                <!-- <button mat-stroked-button class="btn_design white_bg" color="primary" (click)="openTeamStructurePopup()">
+                    My Team
+                </button> -->
+                <!-- Search By Button with Menu -->
+                <button mat-stroked-button [matMenuTriggerFor]="searchByopt" #searchByTrigger="matMenuTrigger" color="grey" class="btn_design flex-row-reverse greay_text ln_40" (click)="activeFilterMenu = null">
+                     Search by <mat-icon class="ml-2 mr-0">unfold_more</mat-icon>
+                </button>
+
+                <!-- Search By Menu -->
+                <mat-menu #searchByopt="matMenu" class="filter_option_menu filter_option_menu_new">
+
+                    <!-- Main Menu View -->
+                    <ng-container *ngIf="!activeFilterMenu">
+                        <h3 class="title_menu" (click)="$event.stopPropagation()">
+                            <span class="left_side">
+                            Search Options
+                            <button mat-icon-button color="primary" class="ref_icon" (click)="resetAllFilters()">
+                                <i class="fi fi-br-refresh red_text"></i>
+                            </button>
+                            </span>
+                            <button mat-icon-button type="button" (click)="searchByTrigger.closeMenu()">
+                                <i class="fi fi-br-cross-small"></i>
+                            </button>
+                        </h3>
+
+                        <ng-container *ngFor="let opt of searchByOptionsTopBar; let i = index">
+                            <button mat-menu-item class="mr-0 pr-1 no_wrap"
+                                (click)="openFilterView(opt, i, $event)">
+                                <!-- (click)="openFilterView(opt, i, $event)" [style.display]="opt.key === 'RM' ? 'none' : ''"> -->
+                                <span class="menu_text">
+                                    <i [ngClass]="getSearchByIcon(opt.key)"></i> {{ opt.key }}
+                                </span>
+                                <span class="right_value">
+                                    <span class="filter_num">{{ getSelectedCount(opt.filter_name) }}</span>
+                                    <i class="fas fa-chevron-right ml-2"></i>
+                                </span>
+                            </button>
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- Filter Detail View -->
+                    <ng-container *ngIf="activeFilterMenu && selectedFilterOption">
+                        <div class="filter_menuBar filter_menuBarNew" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+                            <h3 class="title_menu">
+                                <button mat-icon-button (click)="goBackToMenu($event)" class="back_btn mr-1">
+                                    <i class="fi fi-rr-arrow-small-left"></i>
+                                </button>
+                                {{ activeFilterMenu }}
+                                <button mat-icon-button class="close_btn ml-auto" (click)="searchByTrigger.closeMenu()">
+                                    <i class="fi fi-br-cross-small"></i>
+                                </button>
+                            </h3>
+
+                            <div class="pos_rel" [ngClass]="{'subloaderShowing': isLoadingSearchBy}">
+                                <div class="table_sep_loader" *ngIf="isLoadingSearchBy">
+                                    <div class="loaderoverlay loader_screen">
+                                        <div class="loader_screen_center">
+                                            <div class="loader_screen_lottie">
+                                                <span class="logo_loader">
+                                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDgyIDgyIj4KICA8ZyBpZD0iR3JvdXBfMTgxMTMxIiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEzMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjE3MDkuMDQ3IDI0NDc5LjA0NykiPgogICAgPGNpcmNsZSBpZD0iRWxsaXBzZV8zMjUiIGRhdGEtbmFtZT0iRWxsaXBzZSAzMjUiIGN4PSI0MSIgY3k9IjQxIiByPSI0MSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIxNzA5LjA0NyAtMjQ0NzkuMDQ3KSIgZmlsbD0iI2ZmZiIvPgogICAgPGcgaWQ9Ikdyb3VwXzE4MTEyOSIgZGF0YS1uYW1lPSJHcm91cCAxODExMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMTY5OC4yOTcgLTI0NDUzLjU3OCkiPgogICAgICA8ZyBpZD0iR3JvdXBfMTgxMTI4IiBkYXRhLW5hbWU9Ikdyb3VwIDE4MTEyOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+CiAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZV8xNTU1OTMiIGRhdGEtbmFtZT0iUmVjdGFuZ2xlIDE1NTU5MyIgd2lkdGg9IjMwLjI2MiIgaGVpZ2h0PSIzMC4yNjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1LjE2NykiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTU5OSIgZGF0YS1uYW1lPSJQYXRoIDk5NTk5IiBkPSJNMTQyLjczMSwxNS4xNjcsMTI3LjYsMFYzMC4zWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTgyLjE3MSkiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMCIgZGF0YS1uYW1lPSJQYXRoIDk5NjAwIiBkPSJNNTcuNzMxLDE1LjE2Nyw3Mi44NjIsMEg0Mi42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMykiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMSIgZGF0YS1uYW1lPSJQYXRoIDk5NjAxIiBkPSJNMCwxNS4xNjcsMTUuMTY3LDMwLjNWMFoiIGZpbGw9IiNkYjAwMTEiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF85OTYwMiIgZGF0YS1uYW1lPSJQYXRoIDk5NjAyIiBkPSJNNTcuNzMxLDQyLjYsNDIuNiw1Ny43MzFINzIuODYyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI3LjQzMyAtMjcuNDMzKSIgZmlsbD0iI2RiMDAxMSIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="filter_searchbox" *ngIf="searchByDataHistory[selectedFilterOption?.dataset_id]">
+                                    <div class="filter_searchbox_wrapper">
+                                        <i class="fas fa-search searchbox_Icn"></i>
+                                        <input type="text" placeholder="Search" class="searchbox_input"
+                                            [(ngModel)]="searchByDataHistory[selectedFilterOption.dataset_id].searchValue"
+                                            (ngModelChange)="onSearchChange($event, selectedFilterOption.dataset_id, selectedFilterOption.dataset_name)"/>
+                                    </div>
+                                </div>
+
+                                <div class="filter_details checkbox_lists"
+                                    (scroll)="onScroll($event, selectedFilterOption?.dataset_id, selectedFilterOption?.dataset_name, selectedFilterOption?.filter_name)">
+                                    <mat-checkbox *ngFor="let item of dependantFilters"
+                                        [checked]="selectedItemsMap[selectedFilterOption?.filter_name]?.includes(item.value)"
+                                        (change)="onSelectField($event, selectedFilterOption?.filter_name, item.value, selectedFilterOption?.dataset_id)">
+                                        {{ item.key }}
+                                    </mat-checkbox>
+                                </div>
+
+                                <div class="filter_action">
+                                    <button mat-flat-button color="primary" class="no_wrap" (click)="applyFilters()">Apply</button>
+                                    <button mat-stroked-button class="btn_design white_bg no_wrap" color="primary"
+                                        (click)="resetFilters(selectedFilterOption?.dataset_id, selectedFilterOption?.dataset_name, selectedFilterOption?.filter_name)">
+                                        <i class="fi fi-br-refresh mr-1"></i> Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </mat-menu>
+
+            </div>
+            <mat-tab-group mat-align-tabs="start" class="tabs-design tabs-design2">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        Lipisearch Lending Wallet
+                    </ng-template>
+                    <mat-card-content>
+                        <app-pr-top-filter [filters]="filters" [filtersC]="filtersC" [datasetsC]="datasetsC" [showComparison]="showComparison" [restoredFiltersC]="restoredFiltersC" [restoredFilters]="restoredFilters" [searchViewBySelectionRestored]="searchViewBySelectionRestored" [searchViewByOptionsRestored]="searchViewByOptionsRestored" (filtersApplied)="handleAppliedFilters($event)"
+                            (filtersAppliedC)="handleAppliedFiltersC($event)" (resetAppliedC)="handleAppliedResetC($event)" #prTopFilter (showSummaryChange)="onSummaryChange($event)"
+                            (viewByChanged)="onViewByChanged($event)" (filtersStateChanged)="onFiltersStateChanged($event)" (searchViewBySelectionChanged)="onSearchViewBySelectionChanged($event)"
+                            (searchViewByOptionsChanged)="onSearchViewByOptionsChanged($event)"
+                            (clearRestoredFilters)="onClearRestoredFilters()"></app-pr-top-filter>
+                        <ng-container *ngIf="!showComparison">
+                            <app-pr-lending-analytics [lendingAnalysis]="lendingAnalysis" [previousLendingAnalysis]="previousLendingAnalysis"
+                            [isLoadingFromParent]="isLoadingLendingAnalysis"
+                            (unitChanged)="onUnitChanged($event)" [selectedUnit]="selectedUnit"></app-pr-lending-analytics>
+
+                        <div class="wallet_chart_main mt-4">
+                            <div class="card_box">
+                                <app-trends-lending-chart [trendsLendingChartsData]="trendsLendingChartsData" [dateOfReportMap]="dateOfReportMap"
+                                    [selectedUnit]="selectedUnit" [isLoadingFromParent]="isLoadingTrendsLending"></app-trends-lending-chart>
+                            </div>
+                            <div class="card_box">
+                                <app-segment-level-chart [trendsLendingChartsData]="trendsLendingChartsData" [latestDateOfReportShow]="latestDateOfReportShow" [dateOfReportMap]="dateOfReportMap"
+                                    [segmentLevelOppData]="segmentLevelOppData" [selectedUnit]="selectedUnit" [isLoadingFromParent]="isLoadingSegmentLevel" [hasFiltersApplied]="hasFiltersApplied">
+                                </app-segment-level-chart>
+                            </div>
+                        </div>
+                        <app-product-level-chart [productLevelOppData]="productLevelOppData" [productLevelChartData]="productLevelChartData" [customerLevelOppData]="customerLevelOppData"
+                            [customerLevelChartData]="customerLevelChartData" [selectedUnit]="selectedUnit" [isLoadingFromParent]="isLoadingProductLevel" [isLoadingProductLevelChart]="isLoadingProductLevelChart"
+                            (customerNameChange)="onCustomerSelected($event)" [customerWiseProductsData]="customerWiseProductsData" [isLoadingCustomerLevelChart]="isLoadingCustomerLevelChart"
+                             (pageChangeCustomerLevel)="onPageChangeCustomerLevel($event)" [totalRecordsCustomer]="totalRecordsCustomer"
+                             (pageChangeProductLevel)="onFetchProductLevelCustomers($event)" (searchSortEvent)="onProductOrCusomerLvlSortSearch($event)"
+                             [totalRecordsProduct]="totalRecordsProduct" [productWiseCustomerData]="productWiseCustomerData"
+                             [totalRecordsProductParent]="totalRecordsProductLevel" [totalRecordsCustomerProducts]="totalRecordsCustomerWiseProducts"
+                             (pageChangeProductParent)="getProductLevelOppCharts($event)" (pageChangeCustomerProducts)="getCustomerLevelWiseProduct($event)"
+                             (emitExcelDownloadProductLevel)="emitExcelDownloadProductLevel($event)" [latestDateOfReportShow]="latestDateOfReportShow"
+                             [filtersApplied]="appliedFilters" [hasFiltersApplied]="hasFiltersApplied"
+                             [filterOptions]="filters" [filtersff]="filtersff" [filtersffNavigateFinale]="filtersffNavigateFinale" [dataSetIdSCT]="dataSetIdSCT"
+                             [restoredTableLevel]="restoredTableLevel"
+                             (tableLevelRestored)="restoredTableLevel = null"
+                             (productClicked)="onProductBarClicked($event)" (resetProductChart)="onResetDashboard()"
+                            (customerLevelChartClicked)="onCustomerLevelChartClicked($event)">
+                        </app-product-level-chart>
+                        </ng-container>
+                        <ng-container *ngIf="showComparison && clickOnApply">
+                            <app-pr-insights-analysis [lendingAnalysisC]="lendingAnalysisC" (unitChangedC)="onUnitChangedC($event)" [selectedUnitC]="selectedUnitC"
+                            [dateOfReportMap]="dateOfReportMap" [latestDateOfReport]="latestDateOfReport" [selectedDateOfReport]="selectedDateOfReport"
+                            [isLoadingFromParentC]="isLoadingLendingAnalysisC" ></app-pr-insights-analysis>
+                            <app-comparison-analysis [firstLevelDataC]="firstLevelDataC" [totalRecordsFirstLevel]="totalRecordsFirstLevel"
+                            [selectedViewBy]="selectedViewByShow" (pageChangeFirstLevel)="onFetchFirstLevelView($event)"
+                            [secendLevelViewData]="secendLevelViewData" (pageChangeSecondLevel)="onFetchSecendLevelView($event)" [totalRecordsSecondLevel]="totalRecordsSecondLevel"
+                            [filtersffC]="filtersffC"  [filtersffCFirstLevel]="filtersffCFirstLevel" [calculationOn]="calculationOn" [selectedUnitC]="selectedUnitC" [isLoadingFromParent]="isLoadingComparisionFL"
+                            [isFilterApplied]="isFilterApplied" [dataSetIdCRQ]="dataSetIdCRQ" [dataSetIdCTRQ]="dataSetIdCTRQ" (emitComaprisonExcelDownload)="emitComaprisonExcelDownload($event)"
+                            [latestDateOfReportShowCom]="latestDateOfReportShowCom" [selectedDateOfReportShowCom]="selectedDateOfReportShowCom" [hasFiltersApplied]="hasFiltersApplied"
+                            [filterOptions]="filtersC" [searchViewBySelection]="searchViewBySelection" [searchViewByOptions]="searchViewByOptions"></app-comparison-analysis>
+                        </ng-container>
+                        </mat-card-content>
+                </mat-tab>
+                    <!-- <mat-tab>
+                    <ng-template mat-tab-label>
+                        Liability Wallet
+                    </ng-template>
+                    <mat-card-content>
+                        <app-banker-analysis-tabs></app-banker-analysis-tabs>
+                    </mat-card-content>
+                </mat-tab> -->
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

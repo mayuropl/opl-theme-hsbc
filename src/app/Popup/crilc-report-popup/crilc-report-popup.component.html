@@ -1,0 +1,35 @@
+
+
+<section class="popup_design  HSBC_Common_Pages crilc_report_popup pb-0">
+    <div class="popup_header" mat-dialog-title>
+        <a class="modal_closeicn_btn" href="javascript:void(0)" matDialogClose="">
+            <mat-icon>close</mat-icon>
+        </a>
+        <h3>CRILC Report</h3>  
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content>
+            <div class="popup_body">
+                <div class="input_field ">
+                    <div class="custom_month_picker">
+                        <div class="form_box">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date" bsDatepicker
+                                [maxDate]="maxDate"
+                                [bsConfig]="{ dateInputFormat: 'MMM YYYY', adaptivePosition: true, maxDate: maxDate }"
+                                (ngModelChange)="getAlertsSubTabData(0)"
+                                (onShown)="onOpenCalendar($event)"
+                                onkeydown="return false">
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                    </div>
+    
+                 </div> 
+            </div> 
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns">
+            <button mat-flat-button color="primary" class="btn_design gray_btn br_8" matDialogClose>Cancel</button> 
+            <button mat-flat-button color="primary" (click)="downloadOriginalFile()">Download</button> 
+        </mat-dialog-actions>
+    </div>
+</section>

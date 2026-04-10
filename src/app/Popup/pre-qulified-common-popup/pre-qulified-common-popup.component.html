@@ -1,0 +1,135 @@
+<div class="popup_design min_w700 approved_popup" *ngIf="popupType === 'approved'">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Approved Applications With Risk Flags</h3>
+        </div>
+        <mat-dialog-content class="px-0">
+            <div class="table-responsive max-h-400" appTableScroll>
+                <table class="CommonTable_NP design_Main_listTable CommonTable_Scroll table_wrap">
+                    <thead>
+                        <tr class="tr_lightred_bg">
+                            <th width="50%">Risk Parameter</th>
+                            <th>Total Amount</th>
+                            <th class="text_center">Application Count</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bureau Default</td>
+                            <td>₹ 70,00,000</td>
+                            <td class="text_center">8</td>
+                        </tr>
+                        <tr>
+                            <td>Bureau Default</td>
+                            <td>₹ 70,00,000</td>
+                            <td class="text_center">8</td>
+                        </tr>
+                        <tr>
+                            <td>Bureau Default</td>
+                            <td>₹ 70,00,000</td>
+                            <td class="text_center">8</td>
+                        </tr>
+                        <tr>
+                            <td>Bureau Default</td>
+                            <td>₹ 70,00,000</td>
+                            <td class="text_center">8</td>
+                        </tr>
+                        <tr>
+                            <td>Bureau Default</td>
+                            <td>₹ 70,00,000</td>
+                            <td class="text_center">8</td>
+                        </tr>
+                        <tr>
+                            <td>Bureau Default</td>
+                            <td>₹ 70,00,000</td>
+                            <td class="text_center">8</td>
+                        </tr>
+                        <!-- <tr>
+                            <td colspan="5">
+                                <app-no-data-found message="No data found"/>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </mat-dialog-content>
+        <!-- <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-stroked-button color="primary" class="btn_design" matDialogClose="">No</button>
+            <button mat-flat-button color="primary">Yes</button>
+        </mat-dialog-actions> -->
+    </div>
+</div>
+
+
+<div class="popup_design max-700 rejected_popup" *ngIf="popupType === 'rejected'">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Rejected</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">             
+                <p class="text_para"><b>What it means:</b> Your application didn’t meet one or more mandatory parameters or validation criteria.</p>
+                <p class="text_para"><b>What happens next:</b> The application is closed and <b>can’t be processed further</b> under Criteria Based Lending.</p>
+            </div> 
+        </mat-dialog-content> 
+    </div>
+</div>
+  
+<div class="popup_design max-700 inProcess_popup" *ngIf="popupType === 'inProcess'">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>In Progress</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">             
+                <p class="text_para"><b>What it means:</b> Your application is still under review.</p>
+                <p class="text_para"><b>What happens next:</b> It will move through multiple evaluation stages until a final decision is made.</p>
+                <hr>
+                <p class="text_para sm_title">Journey stages (within “In Progress”)</p>
+
+                <h3 class="small_title">GST Validation</h3>
+                <p class="text_para"><b>What happens:</b> GST details are fetched using the PAN provided.</p>
+                <p class="text_para"><b>What’s checked:</b> Filing status, filing delays, and overall compliance.</p>
+
+                <h3 class="small_title">Bureau Profile</h3>
+                <p class="text_para"><b>What happens:</b> Bureau profiles are reviewed for the company and associated directors (if applicable).</p>
+                <p class="text_para"><b>What’s checked:</b> Credit history, repayment behaviour, delays/defaults, and overall creditworthiness.</p>
+
+                <h3 class="small_title">Additional Information (Optional)</h3>
+                <p class="text_para"><b>What happens:</b> You can share extra documents <b>(like GST documents, ITR information, bank statements)</b> to support the applications for non-MCA registered entities.</p>
+                <p class="text_para"><b>Note:</b> This step is optional for MCA Registered entities and only applies if you choose to provide more details.</p>
+                <h3 class="small_title">Final Assessment</h3>
+                <p class="text_para"><b>What happens:</b> The rule engine runs and final eligibility for each Product is assessed.</p>
+                <p class="text_para"><b>Note on timelines:</b> Processing may take longer if we’re waiting for responses from external systems (e.g., MCA Financials, Customs, Bureau, NCLT, etc)</p>
+
+            </div> 
+        </mat-dialog-content> 
+    </div>
+</div>
+
+<div class="popup_design max-700 inProcess_popup" *ngIf="popupType === 'disabled'">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>Disabled</h3>
+        </div>
+        <mat-dialog-content>
+            <div class="popup_body">             
+                <p class="text_para"><b>What it means:</b> Application is incomplete and no activity was recorded for 60 days since.</p>
+                <p class="text_para"><b>What happens next:</b> The application is automatically marked as Disabled.</p>
+            </div> 
+        </mat-dialog-content> 
+    </div>
+</div>
+  

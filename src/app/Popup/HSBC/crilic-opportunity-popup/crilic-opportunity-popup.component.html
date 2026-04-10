@@ -1,0 +1,117 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <div class="popup_header" mat-dialog-title>
+            <h3>CRILC Opportunity Dashboard</h3>
+        </div>
+        <mat-card-content>
+            <mat-dialog-content class="pt-0 pb-0">
+                <div class="popup_body box_design">
+                    <div class="box_design_ttl_bar">
+                        <div class="box_design_ttl_bar_left">
+                            <h4>Client Level</h4>
+                        </div>
+                        <div class="box_design_ttl_bar_right">
+                            <button mat-stroked-button class="btn_design white_bg" color="primary" >
+                                <i class="fas fa-plus mr-1"></i> Create Campaign
+                              </button>
+                        </div>
+                    </div>
+                    <div class="tableResponsive max-h-300" appTableScroll>
+                        <table
+                            class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table rmExisitingPortfolio_list_table table_wrap">
+                            <thead>
+                                <tr class="tr_lightred_bg">
+                                    <th>#</th>
+                                    <th>Customer ID</th>
+                                    <th>Clients</th>
+                                    <th>Total Balance</th>
+                                    <th>HSBC Balance</th>
+                                    <th>Opportunity</th>
+                                    <th>Opportunity %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>CUST001</td>
+                                    <td>Milam Sales Agencies Private Limited</td>
+                                    <td>₹120 Cr</td>
+                                    <td>₹72 Cr</td>
+                                    <td>₹70 Cr</td>
+                                    <td>58%</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>CUST002</td>
+                                    <td>Asian Paints Ltd</td>
+                                    <td>₹220 Cr</td>
+                                    <td>₹50 Cr</td>
+                                    <td>₹20 Cr</td>
+                                    <td>88%</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>CUST003</td>
+                                    <td>Asian Granito Ltd</td>
+                                    <td>₹650 Cr</td>
+                                    <td>₹80 Cr</td>
+                                    <td>₹95 Cr</td>
+                                    <td>32%</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>CUST004</td>
+                                    <td>Avishkaran Industries Pvt Ltd</td>
+                                    <td>₹100 Cr</td>
+                                    <td>₹11 Cr</td>
+                                    <td>₹39 Cr</td>
+                                    <td>15%</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>CUST005</td>
+                                    <td>OSB Overseas Pvt Ltd.</td>
+                                    <td>₹70 Cr</td>
+                                    <td>₹31 Cr</td>
+                                    <td>₹57 Cr</td>
+                                    <td>46%</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="pagination-table NP_LeftPagintion">
+                        <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            1 to 1 of 20 rows
+                            <div class="dataTables_length" id="tickets-table_length">
+                                <div class="NP_HSBC_ComInput select-field">
+                                    <mat-form-field appearance="outline">
+                                        <mat-select [panelClass]="'pagination_select'">
+                                            <mat-option>
+                                                1
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <span>row per page</span>
+                        </div>
+                        <div class="text-md-right float-md-right pagination-rounded">
+                            <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                <ngb-pagination [maxSize]="3" [rotate]="true" [boundaryLinks]="true">
+                                </ngb-pagination>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </mat-dialog-content>
+            <!-- <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary">Ok</button>
+        </mat-dialog-actions> -->
+        </mat-card-content>
+    </div>
+</section>

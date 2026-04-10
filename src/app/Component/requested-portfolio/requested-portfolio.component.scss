@@ -1,0 +1,40 @@
+.searchBox_design{
+    padding: 30px;
+    display: flex;
+    align-items: center;
+}
+.ellips_txt{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 75px;
+    display: block;
+}
+a{
+    cursor: pointer;
+}
+
+.intable_td{
+    padding: 10px 50px;
+  }
+  
+
+  .ellips_txt{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 75px;
+    display: block;
+    min-width: 100%;
+  }
+  .rotate_icon{
+    i{
+        transform: rotate(180deg);
+    }
+}
+
+
+.white_bg{
+    background: #ffff;
+}
+ 

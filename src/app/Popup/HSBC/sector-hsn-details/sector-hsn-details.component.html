@@ -1,0 +1,317 @@
+<section class="popup_design max-900 HSBC_Common_Pages pb-0">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="pop_up_container">
+        <!-- <div class="popup_header" mat-dialog-title>
+            <h3>HSN Details</h3>
+        </div> -->
+        <mat-dialog-content class="px-0">
+            <div class="popup_body">
+                <mat-tab-group mat-align-tabs="start" class="tabs-design" [@.disabled]="true"  (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Export HSN"  >
+                        <mat-card-content>
+                            <div class="table_sec">
+                                <div class="tableResponsive ">
+                                    <table
+                                        class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table compressed_table ">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>HSN Code</th>
+                                                <th>HSN Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @for (hsnCode of exportHsnCodePagData; track $index) {
+                                            <tr>
+                                              <td data-label="HSN Code">{{hsnCode.code || '-'}}</td>
+                                              <td data-label="HSN Description">{{hsnCode.description || '-'}}
+                                              </td>
+                                          </tr>
+                                          } @empty {
+                                            <tr>
+                                              <td colspan="2">
+                                                  <app-no-data-found message="No record found" />
+                                              </td>
+                                          </tr>
+                                          }
+
+                                            <!-- <tr>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr> -->
+                                            <!-- <tr>
+                                                <td colspan="2">
+                                                    <app-no-data-found message="No record found" />
+                                                </td>
+                                            </tr> -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(exportHsnPage.startIndex()+1)}} to
+                                        {{(exportHsnPage.pageSize()*exportHsnPage.page()) >
+                                        (exportHsnPage.totalSize) ? (exportHsnPage.totalSize) :
+                                        (exportHsnPage.pageSize()*exportHsnPage.page())}} of
+                                        {{exportHsnPage.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="exportHsnPage.pageSize"
+                                                        [panelClass]="'pagination_select'" (selectionChange)="updateExportPaginatedData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="exportHsnPage.totalSize" [maxSize]="3"
+                                                [(page)]="exportHsnPage.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="exportHsnPage.pageSize()" (pageChange)="updateExportPaginatedData()" >
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+                    <mat-tab label="Import HSN">
+                        <mat-card-content>
+                            <div class="table_sec">
+                                <div class="tableResponsive ">
+                                    <table
+                                        class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table compressed_table ">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th>HSN Code</th>
+                                                <th>HSN Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @for (hsnCode of importHsnCodePagData; track $index) {
+                                            <tr>
+                                              <td data-label="HSN Code">{{hsnCode.code || '-'}}</td>
+                                              <td data-label="HSN Description">{{hsnCode.description || '-'}}
+                                              </td>
+                                          </tr>
+                                          } @empty {
+                                            <tr>
+                                              <td colspan="2">
+                                                  <app-no-data-found message="No record found" />
+                                              </td>
+                                          </tr>
+                                          }
+
+                                            <!-- <tr>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">844190</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>-->
+                                            <!-- <tr>
+                                                <td colspan="2">
+                                                    <app-no-data-found message="No record found" />
+                                                </td>
+                                            </tr> -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(importHsnPage.startIndex()+1)}} to
+                                        {{(importHsnPage.pageSize()*importHsnPage.page()) >
+                                        (importHsnPage.totalSize) ? (importHsnPage.totalSize) :
+                                        (importHsnPage.pageSize()*importHsnPage.page())}} of
+                                        {{importHsnPage.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="importHsnPage.pageSize"
+                                                        [panelClass]="'pagination_select'" (selectionChange)="updateImportPaginatedData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="importHsnPage.totalSize" [maxSize]="3"
+                                                [(page)]="importHsnPage.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="importHsnPage.pageSize()" (pageChange)="updateImportPaginatedData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+                    <mat-tab label="GST HSN/SAC">
+                        <mat-card-content>
+                            <div class="table_sec">
+                                <div class="tableResponsive ">
+                                    <table
+                                        class="CommonTable_FixedScroll firstSrCols no_stripe_borderX_table compressed_table ">
+                                        <thead>
+                                            <tr class="tr_lightred_bg">
+                                                <th class="minw_124">HSN/SAC Code</th>
+                                                <th>HSN/SAC Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (hsnCode of gstHsnCodePagData; track $index) {
+                                              <tr>
+                                                <td data-label="HSN/SAC Code">{{hsnCode.code || '-'}}</td>
+                                                <td data-label="HSN/SAC Description">{{hsnCode.description || '-'}}
+                                                </td>
+                                            </tr>
+                                            } @empty {
+                                              <tr>
+                                                <td colspan="2">
+                                                    <app-no-data-found message="No record found" />
+                                                </td>
+                                            </tr>
+                                            }
+<!--
+                                            <tr>
+                                                <td data-label="HSN Code">84</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">84</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">84</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td data-label="HSN Code">84</td>
+                                                <td data-label="HSN Description">Machinery; Parts Of Machinery For
+                                                    Making Up Paper
+                                                    Pulp, Paper Or Paperboard, Including Cutting Machines Of All Kinds
+                                                </td>
+                                            </tr> -->
+                                            <!-- <tr>
+                                                <td colspan="2">
+                                                    <app-no-data-found message="No record found" />
+                                                </td>
+                                            </tr> -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-table NP_LeftPagintion">
+                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
+                                        aria-live="polite">
+                                        Showing
+                                        {{(gstHsnPage.startIndex()+1)}} to
+                                        {{(gstHsnPage.pageSize()*gstHsnPage.page()) >
+                                        (gstHsnPage.totalSize) ? (gstHsnPage.totalSize) :
+                                        (gstHsnPage.pageSize()*gstHsnPage.page())}} of
+                                        {{gstHsnPage.totalSize}} rows
+                                        <div class="dataTables_length" id="tickets-table_length">
+                                            <div class="NP_HSBC_ComInput select-field">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select [(ngModel)]="gstHsnPage.pageSize"
+                                                        [panelClass]="'pagination_select'" (selectionChange)="updateGstPaginatedData()">
+                                                        <mat-option *ngFor="let pages of PageSelectNumber"
+                                                            [value]="pages.value">
+                                                            {{pages.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <span class="grey_text"> row per page</span>
+                                    </div>
+                                    <div class="text-md-right float-md-right pagination-rounded">
+                                        <ul class="pagiation pagination-rounded psb-flex-end my-2">
+                                            <ngb-pagination [collectionSize]="gstHsnPage.totalSize" [maxSize]="3"
+                                                [(page)]="gstHsnPage.page" [rotate]="true" [boundaryLinks]="true"
+                                                [pageSize]="gstHsnPage.pageSize()" (pageChange)="updateGstPaginatedData()">
+                                            </ngb-pagination>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-tab>
+                </mat-tab-group>
+
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="d-flex justify-content-center popup_actions_btns pt-0">
+            <button mat-flat-button color="primary" matDialogClose="">OK</button>
+        </mat-dialog-actions>
+    </div>
+</section>

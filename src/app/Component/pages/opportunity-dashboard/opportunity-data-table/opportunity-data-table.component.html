@@ -1,0 +1,192 @@
+<!-- <div class="page_Title_sec mt-2">
+    <div class="page_Title_left small_title">
+        <h4>All Campaign</h4> 
+    </div>
+    <div class="page_Title_Right with_filtertop">
+        <div class="filter_top_bar filter_top_bar_new d-flex"> 
+            <button type="button" mat-stroked-button class="btn_design greay_text ln_40" color="grey"><i class="fi fi-sr-gears mr-1"></i>Customize Columns</button>  
+            <div class="topside_btn d-flex al-center"> 
+               <button mat-flat-button [matMenuTriggerFor]="searchByopt" class="search_label_btn">
+                Search by <mat-icon>unfold_more</mat-icon>
+              </button>
+          
+               <mat-menu #searchByopt="matMenu" class="filter_option_menu filter_option_menu_new">
+                <h3 class="title_menu">
+                  Search Options 
+                  <button mat-icon-button type="button">
+                    <i class="fi fi-br-cross-small"></i>
+                  </button>
+                </h3>
+          
+               
+                <button mat-menu-item [matMenuTriggerFor]="menu1" class="mr-0 pr-1">
+                  <span class="menu_text">
+                    <i class="fas fa-map-marker-alt"></i> Campaign
+                  </span>
+                  <span class="filter_num">32</span>
+                </button>
+          
+              
+                <button mat-menu-item [matMenuTriggerFor]="rm_menu" class="mr-0 pr-1">
+                    <span class="menu_text">
+                        <i class="fi fi-sr-layers"></i> PM Name
+                      </span>
+                      <span class="filter_num">32</span>
+                </button>
+              </mat-menu>
+       
+              <mat-menu #menu1="matMenu" class="filter_menuMain">
+                <div class="filter_menuBar filter_menuBarNew">
+                  <h3 class="filter_menuBar_ttl">Campaign</h3>
+          
+                  <div class="filter_searchbox" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+                    <div class="filter_searchbox_wrapper">
+                      <i class="fas fa-search searchbox_Icn"></i>
+                      <input type="text" placeholder="Search" class="searchbox_input" />
+                    </div>
+                  </div>
+          
+                  <div class="filter_details checkbox_lists" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+                    <mat-checkbox>FEX Revenue</mat-checkbox>
+                    <mat-checkbox>US Corridor</mat-checkbox>
+                    <mat-checkbox>Corporate Card</mat-checkbox>
+                    <mat-checkbox>Utility Card</mat-checkbox>
+                    <mat-checkbox>Receivable Finance</mat-checkbox>
+                   </div>
+          
+                  <div class="filter_action">
+                    <button mat-flat-button color="primary">Apply</button>
+                    <button mat-stroked-button class="btn_design white_bg" color="primary">
+                        <i class="fi fi-sr-refresh mr-1"></i> Reset
+                      </button>
+                  </div>
+                </div>
+              </mat-menu>
+          
+
+              <mat-menu #rm_menu="matMenu" class="filter_menuMain">
+                <div class="filter_menuBar filter_menuBarNew">
+                  <h3 class="filter_menuBar_ttl">PM Name</h3>
+          
+                  <div class="filter_searchbox" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+                    <div class="filter_searchbox_wrapper">
+                      <input type="text" placeholder="Search" class="searchbox_input" />
+                      <i class="fas fa-search searchbox_Icn"></i>
+                    </div>
+                  </div>
+          
+                  <div class="filter_details checkbox_lists" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+                    <mat-checkbox>FEX Revenue</mat-checkbox>
+                    <mat-checkbox>US Corridor</mat-checkbox>
+                    <mat-checkbox>Corporate Card</mat-checkbox>
+                    <mat-checkbox>Utility Card</mat-checkbox>
+                    <mat-checkbox>Receivable Finance</mat-checkbox>
+                  </div>
+          
+                  <div class="filter_action">
+                    <button mat-flat-button color="primary">Apply</button>
+                    <button mat-stroked-button class="btn_design white_bg" color="primary">
+                        <i class="fi fi-sr-refresh mr-1"></i> Reset
+                      </button>
+                  </div>
+                </div>
+              </mat-menu>
+            </div>  
+            <button mat-stroked-button class="btn_design white_bg" color="primary">
+                <i class="fi fi-sr-file-export mr-1"></i> Export
+              </button>
+          </div>
+          
+      </div> 
+</div>
+<mat-card class="box_design b0 bx_none">
+    <div class="box_design_details p-0">
+        <div class="table-responsive">
+            <table class="table_design_new CommonTable_NP">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th>Customer ID</th>
+                        <th>
+                            <span class="thead_filter_icon_text">
+                                Name Of Customer 
+                                <span class="thead_filter_icon">
+                                    <button [matMenuTriggerFor]="searchByNC" mat-icon-button class="mr-1"><i class="fas fa-search"></i></button>  
+                                    <span class="shorting">
+                                        <mat-icon>unfold_more</mat-icon>
+                                     </span>
+                                </span>
+                            </span>
+                            <mat-menu #searchByNC="matMenu" class="filter_option_menu filter_option_menu_new table_filter_menu" yPosition="below" xPosition="before">
+                                <div class="filter_menuBar filter_menuBarNew">
+                                     <div class="filter_searchbox" (click)="$event.stopPropagation()"
+                                        (keydown)="$event.stopPropagation()">
+                                    <div class="filter_searchbox_wrapper">
+                                        <em class="fas fa-search searchbox_Icn"></em>
+                                        <input type="text"
+                                        name="name" placeholder="Search" class="searchbox_input">
+                                    </div>
+                                    </div>
+                                    <div class="filter_details checkbox_lists" (click)="$event.stopPropagation()"
+                                        (keydown)="$event.stopPropagation()">
+                                        <button mat-menu-item>HSBC-00009547</button>
+                                        <button mat-menu-item>HSBC-00009547</button>
+                                    </div> 
+                                </div>
+                            </mat-menu> 
+                        </th>
+                         <th>RM Name</th>
+                        <th>Estimated Revenue</th>
+                        <th>Pre-Approved</th>
+                        <th>EXIM</th>
+                        <th>Campaign</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">1.</td>
+                        <td><span class="lightred_badge">HSBC-00009547</span></td>
+                        <td>OSB Overseas Pvt Ltd.</td>
+                        <td>Birender Mandal</td>
+                        <td>$1548</td>
+                        <td><span class="skyblue_badge">In Process</span></td>
+                        <td>–</td>
+                        <td>FEX Revenue, US Corridor 
+                            <span [matMenuTriggerFor]="moreMenu" class="darkgreen_text" style="cursor:pointer;">
+                                More
+                              </span>
+                              <mat-menu #moreMenu="matMenu" xPosition="before" class="newtable_menu">
+                                <button mat-menu-item>Corporate Card</button>
+                                <button mat-menu-item>Utility Card</button>
+                                <button mat-menu-item>Receivable Finance</button>
+                              </mat-menu>
+                        </td>
+                        <td class="nowrap_td text-center">
+                            <a mat-icon-button class="grey_text" ngbTooltip="View Request">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <div ngbDropdown container="body" class="dropdown d-inline">
+                                <a href="javascript:void(0);" class="action-icon" ngbDropdownToggle>
+                                    <em class="fas fa-ellipsis-v"
+                                        [placement]="['left', 'right','auto']"
+                                        ngbTooltip="Audit"></em></a>
+                                 <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
+                                 <button ngbDropdownItem>
+                                        <i class="fi fi-rr-search-alt mr-1"></i> Audit trail
+                                    </button> 
+                                    <button ngbDropdownItem >
+                                        <i class="fas fa-clipboard-list mr-1"></i> Audit Logs
+                                    </button>
+                                    <button ngbDropdownItem >
+                                        <i class="fas fa-tasks mr-1"></i> Change Status
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</mat-card> -->

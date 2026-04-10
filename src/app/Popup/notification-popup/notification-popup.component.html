@@ -1,0 +1,194 @@
+<section class="popup_design max-900 pb-0 HSBC_Common_Pages notification_popup">
+    <a class="modal_closeicn_btn" href="javascript:void(0)">
+        <mat-icon matDialogClose="" cdkFocusInitial>close</mat-icon>
+    </a>
+    <div class="popup_header">
+        <h3>Notification</h3>
+        <div class="header_actions">
+            <a href="javascript:void(0)" class="mark_read_link darkgreen_text" (click)="getNotificationDataForUser()"
+                title="Refresh">
+                <i class="fas fa-sync-alt"></i> <!-- Use a FontAwesome icon -->
+            </a>
+            <a href="javascript:void(0)" class="mark_read_link darkgreen_text" (click)="markAllAsRead()">Mark All As
+                Read</a>
+        </div>
+    </div>
+    <div class="notification_tabs_section">
+        <div class="tabs_right">
+            <div class="search_input">
+                <i class="fas fa-search red_text"></i>
+                <input type="text" placeholder="Search" [(ngModel)]="searchText" (input)="onSearch()">
+            </div>
+            <!-- <fieldset>
+                <div class="custom_month_picker">
+                    <div class="form_box">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input autocomplete="off" class="form-control" [(ngModel)]="date" name="date" bsDatepicker
+                            [bsConfig]="bsConfig" readonly onkeydown="return false;" [maxDate]="today"
+                            placeholder="MM/YYYY" container="body">
+                    </div>
+                </div>
+            </fieldset> -->
+        </div>
+    </div>
+
+    <mat-tab-group mat-align-tabs="start" class="tabs-design" animationDuration="0ms">
+        <mat-tab label="All ({{allNotificationsCount}})">
+            <mat-card-content>
+                <div class="notification_content">
+                    <div class="notification_list">
+
+                        <!-- Today Section -->
+                        <div *ngIf="groupedNotifications.today.length > 0">
+                            <div class="date_header">Today</div>
+                            <div class="notification_item" *ngFor="let notification of groupedNotifications.today"
+                                [class.unread]="!notification.isRead" (click)="markAsRead(notification)">
+                                <div class="notification_icon" *ngIf="!notification.htmlBody"
+                                    [ngClass]="notification.isRead ? 'approved' : 'rejected'">
+                                    <!-- Using different icons for read/unread or based on template? Using check for read for now -->
+                                    <i class="fas"
+                                        [ngClass]="notification.isRead ? 'fa-check-circle' : 'fa-info-circle'"></i>
+                                </div>
+                                <div class="notification_body">
+                                    <!-- <div class="notification_header">
+                                        <span class="notification_title">{{notification.title}}</span>
+                                    </div>
+                                    <p class="notification_message" [innerHTML]="getMessage(notification)"></p> -->
+                                    <div class="dynamic-wrapper" (click)="handleDynamicClick($event, notification)">
+                                        <div class="dynamic-content" [innerHTML]="notification.safeHtml"></div>
+                                    </div>
+                                    <span class="notification_time">{{notification.notificationDate | date:'dd MMM yyyy
+                                        HH:mm a'}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Yesterday Section -->
+                        <div *ngIf="groupedNotifications.yesterday.length > 0">
+                            <div class="date_header with_line">Yesterday</div>
+                            <div class="notification_item" *ngFor="let notification of groupedNotifications.yesterday"
+                                [class.unread]="!notification.isRead" (click)="markAsRead(notification)">
+                                <div class="notification_icon" *ngIf="!notification.htmlBody"
+                                    [ngClass]="notification.isRead ? 'approved' : 'rejected'">
+                                    <i class="fas"
+                                        [ngClass]="notification.isRead ? 'fa-check-circle' : 'fa-info-circle'"></i>
+                                </div>
+                                <div class="notification_body">
+                                    <!-- <div class="notification_header">
+                                        <span class="notification_title">{{notification.title}}</span>
+                                    </div>
+                                    <p class="notification_message" [innerHTML]="getMessage(notification)"></p> -->
+                                    <div class="dynamic-wrapper" (click)="handleDynamicClick($event, notification)">
+                                        <div class="dynamic-content" [innerHTML]="notification.safeHtml"></div>
+                                    </div>
+                                    <span class="notification_time">{{notification.notificationDate | date:'dd MMM yyyy
+                                        HH:mm a'}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Older Section -->
+                        <div *ngIf="groupedNotifications.older.length > 0">
+                            <div class="date_header with_line">Older</div>
+                            <div class="notification_item" *ngFor="let notification of groupedNotifications.older"
+                                [class.unread]="!notification.isRead" (click)="markAsRead(notification)">
+                                <div class="notification_icon" *ngIf="!notification.htmlBody"
+                                    [ngClass]="notification.isRead ? 'approved' : 'rejected'">
+                                    <i class="fas"
+                                        [ngClass]="notification.isRead ? 'fa-check-circle' : 'fa-info-circle'"></i>
+                                </div>
+                                <div class="notification_body">
+                                    <!-- <div class="notification_header">
+                                        <span class="notification_title">{{notification.title}}</span>
+                                    </div>
+                                    <p class="notification_message" [innerHTML]="getMessage(notification)"></p> -->
+                                    <div class="dynamic-wrapper" (click)="handleDynamicClick($event, notification)">
+                                        <div class="dynamic-content" [innerHTML]="notification.safeHtml"></div>
+                                    </div>
+                                    <span class="notification_time">{{notification.notificationDate | date:'dd MMM yyyy
+                                        HH:mm a'}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="filteredCount === 0" class="no_data_found">
+                            <i class="fas fa-bell-slash"></i>
+                            <span>No notifications found.</span>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-tab>
+        <mat-tab label="Unread ({{unreadNotifications.length}})">
+            <mat-card-content>
+                <div class="notification_content">
+                    <div class="notification_list">
+                        <!-- Today Section -->
+                        <div *ngIf="groupedUnreadNotifications.today.length > 0">
+                            <div class="date_header">Today</div>
+                            <div class="notification_item unread"
+                                *ngFor="let notification of groupedUnreadNotifications.today"
+                                (click)="markAsRead(notification)">
+                                <div class="notification_icon rejected" *ngIf="!notification.htmlBody">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="notification_body">
+                                    <div class="dynamic-wrapper" (click)="handleDynamicClick($event, notification)">
+                                        <div class="dynamic-content" [innerHTML]="notification.safeHtml"></div>
+                                    </div>
+                                    <span class="notification_time">{{notification.notificationDate | date:'dd MMM yyyy
+                                        HH:mm a'}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Yesterday Section -->
+                        <div *ngIf="groupedUnreadNotifications.yesterday.length > 0">
+                            <div class="date_header with_line">Yesterday</div>
+                            <div class="notification_item unread"
+                                *ngFor="let notification of groupedUnreadNotifications.yesterday"
+                                (click)="markAsRead(notification)">
+                                <div class="notification_icon rejected" *ngIf="!notification.htmlBody">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="notification_body">
+                                    <div class="dynamic-wrapper" (click)="handleDynamicClick($event, notification)">
+                                        <div class="dynamic-content" [innerHTML]="notification.safeHtml"></div>
+                                    </div>
+                                    <span class="notification_time">{{notification.notificationDate | date:'dd MMM yyyy
+                                        HH:mm a'}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Older Section -->
+                        <div *ngIf="groupedUnreadNotifications.older.length > 0">
+                            <div class="date_header with_line">Older</div>
+                            <div class="notification_item unread"
+                                *ngFor="let notification of groupedUnreadNotifications.older"
+                                (click)="markAsRead(notification)">
+                                <div class="notification_icon rejected" *ngIf="!notification.htmlBody">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="notification_body">
+                                    <div class="dynamic-wrapper" (click)="handleDynamicClick($event, notification)">
+                                        <div class="dynamic-content" [innerHTML]="notification.safeHtml"></div>
+                                    </div>
+                                    <span class="notification_time">{{notification.notificationDate | date:'dd MMM yyyy
+                                        HH:mm a'}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="filteredUnreadCount === 0" class="no_data_found">
+                            <i class="fas fa-bell-slash"></i>
+                            <span>No unread notifications found.</span>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-tab>
+    </mat-tab-group>
+</section>

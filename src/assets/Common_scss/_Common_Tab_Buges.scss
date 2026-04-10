@@ -1,0 +1,255 @@
+/* tab With Buges Css Start 16-1-2021 */
+.tab-badge {
+    @include Com-fw;
+    font-family: 'Nunito Sans', sans-serif;
+  
+    .Common-tab-Badge {
+      @include Com-sp;
+      padding-top: 16px;
+  
+      &.jc-FStart {
+        justify-content: flex-start;
+      }
+  
+      &.Two_Tab_Full {
+        border-bottom: 2px solid #E4E4E4;
+        margin-bottom: 1.5rem;
+  
+        .Common-badge-C4 {
+          flex: 0 0 49%;
+          padding: 0;
+          margin-right: 0;
+          border-right: 0;
+  
+          li {
+            a {
+              &:last-of-type {
+                margin-right: 0;
+              }
+            }
+          }
+  
+          &.position-rel {
+            &:after {
+              top: -18px;
+              width: 2px;
+            }
+          }
+  
+          .notification-list {
+            .noti-icon-badge {
+              // right: 290px;
+            }
+          }
+        }
+      }
+  
+      &.NP_tab_Flex_Auto {
+        justify-content: flex-start;
+  
+        .Common-badge-C4 {
+          border-right: 0;
+          width: auto;
+  
+          .nav-link {
+            &.PB_0 {
+              padding-bottom: 0 !important;
+            }
+  
+            &.active {
+              padding: 0;
+              border-bottom: 0 !important;
+            }
+          }
+  
+          &.position-rel {
+            &:after {
+              top: -18px;
+              width: 2px;
+            }
+          }
+        }
+      }
+  
+      &.NP_tab_Flex_Auto_Multi {
+        &.three_Tab {
+          .Common-badge-C4 {
+            flex: 0 0 auto;
+            width: calc(100% / 3);
+          }
+        }
+        .Common-badge-C4-section-5 { 
+          width: calc(100% / 5) !important;
+        }
+        .Common-badge-C4 {
+          border-right: 0;
+          width: calc(100% / 6);
+          margin-right: 0;
+  
+          &.position-rel {
+            &:after {
+              // top: 5px;
+              width: 2px;
+              height: 55px;
+            }
+          }
+        }
+      }
+  
+      .tab-badge-rel {
+        position: relative;
+        @include br-1;
+        text-align: $center;
+        padding: 0 3rem;
+        width: 20%;
+  
+        .nav-link {
+          margin-right: 0;
+        }
+  
+        &:last-of-type {
+          @include br-0;
+        }
+      }
+  
+      .Common-badge-C4 {
+        position: relative;
+        @include br-1;
+        text-align: $center;
+        padding: 0 1rem;
+        width: 25%;
+  
+        a {
+          margin: 0;
+  
+          .notification-list {
+            padding: 0;
+            margin-bottom: 0;
+            position: relative;
+  
+            .noti-icon-badge {
+              right: 0;
+            }
+          }
+        }
+  
+        &:last-of-type {
+          @include br-0;
+        }
+  
+        // &.NP_BR_1{
+        //   border-right: 0;
+        //   &::after{
+        //     content: "";
+        //     position: absolute;
+        //     width: 1px;
+        //     height: 46px;
+        //     background: $opl-bc;
+        //     top: 5px;
+        //     bottom: 0;
+        //     right: 0;
+        //     opacity: 0.45;
+        //   }
+        // }
+      }
+  
+      p {
+        font-size: $fs-14;
+        font-weight: $f-w700;
+      }
+  
+      .notification-list {
+        min-height: 1.5em;
+        padding: 0 3em;
+        position: relative;
+  
+        .badge {
+          padding: 0.3em 0.3em !important;
+        }
+      }
+  
+      .pd-extra {
+        padding: 0.8em 0 !important;
+      }
+  
+      .notification-list .noti-icon-badge {
+        display: inline-block;
+        position: absolute;
+        top: -23px;
+        right: 100px;
+        background-color: #FF9900;
+        color: #fff !important;
+        display: flex;
+        width: 1.5rem;
+        height: 1.5rem;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  
+  .position-rel {
+    position: relative;
+  
+    &:after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 46px;
+      background: $opl-bc;
+      top: 5px;
+      bottom: 0;
+      right: 0;
+      opacity: 0.45;
+    }
+  
+    // border-right: 1px solid #f3f4f5;
+    &:last-of-type {
+      border: none;
+  
+      &:after {
+        display: none;
+      }
+    }
+  
+    .notification-list {
+      min-height: 1.5em;
+      padding: 0 3em;
+  
+      .badge {
+        padding: 0.3em 0.3em !important;
+      }
+    }
+  
+    .pd-extra {
+      padding: 0.8em 0 !important;
+    }
+  
+    .notification-list .noti-icon-badge {
+      display: inline-block;
+      position: absolute;
+      top: -14px;
+      right: 10px;
+      background-color: #FF9900;
+      color: #fff !important;
+      display: flex;
+      min-width: 1.5rem;
+      height: 1.5rem;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500 !important;
+    }
+  }
+  
+  .dash-count {
+    width: 40%;
+  
+    .nav-tabs {
+      .nav-item {
+        width: 33.33%;
+        padding: 0 15px;
+        text-align: center;
+      }
+    }
+  }
+  /* tab With Buges Css End 16-1-2021 */

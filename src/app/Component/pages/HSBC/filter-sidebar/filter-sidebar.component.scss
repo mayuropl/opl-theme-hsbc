@@ -1,0 +1,82 @@
+.top_filter_toogle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: #F6F6F6;
+    border-bottom: 1px solid #DCDFE0;
+
+    h3 {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        margin: 0;
+
+        span {
+            font-size: 12px;
+            font-weight: 500;
+            padding-top: 4px;
+        }
+    }
+}
+
+.date_box_filter {
+    .inp_box {
+        position: relative;
+        overflow: hidden !important;
+
+        .cal_icon_toggle {
+            position: absolute;
+            right: 10px;
+            height: 30px;
+            width: 30px;
+            top: -8px;
+
+            button {
+                height: 30px;
+                width: 30px;
+                padding: 0;
+            }
+        }
+
+        .form-control {
+            padding: 1px 30px 1px 5px;
+        }
+    }
+}
+
+.no-results-msg {
+  color: #d32f2f;
+  font-size: 12px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.validation-error {
+  color: #d32f2f;
+  font-size: 12px;
+  padding: 8px 0 0;
+  text-align: left;
+}
+
+.input-error {
+  border-color: #d32f2f !important;
+  border-width: 1px !important;
+  
+  &:focus {
+    border-color: #d32f2f !important;
+    box-shadow: 0 0 0 1px #d32f2f;
+  }
+}
+
+.panel-error {
+  &::ng-deep > .mat-expansion-panel-header {
+    background-color: rgba(211, 47, 47, 0.08) !important;
+  }
+}
+
+.error-icon {
+  color: #d32f2f;
+  margin-left: 8px;
+  font-size: 14px;
+}

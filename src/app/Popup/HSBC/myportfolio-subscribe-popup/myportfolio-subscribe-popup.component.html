@@ -1,0 +1,175 @@
+<section class="popup_design max-800 HSBC_Common_Pages subscribe_popup pb-0">
+    <div class="popup_header" mat-dialog-title>
+        <a class="modal_closeicn_btn" href="javascript:void(0)" (click)="dialogRef.close()">
+            <mat-icon>close</mat-icon>
+        </a>
+        <h3>
+            <ng-container *ngIf="isSubscribe">Subscribe To</ng-container>
+            <ng-container *ngIf="!isSubscribe">Unsubscribe From</ng-container>
+            <br> {{data.parentCategory !== 'All' ? data.parentCategory : 'Corporate Actions'}} Updates
+        </h3>
+        <div class="right_fields">
+            <div class="subscribe_toggle">
+                <button type="button" class="toggle_btn no_wrap" [class.active]="isSubscribe"
+                    (click)="isSubscribe = true">Create Subscription</button>
+                <button type="button" class="toggle_btn no_wrap" [class.active]="!isSubscribe"
+                    (click)="isSubscribe = false">Active Subscriptions</button>
+            </div>
+        </div>
+    </div>
+    <div class="pop_up_container">
+        <mat-dialog-content class="p-0">
+            <div class="popup_body">
+                <!-- Parent category label -->
+                <div class="parent_category_label" *ngIf="data.parentCategory && data.parentCategory !== 'All'">
+                    <span class="grey_badge">{{data.parentCategory}}</span>
+                </div>
+
+                <div class="box_wrap_list">
+                    <!-- LEFT: Companies -->
+                    <div class="sep_box">
+                        <div class="subscribe_box">
+                            <h2>Select Companies</h2>
+                            <div class="input_field">
+                                <mat-form-field appearance="outline" class="w-auto">
+                                    <input type="text" placeholder="Search" matInput
+                                        [ngModel]="searchCompanyText"
+                                        (ngModelChange)="onCompanySearch($event)">
+                                    <em matSuffix class="fas fa-search searchbox_Icn mr-2"></em>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- Subscribe: Companies -->
+                        <div class="bottom_sb_list" *ngIf="isSubscribe">
+                            <div class="checklist_box checkbox_lists"
+                                 (scroll)="onCompanyScroll($event)">
+                                <!-- <mat-checkbox
+                                    *ngIf="filteredCompanySubscribeList.length > 0 && !searchCompanyText"
+                                    [checked]="isAllCompanySubscribeSelected"
+                                    [disabled]="isAllCompanySubscribeDisabled"
+                                    (change)="toggleAllCompanySubscribe($event.checked)">
+                                    All
+                                </mat-checkbox> -->
+                                <mat-checkbox *ngFor="let item of filteredCompanySubscribeList"
+                                    [checked]="item.selected"
+                                    [disabled]="item.disabled"
+                                    (change)="item.selected = $event.checked">
+                                    {{item.name}}
+                                </mat-checkbox>
+                                <p class="text-center text-muted p-2" *ngIf="companyLoading">Loading...</p>
+                                <p *ngIf="!companyLoading && filteredCompanySubscribeList.length === 0">No companies match your search.</p>
+                            </div>
+                        </div>
+
+                        <!-- Unsubscribe: Companies -->
+                        <div class="bottom_sb_list" *ngIf="!isSubscribe">
+                            <div class="checklist_box checkbox_lists">
+                                <mat-checkbox
+                                    *ngIf="filteredCompanyUnsubscribeList.length > 0 && (!searchCompanyText || 'all'.includes(searchCompanyText.toLowerCase()))"
+                                    [checked]="isAllCompanyUnsubscribeSelected"
+                                    (change)="toggleAllCompanyUnsubscribe($event.checked)">
+                                    All
+                                </mat-checkbox>
+                                <mat-checkbox *ngFor="let item of filteredCompanyUnsubscribeList"
+                                    [checked]="item.selected"
+                                    (change)="onUnsubscribeCompanyChange(item, $event.checked)">
+                                    {{item.name}}
+                                </mat-checkbox>
+                                <p *ngIf="filteredCompanyUnsubscribeList.length === 0">No active company subscriptions found.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: Subcategories -->
+                    <div class="sep_box">
+                        <div class="subscribe_box">
+                            <h2>Select {{data.parentCategory !== 'All' ? data.parentCategory : 'Subcategories'}}</h2>
+                        </div>
+
+                        <!-- Subscribe: Subcategories -->
+                        <div class="bottom_sb_list" *ngIf="isSubscribe">
+                            <div class="checklist_box checkbox_lists">
+                                <mat-checkbox
+                                    *ngIf="subcategorySubscribeList.length > 0"
+                                    [checked]="isAllSubcategorySubscribeSelected"
+                                    [disabled]="isAllSubcategorySubscribeDisabled"
+                                    (change)="toggleAllSubcategorySubscribe($event.checked)">
+                                    All
+                                </mat-checkbox>
+                                <mat-checkbox *ngFor="let item of subcategorySubscribeList"
+                                    [checked]="item.selected"
+                                    [disabled]="item.disabled"
+                                    (change)="item.selected = $event.checked">
+                                    {{formatSubcategory(item.name)}}
+                                </mat-checkbox>
+                                <p *ngIf="subcategorySubscribeList.length === 0">No subcategories available.</p>
+                            </div>
+                        </div>
+
+                        <!-- Unsubscribe: Subcategories -->
+                        <div class="bottom_sb_list" *ngIf="!isSubscribe">
+                            <div class="checklist_box checkbox_lists">
+                                <mat-checkbox
+                                    *ngIf="subcategoryUnsubscribeList.length > 0"
+                                    [checked]="isAllSubcategoryUnsubscribeSelected"
+                                    (change)="toggleAllSubcategoryUnsubscribe($event.checked)">
+                                    All
+                                </mat-checkbox>
+                                <mat-checkbox *ngFor="let item of subcategoryUnsubscribeList"
+                                    [checked]="item.selected"
+                                    (change)="item.selected = $event.checked">
+                                    {{formatSubcategory(item.name)}}
+                                </mat-checkbox>
+                                <p *ngIf="subcategoryUnsubscribeList.length === 0">No active subcategory subscriptions found.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Range (only in Subscribe mode) -->
+                <div class="date_box" *ngIf="isSubscribe">
+                    <h2>Date Range</h2>
+                    <div class="date_range_box">
+                        <div class="input_fieldNew">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <input type="text" matInput [matDatepicker]="pickerFrom"
+                                    [(ngModel)]="fromDate"
+                                    [min]="minDate"
+                                    (dateChange)="onFromDateChange($event.value)"
+                                    readonly
+                                    placeholder="From Date">
+                                <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+                                    <mat-icon class="material-symbols-outlined"
+                                        matDatepickerToggleIcon>calendar_month</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #pickerFrom></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="input_fieldNew ml-2">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <input type="text" matInput [matDatepicker]="pickerTo"
+                                    [(ngModel)]="toDate"
+                                    [min]="minToDate"
+                                    readonly
+                                    placeholder="End Date">
+                                <mat-datepicker-toggle matSuffix [for]="pickerTo">
+                                    <mat-icon class="material-symbols-outlined"
+                                        matDatepickerToggleIcon>calendar_month</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #pickerTo></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions class="popup_actions_btns">
+            <p>
+                <span class="red_text">{{selectedCompanyCount}}</span> Companies and
+                <span class="red_text">{{selectedSubcategoryCount}}</span>
+                {{data.parentCategory !== 'All' ? data.parentCategory : ''}} Updates selected
+            </p>
+            <button mat-flat-button color="primary" (click)="onSave()">Save</button>
+        </mat-dialog-actions>
+    </div>
+</section>

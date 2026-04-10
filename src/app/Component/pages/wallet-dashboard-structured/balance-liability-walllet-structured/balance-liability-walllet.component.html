@@ -1,0 +1,134 @@
+<div class="wallet_chart_main mt-4">
+    <div class="card_box w-100">
+        <div class="chart_table_wrp">
+            <div class="chart_box w-100">
+                <div class="title_chart p-0 pb-2">
+                    <div class="lef_desc">
+                        <h2><i class="fi fi-rr-users red_text mr-2"></i> Balance</h2>
+                    </div>
+                    <div class="right_desc">          
+                        <div class="balance_tabs_wrapper">
+                            <div class="balance_tabs">
+                                <button 
+                                    class="balance_tab" 
+                                    [class.active]="activeTab === 'TMD'"
+                                    (click)="setActiveTab('TMD')">
+                                    TMD
+                                </button>
+                                <button 
+                                    class="balance_tab" 
+                                    [class.active]="activeTab === 'CUA'"
+                                    (click)="setActiveTab('CUA')">
+                                    CUA
+                                </button>
+                                <button 
+                                    class="balance_tab" 
+                                    [class.active]="activeTab === 'EEFC'"
+                                    (click)="setActiveTab('EEFC')">
+                                    EEFC
+                                </button>
+                                <button 
+                                    class="balance_tab" 
+                                    [class.active]="activeTab === 'OD/CC'"
+                                    (click)="setActiveTab('OD/CC')">
+                                    OD/CC
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <app-common-chart [chartOptions]="chartOptions"></app-common-chart>
+            </div>
+            <div class="pad_box">
+                <div class="tableResponsive card_box w-100">
+                    <table id="myTable"
+                        class="CommonTable_Scroll NonBG_Table no_stripe_borderX_table design_Main_listTable table_wrap no_sticky_table">
+                        <thead>
+                            <tr class="tr_lightred_bg">
+                            <th>Month</th>
+                            <th>2025</th>
+                            <th>2024</th>
+                            <th>Change%</th>
+                        </tr> 
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>Jan</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Feb</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Mar</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Apr</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr> 
+                            <tr>
+                                <td><b>May</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Jun</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Jul</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Aug</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Sep</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Oct</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Nov</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td><b>Dec</b></td>
+                                <td>18000</td>
+                                <td>200000</td>
+                                <td>11.21</td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

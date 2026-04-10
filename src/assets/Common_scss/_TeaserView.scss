@@ -1,0 +1,616 @@
+// JNS TeaserView Page scss Start 12-may-2023
+.DetailsCard_teaserView_Grp {
+  display: flex;
+  gap: 15px;
+  @include Com-fw;
+  flex-wrap: wrap;
+}
+
+.DetailsCard_teaserView {
+  @include Com-sp;
+  flex-wrap: wrap;
+  max-width: 100%;
+  align-items: normal;
+  gap: 15px 20px;
+  @include stevieSans;
+  margin-bottom: 25px;
+
+  &.D_tsv_mb {
+    margin-bottom: 15px;
+  }
+
+  .teaserView_Details {
+    // box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+    // border: 1px dashed #EBEBEB;
+    // border-radius: 19px;
+    width: 100%;
+  }
+
+  .TeaserView_Details_CGRP {
+    @include Com-sp;
+    padding: 10px 20px;
+    // border-bottom: 1px dashed #EBEBEB;
+
+    &.ai-center {
+      align-items: center;
+    }
+
+    &.bb-0 {
+      border-bottom: 0;
+    }
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+
+    span {
+      text-align: left;
+      font: 500 14px/19px $ff-stevie;
+      letter-spacing: 0px;
+      color: #7A86A1;
+      @include Com-fw;
+      margin: 0;
+
+      &:nth-child(2) {
+        color: $psbblack;
+        text-align: right;
+      }
+
+      &.primary {
+        color: #00847F;
+      }
+    }
+  }
+
+  .NP_Group_Heading {
+    flex: 0 1 auto;
+    min-height: 50px;
+    padding: 11px 20px;
+    @include Cjc-sp-ai;
+    background: #F1F7F9;
+    border-bottom: 1px solid #DCDFE0;
+    flex-wrap: wrap;
+
+    .Heading_Title {
+      font-size: $fs-15;
+      font-weight: 600;
+      color: #000000;
+      margin: 0;
+    }
+
+    .Btn__Common {
+      padding: 5px 15px;
+      font-size: 13px;
+    }
+
+    ._Heading_grp {
+      @include Cjc-fs-ai;
+      column-gap: 15px;
+
+      .mat-icon {
+        color: $HsbcColor;
+      }
+    }
+  }
+
+  .LH_NP_Com {
+    flex: calc(100% / 2 - 20px);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 13px rgba(221, 221, 221, 0.4);
+    border: 1px solid #DCDFE0;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .teaserView_Details {
+      margin: 0;
+    }
+
+    .NP_Group {
+      @include Com-sp-an;
+      height: 100%;
+    }
+  }
+
+  .LH_NP_Com_appi {
+    flex: 0 1 100%;
+    display: inline-flex;
+    //   margin-top: 1.4375rem;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+
+    &.NP_OneLH {
+      flex: 0 1 49%;
+
+      .teaserView_Details {
+        margin: 0;
+      }
+    }
+
+    .NP_Group {
+      @include Com-sp-an;
+      flex-wrap: wrap;
+      height: 100%;
+      // flex: 0 0 100%;
+    }
+
+    .NP_DFSGroup {
+      @include Com-sp-an;
+      flex-wrap: wrap;
+      height: 100%;
+
+      .NP_Group {
+        flex: 0 1 49%;
+      }
+    }
+
+    &.Data_LH_TwoCols {
+      .teaserView_Details {
+        display: flex;
+        flex-wrap: wrap;
+
+        .TeaserView_Details_CGRP {
+          width: calc(100% / 2 - 20px);
+        }
+      }
+
+    }
+
+    &.Data_LH_ThreeCols {
+      border-bottom: 1px dashed #EBEBEB;
+      padding: 5px 10px;
+
+      &:last-of-type {
+        border-bottom: 0;
+      }
+
+      .NP_Group_Heading {
+        margin: 0;
+      }
+
+      .teaserView_Details {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 6px;
+
+        &.tsdMT_10px {
+          margin-top: 10px;
+        }
+
+        &.collapse:not(.show) {
+          display: none;
+        }
+
+        .TeaserView_Details_CGRP {
+          width: calc(100% / 3 - 6px);
+
+          &:nth-last-child(3),
+          &:nth-last-child(2) {
+            border-bottom: 0;
+          }
+
+          em {
+            font-size: 18px;
+            color: $HsbcColor;
+          }
+        }
+
+        &.DetailIcon_ViewResp {
+          margin-top: 10px;
+
+          .TeaserView_Details_CGRP {
+            column-gap: 10px;
+
+            &:nth-child(n) {
+              span {
+                column-gap: 10px;
+                @include Cai-end;
+
+                a {
+                  @include Cai-end;
+
+                  em {
+                    font-size: 18px;
+                  }
+                }
+              }
+            }
+
+            &:nth-last-child(3),
+            &:nth-last-child(2) {
+              border-bottom: 0;
+            }
+
+            &:nth-child(1) {
+              span {
+                display: inline;
+              }
+            }
+
+          }
+
+          .LH_NP_Com_appi {
+            &.DataresponseView {
+              .teaserView_Details {
+                .TeaserView_Details_CGRP {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+    &.DataresponseView {
+      display: flex;
+      flex-wrap: wrap;
+
+      .TeaserView_Details_CGRP {
+        span {
+          &:nth-child(1) {
+            width: 15%;
+          }
+
+          &:nth-child(2) {
+            width: calc(100% - 15%);
+            display: block;
+            display: -webkit-box;
+            max-width: calc(100% - 20%);
+            height: 20px;
+            margin: 0;
+            font-size: 14px;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: default;
+            text-align: left;
+
+            &:hover {
+              height: auto;
+              -webkit-line-clamp: inherit;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .LH_NP_Com_GRp {
+    flex: 0 1 49%;
+    display: flex;
+    flex-direction: column;
+    //   margin-top: 1.4375rem;
+
+    .LH_NP_Com {
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      .teaserView_Details {
+        margin: 0;
+      }
+
+      .NP_Group {
+        @include Com-sp-an;
+        height: 100%;
+      }
+    }
+  }
+
+  &.single_cols {
+    .LH_NP_Com {
+      flex: calc(100% / 2 - 15px);
+      max-width: calc(100% / 2 - 15px);
+    }
+  }
+
+  &.Admin_ResponseView {
+    .LH_NP_Com {
+      flex: 0 1 43%;
+    }
+
+    .NP_Group {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &.three_cols {
+    .LH_NP_Com {
+      flex: calc(100% / 3 - 20px);
+
+      @media screen and (max-width:$landscap-ipad) {
+        flex: calc(100% / 2 - 15px);
+      }
+
+      @media screen and (max-width:$mobile) {
+        flex: 100%;
+
+        &.my-3 {
+          margin-top: 20px !important;
+          margin-bottom: 5px !important;
+        }
+      }
+
+    }
+
+    @media screen and (max-width:$landscap-ipad) {
+      gap: 0;
+
+
+    }
+
+    @media screen and (max-width:$mobile) {
+      flex: 100%;
+    }
+
+    // .NP_Group_Heading{
+    //   justify-content: center;
+    // }
+    .TeaserView_Details_CGRP {
+      span {
+        font-weight: 500;
+        font-size: 14px;
+        color: #6F6F6F;
+
+        &:nth-child(2) {
+          color: #000000;
+          // font-size: 18px;
+
+          &.dangerColor {
+            color: #32327F;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.app_view_card_sec {
+  @include Com-fw;
+  box-sizing: border-box;
+  margin-bottom: 1.4375rem;
+
+  .DetailsCard_teaserView {
+    display: block;
+
+    .teaserView_Details {
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+      border: 1px solid #EBEBEB;
+      border-radius: 8px;
+      margin: 0;
+      // min-height: auto !important;
+      padding: 20px !important;
+
+      .card-body {
+        span {
+          &:nth-child(3) {
+            font-weight: bold;
+          }
+
+          p {
+            padding-bottom: 5px;
+
+            &:last-child {
+              padding-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  td {
+    em {
+      font-size: $fs-14;
+      font-weight: bold;
+      font-style: normal;
+
+      &.text-green {
+        color: $opl-success;
+      }
+
+      &.text-orange {
+        color: $opl-warning;
+      }
+    }
+  }
+}
+
+.Np_LHL_Tables {
+  @include Com-fw;
+
+  thead,
+  tbody {
+    @include Com-fw;
+
+    tr {
+      @include Com-afs-tr;
+
+      th,
+      td {
+        @include Com-th-td;
+
+        &:nth-child(1) {
+          width: 4%;
+          text-align: center;
+        }
+
+        &:nth-child(2) {
+          width: 36%;
+        }
+
+        &:nth-child(3) {
+          width: 20%;
+        }
+
+        &:nth-child(4) {
+          width: 20%;
+        }
+
+        &:nth-child(5) {
+          width: 24%;
+        }
+
+        &:nth-child(6) {
+          width: 20%;
+        }
+      }
+
+      th {
+        @include thcw;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:last-of-type {
+        border-bottom: 0;
+      }
+    }
+  }
+}
+
+.Np_LHL_Tables_MCP {
+  @include Com-fw;
+
+  thead,
+  tbody {
+    @include Com-fw;
+
+    tr {
+      @include Com-afs-tr;
+
+      th,
+      td {
+        @include Com-th-td;
+
+        &:nth-child(1) {
+          width: 4%;
+          text-align: center;
+        }
+
+        &:nth-child(2) {
+          width: 56%;
+        }
+
+        &:nth-child(3) {
+          width: 20%;
+        }
+
+        &:nth-child(4) {
+          width: 20%;
+        }
+      }
+
+      th {
+        @include thcw;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:last-of-type {
+        border-bottom: 0;
+      }
+    }
+  }
+}
+
+.NP_LHL_PView {
+  @include Com-fw;
+  border-collapse: collapse;
+  display: table;
+  text-indent: initial;
+
+  &.NP_Head {
+    thead {
+      background: #F1F5F7;
+
+      tr {
+        th {
+          @include thcw;
+        }
+      }
+    }
+  }
+
+  thead,
+  tbody {
+    display: table-row-group;
+    vertical-align: middle;
+
+    tr {
+      display: table-row;
+      text-align: $right;
+      border-bottom: 1px solid $opl-bc;
+
+      th,
+      td {
+        @include Com-th-td;
+        float: none;
+        display: table-cell;
+        word-break: break-word;
+
+        &:nth-child(1) {
+          width: 5%;
+          text-align: $left;
+        }
+
+        &:nth-child(2) {
+          text-align: $left;
+        }
+
+
+        &:last-of-type {
+          &.NP_Action {
+            text-align: center;
+          }
+        }
+      }
+
+    }
+  }
+
+  thead {
+    tr {
+      th {
+        @include thcw;
+      }
+    }
+  }
+
+}
+
+/** Add new CSS By Mihir **/
+
+
+&.rmExisitingPortfolioView_page,
+&.designUpdate_page {
+  .DetailsCard_teaserView {
+    .TeaserView_Details_CGRP {
+      span:first-child {
+        color: #333333;
+        font-weight: 400;
+        font-size: 13px;
+      }
+    }
+
+    .LH_NP_Com {
+      .teaserView_Details {
+        padding-top: 10px;
+        float: left;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
