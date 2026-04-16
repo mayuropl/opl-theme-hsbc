@@ -135,7 +135,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "opl-theme-hsbc:build"
+            "buildTarget": "opl-theme-hsbc:build",
+            "servePath": "/opl-theme-hsbc/"
           },
           "configurations": {
             "production": {

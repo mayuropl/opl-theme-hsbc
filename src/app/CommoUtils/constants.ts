@@ -6,7 +6,7 @@ export const Constants = {
   // LOCATION_URL:"http://localhost:4200",
   cwjs: '26f1ac75f77c22ebc66e2359c13ea9955ebd5e2bd7fbe50e5b3ac2977a772302',
   IS_ENCRYPTION: true,
-  IS_LOCAL: false,
+  IS_LOCAL: true,
   BussinessType: {
     EXISTING_BUSINESS: 1,
     NEW_TO_BUSINESS: 2,

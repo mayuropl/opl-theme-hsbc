@@ -427,7 +427,9 @@ export class SidemenubarComponent implements OnInit, OnDestroy {
       if (link.subpageName && link.subpageName == "GTS - OneRF") {
         this.commonService.redirectToBankerModule(link.routeLink);
       } else {
-        this.router.navigate([link.routeLink], {
+        // Absolute path so navigation works from any page (routeLink from menu data is often "hsbc/..." without leading "/")
+        const path = link.routeLink.startsWith('/') ? link.routeLink : '/' + link.routeLink;
+        this.router.navigateByUrl(path, {
           state: { data: link }
         });
       }

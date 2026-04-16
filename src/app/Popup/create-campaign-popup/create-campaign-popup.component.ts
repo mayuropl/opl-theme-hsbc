@@ -360,7 +360,7 @@ export class CreateCampaignPopupComponent {
             this.dialogRef.close();
 
           if (!this.inEditMode)
-            this.router.navigate(['hsbc/opportunity-dashboard'], { state: { data: this.pageData } });
+            this.router.navigate(['/hsbc/opportunity-dashboard'], { state: { data: this.pageData } });
         } else if (response && response.status == 400) {
           this.commonService.warningSnackBar(response.message);
         } else if (response && response.status == 404) {
@@ -387,7 +387,7 @@ export class CreateCampaignPopupComponent {
             this.dialogRef.close();
 
           if (!this.inEditMode)
-            this.router.navigate(['hsbc/opportunity-dashboard'], { state: { data: this.pageData } });
+            this.router.navigate(['/hsbc/opportunity-dashboard'], { state: { data: this.pageData } });
         } else if (response && response.status == 400) {
           this.commonService.warningSnackBar(response.message);
         } else if (response && response.status == 500) {
