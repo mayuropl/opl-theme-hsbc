@@ -40,13 +40,6 @@ $opl-lender-msme-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($opl-lender-msme-theme);
 
-.error-snackbar {
-  background: #d32f2f;
-}
-
-.success-snackbar {
-  background: #43a047;
-}
 
 // PDF and Video Viewer Dialog Styles 
 .cdk-overlay-backdrop.modal-backdrop {
@@ -88,13 +81,6 @@ $opl-lender-msme-theme: mat.define-light-theme((
     width: auto !important;
     height: auto !important;
   }
-}
-.info-snackbar {
-  background: #38a7ff;
-}
-
-.warning-snackbar {
-  background: #ffa000;
 }
 .tooltip-inner {
   max-width: 250px !important;

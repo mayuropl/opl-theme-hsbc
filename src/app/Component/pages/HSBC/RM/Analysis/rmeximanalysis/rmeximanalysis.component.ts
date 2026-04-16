@@ -14,6 +14,7 @@ import { PaginationSignal } from 'src/app/CommoUtils/model/paginationSignal';
 import { EximSearchPopupComponent } from 'src/app/Popup/HSBC/exim-search-popup/exim-search-popup.component';
 import { MsmeService } from 'src/app/services/msme.service';
 import { panValidator } from 'src/app/shared/validators/custom-validators';
+import { environment } from 'src/environments/environment';
 import {
   clearCookie,
   GlobalHeaders,
@@ -27,6 +28,7 @@ import {
   styleUrl: './rmeximanalysis.component.scss'
 })
 export class RMEXIMAnalysisComponent implements OnInit, OnDestroy {
+  private readonly demoPan = 'AAGFV5271N';
   panForm: FormGroup;
   searchForm: FormGroup;
   eximAnalysisHistories: EximAnalysisHistory[] = [];
@@ -176,12 +178,14 @@ export class RMEXIMAnalysisComponent implements OnInit, OnDestroy {
   // }
 
   initForm(searchBy?: any, pan?: any) {
+    const initialSearchBy = searchBy || 'PAN';
+    const initialPan = environment.staticDemo ? (pan || this.demoPan) : (pan || '');
     this.panForm = this.fb.group({
-      searchBy:[searchBy || 'PAN',  [Validators.required]],
-      pan: [pan || '', [Validators.required, panValidator()]]
+      searchBy:[initialSearchBy,  [Validators.required]],
+      pan: [initialPan, [Validators.required, panValidator()]]
       // pan: [value || '', [Validators.required]]
     });
-    this.pan = pan;
+    this.pan = initialPan;
     this.searchSelectionChange()
     // Subscribe to value changes
     this.panForm.get('pan')?.valueChanges.subscribe(value => {
@@ -216,7 +220,7 @@ export class RMEXIMAnalysisComponent implements OnInit, OnDestroy {
       this.verifyPan();
     })
     // )
-    if (!this.commonService.isObjectNullOrEmpty(pan)) {
+    if (environment.staticDemo || !this.commonService.isObjectNullOrEmpty(initialPan)) {
       this.verifyPan();
     }
   }
@@ -227,6 +231,10 @@ export class RMEXIMAnalysisComponent implements OnInit, OnDestroy {
   }
   verifyPan() {
     GlobalHeaders['x-page-action'] = 'Searching from Exim Analysis history';
+    if (environment.staticDemo && !this.panForm?.valid) {
+      this.panForm.patchValue({ pan: this.demoPan, searchBy: 'PAN' }, { emitEvent: false });
+      this.pan = this.demoPan;
+    }
     if (this.panForm.valid) {
       this.commonService.setStorage("exim_pan", this.panForm?.value?.pan);
       this.commonService.setStorage("exim_search_by", this.panForm?.value?.searchBy);
@@ -245,6 +253,16 @@ export class RMEXIMAnalysisComponent implements OnInit, OnDestroy {
           json["filterJSON"] = JSON.stringify(json["filterJSON"]);
         }
       };
+
+      if (environment.staticDemo) {
+        const rows = this.getStaticDemoEximHistoryRows();
+        const filteredRows = this.filterStaticDemoEximRows(rows);
+        this.eximAnalysisHistories = filteredRows;
+        this.panVerified = true;
+        this.pagination.totalSize = filteredRows.length;
+        return;
+      }
+
       console.log(json);
      // GlobalHeaders['x-page-action'] = 'Search By '+json;
       this.msmeService.eximAnalysisHistory(json).subscribe((response: any) => {
@@ -414,34 +432,67 @@ export class RMEXIMAnalysisComponent implements OnInit, OnDestroy {
   }
 
   isActionAvail(actionId: string): boolean {
-    let res = false;
-    // console.log("******Permission*****");
-    // console.log(actionId);
-    // console.log(this.pageData);
-    if (this.pageData?.subpageId == Constants.pageMaster.EXIM_ANALYSIS2 || this.pageData?.subpageId == Constants.pageMaster.EXIM_ANALYSIS) {
-      for (let page of this.pageData?.actions) {
-        if (page?.actionId === actionId) {
-          res = true; // Return true if found
+    if (
+      this.pageData?.subpageId == Constants.pageMaster.EXIM_ANALYSIS2 ||
+      this.pageData?.subpageId == Constants.pageMaster.EXIM_ANALYSIS
+    ) {
+      const actions = Array.isArray(this.pageData?.actions) ? this.pageData.actions : [];
+      return actions.some((page) => page?.actionId === actionId);
+    }
+
+    const masterPages = Array.isArray(this.pageData?.subSubpages) ? this.pageData.subSubpages : [];
+    for (const masterPage of masterPages) {
+      if (masterPage?.subpageId != Constants.pageMaster.ANALYTICS) {
+        continue;
+      }
+      const analyticsPages = Array.isArray(masterPage?.subSubpages) ? masterPage.subSubpages : [];
+      for (const page of analyticsPages) {
+        if (page?.subpageId != Constants.pageMaster.EXIM_ANALYSIS) {
+          continue;
+        }
+        const actions = Array.isArray(page?.actions) ? page.actions : [];
+        if (actions.some((subpage) => subpage?.actionId === actionId)) {
+          return true;
         }
       }
-    } else {
-      if (!res) {
-        this.pageData?.subSubpages.forEach(masterPage => {
-          if (masterPage?.subpageId == Constants.pageMaster.ANALYTICS) {
-            masterPage?.subSubpages.forEach(page => {
-              if (page?.subpageId == Constants.pageMaster.EXIM_ANALYSIS) {
-                for (let subpage of page?.actions) {
-                  if (subpage?.actionId === actionId) {
-                    res = true; // Return true if found
-                  }
-                }
-              }
-            });
-          }
-        })
-      }
     }
-    return res; // Return false if not found
+    return false;
+  }
+
+  private getStaticDemoEximHistoryRows(): EximAnalysisHistory[] {
+    return [
+      { eximId: 410001, name: 'Acme Manufacturing Pvt Ltd', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-16') },
+      { eximId: 410002, name: 'Zenith Textiles Pvt Ltd', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-15') },
+      { eximId: 410003, name: 'Bluepeak Logistics LLP', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-14') },
+      { eximId: 410004, name: 'Nova Agro Industries', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-13') },
+      { eximId: 410005, name: 'Aster Components Ltd', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-12') },
+      { eximId: 410006, name: 'Orion Plastics Private Limited', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-11') },
+      { eximId: 410007, name: 'Silverline Foods LLP', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-10') },
+      { eximId: 410008, name: 'Vertex Auto Parts', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-09') },
+      { eximId: 410009, name: 'Prime Cables & Wires', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-08') },
+      { eximId: 410010, name: 'Northstar Chemicals', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-07') },
+    ];
+  }
+
+  private filterStaticDemoEximRows(rows: EximAnalysisHistory[]): EximAnalysisHistory[] {
+    const formValue = this.searchForm?.value || {};
+    const contains = (source: any, query: any) => {
+      const q = (query ?? '').toString().trim().toLowerCase();
+      if (!q) {
+        return true;
+      }
+      return (source ?? '').toString().toLowerCase().includes(q);
+    };
+    const selectedDate = formValue?.dateOfReport
+      ? this.commonService.formateDate(new Date(formValue.dateOfReport).toLocaleDateString('en-US'))
+      : '';
+
+    return rows.filter((row) =>
+      contains(row.name, formValue?.nameOfCompany) &&
+      contains(row.eximId, formValue?.eximId) &&
+      contains(row.rmName, formValue?.rmName) &&
+      (!selectedDate || this.commonService.formateDate(new Date(row.dateOfReport).toLocaleDateString('en-US')) === selectedDate)
+    );
   }
 
   searchCompany() {

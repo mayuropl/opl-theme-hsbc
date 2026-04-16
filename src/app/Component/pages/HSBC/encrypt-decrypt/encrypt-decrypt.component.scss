@@ -106,18 +106,18 @@
 // Button color customization (assuming you use custom classes like .btn-psb etc.)
 .btn-psb {
   &.btn-outline-psbpurple {
-    border: 1px solid #6f42c1;
-    color: #6f42c1;
+    border: 1px solid #32327F;
+    color: #32327F;
     background-color: transparent;
 
     &:hover {
-      background-color: #6f42c1;
+      background-color: #32327F;
       color: #fff;
     }
   }
 
   &.btn-psbpurple {
-    background-color: #6f42c1;
+    background-color: #32327F;
     color: #fff;
 
     &:hover {

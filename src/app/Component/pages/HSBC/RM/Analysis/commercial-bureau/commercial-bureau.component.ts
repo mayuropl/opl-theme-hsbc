@@ -9,6 +9,7 @@ import { LoaderService } from 'src/app/CommoUtils/common-services/LoaderService'
 import { Constants } from 'src/app/CommoUtils/constants';
 import { BureauReportRefreshPopupComponent } from 'src/app/Popup/HSBC/bureau-report-refresh-popup/bureau-report-refresh-popup.component';
 import { MsmeService } from 'src/app/services/msme.service';
+import { environment } from 'src/environments/environment';
 import {
   clearCookie,
   GlobalHeaders,
@@ -25,6 +26,7 @@ import { interval, Subscription } from 'rxjs';
   styleUrl: './commercial-bureau.component.scss'
 })
 export class CommercialBureauComponent {
+  private readonly demoPan = 'AAGFV5271N';
   today: string;
   submitted: boolean = false;
   companyForm: FormGroup;
@@ -118,6 +120,13 @@ export class CommercialBureauComponent {
     GlobalHeaders['x-main-page'] = 'Commercial Bureau';
 
     this.isFromPRDashboard = this.commonService.getStorage("from_pr_dashboard", true) === "true";
+    if (environment.staticDemo) {
+      this.panNumber = this.demoPan;
+      this.isHistoryDataFetched = true;
+      this.hideForm = true;
+      this.restoreFilterState();
+      this.getBuearueHistoryDataAPI();
+    }
     if (!this.isFromPRDashboard) {
       if (!this.commonService.isObjectNullOrEmpty(this.commonService.getStorage("existing_pan", true))) {
         this.panNumber = this.commonService.getStorage("existing_pan", true);
@@ -163,7 +172,7 @@ export class CommercialBureauComponent {
   ngOnDestroy() {
     const body = document.getElementsByTagName('body')[0];
     body.classList.remove('with_pageTitle_searchForm');
-    this.intervalSubscription.unsubscribe();
+    this.intervalSubscription?.unsubscribe();
     
     // Save filter state before component destruction
     this.saveFilterState();
@@ -655,6 +664,19 @@ export class CommercialBureauComponent {
       panNumber = this.panNumber;
     }
 
+    if (environment.staticDemo) {
+      if (this.commonService.isObjectNullOrEmpty(panNumber)) {
+        panNumber = this.demoPan;
+      }
+      this.panNumber = panNumber;
+      const rows = this.getStaticDemoCommercialHistoryRows();
+      this.bureueHistoryDataList = rows;
+      this.totalSize = rows.length;
+      this.isHistoryDataFetched = true;
+      this.hideForm = true;
+      return;
+    }
+
     let filterJson: any = {};
     filterJson.paginationFROM = this.page - 1
     filterJson.paginationTO = this.pageSize
@@ -776,34 +798,31 @@ export class CommercialBureauComponent {
   }
 
   isActionAvail(actionId: string): boolean {
-    let res = false;
-    // console.log("******Permission*****");
-    // console.log(actionId);
-    // console.log(this.pageData);
-    if (this.pageData?.subpageId == Constants.pageMaster.COMMERCIAL_BUREAU2 || this.pageData?.subpageId == Constants.pageMaster.COMMERCIAL_BUREAU) {
-      for (let page of this.pageData?.actions) {
-        if (page?.actionId === actionId) {
-          res = true; // Return true if found
+    if (
+      this.pageData?.subpageId == Constants.pageMaster.COMMERCIAL_BUREAU2 ||
+      this.pageData?.subpageId == Constants.pageMaster.COMMERCIAL_BUREAU
+    ) {
+      const actions = Array.isArray(this.pageData?.actions) ? this.pageData.actions : [];
+      return actions.some((page) => page?.actionId === actionId);
+    }
+
+    const masterPages = Array.isArray(this.pageData?.subSubpages) ? this.pageData.subSubpages : [];
+    for (const masterPage of masterPages) {
+      if (masterPage?.subpageId != Constants.pageMaster.ANALYTICS) {
+        continue;
+      }
+      const analyticsPages = Array.isArray(masterPage?.subSubpages) ? masterPage.subSubpages : [];
+      for (const page of analyticsPages) {
+        if (page?.subpageId != Constants.pageMaster.COMMERCIAL_BUREAU) {
+          continue;
+        }
+        const actions = Array.isArray(page?.actions) ? page.actions : [];
+        if (actions.some((subpage) => subpage?.actionId === actionId)) {
+          return true;
         }
       }
-    } else {
-      if (!res) {
-        this.pageData?.subSubpages.forEach(masterPage => {
-          if (masterPage?.subpageId == Constants.pageMaster.ANALYTICS) {
-            masterPage?.subSubpages.forEach(page => {
-              if (page?.subpageId == Constants.pageMaster.COMMERCIAL_BUREAU) {
-                for (let subpage of page?.actions) {
-                  if (subpage?.actionId === actionId) {
-                    res = true; // Return true if found
-                  }
-                }
-              }
-            });
-          }
-        })
-      }
     }
-    return res; // Return false if not found
+    return false;
   }
 
   // BureauReportRefresh popup
@@ -856,6 +875,9 @@ export class CommercialBureauComponent {
   }
 
   saveFilterState(): void {
+    if (environment.staticDemo) {
+      return;
+    }
     const filterState = {
       nameOfCompany: this.nameOfCompany,
       bureauType: this.bureauType,
@@ -871,6 +893,20 @@ export class CommercialBureauComponent {
   }
 
   restoreFilterState(): boolean {
+    if (environment.staticDemo) {
+      this.nameOfCompany = null;
+      this.bureauType = null;
+      this.rmName = null;
+      this.cibilId = null;
+      this.dateOfReport = null;
+      this.createdDate = null;
+      this.page = 1;
+      this.pageSize = 10;
+      this.startIndex = 0;
+      this.endIndex = 10;
+      localStorage.removeItem('commercial_bureau_filters');
+      return false;
+    }
     try {
       const savedState = localStorage.getItem('commercial_bureau_filters');
       
@@ -903,5 +939,20 @@ export class CommercialBureauComponent {
 		this.commonService.removeStorage("from_pr_dashboard");
 		this.router.navigate(['/hsbc/walllet-dashboard'], { state: { data: this.pageData } });
 	}
+
+  private getStaticDemoCommercialHistoryRows(): any[] {
+    return [
+      { nameOfCompany: 'Acme Manufacturing Pvt Ltd', cibilId: 510001, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-16T10:15:00', dateOfReport: '2026-04-16T10:15:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Zenith Textiles Pvt Ltd', cibilId: 510002, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-15T11:10:00', dateOfReport: '2026-04-15T11:10:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Bluepeak Logistics LLP', cibilId: 510003, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-14T09:20:00', dateOfReport: '2026-04-14T09:20:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Nova Agro Industries', cibilId: 510004, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-13T12:00:00', dateOfReport: '2026-04-13T12:00:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Aster Components Ltd', cibilId: 510005, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-12T14:45:00', dateOfReport: '2026-04-12T14:45:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Orion Plastics Private Limited', cibilId: 510006, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-11T16:30:00', dateOfReport: '2026-04-11T16:30:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Silverline Foods LLP', cibilId: 510007, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-10T13:40:00', dateOfReport: '2026-04-10T13:40:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Vertex Auto Parts', cibilId: 510008, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-09T15:05:00', dateOfReport: '2026-04-09T15:05:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Prime Cables & Wires', cibilId: 510009, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-08T10:50:00', dateOfReport: '2026-04-08T10:50:00', isCibilProcessCompleted: 1 },
+      { nameOfCompany: 'Northstar Chemicals', cibilId: 510010, rmName: 'Demo Banker', bureauType: 'Commercial Bureau', createdDate: '2026-04-07T09:05:00', dateOfReport: '2026-04-07T09:05:00', isCibilProcessCompleted: 1 },
+    ];
+  }
 
 }

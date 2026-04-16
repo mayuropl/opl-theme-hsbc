@@ -27,7 +27,6 @@ import { ShortNamePipe } from './CommoUtils/pipe/short-name.pipe';
 import { PrivacyPolicyComponent } from './Component/pages/privacy-policy/privacy-policy.component';
 import { ValidateElementDirective } from './Directives/validate-element.directive';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { SnackbarComponent } from './CommoUtils/common-components/snackbar/snackbar.component';
 import { CommonMethods } from './CommoUtils/common-methods';
 import { InterceptorService } from './CommoUtils/common-services/interceptor.service';
 import { LoaderService } from './CommoUtils/common-services/LoaderService';
@@ -54,7 +53,6 @@ import { StaticDemoInterceptor } from './CommoUtils/static-demo/static-demo.inte
 @NgModule({
   declarations: [
     AppComponent,
-    SnackbarComponent,
     LoaderComponent,
     IndNumFormatPipe,
     PrivacyPolicyComponent,

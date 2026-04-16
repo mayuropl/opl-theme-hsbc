@@ -315,9 +315,51 @@ export class SidemenubarComponent implements OnInit, OnDestroy {
         if (data.pageId == Constants.pageMaster.ANALYTICS2) {
           const analyticsNode = this.menuStructure.find(n => n.id === 'analytics');
           if (analyticsNode && data.subpages) {
-            data.subpages.forEach(sub => {
-              // Recursively map subpages (handles Financial Analysis, Credit & Bureau, etc.)
-              const node = this.createMenuNodeFromSubpage(sub, 'ana_', true, true);
+            const analyticsAllowedRoutes = new Set([
+              '/hsbc/rmGSTAnalysis',
+              '/hsbc/rmEXIMAnalysis',
+              '/hsbc/rmCommercialBureau',
+              '/hsbc/newRmBankStatementAnalysis',
+            ]);
+            const normalizeRoute = (raw: string) => {
+              const r = (raw || '').trim();
+              if (!r) return '';
+              return r.startsWith('/') ? r : `/${r}`;
+            };
+            const collectAllowedAnalyticsLeaves = (items: any[]): any[] => {
+              const seen = new Set<string>();
+              const found: any[] = [];
+              const walk = (list: any[]) => {
+                for (const sub of list || []) {
+                  const route = normalizeRoute(sub?.routeLink || '');
+                  if (route && analyticsAllowedRoutes.has(route) && !seen.has(route)) {
+                    seen.add(route);
+                    found.push({ ...sub, subpages: [], subSubpages: [] });
+                  }
+                  if (sub.subpages?.length) {
+                    walk(sub.subpages);
+                  }
+                  if (sub.subSubpages?.length) {
+                    walk(sub.subSubpages);
+                  }
+                }
+              };
+              walk(items);
+              const order = [
+                '/hsbc/rmGSTAnalysis',
+                '/hsbc/rmEXIMAnalysis',
+                '/hsbc/rmCommercialBureau',
+                '/hsbc/newRmBankStatementAnalysis',
+              ];
+              found.sort(
+                (a, b) =>
+                  order.indexOf(normalizeRoute(a?.routeLink || '')) -
+                  order.indexOf(normalizeRoute(b?.routeLink || ''))
+              );
+              return found;
+            };
+            collectAllowedAnalyticsLeaves(data.subpages).forEach(sub => {
+              const node = this.createMenuNodeFromSubpage(sub, 'ana_', true, false);
               analyticsNode.children?.push(node);
             });
             analyticsNode.visible = true;
@@ -328,7 +370,17 @@ export class SidemenubarComponent implements OnInit, OnDestroy {
         if (data.pageId == Constants.pageMaster.BULK_UPLOAD) {
           const bulkNode = this.menuStructure.find(n => n.id === 'bulkUpload');
           if (bulkNode && data.subpages) {
+            const bulkUploadAllowedRoutes = new Set([
+              '/hsbc/country-master-bulk-upload',
+              '/hsbc/new-gcc-upload',
+              '/hsbc/new-age-economy-upload',
+              '/hsbc/commercial-crif-pr-data',
+            ]);
             data.subpages.forEach(sub => {
+              const route = (sub?.routeLink || '').startsWith('/') ? sub.routeLink : `/${sub?.routeLink || ''}`;
+              if (!bulkUploadAllowedRoutes.has(route)) {
+                return;
+              }
               const allowDeep = (sub.subpageName == 'Exim Uploads') || (sub.subpageName == 'Crilc Uploads');
               const node = this.createMenuNodeFromSubpage(sub, 'bulk_', true, allowDeep);
               bulkNode.children?.push(node);

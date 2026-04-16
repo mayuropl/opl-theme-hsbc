@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SnackbarService } from './SnackbarService';
 import { Constants } from '../constants';
 import { RootScopeService } from './root-scope.service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
@@ -32,7 +31,7 @@ export class CommonService {
   customerInActiveForCurrPage: boolean[] = [false, false, false, false, false, false];
   
   data: any;
-  constructor(private modalService: NgbModal, private snackbar: SnackbarService, private rootScope: RootScopeService,private http: HttpClient,
+  constructor(private modalService: NgbModal, private rootScope: RootScopeService,private http: HttpClient,
               private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private dialog: MatDialog) { this.loadToggleState(); }
 
   setData(data: any) {
@@ -226,19 +225,19 @@ export class CommonService {
    * For display Toaster msg in right side
    */
   successSnackBar(message: any, action?: any) {
-    this.snackbar.openSnackBar(message, action, 'success');
+    return;
   }
   errorSnackBar(message: string, action?: undefined) {
-    this.snackbar.openSnackBar(message, action, 'error');
+    return;
   }
   warningSnackBar(message: any, action?: any) {
-    this.snackbar.openSnackBar(message, action, 'warning');
+    return;
   }
   infoSnackBar(message: any, action?: any) {
-    this.snackbar.openSnackBar(message, action, 'info');
+    return;
   }
   defaultSnackBar(message: any, action?: any) {
-    this.snackbar.openSnackBar(message, action, '');
+    return;
   }
 
   /**

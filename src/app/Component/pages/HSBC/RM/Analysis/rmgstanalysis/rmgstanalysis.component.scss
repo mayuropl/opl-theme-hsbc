@@ -1,0 +1,28 @@
+.filter_chip_wrapper {
+  pointer-events: auto;
+}
+
+:host ::ng-deep {
+  .gst-history-table {
+    table-layout: fixed;
+
+    .filter_tr td {
+      vertical-align: middle;
+    }
+
+    .filter_tr .NP_HSBC_ComInput,
+    .filter_tr .NP_HSBC_ComInput .mat-mdc-form-field {
+      width: 100%;
+    }
+
+    .filter_tr .mat-mdc-form-field-infix {
+      width: 100%;
+      min-width: 0 !important;
+    }
+
+    td[data-label="Action"],
+    th:last-child {
+      text-align: center;
+    }
+  }
+}

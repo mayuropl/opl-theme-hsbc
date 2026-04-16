@@ -7,7 +7,6 @@ import { CommonService } from './common-services/common.service';
 import { UntypedFormGroup } from '@angular/forms';
 import { IndNumFormatPipe } from './pipe/ind-num-format.pipe';
 import { RestUrl } from './resturl';
-import { SnackbarService } from './common-services/SnackbarService';
 import * as _ from 'lodash';
 import {clearCookie, GlobalHeaders, resetGlobalHeaders} from './global-headers';
 import { ProspectsFilterStorageService } from '../services/prospect-filter-storage.service';
@@ -27,7 +26,7 @@ export class CommonMethods {
     { pageId: 51, pageName: "Bulk Upload" },
     { pageId: 39, pageName: "Analytics" }
   ];
-    constructor(private router: Router, private msmeService: MsmeService, private commonservice: CommonService,private snackbar: SnackbarService,
+    constructor(private router: Router, private msmeService: MsmeService, private commonservice: CommonService,
       private prospectsfilterStorageService: ProspectsFilterStorageService) { }
 
     goToSelectModule() {
@@ -192,10 +191,10 @@ export class CommonMethods {
     }
 
     successSnackBar(message: any, action?: any): any {
-        this.snackbar.openSnackBar(message, action, 'success');
+        return;
     }
     warningSnackBar(message: any, action?: any): any {
-        this.snackbar.openSnackBar(message, action, 'warning');
+        return;
     }
 
     // updateStage(object) {

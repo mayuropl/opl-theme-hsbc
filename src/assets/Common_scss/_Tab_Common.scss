@@ -652,17 +652,17 @@
         background-color: #ffffff !important;
         // box-shadow: 2px 2px #32327F !important;
         // border: 1px solid #32327F;
-        box-shadow: 2px 2px #00847F !important;
-        border: 1px solid #00847F;
+        box-shadow: 2px 2px #32327F !important;
+        border: 1px solid #32327F;
         font-weight: 500 !important;
 
         .mdc-tab__text-label {
-          color: #00847F !important;
+          color: #32327F !important;
         }
 
         &:after {
           border: 9px solid;
-          border-color: #00847F transparent transparent transparent;
+          border-color: #32327F transparent transparent transparent;
           content: " ";
           height: 0;
           position: absolute;

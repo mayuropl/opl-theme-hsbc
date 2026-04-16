@@ -399,7 +399,8 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td colspan="10" class="p-3 b0">
-                                                                            <p>{{ item.details || 'No details available' }}</p>
+                                                                            <p *ngIf="item.details">{{ item.details }}</p>
+                                                                            <app-no-data-found *ngIf="!item.details" message="No details available" />
                                                                             <span class="grey_badge white_bg mr-2" *ngIf="item.subgroup">
                                                                                 {{ formatSubgroup(item.subgroup) }}
                                                                             </span>

@@ -1568,6 +1568,36 @@ function demoSupplierCustomerLevelPayload(reqBody: any): any {
   };
 }
 
+function demoGstHistoryRows(): any[] {
+  return [
+    { nameOfCompany: 'Acme Manufacturing Pvt Ltd', gstId: 120001, rmName: 'Demo Banker', dateOfReport: '2026-04-16', projectedSale: 12000000 },
+    { nameOfCompany: 'Zenith Textiles Pvt Ltd', gstId: 120002, rmName: 'Demo Banker', dateOfReport: '2026-04-15', projectedSale: 9800000 },
+    { nameOfCompany: 'Bluepeak Logistics LLP', gstId: 120003, rmName: 'Demo Banker', dateOfReport: '2026-04-14', projectedSale: 7600000 },
+    { nameOfCompany: 'Nova Agro Industries', gstId: 120004, rmName: 'Demo Banker', dateOfReport: '2026-04-13', projectedSale: 8400000 },
+    { nameOfCompany: 'Aster Components Ltd', gstId: 120005, rmName: 'Demo Banker', dateOfReport: '2026-04-12', projectedSale: 11300000 },
+    { nameOfCompany: 'Orion Plastics Private Limited', gstId: 120006, rmName: 'Demo Banker', dateOfReport: '2026-04-11', projectedSale: 5600000 },
+    { nameOfCompany: 'Silverline Foods LLP', gstId: 120007, rmName: 'Demo Banker', dateOfReport: '2026-04-10', projectedSale: 6900000 },
+    { nameOfCompany: 'Vertex Auto Parts', gstId: 120008, rmName: 'Demo Banker', dateOfReport: '2026-04-09', projectedSale: 10100000 },
+    { nameOfCompany: 'Prime Cables & Wires', gstId: 120009, rmName: 'Demo Banker', dateOfReport: '2026-04-08', projectedSale: 9100000 },
+    { nameOfCompany: 'Northstar Chemicals', gstId: 120010, rmName: 'Demo Banker', dateOfReport: '2026-04-07', projectedSale: 7900000 },
+  ];
+}
+
+function demoGstinListRows(): any[] {
+  return [
+    { nameOfCompany: 'Acme Manufacturing Pvt Ltd', gstin: '27AABCA1111A1Z1', constitution: 'Private Limited', username: 'acme.user', state: 'Maharashtra', otpVerificationStatus: 'Success', mstId: 120001, detailId: 1 },
+    { nameOfCompany: 'Zenith Textiles Pvt Ltd', gstin: '29AAACZ2222B1Z2', constitution: 'Private Limited', username: 'zenith.user', state: 'Karnataka', otpVerificationStatus: 'Success', mstId: 120002, detailId: 2 },
+    { nameOfCompany: 'Bluepeak Logistics LLP', gstin: '07AACCB3333C1Z3', constitution: 'LLP', username: 'bluepeak.user', state: 'Delhi', otpVerificationStatus: 'Pending', mstId: 120003, detailId: 3 },
+    { nameOfCompany: 'Nova Agro Industries', gstin: '24AACCN4444D1Z4', constitution: 'Partnership', username: 'nova.user', state: 'Gujarat', otpVerificationStatus: null, mstId: 120004, detailId: 4 },
+    { nameOfCompany: 'Aster Components Ltd', gstin: '33AACCA5555E1Z5', constitution: 'Public Limited', username: 'aster.user', state: 'Tamil Nadu', otpVerificationStatus: 'Success', mstId: 120005, detailId: 5 },
+    { nameOfCompany: 'Orion Plastics Private Limited', gstin: '06AACCO6666F1Z6', constitution: 'Private Limited', username: 'orion.user', state: 'Haryana', otpVerificationStatus: null, mstId: 120006, detailId: 6 },
+    { nameOfCompany: 'Silverline Foods LLP', gstin: '19AACCS7777G1Z7', constitution: 'LLP', username: 'silverline.user', state: 'West Bengal', otpVerificationStatus: 'Pending', mstId: 120007, detailId: 7 },
+    { nameOfCompany: 'Vertex Auto Parts', gstin: '32AACCV8888H1Z8', constitution: 'Proprietorship', username: 'vertex.user', state: 'Kerala', otpVerificationStatus: null, mstId: 120008, detailId: 8 },
+    { nameOfCompany: 'Prime Cables & Wires', gstin: '10AACCP9999J1Z9', constitution: 'Private Limited', username: 'prime.user', state: 'Bihar', otpVerificationStatus: 'Success', mstId: 120009, detailId: 9 },
+    { nameOfCompany: 'Northstar Chemicals', gstin: '36AACCN1010K1ZA', constitution: 'Private Limited', username: 'northstar.user', state: 'Telangana', otpVerificationStatus: null, mstId: 120010, detailId: 10 },
+  ];
+}
+
 function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown | undefined {
   const ok = (data: unknown, extra: Record<string, unknown> = {}) => ({
     status: 200,
@@ -1638,6 +1668,47 @@ function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown
   }
   if (u.includes('update-request-rm-by-uuid') || u.includes('update-request-rm-by-ids')) {
     return { status: 200, message: 'Updated', data: true };
+  }
+
+  if (u.includes('/gstanalysis/tpbypan')) {
+    return {
+      status: 200,
+      isDisplayStatus: 1,
+      message: 'OK',
+      data: 120001,
+    };
+  }
+
+  if (u.includes('/gstanalysis/gettpbypandata')) {
+    const rows = demoGstinListRows();
+    const pageFrom = Number(reqBody?.filterJSON ? JSON.parse(reqBody.filterJSON)?.paginationFROM : 0) || 0;
+    const pageSize = Number(reqBody?.filterJSON ? JSON.parse(reqBody.filterJSON)?.paginationTO : 10) || 10;
+    const safeStart = Math.max(0, pageFrom);
+    const pageRows = rows.slice(safeStart, safeStart + pageSize);
+    const states = Array.from(new Set(rows.map((r) => r.state)));
+    return {
+      status: 200,
+      message: 'OK',
+      data: rows.length,
+      listData: pageRows,
+      dataList: states,
+    };
+  }
+
+  if (u.includes('/gstanalysis/get_gst_history')) {
+    const rows = demoGstHistoryRows();
+    // Keep GST demo stable: always return full history rows so table rendering
+    // stays consistent and does not fluctuate with transient filter/paging state.
+    return {
+      status: 200,
+      message: 'OK',
+      data: {
+        status: 200,
+        message: 'OK',
+        listData: rows,
+        data: rows.length,
+      },
+    };
   }
 
   if (u.includes('/api/my-portfolio/categories/all')) {

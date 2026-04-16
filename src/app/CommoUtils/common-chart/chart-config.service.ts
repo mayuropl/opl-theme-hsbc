@@ -274,7 +274,7 @@ export class ChartConfigService {
       //   {
       //     name: 'Bank Sanction (₹M)',
       //     data: [5228, 5467, 5865, 6345, 7124, 7626],
-      //     color: '#E02020',
+      //     color: '#32327F',
       //     marker: {
       //       fillColor: '#f9d6d6',
       //       lineColor: '#FFFFFF',

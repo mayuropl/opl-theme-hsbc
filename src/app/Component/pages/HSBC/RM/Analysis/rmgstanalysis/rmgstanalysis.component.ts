@@ -21,6 +21,7 @@ import {
   saveActivity
 } from "../../../../../../CommoUtils/global-headers";
 import { ReadInstructionsPopupComponent } from 'src/app/Popup/read-instructions-popup/read-instructions-popup.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-rmgstanalysis',
@@ -28,6 +29,7 @@ import { ReadInstructionsPopupComponent } from 'src/app/Popup/read-instructions-
   styleUrl: './rmgstanalysis.component.scss'
 })
 export class RMGSTAnalysisComponent implements OnInit, OnDestroy {
+  private readonly demoPan = 'AAGFV5271N';
 
   panForm: FormGroup;
   gstinListSearchForm: FormGroup;
@@ -205,10 +207,11 @@ export class RMGSTAnalysisComponent implements OnInit, OnDestroy {
   initForm(value?: any) {
 
     this.gstinPagination = new Pagination();
+    const initialPan = environment.staticDemo ? (value || this.demoPan) : (value || '');
     this.panForm = this.fb.group({
-      pan: new FormControl(value || '', [Validators.required, Validators.pattern('^[A-Z]{5}[0-9]{4}[A-Z]{1}$')])
+      pan: new FormControl(initialPan, [Validators.required, Validators.pattern('^[A-Z]{5}[0-9]{4}[A-Z]{1}$')])
     })
-    this.pan = value;
+    this.pan = initialPan;
     // this.getStateList();
     // Initialize controls outside the main form
 
@@ -241,16 +244,21 @@ export class RMGSTAnalysisComponent implements OnInit, OnDestroy {
       dateOfReport: ['']
     });
 
-    // Restore filter state if available
-    const savedFilters = this.commonService.getStorage("gst_history_filters", true);
-    if (savedFilters && !this.commonService.isObjectNullOrEmpty(savedFilters)) {
-      try {
-        const filterValues = JSON.parse(savedFilters);
-        this.gstHistorySearchForm.patchValue(filterValues, { emitEvent: false });
-        this.filterState = filterValues;
-      } catch (e) {
-        console.error('Error parsing saved filters:', e);
+    // Restore filter state if available (skip in static demo so full dummy rows are visible)
+    if (!environment.staticDemo) {
+      const savedFilters = this.commonService.getStorage("gst_history_filters", true);
+      if (savedFilters && !this.commonService.isObjectNullOrEmpty(savedFilters)) {
+        try {
+          const filterValues = JSON.parse(savedFilters);
+          this.gstHistorySearchForm.patchValue(filterValues, { emitEvent: false });
+          this.filterState = filterValues;
+        } catch (e) {
+          console.error('Error parsing saved filters:', e);
+        }
       }
+    } else {
+      this.filterState = null;
+      this.commonService.removeStorage("gst_history_filters");
     }
 
     // Subscribe to value changes in history search form
@@ -289,7 +297,7 @@ export class RMGSTAnalysisComponent implements OnInit, OnDestroy {
     )
 
     // Reset pagination and fetch history data when PAN is provided
-    if (!this.commonService.isObjectNullOrEmpty(value)) {
+    if (environment.staticDemo || !this.commonService.isObjectNullOrEmpty(value)) {
       this.page = 1;
       this.startIndex = 0;
       this.endIndex = this.pageSize;
@@ -652,6 +660,10 @@ export class RMGSTAnalysisComponent implements OnInit, OnDestroy {
 
   getGstHistoryDataAPI() {
     GlobalHeaders['x-page-action'] = 'Getting Search History';
+    if (environment.staticDemo && !this.panForm?.valid) {
+      this.panForm.patchValue({ pan: this.demoPan }, { emitEvent: false });
+      this.pan = this.demoPan;
+    }
     if (this.panForm.valid) {
       // Build request object matching GstHistoryRequestDto
       const gstHistryReq: any = {
@@ -695,6 +707,14 @@ export class RMGSTAnalysisComponent implements OnInit, OnDestroy {
 
       console.log("getGstHistoryData req :", gstHistryReq)
 
+      if (environment.staticDemo) {
+        const allRows = this.getStaticDemoGstHistoryRows();
+        this.gstHistoryDataList = allRows;
+        this.totalSize = allRows.length;
+        this.isHistoryDataFetched = true;
+        return;
+      }
+
       this.msmeService.getGstHistoryData(gstHistryReq).subscribe(response => {
         console.log("getGstHistoryData response", response)
         if (response?.status == 200) {
@@ -735,6 +755,21 @@ export class RMGSTAnalysisComponent implements OnInit, OnDestroy {
     } else {
       this.commonService.errorSnackBar("Please fill details")
     }
+  }
+
+  private getStaticDemoGstHistoryRows(): any[] {
+    return [
+      { nameOfCompany: 'Acme Manufacturing Pvt Ltd', gstId: 120001, rmName: 'Demo Banker', dateOfReport: '2026-04-16', projectedSale: 12000000 },
+      { nameOfCompany: 'Zenith Textiles Pvt Ltd', gstId: 120002, rmName: 'Demo Banker', dateOfReport: '2026-04-15', projectedSale: 9800000 },
+      { nameOfCompany: 'Bluepeak Logistics LLP', gstId: 120003, rmName: 'Demo Banker', dateOfReport: '2026-04-14', projectedSale: 7600000 },
+      { nameOfCompany: 'Nova Agro Industries', gstId: 120004, rmName: 'Demo Banker', dateOfReport: '2026-04-13', projectedSale: 8400000 },
+      { nameOfCompany: 'Aster Components Ltd', gstId: 120005, rmName: 'Demo Banker', dateOfReport: '2026-04-12', projectedSale: 11300000 },
+      { nameOfCompany: 'Orion Plastics Private Limited', gstId: 120006, rmName: 'Demo Banker', dateOfReport: '2026-04-11', projectedSale: 5600000 },
+      { nameOfCompany: 'Silverline Foods LLP', gstId: 120007, rmName: 'Demo Banker', dateOfReport: '2026-04-10', projectedSale: 6900000 },
+      { nameOfCompany: 'Vertex Auto Parts', gstId: 120008, rmName: 'Demo Banker', dateOfReport: '2026-04-09', projectedSale: 10100000 },
+      { nameOfCompany: 'Prime Cables & Wires', gstId: 120009, rmName: 'Demo Banker', dateOfReport: '2026-04-08', projectedSale: 9100000 },
+      { nameOfCompany: 'Northstar Chemicals', gstId: 120010, rmName: 'Demo Banker', dateOfReport: '2026-04-07', projectedSale: 7900000 },
+    ];
   }
 
   viewGstAnalysisPage(gstMstId) {
@@ -793,34 +828,34 @@ export class RMGSTAnalysisComponent implements OnInit, OnDestroy {
   }
 
   isActionAvail(actionId: string): boolean {
-    let res = false;
-    // console.log("******Permission*****");
-    // console.log(actionId);
-    // console.log(this.pageData);
-    if (this.pageData?.subpageId == Constants.pageMaster.GST_ANALYSIS2 || this.pageData?.subpageId == Constants.pageMaster.GST_ANALYSIS) {
-      for (let page of this.pageData?.actions) {
-        if (page?.actionId === actionId) {
-          res = true; // Return true if found
+    // For direct GST page data shape
+    if (
+      this.pageData?.subpageId == Constants.pageMaster.GST_ANALYSIS2 ||
+      this.pageData?.subpageId == Constants.pageMaster.GST_ANALYSIS
+    ) {
+      const actions = Array.isArray(this.pageData?.actions) ? this.pageData.actions : [];
+      return actions.some((page) => page?.actionId === actionId);
+    }
+
+    // For nested analytics page data shape
+    const masterPages = Array.isArray(this.pageData?.subSubpages) ? this.pageData.subSubpages : [];
+    for (const masterPage of masterPages) {
+      if (masterPage?.subpageId != Constants.pageMaster.ANALYTICS) {
+        continue;
+      }
+      const analyticsPages = Array.isArray(masterPage?.subSubpages) ? masterPage.subSubpages : [];
+      for (const page of analyticsPages) {
+        if (page?.subpageId != Constants.pageMaster.GST_ANALYSIS) {
+          continue;
+        }
+        const actions = Array.isArray(page?.actions) ? page.actions : [];
+        if (actions.some((subpage) => subpage?.actionId === actionId)) {
+          return true;
         }
       }
-    } else {
-      if (!res) {
-        this.pageData?.subSubpages.forEach(masterPage => {
-          if (masterPage?.subpageId == Constants.pageMaster.ANALYTICS) {
-            masterPage?.subSubpages.forEach(page => {
-              if (page?.subpageId == Constants.pageMaster.GST_ANALYSIS) {
-                for (let subpage of page?.actions) {
-                  if (subpage?.actionId === actionId) {
-                    res = true; // Return true if found
-                  }
-                }
-              }
-            });
-          }
-        })
-      }
     }
-    return res; // Return false if not found
+
+    return false;
   }
   openReadInstructions() {
     this.commonService.openDialogue(ReadInstructionsPopupComponent, {

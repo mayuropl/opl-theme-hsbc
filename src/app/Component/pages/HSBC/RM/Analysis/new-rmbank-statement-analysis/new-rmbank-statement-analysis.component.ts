@@ -17,6 +17,7 @@ import {
   resetGlobalHeaders,
   saveActivity
 } from '../../../../../../CommoUtils/global-headers';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-rmbank-statement-analysis',
@@ -24,6 +25,7 @@ import {
   styleUrl: './new-rmbank-statement-analysis.component.scss'
 })
 export class NewRMBankStatementAnalysisComponent implements OnInit, OnDestroy {
+  private readonly demoPan = 'AAGFV5271N';
   today: string;
   panForm: FormGroup;
   searchForm: FormGroup;
@@ -178,7 +180,7 @@ export class NewRMBankStatementAnalysisComponent implements OnInit, OnDestroy {
         this.verifyPan();
       })
     )
-    if (!this.commonService.isObjectNullOrEmpty(value)) {
+    if (environment.staticDemo || !this.commonService.isObjectNullOrEmpty(value)) {
       this.verifyPan();
     }
   }
@@ -246,6 +248,11 @@ export class NewRMBankStatementAnalysisComponent implements OnInit, OnDestroy {
     //   this.panForm.addControl('userId', this.fb.control(this.userId));
     // }
 
+    if (environment.staticDemo && !this.panForm?.valid) {
+      this.panForm.patchValue({ pan: this.demoPan }, { emitEvent: false });
+      this.pan = this.demoPan;
+    }
+
     if (this.panForm.valid) {
       this.commonService.setStorage("bs_pan", this.panForm?.value?.pan);
       var json = {};
@@ -261,11 +268,21 @@ export class NewRMBankStatementAnalysisComponent implements OnInit, OnDestroy {
       if(json){
         GlobalHeaders['x-page-action'] = 'Searching from BankStatement analysis history';
       }
+
+      if (environment.staticDemo) {
+        const allFiltered = this.filterStaticDemoBankRows(this.getStaticDemoBankHistoryRows());
+        const from = (this.page - 1) * this.pageSize;
+        this.bankStatementHistories = allFiltered.slice(from, from + this.pageSize);
+        this.panVerified = true;
+        this.totalSize = allFiltered.length;
+        return;
+      }
+
       this.msmeService.bankAnalysisVerifyPan(json).subscribe((response: any) => {
         console.log(response);
         // console.log(response.status);
         if (response.status == 200) {
-          this.bankStatementHistories = response?.listData;
+          this.bankStatementHistories = response?.listData ?? [];
           console.log(this.bankStatementHistories);
           // this.updatePage();
           this.panVerified = true;
@@ -302,31 +319,69 @@ export class NewRMBankStatementAnalysisComponent implements OnInit, OnDestroy {
   }
 
   isActionAvail(actionId: string): boolean {
-    let res = false;
-    if (this.pageData?.subpageId == Constants.pageMaster.BANK_STATEMENT_ANALYSIS2 || this.pageData?.subpageId == Constants.pageMaster.BANK_STATEMENT_ANALYSIS) {
-      for (let page of this.pageData?.actions) {
-        if (page?.actionId === actionId) {
-          res = true; // Return true if found
+    if (
+      this.pageData?.subpageId == Constants.pageMaster.BANK_STATEMENT_ANALYSIS2 ||
+      this.pageData?.subpageId == Constants.pageMaster.BANK_STATEMENT_ANALYSIS
+    ) {
+      const actions = Array.isArray(this.pageData?.actions) ? this.pageData.actions : [];
+      return actions.some((page) => page?.actionId === actionId);
+    }
+
+    const masterPages = Array.isArray(this.pageData?.subSubpages) ? this.pageData.subSubpages : [];
+    for (const masterPage of masterPages) {
+      if (masterPage?.subpageId != Constants.pageMaster.ANALYTICS) {
+        continue;
+      }
+      const analyticsPages = Array.isArray(masterPage?.subSubpages) ? masterPage.subSubpages : [];
+      for (const page of analyticsPages) {
+        if (page?.subpageId != Constants.pageMaster.BANK_STATEMENT_ANALYSIS) {
+          continue;
+        }
+        const actions = Array.isArray(page?.actions) ? page.actions : [];
+        if (actions.some((subpage) => subpage?.actionId === actionId)) {
+          return true;
         }
       }
-    } else {
-      if (!res) {
-        this.pageData?.subSubpages.forEach(masterPage => {
-          if (masterPage?.subpageId == Constants.pageMaster.ANALYTICS) {
-            masterPage?.subSubpages.forEach(page => {
-              if (page?.subpageId == Constants.pageMaster.BANK_STATEMENT_ANALYSIS) {
-                for (let subpage of page?.actions) {
-                  if (subpage?.actionId === actionId) {
-                    res = true; // Return true if found
-                  }
-                }
-              }
-            });
-          }
-        })
-      }
     }
-    return res; // Return false if not found
+    return false;
+  }
+
+  private getStaticDemoBankHistoryRows(): BankStatementHistory[] {
+    return [
+      { bsId: 520001, accountHolderName: 'Acme Manufacturing Pvt Ltd', bankName: 'HSBC', accountNumber: '****4521', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-16'), isConsolidatedRequired: '0' },
+      { bsId: 520002, accountHolderName: 'Zenith Textiles Pvt Ltd', bankName: 'HSBC', accountNumber: '****8832', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-15'), isConsolidatedRequired: '0' },
+      { bsId: 520003, accountHolderName: 'Bluepeak Logistics LLP', bankName: 'HSBC', accountNumber: '****1109', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-14'), isConsolidatedRequired: '1' },
+      { bsId: 520004, accountHolderName: 'Nova Agro Industries', bankName: 'HSBC', accountNumber: '****7743', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-13'), isConsolidatedRequired: '0' },
+      { bsId: 520005, accountHolderName: 'Aster Components Ltd', bankName: 'HSBC', accountNumber: '****2290', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-12'), isConsolidatedRequired: '0' },
+      { bsId: 520006, accountHolderName: 'Orion Plastics Private Limited', bankName: 'HSBC', accountNumber: '****6612', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-11'), isConsolidatedRequired: '0' },
+      { bsId: 520007, accountHolderName: 'Silverline Foods LLP', bankName: 'HSBC', accountNumber: '****3388', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-10'), isConsolidatedRequired: '1' },
+      { bsId: 520008, accountHolderName: 'Vertex Auto Parts', bankName: 'HSBC', accountNumber: '****9054', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-09'), isConsolidatedRequired: '0' },
+      { bsId: 520009, accountHolderName: 'Prime Cables & Wires', bankName: 'HSBC', accountNumber: '****4417', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-08'), isConsolidatedRequired: '0' },
+      { bsId: 520010, accountHolderName: 'Northstar Chemicals', bankName: 'HSBC', accountNumber: '****5520', rmName: 'Demo Banker', dateOfReport: new Date('2026-04-07'), isConsolidatedRequired: '0' },
+    ];
+  }
+
+  private filterStaticDemoBankRows(rows: BankStatementHistory[]): BankStatementHistory[] {
+    const formValue = this.searchForm?.value || {};
+    const contains = (source: any, query: any) => {
+      const q = (query ?? '').toString().trim().toLowerCase();
+      if (!q) {
+        return true;
+      }
+      return (source ?? '').toString().toLowerCase().includes(q);
+    };
+    const selectedDate = formValue?.dateOfReport
+      ? this.formateDate(new Date(formValue.dateOfReport).toLocaleDateString('en-US'))
+      : '';
+
+    return rows.filter((row) =>
+      contains(row.accountHolderName, formValue?.accountHolderName) &&
+      contains(row.bankName, formValue?.bankName) &&
+      contains(row.accountNumber, formValue?.accountNumber) &&
+      contains(row.bsId, formValue?.bsId) &&
+      contains(row.rmName, formValue?.rmName) &&
+      (!selectedDate || this.formateDate(new Date(row.dateOfReport as Date).toLocaleDateString('en-US')) === selectedDate)
+    );
   }
 
   onRefresh() {
