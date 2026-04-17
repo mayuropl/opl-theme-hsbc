@@ -74,7 +74,7 @@
                   <h3 class="title_menu" (click)="$event.stopPropagation()">
                     <span class="left_side">
                     Search Options
-                    <button *ngIf="isActionAvail(constants.PageActions.TOPBAR_FILTER_RESET)" type="button" mat-icon-button class="ref_icon" (click)="$event.stopPropagation(); removeTopBarFilter()" color="primary"><i class="fi fi-br-refresh red_text"></i></button>
+                    <button *ngIf="isActionAvail(constants.PageActions.TOPBAR_FILTER_RESET)" type="button" mat-icon-button class="ref_icon" (click)="$event.stopPropagation(); removeTopBarFilter()" color="primary"><i class="fi fi-br-refresh blue_text"></i></button>
                   </span>
                     <button mat-icon-button type="button" (click)="searchByTrigger.closeMenu()">
                       <i class="fi fi-br-cross-small"></i>
@@ -238,7 +238,7 @@
               <!-- Customer Type Toggle -->
               <!-- <button type="button" mat-stroked-button="" color="grey" class="btn_design greay_text" *ngIf="isNewFilter">
                 Customer Type
-                <span class="ml-1"  [ngClass]="isCustomerTypeActive ? 'darkgreen_text' : 'red_text'">
+                <span class="ml-1"  [ngClass]="isCustomerTypeActive ? 'darkgreen_text' : 'blue_text'">
                   {{ !isCustomerTypeInActive ? 'ACTIVE' : 'INACTIVE' }}
                 </span>
                 <mat-slide-toggle
@@ -256,7 +256,7 @@
               </button>
               <!-- Add this method in save filter button (click)="saveFilterPopup()" -->
               <button mat-stroked-button class="btn_design white_bg" color="primary" [disabled]="totalSize == 0" (click)="onExportExcelPopup()" *ngIf="isActionAvail(constants.PageActions.EXPORT)">
-                <i class="fi fi-sr-file-export mr-1 red_text vr_2"></i>Export</button>
+                <i class="fi fi-sr-file-export mr-1 blue_text vr_2"></i>Export</button>
               <button mat-flat-button color="primary" class="white_text" *ngIf="isNewFilter" (click)="openAdvancedFilter()">
                 <i class="fi fi-rr-settings-sliders mr-1"></i> Filter
               </button>
@@ -643,11 +643,11 @@
                                             <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
                                         </button> -->
                                       <!-- View Button -->
-                                      <a mat-icon-button class="matIcon skyblue_icn" matTooltipPosition="left" matTooltipClass="mat-tooltip-left-arrow" matTooltip="View"
-                                         (click)="navigateToView(customer.panNo,customer.customerId,customer.cin)"
+                                      <button type="button" mat-icon-button class="matIcon skyblue_icn" matTooltipPosition="left" matTooltipClass="mat-tooltip-left-arrow" matTooltip="View"
+                                         (click)="navigateToView(customer, $event)"
                                          *ngIf="isActionAvail(constants.PageActions.VIEW) && (customer.scope?.toLowerCase() !== 'csem')">
                                         <i class="fa fa-eye"></i>
-                                      </a>
+                                      </button>
 
                                       <!-- Audit Button -->
                                       <a mat-icon-button class="matIcon grey_icn" matTooltipPosition="left" matTooltipClass="mat-tooltip-left-arrow" matTooltip="Audit"

@@ -44,7 +44,7 @@
                                 {{selectedSectorIds.includes('ALL') ? 'All' : (sectorSelect.triggerValue || 'Sector')}}
                             </mat-select-trigger>
                             <mat-option [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
-                            <mat-option *ngFor="let sector of sectors" [value]="sector.id">{{sector.name}} <span class="red_text">({{sector.count || 0}})</span></mat-option>
+                            <mat-option *ngFor="let sector of sectors" [value]="sector.id">{{sector.name}} <span class="blue_text">({{sector.count || 0}})</span></mat-option>
                             <mat-divider></mat-divider>
                             <mat-option class="reset-option">
                                 <button mat-flat-button class="no_wrap br_8 ln_40" color="primary" (click)="resetSectorFilter($event, sectorSelect)">Reset</button>
@@ -59,7 +59,7 @@
                                 {{selectedSubSectorIds.includes('ALL') ? 'All' : (subSectorSelect.triggerValue || 'Sub-Sectors')}}
                             </mat-select-trigger>
                             <mat-option [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
-                            <mat-option *ngFor="let ss of subSectors" [value]="ss.id">{{ss.name}} <span class="red_text">({{ss.count || 0}})</span></mat-option>
+                            <mat-option *ngFor="let ss of subSectors" [value]="ss.id">{{ss.name}} <span class="blue_text">({{ss.count || 0}})</span></mat-option>
                             <mat-divider></mat-divider>
                             <mat-option class="reset-option">
                                 <button mat-flat-button class="no_wrap br_8 ln_40" color="primary" (click)="resetSubSectorFilter($event, subSectorSelect)">Reset</button>
@@ -111,12 +111,12 @@
                                 <li><a class="corporate-action-category-link" href="javascript:void(0)"
                                     [ngClass]="{'active': selectedIndustry === null}"
                                     (click)="onIndustrySelect(null)"><span>All
-                                        <span class="red_text">({{totalCount}})</span></span></a></li>
+                                        <span class="blue_text">({{totalCount}})</span></span></a></li>
                                 <li *ngFor="let stat of industryStats">
                                     <a class="corporate-action-category-link" href="javascript:void(0)"
                                        [ngClass]="{'active': selectedIndustry && selectedIndustry.name === stat.name}"
                                        (click)="onIndustrySelect(stat)"><span>{{stat.name}}
-                                        <span class="red_text">({{stat.totalCount}})</span></span>
+                                        <span class="blue_text">({{stat.totalCount}})</span></span>
                                         <span class="grey_text no_wrap">{{stat.newCount}}</span></a>
                                 </li>
                             </ul>

@@ -193,7 +193,7 @@
                 <ng-container *ngIf="bulkUploadHistory">
                   <tr *ngFor="let historyData of bulkUploadHistory; let i=index">
                     <td data-label="Sr. No."> {{ startIndex + i + 1 }}</td>
-                    <td data-label="File Name">{{historyData?.fileName}} <span> <i class="fas fa-info-circle red_text mr-1" matTooltip="{{historyData?.fileUploadFailureReason}}" *ngIf="historyData?.statusCode == 3"></i>
+                    <td data-label="File Name">{{historyData?.fileName}} <span> <i class="fas fa-info-circle blue_text mr-1" matTooltip="{{historyData?.fileUploadFailureReason}}" *ngIf="historyData?.statusCode == 3"></i>
                        </span> </td>
                     <td data-label="Uploaded On">{{historyData?.createdDate |date:'dd MMM yyyy hh:mm:ss'}}</td>
                     <td><span [ngClass]="{
@@ -355,7 +355,7 @@
                   <td>{{ file.inputDownloadDate ? (file.inputDownloadDate | date:'dd MMM yyyy hh:mm:ss') : '-' }}</td>
                   <td>{{ file.fileUploadDate ? (file.fileUploadDate | date:'dd MMM yyyy hh:mm:ss') : '-' }}</td>
                   <td>{{ file.successEntries ?? '-' }} <i *ngIf="file.successEntries" (click)="getData(2,ConsumerCibilDownloadUrls.DOWNLOAD_CIBILINPUTDATA,file?.fileId,'Success-Entries-File-Data')" class="fas fa-download green_text cursor_pointer ml-1"></i></td>
-                  <td>{{ file.errorCount ?? '-' }} <i *ngIf="file.errorCount" (click)="getData(3,ConsumerCibilDownloadUrls.DOWNLOAD_CIBILINPUTDATA,file?.fileId,'Error-Count-Entries-File-Data')" class="fas fa-download red_text cursor_pointer ml-1"></i></td>
+                  <td>{{ file.errorCount ?? '-' }} <i *ngIf="file.errorCount" (click)="getData(3,ConsumerCibilDownloadUrls.DOWNLOAD_CIBILINPUTDATA,file?.fileId,'Error-Count-Entries-File-Data')" class="fas fa-download blue_text cursor_pointer ml-1"></i></td>
                   <td>{{ file.NoHitEntries ?? '-' }} <i *ngIf="file.NoHitEntries" (click)="getData(4,ConsumerCibilDownloadUrls.DOWNLOAD_CIBILINPUTDATA,file?.fileId,'No-Hit-Entries-File-Data')" class="fas fa-download yellow_text cursor_pointer ml-1"></i></td>
                   <td>{{ file.dataNotReceivedCount ?? '-' }} <i *ngIf="file.dataNotReceivedCount" (click)="getData(5,ConsumerCibilDownloadUrls.DOWNLOAD_CIBILINPUTDATA,file?.fileId,'Data-Not-Received-Entries-File-Data')" class="fas fa-download grey_l_text cursor_pointer ml-1"></i></td>
                   <td>{{ file.totalCustomer ?? '-' }} <i *ngIf="file.totalCustomer" (click)="getData(1,ConsumerCibilDownloadUrls.DOWNLOAD_CIBILINPUTDATA,file?.fileId,generateFileName(file?.fileName),'xlsx')" class="fas fa-download black_text cursor_pointer ml-1"></i></td>
@@ -380,7 +380,7 @@
                           <tbody class="subtable-container">
                           <tr *ngFor="let sub of file.fileWiseData; let j = index">
                             <td data-label="Sr. No."> {{ j + 1 }}</td>
-                            <td data-label="File Name">{{sub.file_name}} <span> <i *ngIf="sub?.stage_id === 3" class="fas fa-info-circle red_text mr-1" matTooltip="{{sub.file_upload_failure_reason}}"></i></span> </td>
+                            <td data-label="File Name">{{sub.file_name}} <span> <i *ngIf="sub?.stage_id === 3" class="fas fa-info-circle blue_text mr-1" matTooltip="{{sub.file_upload_failure_reason}}"></i></span> </td>
                             <td data-label="Uploaded On">{{ sub.created_date | date:'dd MMM yyyy HH:mm:ss' }}</td>
                             <td><span [ngClass]="{
                           'orange_badge': sub?.stage_id === 1 ,
@@ -389,7 +389,7 @@
                             }">{{getStatus(sub?.stage_id)}}</span>
                             </td>
                             <td data-label="Successful Entries">{{ sub.success_entries }} <i (click)="getData(2,ConsumerCibilDownloadUrls.DOWNLOAD_PRSTATUS_DATA,sub?.file_id,'Success-Entries-File-Data')" class="fas fa-download green_text"></i></td>
-                            <td data-label="Failed Entries">{{ sub.fail_entries }} <i (click)="getData(3,ConsumerCibilDownloadUrls.DOWNLOAD_PRSTATUS_DATA,sub?.file_id,'Fail-Entries-File-Data')" class="fas fa-download red_text"></i></td>
+                            <td data-label="Failed Entries">{{ sub.fail_entries }} <i (click)="getData(3,ConsumerCibilDownloadUrls.DOWNLOAD_PRSTATUS_DATA,sub?.file_id,'Fail-Entries-File-Data')" class="fas fa-download blue_text"></i></td>
                             <td data-label="Total Entries">{{ sub.total_entries }}<i (click)="getData(1,ConsumerCibilDownloadUrls.DOWNLOAD_PRSTATUS_DATA,sub?.file_id,'Total-Entries-File-Data')" class="fas fa-download grey_text"></i></td>
                           </tr>
                           </tbody>

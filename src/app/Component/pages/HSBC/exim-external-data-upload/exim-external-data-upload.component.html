@@ -152,7 +152,7 @@
                         @if(audit.isUploadFailLoading){
                         <div class="loader_Circal"></div>
                           }@else{
-                            <!-- <i class="fas fa-download red_text cursor_pointer ml-1" (click)="downloadByBucketRef(1, audit?.fileName, audit?.uploadFailedFilePath)"></i> -->
+                            <!-- <i class="fas fa-download blue_text cursor_pointer ml-1" (click)="downloadByBucketRef(1, audit?.fileName, audit?.uploadFailedFilePath)"></i> -->
                           <a mat-icon-button class="matIcon skyblue_icn" [disabled]="audit.uploadFailedCount == null || audit.uploadFailedCount == 0"
                             (click)="downloadByBucketRef(1, audit?.fileName, audit?.uploadFailedFilePath)">
                             <i class="fas fa-download cursor_pointer" ></i>
@@ -163,7 +163,7 @@
                         @if(audit.isValidationFailLoading){
                           <div class="loader_Circal"></div>
                         }@else{
-                        <!-- <i class="fas fa-download red_text cursor_pointer ml-1" (click)="downloadByBucketRef(2, audit?.fileName, audit?.validationFailedFilePath)"></i> -->
+                        <!-- <i class="fas fa-download blue_text cursor_pointer ml-1" (click)="downloadByBucketRef(2, audit?.fileName, audit?.validationFailedFilePath)"></i> -->
                           <a mat-icon-button class="matIcon skyblue_icn"
                             [disabled]="audit.validationFailedCount == null || audit.validationFailedCount == 0"
                             (click)="downloadByBucketRef(2, audit?.fileName, audit?.validationFailedFilePath)">
@@ -174,7 +174,7 @@
                       <td class="text-right">{{audit.successCount+audit?.uploadFailedCount+audit?.validationFailedCount || '-'}}</td>
                       <td class="text-right pr-3">
                         <button mat-icon-button class="matIcon red_icn" [disabled]="audit.uploadFailedCount == null || audit.uploadFailedCount == 0" color="primary" (click)="retryUpload(audit.uuid)">
-                          <i class="fas fa-redo red_text"></i>
+                          <i class="fas fa-redo blue_text"></i>
                         </button>
                     </tr>
                   }

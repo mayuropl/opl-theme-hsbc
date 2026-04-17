@@ -351,7 +351,7 @@
                           </div>
                       </div>
                       <div class="clearfix"></div>
-                      <!-- <p  class="red_text pl-4 pt-2">** only business user allowed **</p> -->
+                      <!-- <p  class="blue_text pl-4 pt-2">** only business user allowed **</p> -->
                       <div class="searchBox_design">
                         <div class="searchBox_input">
                          <ng-container *ngIf="selectedOption === '1'">
@@ -1667,8 +1667,7 @@
                                             </span>
                                         </th>
                                         <th>Remarks</th>
-                                        <th>Action</th>
-                                     </tr>
+                                      </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="Mobile_View_Filter_Hide_NP filter_tr" [formGroup]="approveRejectRequestRecevier">
@@ -1731,8 +1730,7 @@
                                                 </mat-form-field>
                                             </fieldset> -->
                                         </td>
-                                        <td></td>
-                                      </tr>
+                                       </tr>
                                     <ng-container *ngIf="approve_reject_companaylist && approve_reject_companaylist.length > 0; else noData">
                                     <tr *ngFor="let item of approve_reject_companaylist; let i = index">
                                         <td class="text-center">{{ i + 1 }}</td>
@@ -1745,15 +1743,7 @@
                                         <td>{{ item.status || '-' }}</td>
                                         <td>{{item.pendingTime === -1 || item.pendingTime === '-1' ? "Unlimited": item.pendingTime || '-' }}</td>
                                         <td>{{ item.approverRemarks || '-' }}</td>
-                                        <td class="nowrap_td" data-label="Action">
-                                            <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="View" (click)="navigateToView(item.pan)">
-                                                <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon>
-                                            </button>
-
-                                            <button mat-icon-button class="matIcon skyblue_icn" ngbTooltip="Revoke" (click)="revokeRequestCustomerPortfolio(item.id)">
-                                                <em class="fas fa-undo-alt"></em>
-                                            </button>
-                                        </td>
+                                        
                                     </tr>
                                     </ng-container>
                                         <ng-template #noData>

@@ -55,7 +55,7 @@
                             <ng-container *ngFor="let item of auditReportData; let i = index">
                                 <tr>
                                     <td class="no_wrap table_check_box">
-                                        <a mat-icon-button href="javascript:void(0)" class="matIcon red_text mr-1"
+                                        <a mat-icon-button href="javascript:void(0)" class="matIcon blue_text mr-1"
                                             (click)="toggleDetails(i)" [ngClass]="{'rotate_icon': isRowExpanded(i)}">
                                             <i class="fas fa-chevron-down"></i>
                                         </a>
@@ -64,7 +64,7 @@
                                     <td>{{ item.month }}</td>
                                     <td>{{ item.year }}</td>
                                     <td>{{ item.total_successful }} <i class="fas fa-download green_text cursor_pointer ml-1" (click)="downloadAuditReport(item, '1')"></i></td>
-                                    <td>{{ item.total_failed }} <i class="fas fa-download red_text cursor_pointer ml-1" (click)="downloadAuditReport(item, '2')"></i></td>
+                                    <td>{{ item.total_failed }} <i class="fas fa-download blue_text cursor_pointer ml-1" (click)="downloadAuditReport(item, '2')"></i></td>
                                     <td>{{ item.total_Customers }} <i class="fas fa-download grey_text cursor_pointer ml-1" (click)="downloadAuditReport(item, '3')"></i></td>
                                     <td class="text-center">
                                         <a type="button" mat-flat-button class="btn_design with_right_icn br_8"
@@ -107,7 +107,7 @@
                                                                 report?.status === 3 ? 'Failed' : '' }}
                                                             </span>
                                                             <span *ngIf="report?.status === 3 && (report?.file_upload_failure_reason || report?.failure_reason)">
-                                                                <i class="fas fa-info-circle red_text ml-1"
+                                                                <i class="fas fa-info-circle blue_text ml-1"
                                                                 matTooltip="{{report?.file_upload_failure_reason || report?.failure_reason}}">
                                                                 </i>
                                                             </span>
@@ -116,7 +116,7 @@
                                                                     class="fas fa-download green_text cursor_pointer ml-1" (click)="downloadDetailAuditReport(report, '1')"></i>
                                                             </td>
                                                             <td>{{ report.failed_files }} <i
-                                                                    class="fas fa-download red_text cursor_pointer ml-1" (click)="downloadDetailAuditReport(report, '2')"></i>
+                                                                    class="fas fa-download blue_text cursor_pointer ml-1" (click)="downloadDetailAuditReport(report, '2')"></i>
                                                             </td>
                                                             <td>{{ report.total_files_processed }} <i
                                                                     class="fas fa-download grey_text cursor_pointer ml-1" (click)="downloadDetailAuditReport(report, '3')"></i>

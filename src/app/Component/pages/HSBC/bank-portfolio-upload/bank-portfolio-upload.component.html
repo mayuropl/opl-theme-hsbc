@@ -112,7 +112,7 @@
                     <ng-container *ngIf="bulkUploadHistory">
                       <tr *ngFor="let historyData of bulkUploadHistory; let i=index">
                         <td data-label="Sr. No."> {{ startIndex + i + 1 }}</td>
-                        <td data-label="File Name">{{historyData?.fileName}} <span> <i class="fas fa-info-circle red_text mr-1" matTooltip="{{historyData?.fileUploadFailureReason}}" *ngIf="historyData?.statusCode == 5"></i>
+                        <td data-label="File Name">{{historyData?.fileName}} <span> <i class="fas fa-info-circle blue_text mr-1" matTooltip="{{historyData?.fileUploadFailureReason}}" *ngIf="historyData?.statusCode == 5"></i>
                        </span> </td>
                         <td data-label="Uploaded On">{{historyData?.createdDate |
                           date:'dd MMM yyyy hh:mm:ss'}}</td>
@@ -127,7 +127,7 @@
                               class="fas fa-download green_text cursor_pointer ml-1"></i></a></td>
                         <td data-label="Failed Entries" class="text-right">{{historyData?.failEntries}} <a
                             href="javscript:void(0)" (click)="getData(2,historyData)"  *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)"><i
-                            class="fas fa-download red_text cursor_pointer ml-1"></i></a></td>
+                            class="fas fa-download blue_text cursor_pointer ml-1"></i></a></td>
                         <td data-label="Total Entries" class="text-right pr-3">{{historyData?.totalEntries}} <a
                             href="javscript:void(0)" (click)="getData(3,historyData)"  *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_TOTAL_ENTRY)"><i
                             class="fas fa-download grey_l_text cursor_pointer ml-1"></i></a></td>

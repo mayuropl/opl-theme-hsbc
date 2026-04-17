@@ -5,12 +5,12 @@
   <div class="pop_up_container">
     <div class="popup_header" mat-dialog-title>
       <h3 *ngIf="!data.uploadFailed">Country Master Bulk Data File Uploaded</h3>
-      <h3 *ngIf="data.uploadFailed" class="red_text">Country Master Bulk Data File Upload Failed</h3>
+      <h3 *ngIf="data.uploadFailed" class="blue_text">Country Master Bulk Data File Upload Failed</h3>
     </div>
     <mat-dialog-content>
       <div class="popup_body">
         <div *ngIf="data.uploadFailed" class="failed-reason-box">
-          <p class="red_text">{{data.failureReason}}</p>
+          <p class="blue_text">{{data.failureReason}}</p>
         </div>
         <div class="list_table_design" *ngIf="!data.uploadFailed">
           <div class="list_row">

@@ -98,7 +98,7 @@
                           'lightred_badge': historyData?.status === 'Failed'
                         }">{{historyData?.status || '—'}}</span>
                         <span *ngIf="historyData?.status === 'Failed' && historyData?.fileUploadFailureReason">
-                          <i class="fas fa-info-circle red_text ml-1"
+                          <i class="fas fa-info-circle blue_text ml-1"
                             matTooltip="{{historyData?.fileUploadFailureReason}}"></i>
                         </span>
                       </td>
@@ -113,7 +113,7 @@
                         {{historyData?.status === 'Failed' ? '—' : historyData?.failedEntries}}
                         <a href="javascript:void(0)" (click)="getData(2, historyData?.mstId || historyData?.id)"
                           *ngIf="historyData?.status !== 'Failed' && isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)">
-                           <i class="fas fa-download red_text cursor_pointer ml-1" alt="Failed Entries"></i>
+                           <i class="fas fa-download blue_text cursor_pointer ml-1" alt="Failed Entries"></i>
                         </a>
                       </td>
                       <td data-label="Total Entries" class="text-right">

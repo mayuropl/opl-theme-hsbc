@@ -8,7 +8,7 @@
             <em class="fa fa-arrow-left mr-2"></em>
             Upload Bank Statement
           </h4>
-          <p class="note_text"> <span class="red_text mr-1">Note:</span>External Bank Statement Analysis for scanned pdf
+          <p class="note_text"> <span class="blue_text mr-1">Note:</span>External Bank Statement Analysis for scanned pdf
             may take approximately 2–3 hours to complete. You will be notified once the report is ready.</p>
         </div>
 
@@ -18,7 +18,7 @@
             <!-- Status Badge -->
             <div class="d-flex align-items-center" *ngIf="header.get('status')?.value">
               <span *ngIf="header.get('status')?.value === '2'">
-                <i class="fas fa-info-circle red_text mr-1" [matTooltip]="header.get('message')?.value"></i>
+                <i class="fas fa-info-circle blue_text mr-1" [matTooltip]="header.get('message')?.value"></i>
               </span>
               <span *ngIf="header.get('status')?.value === '1'" class="green_badge suess_text mr-2">
                 <i class="fas fa-check-circle mr-1"></i>Success

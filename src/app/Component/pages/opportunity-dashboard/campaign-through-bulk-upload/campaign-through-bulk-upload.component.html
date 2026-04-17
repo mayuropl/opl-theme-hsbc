@@ -146,7 +146,7 @@
                     <div class="upload_file_wrap" *ngIf="uploadedFileName">
                         <span class="uploaded_file_name">
                             <i class="fas fa-file-excel green_text mr-1"></i> {{uploadedFileName}}
-                            <i class="fas fa-times red_text cursor_pointer ml-2" (click)="removeFile()"></i>
+                            <i class="fas fa-times blue_text cursor_pointer ml-2" (click)="removeFile()"></i>
                         </span>
                     </div>
                     <button mat-stroked-button color="primary" class="btn_design br_8" (click)="onUploadFile()"><mat-icon>arrow_upward_alt</mat-icon> Upload File</button>
@@ -194,7 +194,7 @@
                                         {{item.failCount}}
                                         <button type="button" class="btn-link p-0 border-0 bg-transparent"
                                             *ngIf="item.failCount > 0" (click)="downloadFile(item.id, 'failed')">
-                                            <i class="fas fa-download red_text cursor_pointer ml-1"></i>
+                                            <i class="fas fa-download blue_text cursor_pointer ml-1"></i>
                                         </button>
                                     </td>
                                     <td class="text-right">

@@ -195,7 +195,7 @@
                                             <td class="text-center">{{ (currentPage - 1) * selectedRowsPerPage + i + 1 }}</td>
                                             <td>{{report.reportName}}</td>
                                             <td class="no_wrap" [ngClass]="{
-                                                'red_text': report.status === 'FAILED',
+                                                'blue_text': report.status === 'FAILED',
                                                 'darkyellow_text': report.status === 'IN_PROGRESS',
                                                 'green_text': report.status === 'COMPLETED'
                                             }">{{report.status}}</td>
@@ -207,7 +207,7 @@
                                                 'green_badge': report.status === 'Completed'
                                             }">
                                                     {{ report.status }}
-                                                    <i *ngIf="report.status === 'Failed'" class="fa fa-info-circle mr-1 red_text"
+                                                    <i *ngIf="report.status === 'Failed'" class="fa fa-info-circle mr-1 blue_text"
                                                         [ngbTooltip]="report.failureReason"></i>
                                                 </span>
                                                 <a (click)="downloadExportReport(report.docReferenceId,report.reportName)"

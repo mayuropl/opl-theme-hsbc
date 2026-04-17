@@ -6079,7 +6079,7 @@ export class TargetsProspectsFindComponent implements OnInit, OnDestroy {
         case 'Name Of Customer':
           return '';
         case 'Persona':
-          return 'red_text';
+          return 'blue_text';
         default:
           return '';
       }

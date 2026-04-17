@@ -838,13 +838,14 @@ export class BankStatementAnalysisComponent implements OnInit {
         break;
 
       case '6':
-        const  oppList = data?.opportunityReport;
-        if(this.opportunityList && oppList){
+        const oppList = data?.opportunityReport;
+        if (this.opportunityList && oppList) {
+          const childCustRows = Array.isArray(oppList?.data?.[0]?.custIdWise) ? oppList.data[0].custIdWise : [];
           this.fullOpportunityList.forEach((supplier: any) => {
-            if (supplier.company_name === banke.company_name){
-              supplier.custPagination.displayedCustList = oppList?.data || [];
-              supplier.custPagination.totalItems = oppList?.totalRows || 0;
-           }
+            if (supplier.company_name === banke.company_name) {
+              supplier.custPagination.displayedCustList = childCustRows;
+              supplier.custPagination.totalItems = oppList?.totalRows ?? childCustRows.length ?? 0;
+            }
           });
         }
         this.loadingSwitch('6', false);

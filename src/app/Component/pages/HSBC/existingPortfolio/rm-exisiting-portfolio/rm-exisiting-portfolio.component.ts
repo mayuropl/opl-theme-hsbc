@@ -543,6 +543,7 @@ export class RmExisitingPortfolioComponent implements OnInit {
 
         if (!this.commonService.isObjectNullOrEmpty(this.customerList)) {
           this.customerList.forEach(element => {
+            element.customerTypeId = element.customerType;
             element.customerType = Constants.CustomerTypeById[element.customerType];
           });
         }
@@ -610,17 +611,30 @@ export class RmExisitingPortfolioComponent implements OnInit {
     }
   }
 
-  navigateToView(pan: String, customerId?: any, cin?: String) {
-    let panData: any = pan.toString();
+  navigateToView(customer: any, event?: MouseEvent) {
+    event?.preventDefault();
+    event?.stopPropagation();
+    if (!customer?.panNo) {
+      this.commonService.warningSnackBar('Customer PAN is not available.');
+      return;
+    }
+    const panData: any = customer.panNo.toString();
     GlobalHeaders['x-page-data'] = panData;
     GlobalHeaders['x-page-action'] = 'View Exisiting Portfolio';
-    const routerData = { pan: pan, tabId: 1, cin: cin };// Data to pass
+    const customerTypeNumeric = customer.customerTypeId ?? this.consValue.CustomerType.ETB;
+    const routerData = {
+      pan: customer.panNo,
+      tabId: 1,
+      cin: customer.cin,
+      customerType: customerTypeNumeric,
+      customerTypeStr: typeof customer.customerType === 'string' ? customer.customerType : (Constants.CustomerTypeById[customerTypeNumeric] ?? 'ETB'),
+    };
     this.pageData.isCustomerTypeInActive = this.isCustomerTypeInActive;
     saveActivity(() => { });
-    if (customerId) {
-      this.commonService.setStorage("cutomerId", customerId);
+    if (customer.customerId) {
+      this.commonService.setStorage('cutomerId', customer.customerId);
     }
-    this.router.navigate([`/hsbc/rmExisitingPortfolioView`], { state: { routerData, data: this.pageData, dataFrom: this.pageData, isFromParentPage: true } });
+    this.router.navigate(['/hsbc/rmExisitingPortfolioView'], { state: { routerData, data: this.pageData, dataFrom: this.pageData, isFromParentPage: true } });
   }
 
   // Function to toggle sorting based on the column clicked
@@ -1236,6 +1250,7 @@ export class RmExisitingPortfolioComponent implements OnInit {
       'Company Name': 'fas fa-layer-group',
       'RM': 'fas fa-user',
       'Segment': 'fas fa-cube',
+      'Region': 'fas fa-globe-americas',
       'Parent Company': 'fas fa-building',
       'Parent Country': 'fas fa-globe'
     };
@@ -2693,7 +2708,7 @@ export class RmExisitingPortfolioComponent implements OnInit {
       case 'Name Of Customer':
         return '';
       case 'Persona':
-        return 'red_text';
+        return 'blue_text';
       default:
         return '';
     }
@@ -2838,6 +2853,8 @@ interface CustomerList {
   scope: string;
   cin: string;
   rmId: string;
+  /** Numeric id from API before display mapping */
+  customerTypeId?: number;
   customerType: any;
 }
 

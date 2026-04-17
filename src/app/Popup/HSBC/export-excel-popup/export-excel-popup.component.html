@@ -841,7 +841,7 @@
                                     'green_badge': report.status === 'Completed'
                                 }">
                                     {{ report.status }}
-                                    <i *ngIf="report.status === 'Failed'" class="fa fa-info-circle mr-1 red_text" [ngbTooltip]="report.failureReason"></i>
+                                    <i *ngIf="report.status === 'Failed'" class="fa fa-info-circle mr-1 blue_text" [ngbTooltip]="report.failureReason"></i>
                                 </span>
                                 <a *ngIf="report.status === 'Completed'" (click)="downloadExportReport(report.docReferenceId,report.reportName)" class="green_text dwn_link cursor_pointer">
                                     <mat-icon class="ml-2 mr-0">arrow_downward_alt</mat-icon>

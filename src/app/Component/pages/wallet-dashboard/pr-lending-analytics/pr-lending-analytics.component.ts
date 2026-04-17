@@ -106,7 +106,7 @@ walletTrend: { change: number; isIncrease: boolean; changePercent: number } = {
   //       case 'Competition Sanction':
   //         return { ...item, icon: 'fi fi-rr-gym-bag green_text', trend: { ...item.trend, icon: 'fi fi-rr-arrow-trend-up', color: 'darkgreen_text' } };
   //       case 'Bank Sanction':
-  //         return { ...item, img: 'assets/images/hsbc-title.svg', trend: { ...item.trend, icon: 'fi fi-rr-arrow-trend-down', color: 'red_text' } };
+  //         return { ...item, img: 'assets/images/hsbc-title.svg', trend: { ...item.trend, icon: 'fi fi-rr-arrow-trend-down', color: 'blue_text' } };
   //       case 'Competition Utilisation':
   //         return { ...item, icon: 'fi fi-rr-gym-bag green_text' };
   //       default:

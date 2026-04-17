@@ -1,14 +1,30 @@
 import { Constants } from '../constants';
 
+/**
+ * Synthetic `actionName` for static demo so pages that parse permissions from
+ * `action.actionName.split('_').pop()` (e.g. Existing Portfolio Search by) still
+ * receive tokens like CITY / SEGMENT / REGION matching `topBarFilters[].name`.
+ */
+function staticDemoActionName(actionId: number): string {
+  const pa = Constants.PageActions as Record<string, number>;
+  const topBarKey = Object.keys(pa).find(
+    (k) => k.startsWith('TOPBAR_FILTER_') && pa[k] === actionId
+  );
+  if (topBarKey) {
+    return topBarKey;
+  }
+  return `PAGE_PERM_${actionId}`;
+}
+
 /** Every PageActions id so *ngIf="isActionAvail(...)" passes in static demo. */
-export function allDemoPageActions(): { actionId: number }[] {
+export function allDemoPageActions(): { actionId: number; actionName: string }[] {
   return Object.values(Constants.PageActions)
     .filter((v): v is number => typeof v === 'number')
-    .map((actionId) => ({ actionId }));
+    .map((actionId) => ({ actionId, actionName: staticDemoActionName(actionId) }));
 }
 
 /** Covers isActionAvailforSubpage(subPageId, ...) for any pageMaster id. */
-export function demoSubSubpagesAll(): { subpageId: number; actions: { actionId: number }[] }[] {
+export function demoSubSubpagesAll(): { subpageId: number; actions: { actionId: number; actionName: string }[] }[] {
   const actions = allDemoPageActions();
   return Object.values(Constants.pageMaster)
     .filter((v): v is number => typeof v === 'number')
@@ -80,18 +96,15 @@ export function buildStaticDemoFullMenu(): any[] {
         demoLeaf('hsbc/average-bank-balance-analysis', 'Average Bank Balance Analysis'),
         demoLeaf('hsbc/walllet-dashboard', 'Lending Wallet Dashboard'),
         demoLeaf('hsbc/income-dashboard', 'Income Dashboard'),
-        demoLeaf('hsbc/walllet-dashboard-structured', 'PR-Dashboard-Structured'),
         demoGroup(
           'sd_campaign_dash',
           'Campaign Dashboard',
           [
             demoLeaf('hsbc/opportunity-dashboard', 'ETB Dashboard'),
             demoLeaf('hsbc/opportunity-dashboard-ntb', 'NTB Dashboard'),
-            demoLeaf('hsbc/campaign-through-bulk-upload', 'Campaign Through Bulk Upload'),
           ],
           true
         ),
-        demoLeaf('hsbc/walllet-dashboard-lipisearch', 'Lipisearch Lending Wallet Dashboard'),
       ],
       true
     ),
@@ -121,7 +134,6 @@ export function buildStaticDemoFullMenu(): any[] {
       demoLeaf('hsbc/commercial-crif-pr-data', 'Commercial CRIF PR'),
     ]),
     section('sd_misc', 'Tools & Other', 'fi fi-sr-settings', [
-      demoLeaf('hsbc/bureauConfig', 'Bureau Configuration'),
       demoLeaf('hsbc/login-img-upload', 'Login Image Upload'),
       demoLeaf('hsbc/help-and-support-upload', 'Help Support Upload'),
     ]),

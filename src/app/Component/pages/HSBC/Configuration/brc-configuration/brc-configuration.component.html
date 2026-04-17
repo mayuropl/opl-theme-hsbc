@@ -723,7 +723,7 @@ of {{ rejectionTotalSize }} rows
                <!-- <div class="no_data_found_container">
                 <app-no-data-found message="No data found"></app-no-data-found>
               </div> -->
-                 <h4 class="box_text"><i class="fi fi-sr-check-circle red_text vr_2 mr-1"></i> Customer threshold for bulk approval is set to <span class="red_text ml-1">{{ activeThresholdValue||0 }} Customers</span></h4>
+                 <h4 class="box_text"><i class="fi fi-sr-check-circle blue_text vr_2 mr-1"></i> Customer threshold for bulk approval is set to <span class="blue_text ml-1">{{ activeThresholdValue||0 }} Customers</span></h4>
            </div>
         </div>
         </div>
@@ -749,7 +749,7 @@ of {{ rejectionTotalSize }} rows
                                   <tbody formArrayName="levels">
                                    <tr *ngFor="let level of levelsFormArray.controls; let i = index" [formGroupName]="i">
    
-                                     <td width="10%" class="red_text"><b>{{ level.get('ruleName')?.value }}</b></td>
+                                     <td width="10%" class="blue_text"><b>{{ level.get('ruleName')?.value }}</b></td>
                                      <td width="45%"><b>{{ level.get('ruleDetails.parameterValue')?.value }}</b></td>
    
                                      <td width="45%" class="text-right" colspan="2">
@@ -759,7 +759,7 @@ of {{ rejectionTotalSize }} rows
                                            <mat-radio-button value="amount"></mat-radio-button>
    
                                            <span class="grey_badge ml-2 mr-2 ln_30">
-                                             <span class="red_text p-0 fw-800 no_wrap"><= </span>
+                                             <span class="blue_text p-0 fw-800 no_wrap"><= </span>
                                            </span>
    
                                            <div class="input_field" formGroupName="ruleDetails">

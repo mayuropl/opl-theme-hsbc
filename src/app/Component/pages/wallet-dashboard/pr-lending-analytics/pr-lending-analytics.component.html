@@ -78,10 +78,10 @@
                 <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">
                     ₹ {{(lendingAnalysis?.competition_utilization?? 0) | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}} 
                     <!-- <span  [ngClass]="{
-                        'red_text': lendingAnalysis?.competition_utilization_pct < 0,
+                        'blue_text': lendingAnalysis?.competition_utilization_pct < 0,
                         'green_text': lendingAnalysis?.competition_utilization_pct >= 0
                       }"> {{lendingAnalysis?.competition_utilization_pct | number:'1.2-2'}}%</span> -->
-                      <span class="red_text">{{lendingAnalysis?.competition_utilization_pct | number:numberFormatForPer}}%</span>
+                      <span class="blue_text">{{lendingAnalysis?.competition_utilization_pct | number:numberFormatForPer}}%</span>
                 </h2>
             </div>
         </li>
@@ -94,7 +94,7 @@
                 <h2 class="number_title" [ngClass]="{'skeleton': isLoading}">
                     ₹ {{(lendingAnalysis?.hsbc_utilization?? 0) | number:numberFormat:'en-US'}}{{moneyFormatTableHeader}}
                     <span [ngClass]="{
-                        'red_text': lendingAnalysis?.hsbc_utilization_pct < 0,
+                        'blue_text': lendingAnalysis?.hsbc_utilization_pct < 0,
                         'green_text': lendingAnalysis?.hsbc_utilization_pct >= 0
                       }"> {{(lendingAnalysis?.hsbc_utilization_pct?? 0) | number:numberFormatForPer}}%</span>
                 </h2>
@@ -113,11 +113,11 @@
                             <i class="fi fi-rr-arrow-trend-up green_text" *ngIf="walletTrend.isIncrease"></i>
                         </div>
                         <div class="icon-holder">
-                            <i class="fi fi-rr-arrow-trend-down red_text" *ngIf="!walletTrend.isIncrease"></i>
+                            <i class="fi fi-rr-arrow-trend-down blue_text" *ngIf="!walletTrend.isIncrease"></i>
                         </div>
                      <span [ngClass]="{
                        'green_text': walletTrend.isIncrease,
-                       'red_text': !walletTrend.isIncrease
+                       'blue_text': !walletTrend.isIncrease
                      }">{{walletTrend.changePercent | number:numberFormatForPer}}%</span>
                    </span>
                 </h2>

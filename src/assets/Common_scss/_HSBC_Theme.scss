@@ -64,12 +64,12 @@
   .mat-mdc-raised-button,
   .mat-mdc-outlined-button,
   .mat-mdc-unelevated-button {
-    line-height: 40px;
+    border-radius: 30px;
+    font-size: 12px;
+    padding: 0 10px;
     min-width: 130px;
-    font-size: 14px;
-    // padding: 26px;
+    line-height: 40px;
     font-weight: 500;
-    height: auto;
 
     &.removeBtn {
       line-height: 40px;
@@ -1113,8 +1113,8 @@
     }
 
     &:hover {
-      color: #00847F;
-      background: rgba(207, 233, 232, 0.5) !important;
+      color: #32327F;
+      background:rgb(50, 50, 127, .2) !important;
     }
   }
 

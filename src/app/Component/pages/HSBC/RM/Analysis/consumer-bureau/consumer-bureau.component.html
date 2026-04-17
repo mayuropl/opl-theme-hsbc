@@ -30,7 +30,7 @@
                 </form>
             </div>
         </div>
-            <div *ngIf="notesData.consumerNoteWantToShow && notesData.consumerNote" class="red_text note_text">
+            <div *ngIf="notesData.consumerNoteWantToShow && notesData.consumerNote" class="blue_text note_text">
                 <p><i class="fas fa-exclamation-triangle mr-2"></i><span>Note</span> : {{notesData.consumerNote}}</p>
             </div>
         <div class="page_Details ">
@@ -416,7 +416,7 @@
                                                 <span class="lightred_badge" *ngIf="bureueHstry?.isCibilProcessCompleted === 0">
                                                     Failed
                                                  </span>
-                                                  <i *ngIf="bureueHstry?.isCibilProcessCompleted === 0"  [matTooltip]="'ERR: Bureau Analysis failed due to technical reasons. Kindly retrigger analysis by clicking on the view button.'" class="fas fa-info-circle ml-1 red_text"></i>
+                                                  <i *ngIf="bureueHstry?.isCibilProcessCompleted === 0"  [matTooltip]="'ERR: Bureau Analysis failed due to technical reasons. Kindly retrigger analysis by clicking on the view button.'" class="fas fa-info-circle ml-1 blue_text"></i>
                                             <span class="orange_badge" *ngIf="bureueHstry?.isCibilProcessCompleted !== 1 && bureueHstry?.isCibilProcessCompleted !== 0">
                                                  Pending
                                             </span>

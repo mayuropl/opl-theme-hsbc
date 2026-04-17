@@ -193,7 +193,7 @@
                           class="ml-1" href="javscript:void(0)" (click)="downloadErrorAndNoHits(1,historyData?.fileId)"><i
                           class="fas fa-download green_text" alt="Successful Entries" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_SUCCESS_ENTRY)"></i></a></td>
                         <td class="text-right">{{historyData?.error}} <a class="ml-1" (click)="downloadErrorAndNoHits(2, historyData?.fileId); $event.preventDefault();">
-                            <i class="fas fa-download red_text"></i>
+                            <i class="fas fa-download blue_text"></i>
                             </a>
                         </td>
                         <td class="text-right">
@@ -208,7 +208,7 @@
                               <i class="fas fa-download grey_l_text"></i>
                             </a>
                         </td>
-                          <!-- <td class="text-right">{{historyData?.error}} <a class="ml-1" href=""><i class="fas fa-download red_text"></i></a></td>
+                          <!-- <td class="text-right">{{historyData?.error}} <a class="ml-1" href=""><i class="fas fa-download blue_text"></i></a></td>
                         <td class="text-right">{{historyData?.noHit}} <a class="ml-1" href=""><i class="fas fa-download yellow_text"></i></a></td>
                         <td class="text-right">{{historyData?.dataNotReceived}} <a class="ml-1" href=""><i class="fas fa-download grey_l_text"></i></a></td> -->
                         <td class="text-right"> 
@@ -218,7 +218,7 @@
                             </a>
                         </td> 
                         <td><span class="green_badge"  [ngClass]="{'green_badge': true, 'clickable': historyData?.fileIdStatus === 'Pending', 'disabled': historyData?.fileIdStatus !== 'Pending' }" (click)="Mark_popup(historyData?.fileId, false)">Mark File ID Complete<i *ngIf="historyData?.fileIdStatus !== 'Pending'" class="fas fa-check-circle ml-1"></i></span></td>
-                          <!-- <mat-icon color="warn" class="red_text" (click)="uploadStatusChange(historyData?.fileId, true)" ngbTooltip="Revert">refresh</mat-icon> -->
+                          <!-- <mat-icon color="warn" class="blue_text" (click)="uploadStatusChange(historyData?.fileId, true)" ngbTooltip="Revert">refresh</mat-icon> -->
                         <!-- <td><button mat-icon-button color="warn" (click)="uploadStatusChange(historyData?.fileId, true)" ngbTooltip="Revert"><mat-icon>refresh</mat-icon></button></td> -->
                       </tr>
                       <!-- <tr *ngIf="openedRowIndex === i && prBulkUploadHistory.length>0"> -->
@@ -258,7 +258,7 @@
                                       class="fas fa-download green_text cursor_pointer ml-1" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_SUCCESS_ENTRY)"></i></a></td>
                                     <td data-label="Failed Entries" class="text-right">{{data?.fail}} <a
                                       href="javscript:void(0)" (click)="getDataForMainPrescreen(2,data)"><i
-                                      class="fas fa-download red_text cursor_pointer ml-1" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)"></i></a></td>
+                                      class="fas fa-download blue_text cursor_pointer ml-1" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)"></i></a></td>
                                       <!-- <td class="text-right">{{ data?.fail }}</td> -->
                                     <td data-label="Total Entries" class="text-right">{{data?.totalRows}} <a
                                       href="javscript:void(0)" (click)="getDataForMainPrescreen(3,data)"><i

@@ -5331,9 +5331,9 @@ input[type=checkbox]:checked+label {
     .form_box{
       display: flex;
       align-items: center;
-      border: 1px solid #027D85;
+      border: 1px solid #778ED1;
       height: 40px;
-      color: #027D85;
+      color: #778ED1;
        border-radius: 4px;
       max-width: 140px;
       padding: 10px;
@@ -5351,7 +5351,7 @@ input[type=checkbox]:checked+label {
     }
     .form-control{
       border: 0;
-      color: #027D85;
+      color: #778ED1;
       padding: 0 0 0 10px;
       font-size: 14px;
       font-weight: 500;
@@ -5378,12 +5378,12 @@ input[type=checkbox]:checked+label {
     .theme-green .bs-datepicker-body table td.selected span, 
     .theme-green .bs-datepicker-body table td span[class*=select-]:after, 
     .theme-green .bs-datepicker-body table td[class*=select-] span:after{
-     background: #00847F;
+     background: #778ED1;
      color: #ffffff;
      }
      .bs-datepicker-body table.months td span:hover,
      .bs-datepicker-body table.years td span:hover{
-        background: #00847F !important;
+        background: #778ED1 !important;
         color: #ffffff !important;
      }
      .bs-datepicker-body table.months td.disabled span:hover,

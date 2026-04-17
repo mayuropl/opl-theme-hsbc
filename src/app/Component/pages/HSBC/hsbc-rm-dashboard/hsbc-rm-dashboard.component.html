@@ -37,7 +37,7 @@
                   <span class="left_side">
                   Search Options
                   <button mat-icon-button color="primary" class="ref_icon" (click)="resetAllSearchByFilters()">
-                    <i class="fi fi-br-refresh red_text"></i>
+                    <i class="fi fi-br-refresh blue_text"></i>
                   </button>
                   </span>
                   <button mat-icon-button type="button" (click)="searchByTrigger.closeMenu()">
@@ -257,7 +257,7 @@
                                 <div class="btm_desc">
                                     <div class="left_side">
                                         <h5 class="short_desc">With Risk Flags</h5>
-                                        <h2 class="number_title red_text">{{dashboardSummary?.approved?.withRiskFlags || 0}}</h2>
+                                        <h2 class="number_title blue_text">{{dashboardSummary?.approved?.withRiskFlags || 0}}</h2>
                                     </div>
                                     <div class="divider"></div>
                                     <div class="left_side">
@@ -269,20 +269,20 @@
                         </li>
                         <li class="recon_card_red" [ngClass]="{'active': activeCard === 'rejected'}">
                             <div class="info_btn_desc">
-                                <button mat-icon-button class="matIcon red_text" (click)="getHoDashBroadDataDownloandWithExcel()"><i class="fas fa-download"></i></button>
+                                <button mat-icon-button class="matIcon blue_text" (click)="getHoDashBroadDataDownloandWithExcel()"><i class="fas fa-download"></i></button>
                                 <button mat-icon-button class="matIcon grey_icn" (click)="openPreQulifiedCommonPopup('rejected')"><i class="fas fa-info-circle"></i></button>
                             </div>
                             <div class="tab_wrp recon_card cursor_pointer" (click)="onSummaryCardClick('rejected')" [ngClass]="{'blur-effect': isSummaryLoading}">
                                 <div class="left_side align_side">
-                                    <div class="box_icon red_text">
+                                    <div class="box_icon blue_text">
                                         <i class="fi fi-rr-document-circle-wrong"></i>
                                     </div>
-                                    <h5 class="short_desc ml-2 red_text">Rejected</h5>
+                                    <h5 class="short_desc ml-2 blue_text">Rejected</h5>
                                 </div>
                                 <div class="btm_desc">
                                     <div class="left_side">
                                         <!-- <h5 class="short_desc"></h5> -->
-                                        <h2 class="number_title red_text">{{dashboardSummary?.rejected || 0}}</h2>
+                                        <h2 class="number_title blue_text">{{dashboardSummary?.rejected || 0}}</h2>
                                     </div> 
                                 </div>
                              </div>
@@ -607,18 +607,14 @@
                                                             ngbTooltip="Audit"></em></a>
                                                     <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
                                                         <button ngbDropdownItem
-                                                            (click)="viewTeaser(customer.applicationId,1)"
                                                             ngbTooltip="Audit API">
                                                             API Audit
                                                         </button>
                                                         <button ngbDropdownItem
-                                                            (click)="viewTeaser(customer.applicationId,3)"
-                                                            ngbTooltip="Cibil API"
-                                                            *ngIf="customer.displayName==='Eligible' || customer.displayName==='InProgress'">
+                                                            ngbTooltip="Cibil API">
                                                             Cibil Audit
                                                         </button>
-                                                        <button ngbDropdownItem
-                                                            (click)="viewTrailLog(customer.applicationId)">
+                                                        <button ngbDropdownItem>
                                                             Trail
                                                         </button>
                                                     </div>
@@ -870,7 +866,7 @@
                                             <td data-label="Risk Flag">
                                                 <ng-container *ngIf="customer.breDashboardResList; else elseRisk">
                                                     <a href="javascript:void(0)" class="cursor_pointer"
-                                                       [ngClass]="{'red_text': hasAnyProductRiskFlag(customer.breDashboardResList), 'green_text': !hasAnyProductRiskFlag(customer.breDashboardResList)}"
+                                                       [ngClass]="{'blue_text': hasAnyProductRiskFlag(customer.breDashboardResList), 'green_text': !hasAnyProductRiskFlag(customer.breDashboardResList)}"
                                                        (click)="toggleCollapse(customer.applicationId)">
                                                         {{hasAnyProductRiskFlag(customer.breDashboardResList) ? 'Yes' : 'No'}}
                                                         <i *ngIf="tabValue === 0" class="fas fa-chevron-down ml-1" style="font-size: 10px;"
@@ -920,23 +916,17 @@
                                                             [placement]="['left', 'right','auto']"
                                                             ngbTooltip="Audit"></em></a>
                                                     <div ngbDropdownMenu class="dropdown-menu NP_Drop_Hover">
-                                                        <button ngbDropdownItem
-                                                            (click)="viewTeaser(customer.applicationId,1)">
+                                                        <button ngbDropdownItem>
                                                             API Audit
                                                         </button>
-                                                        <button ngbDropdownItem
-                                                            (click)="getMCAStageAuditData(customer.applicationId,5)"
-                                                            *ngIf="customer.displayName==='Eligible' && customer.isMca">
+                                                        <button ngbDropdownItem>
                                                             MCA Audit
                                                         </button>
                                                         <button ngbDropdownItem
-                                                            (click)="viewTeaser(customer.applicationId,3)"
-                                                            *ngIf="customer.displayName==='Eligible' || customer.displayName==='InProgress'"
                                                             ngbTooltip="Cibil API">
                                                             Cibil Audit
                                                         </button>
-                                                        <button ngbDropdownItem
-                                                            (click)="viewTrailLog(customer.applicationId)">
+                                                        <button ngbDropdownItem>
                                                             Trail
                                                         </button>
                                                     </div>
@@ -976,7 +966,7 @@
                                                                         </ng-container>
                                                                         <ng-template #noLimit>-</ng-template>
                                                                     </td>
-                                                                    <td class="text-center" [ngClass]="{'red_text': breData.isRiskFlag}">
+                                                                    <td class="text-center" [ngClass]="{'blue_text': breData.isRiskFlag}">
                                                                         <strong>{{ breData.isRiskFlag ? 'Yes' : 'No' }}</strong>
                                                                     </td>
                                                                     <td class="text-center">

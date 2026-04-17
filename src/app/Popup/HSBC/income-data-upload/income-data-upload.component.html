@@ -128,7 +128,7 @@
                                 <tbody>
                                         <tr  *ngFor="let data of bulkUploadHistory ;  let i=index">
                                             <td> {{ startIndex + i + 1 }}</td>
-                                            <td>{{ data?.fileName || '-' }} <span> <i *ngIf="data?.uploadStatus === 'FAILED'" class="fas fa-info-circle red_text mr-1" matTooltip="{{data.fileUploadFailureReason}}"></i></span> </td>
+                                            <td>{{ data?.fileName || '-' }} <span> <i *ngIf="data?.uploadStatus === 'FAILED'" class="fas fa-info-circle blue_text mr-1" matTooltip="{{data.fileUploadFailureReason}}"></i></span> </td>
                                             <td>{{ data?.createdDate ? (data?.createdDate | date:'dd MMM yyyy hh:mm:ss') : '-' }}</td>
                                             <td>{{data?.incomeExcelCategory || '-'}}</td>
                                             <td><span [ngClass]="{
@@ -138,7 +138,7 @@
                                              }">{{ data?.uploadStatus || '-' }}</span>
                                             </td>
                                             <td class="text-right">{{ data?.success ?? '-' }} <i *ngIf="data?.success && commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.DOWNLOAD_SUCCESS_ENTRY)" (click)="getData('isSuccess' , data?.id)" class="fas fa-download green_text cursor_pointer ml-1"></i></td>
-                                            <td class="text-right">{{ data?.fail ?? '-' }} <i *ngIf="data?.fail && commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.DOWNLOAD_FAIL_ENTRY)" (click)="getData('isFailed' , data?.id)" class="fas fa-download red_text cursor_pointer ml-1"></i></td>
+                                            <td class="text-right">{{ data?.fail ?? '-' }} <i *ngIf="data?.fail && commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.DOWNLOAD_FAIL_ENTRY)" (click)="getData('isFailed' , data?.id)" class="fas fa-download blue_text cursor_pointer ml-1"></i></td>
                                             <td class="text-right pr-3" >{{ data?.totalRows ?? '-' }} <i *ngIf="data?.totalRows && commonService.isActionAvailable(pageData,consValue.pageMaster.INCOME_DATA_UPLOAD,consValue.PageActions.DOWNLOAD_TOTAL_ENTRY)" (click)="getData('isTotal' , data?.id)" class="fas fa-download black_text cursor_pointer ml-1"></i></td>
                                         </tr>
                                     </tbody>

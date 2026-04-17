@@ -17,7 +17,7 @@
             </div>
             <button type="button" mat-stroked-button="" color="grey" class="btn_design greay_text c_type_btn br_8">
                 Customer Type
-                <span class="ml-1 c_type_text"  [ngClass]="isActive ? 'darkgreen_text' : 'red_text'">
+                <span class="ml-1 c_type_text"  [ngClass]="isActive ? 'blue_text' : 'blue_text'">
                     {{ !customerTypeInActive ? 'ACTIVE' : 'INACTIVE' }}
                   </span>
                 <mat-slide-toggle
@@ -206,7 +206,7 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="validation-error red_text" *ngIf="filter2.json.validationError">{{filter2.json.validationError}}</div>
+                            <div class="validation-error blue_text" *ngIf="filter2.json.validationError">{{filter2.json.validationError}}</div>
                         </div>
                     </div>
 

@@ -44,8 +44,8 @@
                 [disabled]="isDisable">Search</button>
             </div>
           </div>
-          <p class="fetch_text" *ngIf="searchErrMsg.length > 0 && isDisable && searchQuery?.trim().length > 0" class="red_text"> {{ searchErrMsg }} </p>
-          <p class="fetch_text" *ngIf="isFetchingDetails">We are fetching the details... <span class="red_text">please wait</span></p>
+          <p class="fetch_text" *ngIf="searchErrMsg.length > 0 && isDisable && searchQuery?.trim().length > 0" class="blue_text"> {{ searchErrMsg }} </p>
+          <p class="fetch_text" *ngIf="isFetchingDetails">We are fetching the details... <span class="blue_text">please wait</span></p>
         </div>
       </div>
       <div class="page_Details">

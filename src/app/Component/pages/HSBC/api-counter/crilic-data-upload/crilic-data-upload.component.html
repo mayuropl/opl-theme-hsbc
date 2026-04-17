@@ -111,7 +111,7 @@
                                         <td> {{ startIndex + i + 1 }}</td>
                                         <td>{{ data?.fileName }} 
                                             <!-- <span> <i *ngIf="data?.file_upload_failure_reason || data?.failure_reason"
-                                                    class="fas fa-info-circle red_text mr-1"
+                                                    class="fas fa-info-circle blue_text mr-1"
                                                     matTooltip="{{data?.file_upload_failure_reason || data?.failure_reason}}"></i></span>  -->
                                                 </td>
                                         <td>{{ data?.uploadedOn }}</td>
@@ -123,7 +123,7 @@
                                             'lightred_badge': data?.status === 'Failed'
                                         }">{{data?.status || 'Pending'}}</span>
                                             <span *ngIf="data?.status === 'Failed' && (data?.file_upload_failure_reason || data?.failure_reason)">
-                                                <i class="fas fa-info-circle red_text ml-1"
+                                                <i class="fas fa-info-circle blue_text ml-1"
                                                     matTooltip="{{data?.file_upload_failure_reason || data?.failure_reason}}"></i>
                                             </span>
                                         </td>
@@ -132,7 +132,7 @@
                                                 class="fas fa-download green_text cursor_pointer ml-1"></i></td>
                                         <td class="text-right">{{ data?.failedEntries }} <i
                                                 (click)="getData('isFailed' , data?.id ,data?.fileName || data?.file_name)"
-                                                class="fas fa-download red_text cursor_pointer ml-1"></i></td>
+                                                class="fas fa-download blue_text cursor_pointer ml-1"></i></td>
                                         <td class="text-right pr-3">{{ data?.totalEntries }} <i
                                                 (click)="getData('isTotal' , data?.id ,data?.fileName || data?.file_name)"
                                                 class="fas fa-download black_text cursor_pointer ml-1"></i></td>

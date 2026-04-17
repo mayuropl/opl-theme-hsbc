@@ -1197,6 +1197,196 @@ function demoGenericTableRows(n: number) {
   }));
 }
 
+/** Income dashboard: one row matching `IncomeDashboardComponent.mapResponseToModel` API field names. */
+function demoIncomeVisualizationRow(
+  id: string,
+  label: string,
+  nextLevel: string,
+  r1Ic: number,
+  r1Ib: number,
+  r1Ob: number,
+  r2Ic: number,
+  r2Ib: number,
+  r2Ob: number,
+  gIc: number,
+  gIb: number,
+  gOb: number,
+  gTot: number
+) {
+  const r1Tot = Math.round((r1Ic + r1Ib + r1Ob) * 10) / 10;
+  const r2Tot = Math.round((r2Ic + r2Ib + r2Ob) * 10) / 10;
+  return {
+    id,
+    label,
+    nextLevel,
+    range1Incountry: r1Ic,
+    range1Inbound: r1Ib,
+    range1Outbound: r1Ob,
+    range1Total: r1Tot,
+    range2Incountry: r2Ic,
+    range2Inbound: r2Ib,
+    range2Outbound: r2Ob,
+    range2Total: r2Tot,
+    growthInCountry: gIc,
+    growthInBound: gIb,
+    growthOutBound: gOb,
+    growthTotal: gTot,
+  };
+}
+
+function demoIncomeSumTotals(rows: any[]) {
+  if (!rows.length) {
+    return {
+      label: 'Total',
+      range1Incountry: 0,
+      range1Inbound: 0,
+      range1Outbound: 0,
+      range1Total: 0,
+      range2Incountry: 0,
+      range2Inbound: 0,
+      range2Outbound: 0,
+      range2Total: 0,
+      growthInCountry: 0,
+      growthInBound: 0,
+      growthOutBound: 0,
+      growthTotal: 0,
+    };
+  }
+  const z = rows.reduce(
+    (acc, r) => ({
+      range1Incountry: acc.range1Incountry + (Number(r.range1Incountry) || 0),
+      range1Inbound: acc.range1Inbound + (Number(r.range1Inbound) || 0),
+      range1Outbound: acc.range1Outbound + (Number(r.range1Outbound) || 0),
+      range1Total: acc.range1Total + (Number(r.range1Total) || 0),
+      range2Incountry: acc.range2Incountry + (Number(r.range2Incountry) || 0),
+      range2Inbound: acc.range2Inbound + (Number(r.range2Inbound) || 0),
+      range2Outbound: acc.range2Outbound + (Number(r.range2Outbound) || 0),
+      range2Total: acc.range2Total + (Number(r.range2Total) || 0),
+    }),
+    {
+      range1Incountry: 0,
+      range1Inbound: 0,
+      range1Outbound: 0,
+      range1Total: 0,
+      range2Incountry: 0,
+      range2Inbound: 0,
+      range2Outbound: 0,
+      range2Total: 0,
+    }
+  );
+  const pct = (a: number, b: number) => (b === 0 ? 0 : Math.round(((a - b) / b) * 1000) / 10);
+  const round1 = (n: number) => Math.round(n * 10) / 10;
+  return {
+    label: 'Total',
+    range1Incountry: round1(z.range1Incountry),
+    range1Inbound: round1(z.range1Inbound),
+    range1Outbound: round1(z.range1Outbound),
+    range1Total: round1(z.range1Total),
+    range2Incountry: round1(z.range2Incountry),
+    range2Inbound: round1(z.range2Inbound),
+    range2Outbound: round1(z.range2Outbound),
+    range2Total: round1(z.range2Total),
+    growthInCountry: pct(z.range1Incountry, z.range2Incountry),
+    growthInBound: pct(z.range1Inbound, z.range2Inbound),
+    growthOutBound: pct(z.range1Outbound, z.range2Outbound),
+    growthTotal: pct(z.range1Total, z.range2Total),
+  };
+}
+
+function demoIncomeSegmentParentRows(): any[] {
+  return [
+    demoIncomeVisualizationRow('seg-retail', 'Retail Banking', 'GRO', 42.1, 18.4, 9.2, 38.6, 16.9, 8.1, 9.1, 8.9, 13.6, 9.4),
+    demoIncomeVisualizationRow('seg-wpb', 'Wealth & Personal Banking', 'GRO', 31.5, 14.2, 6.8, 29.4, 13.1, 6.2, 7.1, 8.4, 9.7, 8.2),
+    demoIncomeVisualizationRow('seg-global', 'Global Corporates', 'REGION', 88.3, 36.7, 22.4, 81.2, 33.5, 20.1, 8.7, 9.6, 11.4, 9.8),
+    demoIncomeVisualizationRow('seg-commercial', 'Commercial Banking', 'GRO', 55.6, 22.3, 11.0, 51.8, 20.6, 10.2, 7.3, 8.3, 7.8, 7.9),
+    demoIncomeVisualizationRow('seg-markets', 'Markets & Securities Services', 'GRO', 67.2, 28.9, 15.6, 62.5, 26.4, 14.0, 7.5, 9.5, 11.4, 8.6),
+    demoIncomeVisualizationRow('seg-sme', 'SME / Business Banking', 'GRO', 24.8, 10.6, 5.4, 23.1, 9.8, 4.9, 7.4, 8.2, 10.2, 8.1),
+    demoIncomeVisualizationRow('seg-private', 'Private Banking', 'GRO', 19.3, 9.1, 4.2, 18.0, 8.4, 3.9, 7.2, 8.3, 7.7, 7.8),
+  ];
+}
+
+function demoIncomeBusinessLineParentRows(): any[] {
+  return [
+    demoIncomeVisualizationRow('bl-gbm', 'Global Banking & Markets', 'GRO', 72.4, 30.1, 16.2, 67.0, 27.8, 14.5, 8.1, 8.3, 11.7, 8.9),
+    demoIncomeVisualizationRow('bl-wpb', 'Wealth & Personal Banking', 'GRO', 34.2, 15.5, 7.4, 31.6, 14.0, 6.6, 8.2, 10.7, 12.1, 9.4),
+    demoIncomeVisualizationRow('bl-cmb', 'Commercial Banking', 'GRO', 48.9, 19.7, 9.8, 45.2, 18.1, 8.9, 8.2, 8.8, 10.1, 8.6),
+    demoIncomeVisualizationRow('bl-gps', 'Global Payments Solutions', 'GRO', 26.1, 11.4, 5.9, 24.3, 10.6, 5.4, 7.4, 7.5, 9.3, 8.0),
+    demoIncomeVisualizationRow('bl-am', 'Asset Management', 'GRO', 15.6, 6.8, 3.2, 14.4, 6.2, 2.9, 8.3, 9.7, 10.3, 9.1),
+    demoIncomeVisualizationRow('bl-ins', 'Insurance & Other', 'GRO', 9.2, 4.1, 2.0, 8.6, 3.7, 1.8, 7.0, 10.8, 11.1, 8.5),
+  ];
+}
+
+function demoIncomeRegionChildRows(): any[] {
+  return [
+    demoIncomeVisualizationRow('reg-apac', 'Asia Pacific', 'GRO', 28.4, 11.2, 6.8, 26.1, 10.1, 6.0, 8.8, 10.9, 13.3, 9.6),
+    demoIncomeVisualizationRow('reg-emea', 'UK & Europe', 'GRO', 22.1, 9.5, 5.9, 20.4, 8.8, 5.4, 8.3, 8.0, 9.3, 8.4),
+    demoIncomeVisualizationRow('reg-amer', 'Americas', 'GRO', 18.6, 7.8, 4.7, 17.2, 7.2, 4.3, 8.1, 8.3, 9.3, 8.2),
+    demoIncomeVisualizationRow('reg-me', 'Middle East & Africa', 'GRO', 9.2, 4.2, 2.6, 8.5, 3.9, 2.4, 8.2, 7.7, 8.3, 8.0),
+    demoIncomeVisualizationRow('reg-hk', 'Hong Kong', 'GRO', 6.5, 2.9, 1.8, 6.0, 2.7, 1.6, 8.3, 7.4, 12.5, 8.6),
+    demoIncomeVisualizationRow('reg-in', 'India Subcontinent', 'GRO', 3.5, 1.1, 0.6, 3.0, 0.9, 0.5, 16.7, 22.2, 20.0, 17.2),
+  ];
+}
+
+function demoIncomeGroChildRows(): any[] {
+  const rms = ['Alex Morgan', 'Samira Khan', 'Jordan Lee', 'Priya Nair', "Chris O'Neill", 'Mei Tan', 'David Rossi', 'Ana Costa'];
+  return rms.map((name, i) =>
+    demoIncomeVisualizationRow(
+      `gro-${i + 1}`,
+      name,
+      'MASTER_GROUP',
+      8.2 + i * 0.7,
+      3.4 + i * 0.3,
+      1.6 + i * 0.2,
+      7.5 + i * 0.6,
+      3.1 + i * 0.25,
+      1.4 + i * 0.15,
+      8.0 + (i % 3),
+      7.5 + (i % 4),
+      9.0 + (i % 2),
+      8.2 + (i % 5) * 0.3
+    )
+  );
+}
+
+function demoIncomeMasterGroupRows(): any[] {
+  return [
+    demoIncomeVisualizationRow('mg-1', 'Master Group — North', 'MASTER_GROUP', 4.2, 1.8, 0.9, 3.9, 1.6, 0.8, 7.7, 12.5, 12.5, 9.1),
+    demoIncomeVisualizationRow('mg-2', 'Master Group — South', 'MASTER_GROUP', 3.6, 1.5, 0.7, 3.3, 1.4, 0.6, 9.1, 7.1, 16.7, 9.0),
+    demoIncomeVisualizationRow('mg-3', 'Master Group — Key Clients', 'MASTER_GROUP', 5.1, 2.2, 1.1, 4.7, 2.0, 1.0, 8.5, 10.0, 10.0, 8.8),
+  ];
+}
+
+function demoIncomeVisualizationPayload(reqBody?: any): unknown {
+  const level = String(reqBody?.currentLevel || '');
+  const page = Number(reqBody?.page) || 0;
+  const size = Math.max(Number(reqBody?.size) || 5, 1);
+
+  const pageSlice = (rows: any[]) => ({
+    content: rows.slice(page * size, page * size + size),
+    totalElements: rows.length,
+  });
+
+  if (level === 'SEGMENT') {
+    const rows = demoIncomeSegmentParentRows();
+    return { content: pageSlice(rows), totals: demoIncomeSumTotals(rows) };
+  }
+  if (level === 'BUSINESS_LINE') {
+    const rows = demoIncomeBusinessLineParentRows();
+    return { content: pageSlice(rows), totals: demoIncomeSumTotals(rows) };
+  }
+  if (level === 'REGION') {
+    return { content: pageSlice(demoIncomeRegionChildRows()) };
+  }
+  if (level === 'GRO') {
+    return { content: pageSlice(demoIncomeGroChildRows()) };
+  }
+  if (level === 'MASTER_GROUP') {
+    return { content: pageSlice(demoIncomeMasterGroupRows()) };
+  }
+
+  return { content: { content: [], totalElements: 0 }, totals: demoIncomeSumTotals([]) };
+}
+
 function demoPortfolioRequestRows(): any[] {
   return [
     {
@@ -1331,9 +1521,14 @@ function demoMyPortfolioAnnouncementsPage(): any {
     runCIN: `L25200MH1995PLC08596${i}`,
     companyName: `Demo Listed Co ${i}`,
     headline: `Demo corporate headline ${i}`,
+    corporateAction: `Demo corporate headline ${i}`,
+    details: 'Static demo announcement summary.',
+    sourceDate: '2026-02-01T12:00:00',
     announcementDate: '2026-02-01',
     category: 'Regulatory',
+    group: 'Regulatory',
     subcategory: 'RBI',
+    subgroup: 'RBI',
     summary: 'Static demo announcement summary.',
   }));
   return {
@@ -1416,112 +1611,383 @@ function demoUploadHistoryShort(): any[] {
   ];
 }
 
-/** Counterparty rows for portfolio bank-statement analysis (self / supplier / customer tables). */
-function demoPortfolioAnalysisCustRows(): any[] {
-  return [
+/** CRIF Commercial PR — `CrifDataUploadComponent` expects `res.data` = `{ data, totalRecords }`. */
+function demoCrifCommercialPrHistoryPage(): { data: any[]; totalRecords: number } {
+  const base = '2026-03-';
+  const rows = [
     {
-      custId: 'DEMO-CUST-001',
-      pan: 'AABCD1234E',
-      totalAmount: 2500000,
-      totalRows: 3,
-      interactionCount: 12,
+      fileId: 501,
+      fileName: 'commercial_pr_inquiry_batch_001.csv',
+      statusCode: 2,
+      inputDownloadDate: `${base}12T09:15:00`,
+      fileUploadDate: `${base}12T10:42:18`,
+      successEntries: 448,
+      dataNotReceived: 7,
+      totalCustomer: 455,
+      completed: true,
+      fileWiseData: [
+        {
+          id: 9001,
+          fileType: 'Account',
+          createdDate: `${base}12T10:40:02`,
+          stageId: 2,
+          successEntries: 455,
+          failEntries: 0,
+          totalEntries: 455,
+        },
+        {
+          id: 9002,
+          fileType: 'Inquiry',
+          createdDate: `${base}12T10:41:10`,
+          stageId: 2,
+          successEntries: 448,
+          failEntries: 0,
+          totalEntries: 448,
+        },
+        {
+          id: 9003,
+          fileType: 'Summary',
+          createdDate: `${base}12T10:41:55`,
+          stageId: 2,
+          successEntries: 450,
+          failEntries: 0,
+          totalEntries: 450,
+        },
+        {
+          id: 9004,
+          fileType: 'IOI',
+          createdDate: `${base}12T10:42:18`,
+          stageId: 2,
+          successEntries: 440,
+          failEntries: 0,
+          totalEntries: 440,
+        },
+      ],
     },
     {
-      custId: 'DEMO-CUST-002',
-      pan: 'AABCD5678F',
-      totalAmount: 1800000,
-      totalRows: 2,
-      interactionCount: 8,
+      fileId: 502,
+      fileName: 'crif_pr_summary_oct2026_v2.xlsx',
+      statusCode: 2,
+      inputDownloadDate: `${base}11T14:20:00`,
+      fileUploadDate: `${base}11T15:05:33`,
+      successEntries: 312,
+      dataNotReceived: 0,
+      totalCustomer: 312,
+      completed: false,
+      fileWiseData: [
+        {
+          id: 9011,
+          fileType: 'Summary',
+          createdDate: `${base}11T15:05:33`,
+          stageId: 2,
+          successEntries: 312,
+          failEntries: 0,
+          totalEntries: 312,
+        },
+      ],
+    },
+    {
+      fileId: 503,
+      fileName: 'ioi_commercial_registry_20260310.xlsx',
+      statusCode: 1,
+      inputDownloadDate: `${base}10T08:00:00`,
+      fileUploadDate: `${base}10T08:12:44`,
+      successEntries: 0,
+      dataNotReceived: 0,
+      totalCustomer: 0,
+      completed: false,
+      fileWiseData: [
+        {
+          id: 9021,
+          fileType: 'IOI',
+          createdDate: `${base}10T08:12:44`,
+          stageId: 1,
+          successEntries: 0,
+          failEntries: 0,
+          totalEntries: 0,
+        },
+      ],
+    },
+    {
+      fileId: 504,
+      fileName: 'inquiry_mismatch_pr_upload.csv',
+      statusCode: 3,
+      inputDownloadDate: `${base}08T11:30:00`,
+      fileUploadDate: `${base}08T11:45:09`,
+      successEntries: 0,
+      dataNotReceived: 22,
+      totalCustomer: 22,
+      completed: false,
+      fileWiseData: [
+        {
+          id: 9031,
+          fileType: 'Inquiry',
+          createdDate: `${base}08T11:45:09`,
+          stageId: 3,
+          successEntries: 0,
+          failEntries: 22,
+          totalEntries: 22,
+          fileUploadFailureReason: 'Header row did not match CRIF commercial template v3.2.',
+        },
+      ],
+    },
+    {
+      fileId: 505,
+      fileName: 'pr_combined_feed_20260305.zip',
+      statusCode: 2,
+      inputDownloadDate: `${base}05T16:45:00`,
+      fileUploadDate: `${base}05T17:22:01`,
+      successEntries: 1205,
+      dataNotReceived: 14,
+      totalCustomer: 1219,
+      completed: true,
+      fileWiseData: [],
+    },
+    {
+      fileId: 506,
+      fileName: 'account_only_remediation.xlsx',
+      statusCode: 2,
+      inputDownloadDate: `${base}03T10:00:00`,
+      fileUploadDate: `${base}03T10:18:27`,
+      successEntries: 88,
+      dataNotReceived: 2,
+      totalCustomer: 90,
+      completed: false,
+      fileWiseData: [
+        {
+          id: 9041,
+          fileType: 'Account',
+          createdDate: `${base}03T10:18:27`,
+          stageId: 2,
+          successEntries: 88,
+          failEntries: 2,
+          totalEntries: 90,
+        },
+      ],
     },
   ];
+  return { data: rows, totalRecords: rows.length };
+}
+
+function demoCrifCommercialPrInputMasterIds(): { listData: any[] } {
+  return {
+    listData: [
+      { fileId: 601, fileName: 'PR-INPUT-2026-Q1-001 (Full refresh)', reqType: 1 },
+      { fileId: 602, fileName: 'PR-INPUT-2026-Q1-002 (Delta)', reqType: 1 },
+      { fileId: 603, fileName: 'PR-STATUS-WEEK-11', reqType: 2 },
+    ],
+  };
+}
+
+const DEMO_BS_TABLE_ROW_COUNT = 10;
+
+/** Counterparty rows for portfolio bank-statement analysis (self / supplier / customer / opportunity inner tables). */
+function demoPortfolioAnalysisCustRows(): any[] {
+  return Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => {
+    const id = `DEMO-CUST-${String(i + 1).padStart(3, '0')}`;
+    const amt = 2500000 - i * 75000;
+    return {
+      custId: id,
+      cust_id: id,
+      cust_name: `HSBC Demo Customer ${i + 1}`,
+      matched_name: `Matched entity ${i + 1}`,
+      pan: `AAAPN${String(1000 + i)}E`,
+      totalAmount: amt,
+      total_amount: amt,
+      totalRows: 3 + (i % 4),
+      interactionCount: 18 - i,
+    };
+  });
+}
+
+/** One row for Net Self Transfer outer grid (`cust_name`, `net_amount`, `yearWise` for expand). */
+function demoPortfolioNetSelfTransferRow(i: number): any {
+  const net = 880000 - i * 52000;
+  const monthAmount = (m: number) => 12000 + m * 900 + i * 700;
+  return {
+    cust_name: `Net self-transfer customer ${i + 1}`,
+    net_amount: net,
+    pan: `AAAPN${String(1300 + i)}E`,
+    cust_id: `NET-SELF-${500 + i}`,
+    yearWise: [2024, 2025, 2026].map((year) => ({
+      year,
+      monthWise: Array.from({ length: 12 }, (_, m) => ({
+        totalAmount: monthAmount(m),
+        totalCount: null,
+      })),
+    })),
+  };
+}
+
+/**
+ * Expanded-row / pagination child calls (`isSubData: 1`) — shapes must match
+ * `updateChildListByPartyType` (e.g. `opportunityReport.data[0].custIdWise`, not the outer company list).
+ */
+function demoPortfolioAnalysisChildPayload(reqBody: any): any | null {
+  if (Number(reqBody?.isSubData) !== 1) {
+    return null;
+  }
+  const rt = String(reqBody?.reportType ?? '');
+  const sub = String(reqBody?.subDataValue ?? '').trim();
+  const inner = demoPortfolioAnalysisCustRows();
+
+  const mapInner = (perJ: number) =>
+    inner.map((c, j) => {
+      const amt = Math.round(c.totalAmount - j * perJ);
+      return { ...c, totalAmount: amt, total_amount: amt };
+    });
+
+  if (rt === '6') {
+    return {
+      opportunityReport: {
+        data: [{ company_name: sub || 'Opportunity Demo Co 1', custIdWise: mapInner(650) }],
+        totalRows: DEMO_BS_TABLE_ROW_COUNT,
+      },
+    };
+  }
+  if (rt === '4') {
+    return {
+      statutoryReport: {
+        data: [{ category_name: sub || 'GST / TDS', custIdWise: mapInner(520) }],
+      },
+    };
+  }
+  if (rt === '2') {
+    return {
+      supplierList: {
+        counterPartyList: [{ partyName: sub || 'Supplier Demo 1 Pvt Ltd', custIdWise: mapInner(560) }],
+      },
+    };
+  }
+  if (rt === '3') {
+    return {
+      customerList: {
+        counterPartyList: [{ partyName: sub || 'Customer Demo 1 Ltd', custIdWise: mapInner(590) }],
+      },
+    };
+  }
+  if (rt === '1') {
+    const bankName = sub || 'Demo Bank Ltd';
+    return {
+      selfTransfer: {
+        debit: [
+          {
+            bankName,
+            custIdList: mapInner(480),
+            totalRows: DEMO_BS_TABLE_ROW_COUNT,
+            totalAmount: mapInner(480).reduce((s, r) => s + (r.totalAmount ?? 0), 0),
+          },
+        ],
+        credit: [],
+        totalRowsDebit: 1,
+        totalRowsCredit: 0,
+      },
+    };
+  }
+  return null;
 }
 
 function demoPortfolioAnalysisPayload(reqBody: any): any {
+  const childPayload = demoPortfolioAnalysisChildPayload(reqBody);
+  if (childPayload) {
+    return childPayload;
+  }
   const reportType = String(reqBody?.reportType ?? '1');
-  const selfBank = {
-    bankName: 'Demo Bank Ltd',
-    totalAmount: 5000000,
-    totalRows: 2,
-    custIdList: demoPortfolioAnalysisCustRows(),
-  };
   const inner = demoPortfolioAnalysisCustRows();
+  const selfBank = (name: string, amountScale: number) => ({
+    bankName: name,
+    totalAmount: Math.round(5000000 * amountScale),
+    totalRows: DEMO_BS_TABLE_ROW_COUNT,
+    custIdList: inner.map((c, j) => ({
+      ...c,
+      totalAmount: c.totalAmount - j * 12000,
+    })),
+  });
 
   switch (reportType) {
     case '1':
       return {
         selfTransfer: {
-          debit: [selfBank],
-          credit: [{ ...selfBank, bankName: 'Inward Demo Bank', totalAmount: 1200000 }],
-          totalRowsDebit: 1,
-          totalRowsCredit: 1,
+          debit: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) =>
+            selfBank(`Demo portfolio bank ${i + 1}`, Math.max(0.35, 1 - i * 0.045)),
+          ),
+          credit: [selfBank('Inward Demo Bank', 0.55), selfBank('Inward secondary', 0.42)],
+          totalRowsDebit: DEMO_BS_TABLE_ROW_COUNT,
+          totalRowsCredit: 2,
         },
       };
     case '2':
       return {
         supplierList: {
-          totalRows: 1,
-          counterPartyList: [
-            {
-              partyName: 'Supplier Alpha Pvt Ltd',
-              totalRows: 2,
-              totalAmount: 3200000,
-              custIdWise: inner,
-            },
-          ],
+          totalRows: DEMO_BS_TABLE_ROW_COUNT,
+          counterPartyList: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => ({
+            partyName: `Supplier Demo ${i + 1} Pvt Ltd`,
+            totalRows: DEMO_BS_TABLE_ROW_COUNT,
+            totalAmount: 3200000 - i * 90000,
+            custIdWise: inner.map((c, j) => ({
+              ...c,
+              totalAmount: c.totalAmount - i * 5000 - j * 3000,
+            })),
+          })),
         },
       };
     case '3':
       return {
         customerList: {
-          totalRows: 1,
-          counterPartyList: [
-            {
-              partyName: 'Customer Beta Ltd',
-              totalRows: 2,
-              totalAmount: 4100000,
-              custIdWise: inner,
-            },
-          ],
+          totalRows: DEMO_BS_TABLE_ROW_COUNT,
+          counterPartyList: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => ({
+            partyName: `Customer Demo ${i + 1} Ltd`,
+            totalRows: DEMO_BS_TABLE_ROW_COUNT,
+            totalAmount: 4100000 - i * 110000,
+            custIdWise: inner.map((c, j) => ({
+              ...c,
+              totalAmount: c.totalAmount - i * 4000 - j * 2500,
+            })),
+          })),
         },
       };
     case '4':
       return {
         statutoryReport: {
-          data: [
-            {
-              category_name: 'GST / TDS',
-              totalRows: 1,
-              totalAmount: 900000,
-              custIdWise: inner,
-            },
-          ],
+          totalRows: DEMO_BS_TABLE_ROW_COUNT,
+          data: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => ({
+            category_name: i % 2 === 0 ? 'GST / TDS' : 'PF / Statutory',
+            totalRows: DEMO_BS_TABLE_ROW_COUNT,
+            totalAmount: 900000 + i * 45000,
+            custIdWise: inner.map((c, j) => ({
+              ...c,
+              totalAmount: c.totalAmount - i * 2000 - j * 1000,
+            })),
+          })),
         },
       };
     case '5':
       return {
         netSelfTransfer: {
-          data: [
-            {
-              partyName: 'Net Demo Party',
-              totalAmount: 750000,
-              totalRows: 1,
-              custIdWise: inner.slice(0, 1),
-            },
-          ],
+          totalRows: DEMO_BS_TABLE_ROW_COUNT,
+          data: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => demoPortfolioNetSelfTransferRow(i)),
         },
       };
     case '6':
       return {
         opportunityReport: {
-          data: [
-            {
-              company_name: 'Opportunity Demo Co',
-              totalRows: 1,
-              totalAmount: 600000,
-              custIdWise: inner,
-            },
-          ],
-          totalRows: 1,
+          data: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => {
+            const custIdWise = inner.map((c, j) => ({
+              ...c,
+              totalAmount: c.totalAmount - i * 2500 - j * 800,
+              total_amount: c.totalAmount - i * 2500 - j * 800,
+            }));
+            const companyWise = custIdWise.reduce((s, r) => s + (r.totalAmount ?? 0), 0);
+            return {
+              company_name: `Opportunity Demo Co ${i + 1}`,
+              totalRows: DEMO_BS_TABLE_ROW_COUNT,
+              interactions: 14 + (i % 9),
+              company_wise_total_amount: companyWise,
+              totalAmount: 600000 + i * 40000,
+              custIdWise,
+            };
+          }),
+          totalRows: DEMO_BS_TABLE_ROW_COUNT,
         },
       };
     default:
@@ -1531,41 +1997,240 @@ function demoPortfolioAnalysisPayload(reqBody: any): any {
   }
 }
 
+function demoSupplierCustomerNameWise(): any[] {
+  return Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => ({
+    name: `Partner ${i + 1}`,
+    total_amount: 200000 - i * 8000,
+  }));
+}
+
+function demoSupplierCustomerCustBlock(): any[] {
+  const names = demoSupplierCustomerNameWise();
+  return Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, c) => ({
+    cust_id: `DEMO-${200 + c}`,
+    cust_total_rows: DEMO_BS_TABLE_ROW_COUNT,
+    cust_total_amount: 3000000 - c * 90000,
+    nameWise: names.map((n, k) => ({
+      ...n,
+      total_amount: n.total_amount - c * 500 - k * 200,
+    })),
+    cust_name: null,
+    pan: null,
+  }));
+}
+
 /** Supplier/customer nested report — API returns JSON strings in data.supplierList | data.customerList. */
 function demoSupplierCustomerLevelPayload(reqBody: any): any {
   const rt = String(reqBody?.reportType ?? '1');
-  const bankRow = (bank: string) => ({
-    bank,
-    bank_total_rows: 1,
-    bank_total_amount: 5000000,
-    custIdWise: [
-      {
-        cust_id: 'DEMO-CUST-001',
-        cust_total_rows: 2,
-        cust_total_amount: 3000000,
-        nameWise: [
-          { name: 'Partner One', total_amount: 1500000 },
-          { name: 'Partner Two', total_amount: 1500000 },
-        ],
-        cust_name: null,
-        pan: null,
-      },
-    ],
+  const bankRow = (idx: number, label: string) => ({
+    bank: `${label} ${idx + 1}`,
+    bank_total_rows: DEMO_BS_TABLE_ROW_COUNT,
+    bank_total_amount: 8000000 + idx * 250000,
+    custIdWise: demoSupplierCustomerCustBlock().map((cw, c) => ({
+      ...cw,
+      cust_total_amount: cw.cust_total_amount - idx * 10000 - c * 5000,
+    })),
   });
   if (rt === '2') {
     return {
       customerList: JSON.stringify({
-        customerList: [bankRow('Demo Customer Bank')],
-        totalRows: 1,
+        customerList: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => bankRow(i, 'Demo Customer Bank')),
+        totalRows: DEMO_BS_TABLE_ROW_COUNT,
       }),
     };
   }
   return {
     supplierList: JSON.stringify({
-      supplierList: [bankRow('Demo Supplier Bank')],
-      totalRows: 1,
+      supplierList: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => bankRow(i, 'Demo Supplier Bank')),
+      totalRows: DEMO_BS_TABLE_ROW_COUNT,
     }),
   };
+}
+
+function demoBsMonthDetailsOneMonth(seed: number): any {
+  const base = 120000 + seed * 6000;
+  return {
+    snLimit: base * 4,
+    dpLimit: base * 3.5,
+    credits: 18 + (seed % 7),
+    totalCredit: base * 2.2,
+    debits: 14 + (seed % 5),
+    totalDebit: base * 1.8,
+    cashDeposits: 2 + (seed % 4),
+    totalCashDeposit: base * 0.35,
+    cashWithdrawals: 2,
+    totalCashWithdrawal: base * 0.22,
+    chqDeposits: 3,
+    totalChqDeposit: base * 0.4,
+    chqIssues: 2,
+    totalChqIssue: base * 0.25,
+    inwChqBounces: 0,
+    totalInwChqBounce: 0,
+    outwChqBounces: seed % 6 === 0 ? 1 : 0,
+    totalOutwChqBounce: seed % 6 === 0 ? 4000 : 0,
+    debitsSelf: 1,
+    totalDebitSelf: base * 0.12,
+    creditSelf: 1,
+    totalCreditSelf: base * 0.1,
+    debitsSC: 4,
+    totalDebitSC: base * 0.45,
+    creditsSC: 3,
+    totalCreditSC: base * 0.42,
+    overdrawnInstances: 0,
+    overdrawnDays: 0,
+    avgUtilization: 42 + (seed % 20),
+    totalInvExpense: base * 0.02,
+    totalInvIncome: base * 0.03,
+    businessCredit: base * 1.1,
+    emiOrLoans: 2,
+    totalEmiOrLoan: base * 0.18,
+    loanDisbursals: base * 0.05,
+    totalLoanDisbursal: 1,
+    inwChqBouncePercent: 0,
+    outwChqBouncePercent: seed % 6 === 0 ? 0.4 : 0,
+    neftCredits: 12,
+    totalNeftCredit: base * 0.5,
+    neftCreditsDebits: 10,
+    totalNeftDebit: base * 0.48,
+    rtgsCredits: 2,
+    totalRtgsCredit: base * 1.6,
+    rtgsDebits: 1,
+    totalRtgsDebit: base * 1.4,
+    upiCredits: 40,
+    totalUpiCredit: base * 0.15,
+    upiDebits: 35,
+    totalUpiDebit: base * 0.12,
+    balMin: base * 3,
+    balMax: base * 5.5,
+    balAvg: base * 4.2,
+  };
+}
+
+function demoBsMultiGetAnalysisData(): any {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
+  const topRow = (i: number, amountBase: number) => ({
+    date: new Date(2026, 0, 5 + (i % 25)).toISOString(),
+    narration: `Demo counterparty ${i + 1}`,
+    category: 'Trade',
+    modeOfPayment: 'RTGS',
+    amount: amountBase + i * 3500,
+  });
+  return {
+    accountList: [
+      { bankName: 'ICICI Bank', accountNo: '1234567890123', acId: '101', accholderName: 'Demo Account Holder' },
+      { bankName: 'HDFC Bank', accountNo: '9988776655443', acId: '102', accholderName: 'Demo Account Holder' },
+    ],
+    summaryInfo: {
+      name: 'Demo Account Holder',
+      bank: 'ICICI Bank',
+      accountNo: '1234567890123',
+      accountType: 'Current',
+      ifsc: 'ICIC0001234',
+      micr: '400229123',
+      mobile: '+91-9876543210',
+      address: 'Demo Tower, Bandra Kurla Complex, Mumbai',
+      timeperiod: '01-Apr-2025 to 31-Mar-2026',
+      bankBalanceSummary: { balAvg: 652000, balMin: 318000, balMax: 1180000 },
+      creditSummary: { credits: 228, totalCredit: 18250000, totalAvgCredit: 1520000 },
+      debitSummary: { debits: 205, totalDebit: 16080000, totalDebitAvg: 1340000 },
+      bounceDetail: { checkBounceForLast1Month: 1, checkBounceForLast6Month: 3, chequeBounce: 5 },
+    },
+    monthWiseDetails: months.map((m, i) => ({
+      monthName: `${m}-26`,
+      details: demoBsMonthDetailsOneMonth(i),
+    })),
+    topTransaction: {
+      topDebits: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => topRow(i, 95000)),
+      topCredits: Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => topRow(i, 128000)),
+    },
+    eodBalances: {
+      monthWiseEod: months.map((m, idx) => ({
+        monthName: `${m}-26`,
+        eodMondto: {
+          five: 498000 + idx * 800,
+          onefive: 516000 + idx * 800,
+          twofive: 505000 + idx * 800,
+          balMin: 475000 + idx * 500,
+          balMax: 548000 + idx * 500,
+          balAvg: 512000 + idx * 600,
+        },
+      })),
+      dayWiseEod: months.map((m, col) => ({
+        monthYear: `${m}-26`,
+        monthBalance: Array.from({ length: 31 }, (_, d) => ({
+          day: d + 1,
+          balance: 420000 + col * 1800 + d * 420,
+        })),
+      })),
+    },
+  };
+}
+
+function demoBsTxnRows(): any[] {
+  return Array.from({ length: DEMO_BS_TABLE_ROW_COUNT }, (_, i) => ({
+    id: i + 1,
+    date: new Date(2026, 1, 1 + (i % 26)).toISOString(),
+    chqNo: i % 4 === 0 ? String(620000 + i) : '-',
+    narration: `Demo bank narration ${i + 1}`,
+    amount: 22000 + i * 1800,
+    category: i % 2 === 0 ? 'Transfer' : 'Payment',
+    balance: 1180000 - i * 17000,
+    modeOfPayment: 'NEFT',
+    type: i % 3 === 0 ? 'Debit' : 'Credit',
+  }));
+}
+
+/** RM single- and multi-account bank statement analysis (`/bsAnalysis/...`). */
+function demoRmBankStatementAnalysisStaticMocks(u: string, _method: string, reqBody?: any): unknown | undefined {
+  if (u.includes('bsanalysis/multi/getanalysisdata')) {
+    return { status: 200, message: 'OK', data: demoBsMultiGetAnalysisData() };
+  }
+  if (u.includes('bsanalysis/getanalysisdata') && !u.includes('/multi/')) {
+    return { status: 200, message: 'OK', data: demoBsMultiGetAnalysisData() };
+  }
+  if (u.includes('bsanalysis/gettransactiondata')) {
+    const pageIndex = Number(reqBody?.pageIndex ?? 0);
+    const pageSize = Math.max(1, Number(reqBody?.size ?? 10));
+    const all = demoBsTxnRows();
+    const slice = all.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
+    return {
+      status: 200,
+      message: 'OK',
+      data: {
+        content: slice,
+        totalElements: all.length,
+        totalPages: Math.max(1, Math.ceil(all.length / pageSize)),
+        last: pageIndex * pageSize + slice.length >= all.length,
+        first: pageIndex === 0,
+        size: pageSize,
+        number: pageIndex,
+      },
+    };
+  }
+  if (u.includes('bsanalysis/getbouncecheqdata')) {
+    const pageIndex = Number(reqBody?.pageIndex ?? 0);
+    const pageSize = Math.max(1, Number(reqBody?.size ?? 10));
+    const all = demoBsTxnRows().map((r, i) => ({
+      ...r,
+      narration: `Returned — ${r.narration}`,
+      category: 'Cheque bounce',
+    }));
+    const slice = all.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
+    return {
+      status: 200,
+      message: 'OK',
+      data: {
+        content: slice,
+        totalElements: all.length,
+        totalPages: Math.max(1, Math.ceil(all.length / pageSize)),
+        last: pageIndex * pageSize + slice.length >= all.length,
+        first: pageIndex === 0,
+        size: pageSize,
+        number: pageIndex,
+      },
+    };
+  }
+  return undefined;
 }
 
 function demoGstHistoryRows(): any[] {
@@ -1598,6 +2263,1023 @@ function demoGstinListRows(): any[] {
   ];
 }
 
+/** Child Customer ID Mapping grid on RM Existing Portfolio → firm profile (static demo). */
+function demoChildCustomerMappingsForFirmProfile(): any[] {
+  const firstRows = [
+    { parentCustomerId: '002-220032', childCustomerId: '002-220089', childCustomerName: 'Hang Seng Bank Limited' },
+    {
+      parentCustomerId: '002-220033',
+      childCustomerId: '002-220078',
+      childCustomerName: 'Bank Middle East Limited and branches',
+    },
+    { parentCustomerId: '002-220034', childCustomerId: '002-229001', childCustomerName: 'Bank Markets (USA) Inc.' },
+    { parentCustomerId: '002-220035', childCustomerId: '002-220037', childCustomerName: 'Bank Singapore Limited' },
+    {
+      parentCustomerId: '002-220036',
+      childCustomerId: '002-220095',
+      childCustomerName: 'Bank Middle East Limited and branches',
+    },
+  ];
+  const namePool = [
+    'Hang Seng Bank Limited',
+    'Bank Middle East Limited and branches',
+    'Bank Markets (USA) Inc.',
+    'Bank Singapore Limited',
+    'HSBC Bank plc',
+    'HSBC UK Bank plc',
+    'The Hongkong and Shanghai Banking Corporation Limited',
+    'HSBC France SA',
+    'HSBC Innovation Banking Limited',
+  ];
+  const rows = [...firstRows];
+  for (let i = firstRows.length; i < 50; i++) {
+    rows.push({
+      parentCustomerId: `002-${String(220032 + i).padStart(6, '0')}`,
+      childCustomerId: `002-${String(220090 + i * 17).padStart(6, '0')}`,
+      childCustomerName: namePool[i % namePool.length],
+    });
+  }
+  return rows;
+}
+
+function demoRmPortfolioFirmProfile(pan: string, cin: string) {
+  const opt = (name: string, value: string, selected = false) => ({
+    optionName: name,
+    optionValue: value,
+    selected,
+  });
+  return {
+    cin,
+    pan,
+    customerTypeId: 1,
+    tradingNameFromCustomer: 'Acme Manufacturing Pvt Ltd',
+    dateOfIncorporation: '15-Mar-2010',
+    constitution: 'Private Limited',
+    persona: 'SME',
+    noOfEmployees: '250',
+    displayPan: pan,
+    leiNumber: '529900DEMO0000000001',
+    leiExpiry: '31-Dec-2026',
+    activeGSTIN: '27AABCA1111A1Z1',
+    inactiveAndCancelledGSTIN: '—',
+    activeGstInList: ['27AABCA1111A1Z1'],
+    inAtiveGstInList: [],
+    udyamNoCertificate: 'UDYAM-MH-12-0001234',
+    iecNumber: 'IECDEMO01',
+    msme: 'Yes',
+    udyamMsmeStatus: 'Active',
+    udyamCategory: 'Small',
+    udyamFetchDate: null,
+    udhyamCertificateRefId: 'REF-DEMO-1',
+    existingLenders: '3',
+    ratingDate: '01-Nov-2024',
+    ratingAgency: 'CRISIL',
+    creditRatingProxy: [],
+    mcaTurnoverUnit: ' INR Cr',
+    mcaTurnoverFY: ' FY24',
+    agriPSL: 'No',
+    startupPSL: 'No',
+    alertCountData: JSON.stringify({ active: 2, closed: 5 }),
+    timeWithHsbc: '4',
+    cddRating: 'Low',
+    cddReviewDate: '01-Jun-2025',
+    limitReviewDate: '01-Dec-2025',
+    crr: '3.2',
+    latestCreditRating: 'A-',
+    bureauCmrScore: '650',
+    lastApprovalDate: '10-Jan-2025',
+    customerId: 'CUST-1001',
+    rmName: 'Demo RM',
+    efillingStatus: 'Compliant',
+    childCustomers: demoChildCustomerMappingsForFirmProfile(),
+    turnover: [
+      opt('MCA', '125.5', true),
+      opt('GST', '118.0', false),
+    ],
+    industry: [opt('MCA', 'Manufacturing', true), opt('GST', 'Manufacturing', false)],
+    sector: [opt('MCA', 'Industrial Machinery', true), opt('GST', 'Machinery', false)],
+    tradingNames: [opt('MCA', 'Acme Manufacturing Pvt Ltd', true), opt('GST', 'Acme Mfg', false)],
+    businessAddress: [
+      opt('MCA', 'MIDC Industrial Area, Mumbai, Maharashtra 400001', true),
+      opt('GST', 'Same as MCA', false),
+    ],
+    constitutions: [opt('GST', 'Private Limited', true), opt('MCA', 'Private Limited', false)],
+    contactPersonName: [
+      {
+        selectType: 'MCA',
+        contactPersonName: 'Ravi Kumar',
+        mobile: '9876543210',
+        email: 'ravi.kumar@acme-demo.example',
+        selected: true,
+      },
+    ],
+  };
+}
+
+function demoRmPortfolioOpportunity(pan: string, cin: string) {
+  return {
+    cin,
+    pan,
+    hsbcRevenueCurrentYear: 1250.75,
+    hsbcRevenueLastYear: 980.25,
+    hsbcPreApprovedProd: [
+      {
+        applicationId: 9001,
+        eligibilityType: 1,
+        name: 'Working Capital Loan',
+        amount: 5000000,
+        dateOfApproval: '2024-08-12',
+        status: 'Pre-qualified',
+        riskFlag: 'Green',
+        camReport: 'Available',
+      },
+      {
+        applicationId: 9002,
+        eligibilityType: 2,
+        name: 'Export Finance',
+        amount: 2500000,
+        dateOfApproval: '2024-06-01',
+        status: 'In review',
+        riskFlag: 'Amber',
+        camReport: 'Pending',
+      },
+    ],
+    opportunityList: { data: [] },
+    crilcLenderData: [],
+  };
+}
+
+/** MCA-Financial → Standalone (and minimal consolidated) — matches `FinancialDataModel` / firm view tab. */
+function demoRmPortfolioFinancials() {
+  const fy2021 = {
+    salesRevenue: '194763630',
+    grossProfitMarginPer: '20.95',
+    ebitda: '18163800',
+    ebitdaMarginPer: '10.00',
+    operatingProfitMarginPer: '7.56',
+    financeCost: '12873470',
+    depriciation: 8000298.15,
+    profitBeforeTax: '1292180',
+    netProfit: '866460',
+    netWorth: '32193180',
+    longTermBorrowings: '33054900',
+    totalNoncurrentliabilities: '33054900',
+    shortTermborrowing: '55511200',
+    tradePayable: '21817600',
+    totalCurrentLiabilities: '87598900',
+    totalNoncurrentSssets: '49759300',
+    currentInvestments: 'NA',
+    inventories: '38873200',
+    tradeReceivables: '56617100',
+    cashAndCashBalance: '3595940',
+    totalCurrentAssets: '99086240',
+    daysOfSalesOutstanding: 110,
+    payableDays: 43,
+    inventoryDays: 76,
+    cashConversionCycle: 144,
+    interestCoverageRatio: 1.1,
+    netDebitBookEntity: 8.5,
+    netDebitEbitda: 4.68,
+    dscr: 0.16,
+    currentRatio: 1.18,
+  };
+  const fy2022 = {
+    salesRevenue: '249760000',
+    grossProfitMarginPer: '22.54',
+    ebitda: '33497260',
+    ebitdaMarginPer: '14.00',
+    operatingProfitMarginPer: '12.61',
+    financeCost: '9300470',
+    depriciation: 6121099.02,
+    profitBeforeTax: '21137770',
+    netProfit: '15767160',
+    netWorth: '47960330',
+    longTermBorrowings: '5947240',
+    totalNoncurrentliabilities: '5947240',
+    shortTermborrowing: '82878800',
+    tradePayable: '10617500',
+    totalCurrentLiabilities: '105741000',
+    totalNoncurrentSssets: '51305200',
+    currentInvestments: 'NA',
+    inventories: '43179600',
+    tradeReceivables: '49999400',
+    cashAndCashBalance: '9122080',
+    totalCurrentAssets: '102301080',
+    daysOfSalesOutstanding: 76,
+    payableDays: 16,
+    inventoryDays: 65,
+    cashConversionCycle: 125,
+    interestCoverageRatio: 3.27,
+    netDebitBookEntity: 7.97,
+    netDebitEbitda: 2.38,
+    dscr: 0.34,
+    currentRatio: 1.02,
+  };
+  const fy2023 = {
+    salesRevenue: '257740000',
+    grossProfitMarginPer: '15.58',
+    ebitda: '20782800',
+    ebitdaMarginPer: '8.00',
+    operatingProfitMarginPer: '6.64',
+    financeCost: '9077870',
+    depriciation: 8319777.81,
+    profitBeforeTax: '7547120',
+    netProfit: '4635230',
+    netWorth: '52595570',
+    longTermBorrowings: '9718490',
+    totalNoncurrentliabilities: '9718490',
+    shortTermborrowing: '73362300',
+    tradePayable: '14531700',
+    totalCurrentLiabilities: '97074700',
+    totalNoncurrentSssets: '50067500',
+    currentInvestments: 'NA',
+    inventories: '51796700',
+    tradeReceivables: '48689000',
+    cashAndCashBalance: '3454310',
+    totalCurrentAssets: '103940010',
+    daysOfSalesOutstanding: 71,
+    payableDays: 21,
+    inventoryDays: 75,
+    cashConversionCycle: 125,
+    interestCoverageRatio: 1.83,
+    netDebitBookEntity: 7.96,
+    netDebitEbitda: 3.83,
+    dscr: 0.2,
+    currentRatio: 1.13,
+  };
+  const standaloneFinancialYear: Record<string, any> = {
+    '2020-21': fy2021,
+    '2021-22': fy2022,
+    '2022-23': fy2023,
+  };
+  return {
+    nameOfAuditor: 'M P Singh & Associates',
+    gstTurnoverBucket: '257740000',
+    gstTurnoverBucketUnit: 'Rs.',
+    dateOfBalanceSheet: '31 March, 2024',
+    balanceSheetUnit: 'Rs.',
+    profitAndLossUnit: 'Rs. Thousand',
+    gstTurnoverFY: '2022-23',
+    spreadDownloadUrl: '',
+    consolidatedGstTurnoverFY: '2022-23',
+    consolidatedDateOfBalSheet: '31 March, 2024',
+    consolidatedGstTurnoverBucket: '257740000',
+    consolidatedGstTurnoverBucketUnit: 'Rs.',
+    standaloneFinancialYear,
+    consolidatedFinancialYear: { ...standaloneFinancialYear },
+  };
+}
+
+/** Directors & Directors Contact Details (Network tab 1) — field names match `DirectorDetails` / template `directorDetails.name`. */
+function demoDirectorDetailsNetwork(pan: string, cin: string): any[] {
+  const p = pan || 'AABCD1234E';
+  const rows = [
+    {
+      name: 'SUILKARIM MADATHUMPADY ABDULKARIM',
+      contactNo: '9198765722',
+      email: 'sijilkarim@valueingredients.com',
+      din: '07210321',
+    },
+    {
+      name: 'RAHUL GOSWAMI',
+      contactNo: '9199999952',
+      email: 'rgoswami@greenstoneadvisory.com',
+      din: '07210322',
+    },
+    {
+      name: 'THYAGARAJAN KARTHIKEYAN',
+      contactNo: '9198888552',
+      email: '',
+      din: '07210323',
+    },
+    {
+      name: 'MEENAKSHI KARTHIKEYAN',
+      contactNo: '9197777360',
+      email: '',
+      din: '07210324',
+    },
+    {
+      name: 'PARESH SURENDRA THAKKER',
+      contactNo: '9196666200',
+      email: 'pareshthakker@yahoo.com',
+      din: '07210325',
+    },
+  ];
+  return rows.map((r, i) => ({
+    id: i + 1,
+    cin,
+    din: r.din,
+    age: String(48 + i),
+    pan: p,
+    displayPan: p,
+    name: r.name,
+    designation: 'Director',
+    dateOfAppointment: `${10 + i}-Jun-201${5 + i}`,
+    disqualifiedUs164Pdf: '',
+    disqualifiedUs164Din: '',
+    stakePercent: String(8 + i * 2),
+    stakeYear: 'FY24',
+    noOfDirectorships: 2,
+    contactNo: r.contactNo,
+    email: r.email,
+    presentResidentialAddress: 'Mumbai, Maharashtra',
+    directorships: [],
+    isCollapsed: true,
+    bureuFetchDate: '2025-01-15',
+  }));
+}
+
+function demoRmPortfolioNetwork(tabType: number, pan: string, cin: string) {
+  const base: any = { cin, pan };
+  switch (tabType) {
+    case 1:
+      return {
+        ...base,
+        directorDetails: demoDirectorDetailsNetwork(pan, cin),
+        connectedLendingDetails: [
+          {
+            lenderName: 'Demo Bank Ltd',
+            sanctionedAmount: '₹ 8 Cr',
+            outstanding: '₹ 5 Cr',
+            dateOfReport: '2024-12-01',
+          },
+        ],
+        customData: {},
+      };
+    case 2:
+      return {
+        ...base,
+        shareholding: [
+          { name: 'Promoter Group', stakePercent: 62.5 },
+          { name: 'Public Float', stakePercent: 37.5 },
+        ],
+        shareHoldingYear: 'FY2024',
+        detailedShareholdingProxies: [
+          { FY: 'FY2024', shareholderName: 'Acme Holdings Pvt Ltd', shareholdingPercent: 45.0 },
+          { FY: 'FY2024', shareholderName: 'Retail & Others', shareholdingPercent: 55.0 },
+        ],
+        relatedEntities: [
+          { Relation_Source: 'Subsidiary', entityName: 'Acme Logistics Pvt Ltd', pan: 'AABCL9999K' },
+          { Relation_Source: 'Parent', entityName: 'Acme Global Ltd', pan: 'AABCG8888J' },
+        ],
+      };
+    case 4:
+      return {
+        ...base,
+        industryPeers: [
+          { peerName: 'Peer Alpha Ltd', revenue: 150, metricLabel: 'Revenue (Cr)' },
+          { peerName: 'Peer Beta Ltd', revenue: 98, metricLabel: 'Revenue (Cr)' },
+        ],
+      };
+    case 5:
+      return {
+        ...base,
+        counterparties: {
+          top5ExportParties: [{ name: 'Export Buyer EU', amount: 1200000 }],
+          top5ImportParties: [{ name: 'Import Supplier APAC', amount: 980000 }],
+        },
+        topFiveBuyersList: [{ name: 'Buyer One', amount: 500000 }],
+        topFiveSalesList: [{ name: 'Sales Channel A', amount: 750000 }],
+        counterpartiesFromBs: {
+          bankDetailsListRes: {
+            topFundsReceipts: [],
+            topFundPayments: [],
+          },
+        },
+      };
+    default:
+      return { ...base, directorDetails: [], connectedLendingDetails: [] };
+  }
+}
+
+function demoRmPortfolioAlerts(tabType: number, pan: string, cin: string) {
+  /** Jan–Dec 2024: risk score timeline uses y-axis 0–4 (No Risk → Critical), not 0–100. */
+  const riskAlertMonthLabels = [
+    'Jan 24',
+    'Feb 24',
+    'Mar 24',
+    'Apr 24',
+    'May 24',
+    'Jun 24',
+    'Jul 24',
+    'Aug 24',
+    'Sep 24',
+    'Oct 24',
+    'Nov 24',
+    'Dec 24',
+  ];
+  const riskTimeLineGraph12 = riskAlertMonthLabels.map((displayValue, i) => ({
+    displayValue,
+    percentage: [0.08, 0.92, 1.18, 1.48, 1.88, 2.38, 3.52, 3.62, 3.48, 3.38, 3.12, 2.98][i],
+  }));
+  const severityTimelineGraph12 = riskAlertMonthLabels.map((month, i) => {
+    const t = i / 11;
+    return {
+      month,
+      lowAlert: Math.round(1 + 1 * t),
+      mediumAlert: Math.round(1 + 2 * t),
+      highAlert: Math.round(1 + 6 * t),
+      criticalAlert: Math.round(1 + 8 * t),
+    };
+  });
+  severityTimelineGraph12[11] = {
+    month: 'Dec 24',
+    lowAlert: 2,
+    mediumAlert: 3,
+    highAlert: 7,
+    criticalAlert: 9,
+  };
+  const categoryTimelineGraph12 = riskAlertMonthLabels.map((month, i) => ({
+    month,
+    'Credit&Financial': 2 + (i % 4),
+    Opportunity: 1 + ((i + 1) % 3),
+    'Business&Operations': 1 + (i % 2),
+    'Legal&Compliance': i % 4 === 0 ? 1 : 0,
+    Regulatory: (i % 3) + 1,
+    Reputation: i % 2,
+    'Media&News': i % 5 === 0 ? 1 : 0,
+  }));
+  if (tabType === 0) {
+    return {
+      activeAlertCountWithStatus: {
+        pending: 12,
+        submitted: 1,
+        complete: 2,
+        totalRemarks: 15,
+      },
+      activeAlertCountWithType: {
+        'NCLT Cases': 12,
+        'Defaulter List': 2,
+        'AML Sanctions': 1,
+        'Bureau Default': 1,
+      },
+      riskScoreGraph: { percentage: 75 },
+      riskTimeLineGraph: riskTimeLineGraph12,
+      severityTimelineGraph: severityTimelineGraph12,
+      categoryTimelineGraph: categoryTimelineGraph12,
+      categoryWiseAlert: [
+        { displayValue: 'Credit & Financial', count: 7, typeId: 1 },
+        { displayValue: 'Opportunity', count: 5, typeId: 2 },
+        { displayValue: 'Business & Operations', count: 3, typeId: 3 },
+        { displayValue: 'Legal & Compliance', count: 3, typeId: 4 },
+        { displayValue: 'Regulatory', count: 2, typeId: 5 },
+      ],
+      severityWiseAlert: [
+        { displayValue: 'Low', count: 10, typeId: 1 },
+        { displayValue: 'Medium', count: 4, typeId: 2 },
+        { displayValue: 'High', count: 1, typeId: 3 },
+        { displayValue: 'Severe', count: 5, typeId: 4 },
+      ],
+      alertsCount: '20',
+    };
+  }
+  const nf = {
+    id: 1,
+    CIN: cin,
+    Score: '620',
+    Date: '2024-11-20',
+    Subject: 'Demo alert: periodic compliance review',
+    URL: '',
+    Type: 'Regulatory',
+    Comment: 'Static demo row — no backend call.',
+    actionRequired: false,
+    actionedClosed: false,
+    ragStatus: false,
+    isActionRequired: false,
+    isActionedClosed: false,
+    alertModuleMasterName: 'Compliance  ',
+    alertModuleMasterId: 1,
+    alertParameterMasterId: 1,
+    category: 'Legal&Compliance',
+    categoryId: 4,
+    status: 1,
+    pan,
+    severity: 'Medium',
+    severityId: 2,
+    alertCategoryMasterList: [],
+    alertSeverityMasterList: [],
+    submittedRemark: '',
+    submittedByName: '',
+    submittedDate: null as any,
+    completedRemark: '',
+    completedByName: '',
+    completedDate: null as any,
+  };
+  return {
+    nonFinancialData: [nf, { ...nf, id: 2, Subject: 'Demo alert: cashflow variance', Type: 'Financial' }],
+    alertCategoryMasterList: [
+      { id: 0, type: 'All' },
+      { id: 1, type: 'Credit&Financial' },
+      { id: 4, type: 'Legal&Compliance' },
+    ],
+    alertSeverityMasterList: [
+      { id: 0, type: 'All' },
+      { id: 1, type: 'Low' },
+      { id: 2, type: 'Medium' },
+      { id: 3, type: 'High' },
+    ],
+    activeAlertCount: '2',
+    inActiveAlertCount: '14',
+  };
+}
+
+function demoRmPortfolioViewMcaTabDetails(reqBody: any) {
+  const pan = String(reqBody?.pan ?? 'AABCD1234E');
+  const cin = String(reqBody?.cin ?? 'L25200MH1995PLC085963');
+  const tab = String(reqBody?.tabType ?? 'FIRM_PROFILE').toUpperCase();
+  if (tab === 'OPPORTUNITY') {
+    return { status: 200, message: 'OK', data: demoRmPortfolioOpportunity(pan, cin) };
+  }
+  if (tab === 'FINANCIALS') {
+    return { status: 200, message: 'OK', data: demoRmPortfolioFinancials() };
+  }
+  return { status: 200, message: 'OK', data: demoRmPortfolioFirmProfile(pan, cin) };
+}
+
+function demoRmPortfolioViewNetworkDetails(reqBody: any) {
+  const pan = String(reqBody?.pan ?? 'AABCD1234E');
+  const cin = String(reqBody?.cin ?? 'L25200MH1995PLC085963');
+  const tab = Number(reqBody?.tabType ?? 1);
+  return { status: 200, message: 'OK', data: demoRmPortfolioNetwork(tab, pan, cin) };
+}
+
+function demoRmPortfolioViewAlertsDetails(reqBody: any) {
+  const pan = String(reqBody?.pan ?? 'AABCD1234E');
+  const cin = String(reqBody?.cin ?? 'L25200MH1995PLC085963');
+  const tab = Number(reqBody?.tabType ?? 0);
+  return { status: 200, message: 'OK', data: demoRmPortfolioAlerts(tab, pan, cin) };
+}
+
+function demoRmPortfolioViewApiAuditList() {
+  return {
+    status: 200,
+    message: 'OK',
+    data: [
+      { apiId: 1, apiName: 'MCA Company Master', status: 'Success' },
+      { apiId: 2, apiName: 'GST Returns', status: 'Success' },
+      { apiId: 3, apiName: 'CRILC Summary', status: 'Success' },
+      { apiId: 4, apiName: 'Bureau CMR', status: 'Success' },
+    ],
+  };
+}
+
+function demoRmPortfolioViewOrderFinancialStatus() {
+  return { status: 200, message: 'OK', data: { status: 'Success', apiName: 'MCA Order Financial' } };
+}
+
+function demoRmPortfolioCrilcLendersResponse() {
+  return {
+    status: 200,
+    message: 'OK',
+    totalCount: 1,
+    data: [
+      {
+        calendar_year: 2024,
+        month_name: 'November',
+        months: {
+          data: {
+            count: 3,
+            existing_banks: ['HSBC', 'Demo Bank A'],
+            included_banks: ['New Lender X'],
+            excluded_banks: ['Old Bank Y'],
+          },
+        },
+      },
+    ],
+  };
+}
+
+/** HSBC API Audit Log (`/get_audit_data`) — `HSBCAPIAuditLogComponent` reads `response.data.data`. */
+function demoHsbcGetAuditDataResponse(reqBody?: any) {
+  const pan = String(reqBody?.pan ?? 'AABCD1234E');
+  const reqDemo = JSON.stringify({ pan, source: 'static-demo' });
+  const resDemo = JSON.stringify({ status: 'SUCCESS', demo: true });
+  const baseRow = (i: number, name: string, status: string, http: string) => ({
+    applicationId: `DEMO-APP-${1000 + i}`,
+    refId: `DEMO-REF-${i}`,
+    name,
+    apiName: name,
+    description: `Static demo audit row ${i} for ${name}`,
+    createdDate: `2026-04-${String(17 - i).padStart(2, '0')} 1${i}:30:00`,
+    status,
+    statusCode: http,
+    serverIp: '10.0.0.12',
+    httpCode: http,
+    request: reqDemo,
+    response: resDemo,
+  });
+  const rows = [
+    {
+      ...baseRow(1, 'UDYAM_MASTER', 'SUCCESS', '200'),
+      totalEntries: 12,
+    },
+    { ...baseRow(2, 'GST_PROFILE', 'SUCCESS', '200') },
+    { ...baseRow(3, 'MCA_COMPANY_MASTER', 'SUCCESS', '200') },
+    { ...baseRow(4, 'CRISIL_AGGREGATION', 'SUCCESS', '200'), refType: 'PAN', refValue: pan },
+    { ...baseRow(5, 'SAVE_RISK_SEARCH', 'FAILED', '500') },
+  ];
+  return {
+    status: 200,
+    message: 'OK',
+    data: {
+      data: rows,
+    },
+  };
+}
+
+/** CCN ids aligned with `getSummaryDetailsByEximId` demo payload for peer / product sorting. */
+const DEMO_EXIM_SHIPPER_CCNS = [20101, 20102];
+const DEMO_EXIM_CONSIGNEE_CCNS = [10101, 10102];
+
+function demoEximMonthlyAnalysis(): any[] {
+  const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+  return months.map((month, i) => ({
+    month,
+    numberOfShipments: 2 + (i % 5),
+    shipmentValue: 15000 + i * 4000,
+  }));
+}
+
+function demoEximFYearResList(): any[] {
+  return [
+    {
+      financialYear: '2023-2024',
+      totalNumberOfShipments: 80,
+      totalShipmentValue: 520000,
+      eximMonthlyAnalysis: demoEximMonthlyAnalysis(),
+    },
+    {
+      financialYear: '2022-2023',
+      totalNumberOfShipments: 72,
+      totalShipmentValue: 445000,
+      eximMonthlyAnalysis: demoEximMonthlyAnalysis(),
+    },
+  ];
+}
+
+function demoEximWalletYearRows(): any[] {
+  return [
+    {
+      financialYear: '2023-24',
+      totalExportWalletSum: 250000,
+      totalExport: 1000000,
+      totalImportWalletSum: 180000,
+      totalImport: 720000,
+    },
+    {
+      financialYear: '2022-23',
+      totalExportWalletSum: 200000,
+      totalExport: 880000,
+      totalImportWalletSum: 150000,
+      totalImport: 650000,
+    },
+  ];
+}
+
+function demoEximMappingLine(i: number, ccnId: number): any {
+  return {
+    name: `Demo party ${i}`,
+    noOfShipments: 20 + i * 3,
+    valueUsd: 125000 + i * 15000,
+    address: `${100 + i} Industrial Area, Mumbai`,
+    ccnId,
+    hsnData: [{ hsnCode: '84713000', description: 'Portable automatic data processing machines' }],
+  };
+}
+
+function demoEximBuyerSellerPeerRow(tab: 'buyer' | 'seller', idx: number): any {
+  const ccnList = tab === 'buyer' ? DEMO_EXIM_SHIPPER_CCNS : DEMO_EXIM_CONSIGNEE_CCNS;
+  return {
+    buyerName: tab === 'buyer' ? `Global consignee ${idx}` : `Global shipper ${idx}`,
+    totalShipmentValue: 350000 - idx * 20000,
+    address: `${idx} Harbour View, Singapore`,
+    mappingDataList: [
+      demoEximMappingLine(1, ccnList[0]),
+      demoEximMappingLine(2, 99999),
+      demoEximMappingLine(3, 88888),
+    ],
+  };
+}
+
+function demoEximProductPeerRow(kind: 'export' | 'import', idx: number): any {
+  const c1 = {
+    ccnId: kind === 'export' ? DEMO_EXIM_SHIPPER_CCNS[0] : DEMO_EXIM_CONSIGNEE_CCNS[0],
+    name: 'Acme Manufacturing Pvt Ltd',
+    totalNoOfShipment: 120,
+    totalShipmentValue: 280000,
+    address: 'SEZ Unit 12, Chennai',
+  };
+  const c2 = {
+    ccnId: 77777,
+    name: 'Peer Industries Ltd',
+    totalNoOfShipment: 95,
+    totalShipmentValue: 210000,
+    address: 'Plot 4, Pune',
+  };
+  const totalValueUsd = c1.totalShipmentValue + c2.totalShipmentValue;
+  return {
+    hsnCode: `84713${idx}`,
+    description:
+      kind === 'export' ? 'Automatic data-processing machines and units thereof' : 'Electronic integrated circuits',
+    totalValueUsd,
+    customerShare: 12.5 + idx,
+    companyDataList: [c1, c2],
+  };
+}
+
+function demoEximExportImportRow(overrides: Record<string, unknown>): any {
+  return {
+    buyerName: 'Demo Global Trading LLC',
+    country: 'United States',
+    address: '100 Commerce Ave, New York, NY',
+    parentCompany: 'Demo Parent Holdings',
+    parentCompanyAddress: '1 Canary Wharf, London',
+    dunsId: '987654321',
+    isHsbcPresence: true,
+    hsbcBanking: 'Active',
+    walletShareLast3M: '28.5%',
+    eximId: 10001,
+    mappingId: 9001,
+    isCollapsed: true,
+    eximFYearResList: demoEximFYearResList(),
+    ...overrides,
+  };
+}
+
+function demoEximCountryExposureRows(tabId: number): any[] {
+  const isExport = tabId === 12;
+  return [
+    {
+      countryName: isExport ? 'United States' : 'China',
+      sanctionStatus: 'Blank',
+      totalNumberOfShipments: 240,
+      totalShipmentValue: 890000,
+      exposurePercent: 32.5,
+    },
+    {
+      countryName: isExport ? 'Germany' : 'Viet Nam',
+      sanctionStatus: 'Selective Sanctions',
+      totalNumberOfShipments: 120,
+      totalShipmentValue: 410000,
+      exposurePercent: 18.2,
+    },
+  ];
+}
+
+/**
+ * Structured payloads for `RmEximAnalysisViewComponent` (summary, wallets, import/export, peers, HSN, anchor search).
+ * Returns `undefined` when the URL is not one of these EXIM analysis APIs (other `/exim/` routes keep generic mocks).
+ */
+function demoEximAnalysisStaticMocks(u: string, _method: string, reqBody?: any): unknown | undefined {
+  const tabId = Number(reqBody?.tabId);
+
+  if (u.includes('getsummarydetailsbyeximid')) {
+    return {
+      status: 200,
+      message: 'OK',
+      data: {
+        eximId: 10001,
+        pan: 'AABCD1234E',
+        companyName: 'Acme Manufacturing Pvt Ltd',
+        address: 'Mumbai, Maharashtra, India',
+        reportFetchedDate: '2026-04-17T10:30:00',
+        consigneeCompanyCcnIdList: [...DEMO_EXIM_CONSIGNEE_CCNS],
+        shipperCompanyCcnIdList: [...DEMO_EXIM_SHIPPER_CCNS],
+      },
+      listData: [
+        {
+          financial_year_start: '2023-24',
+          totalExportSum: 1200000,
+          totalImportSum: 800000,
+          totalEximSum: 2000000,
+        },
+        {
+          financial_year_start: '2022-23',
+          totalExportSum: 950000,
+          totalImportSum: 700000,
+          totalEximSum: 1650000,
+        },
+      ],
+    };
+  }
+
+  if (u.includes('exim-internal-data/analysis-data')) {
+    return { status: 200, message: 'OK', data: demoEximWalletYearRows() };
+  }
+
+  if (u.includes('geteximwalletdata')) {
+    return { status: 200, message: 'OK', data: demoEximWalletYearRows() };
+  }
+
+  if (u.includes('getimportexportanalysis')) {
+    const importRows = [
+      demoEximExportImportRow({
+        buyerName: 'Shanghai Components Ltd',
+        country: 'China',
+        mappingId: 9101,
+        walletShareLast3M: '19%',
+      }),
+      demoEximExportImportRow({
+        buyerName: 'Hanoi Packaging Co',
+        country: 'Viet Nam',
+        mappingId: 9102,
+        eximId: 10001,
+      }),
+    ];
+    const exportRows = [
+      demoEximExportImportRow({
+        buyerName: 'Atlantic Retail Corp',
+        country: 'United States',
+        mappingId: 9201,
+      }),
+      demoEximExportImportRow({
+        buyerName: 'EU Foods SA',
+        country: 'Germany',
+        mappingId: 9202,
+        isHsbcPresence: false,
+        hsbcBanking: 'Prospect',
+      }),
+    ];
+    const rows = tabId === 1 ? importRows : exportRows;
+    return { status: 200, message: 'OK', listData: rows, data: rows.length };
+  }
+
+  if (u.includes('getsamebuyersellerpeer')) {
+    const peers =
+      tabId === 4
+        ? [demoEximBuyerSellerPeerRow('buyer', 1), demoEximBuyerSellerPeerRow('buyer', 2)]
+        : [demoEximBuyerSellerPeerRow('seller', 1), demoEximBuyerSellerPeerRow('seller', 2)];
+    return { status: 200, message: 'OK', listData: peers, data: peers.length };
+  }
+
+  if (u.includes('getproductimportexportpeer')) {
+    const products =
+      tabId === 6
+        ? [demoEximProductPeerRow('export', 0), demoEximProductPeerRow('export', 1)]
+        : [demoEximProductPeerRow('import', 0), demoEximProductPeerRow('import', 1)];
+    return { status: 200, message: 'OK', listData: products, data: products.length };
+  }
+
+  if (u.includes('get-new-buyer-seller')) {
+    const rows =
+      tabId === 8
+        ? [
+            {
+              buyerName: 'Prospect export buyer Alpha',
+              totalNumberOfShipments: 44,
+              totalShipmentValue: 188000,
+              address: 'Phase 2, MIDC, Pune',
+            },
+            {
+              buyerName: 'Prospect export buyer Beta',
+              totalNumberOfShipments: 31,
+              totalShipmentValue: 142000,
+              address: 'SIDCO Industrial Estate, Chennai',
+            },
+          ]
+        : [
+            {
+              buyerName: 'Prospect import seller Gamma',
+              totalNumberOfShipments: 58,
+              totalShipmentValue: 256000,
+              address: 'NH-8, Gurgaon',
+            },
+            {
+              buyerName: 'Prospect import seller Delta',
+              totalNumberOfShipments: 22,
+              totalShipmentValue: 98000,
+              address: 'EM Bypass, Kolkata',
+            },
+          ];
+    return { status: 200, message: 'OK', listData: rows, data: rows.length };
+  }
+
+  if (u.includes('get-anchor')) {
+    return {
+      status: 200,
+      message: 'OK',
+      listData: [
+        { name: 'Demo Anchor Global Ltd', ccn_id: 50001 },
+        { name: 'Second Anchor Corp', ccn_id: 50002 },
+      ],
+      data: 2,
+    };
+  }
+
+  if (u.includes('get-ccn-anchor')) {
+    return {
+      status: 200,
+      message: 'OK',
+      listData: [
+        { nameOfCompetitor: 'Indian Logistics Pvt Ltd', ccnId: 20101, noOfShipment: 88, shipmentValue: 265000 },
+        { nameOfCompetitor: 'Coastal Traders Ltd', ccnId: 20102, noOfShipment: 62, shipmentValue: 198000 },
+      ],
+      data: 2,
+    };
+  }
+
+  if (u.includes('get-country-exposure')) {
+    const rows = demoEximCountryExposureRows(tabId);
+    const response =
+      tabId === 12
+        ? {
+            exportSanctionPercentage: '4.1',
+            exportSelectiveSanctionPercentage: '2.3',
+            totalExportSanctionValue: 12000,
+            totalExportSelectiveSanctionValue: 8000,
+          }
+        : {
+            importSanctionPercentage: '3.5',
+            importSelectiveSanctionPercentage: '1.8',
+            totalImportSanctionValue: 9000,
+            totalImportSelectiveSanctionValue: 5000,
+          };
+    return { status: 200, message: 'OK', listData: rows, data: rows.length, response };
+  }
+
+  if (u.includes('getsearchbyproduct')) {
+    const payload = {
+      searchByProductId: 88001,
+      buyerName: 'Demo buyer network (search)',
+      totalNumberOfShipments: 150,
+      totalShipmentValue: 420000,
+      address: 'Sector 18, Gurgaon',
+      mappingDataList: [
+        {
+          name: 'Peer One Ltd',
+          noOfShipments: 60,
+          valueUsd: 180000,
+          address: 'Ahmedabad',
+          hsnData: [{ hsnCode: '8471', qty: '1' }],
+        },
+        {
+          name: 'Peer Two Ltd',
+          noOfShipments: 45,
+          valueUsd: 120000,
+          address: 'Indore',
+          hsnData: [{ hsnCode: '8517', qty: '2' }],
+        },
+      ],
+    };
+    return {
+      status: 200,
+      message: 'OK',
+      listData: [JSON.stringify(payload)],
+      data: 1,
+    };
+  }
+
+  if (u.includes('geteximcountrymasterlist')) {
+    return {
+      status: 200,
+      message: 'OK',
+      data: [
+        { countryName: 'India', countryCode: 'IN' },
+        { countryName: 'United States', countryCode: 'US' },
+        { countryName: 'China', countryCode: 'CN' },
+        { countryName: 'Germany', countryCode: 'DE' },
+        { countryName: 'Singapore', countryCode: 'SG' },
+      ],
+    };
+  }
+
+  if (u.includes('gethsncodebyeximid')) {
+    return {
+      status: 200,
+      message: 'OK',
+      data: {
+        exportHsnData: [
+          { code: '84713000', description: 'Portable automatic data-processing machines' },
+          { code: '85176200', description: 'Machines for reception, conversion and transmission of voice/data' },
+        ],
+        importHsnData: [{ code: '85423100', description: 'Processors and controllers, whether or not with memory' }],
+      },
+    };
+  }
+
+  if (u.includes('get-hsn-code')) {
+    return {
+      status: 200,
+      message: 'OK',
+      data: [
+        { code: '84713000', description: 'Portable automatic data-processing machines', value: 125000 },
+        { code: '84714900', description: 'Other automatic data-processing machines', value: 98000 },
+      ],
+    };
+  }
+
+  if (u.includes('download-country-exposure')) {
+    return {
+      status: 200,
+      message: 'OK',
+      data: 'RGVtbw==',
+      fileName: 'CountryExposure_demo.xlsx',
+    };
+  }
+
+  return undefined;
+}
+
 function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown | undefined {
   const ok = (data: unknown, extra: Record<string, unknown> = {}) => ({
     status: 200,
@@ -1605,6 +3287,56 @@ function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown
     data,
     ...extra,
   });
+
+  if (u.includes('getmcatabdetails')) {
+    return demoRmPortfolioViewMcaTabDetails(reqBody);
+  }
+  if (u.includes('getmcanetworktabdetais')) {
+    return demoRmPortfolioViewNetworkDetails(reqBody);
+  }
+  if (u.includes('getalertstabdetais')) {
+    return demoRmPortfolioViewAlertsDetails(reqBody);
+  }
+  if (u.includes('getapiauditdata')) {
+    return demoRmPortfolioViewApiAuditList();
+  }
+  if (u.includes('get_audit_data')) {
+    return demoHsbcGetAuditDataResponse(reqBody);
+  }
+  if (u.includes('getstatusfororderfinancial')) {
+    return demoRmPortfolioViewOrderFinancialStatus();
+  }
+  if (u.includes('get-crilc-lender-details')) {
+    return demoRmPortfolioCrilcLendersResponse();
+  }
+  if (u.includes('corporate-announcements/stats')) {
+    return [
+      {
+        group: 'Results',
+        totalCount: 5,
+        subgroups: [
+          { subgroup: 'Quarterly Results', count: 3 },
+          { subgroup: 'Annual Report', count: 2 },
+        ],
+      },
+      {
+        group: 'AGM / EGM',
+        totalCount: 2,
+        subgroups: [{ subgroup: 'AGM Notice', count: 2 }],
+      },
+      {
+        group: 'Corporate Actions',
+        totalCount: 1,
+        subgroups: [{ subgroup: 'Dividend', count: 1 }],
+      },
+    ];
+  }
+  if (u.includes('corporate-announcements/categories/all')) {
+    return ['All', 'Results', 'AGM / EGM', 'Corporate Actions', 'Insider Trading'];
+  }
+  if (u.includes('corporate-announcements/categories/subcategories')) {
+    return ['Board Meeting', 'Dividend', 'Quarterly Results', 'Annual Report'];
+  }
 
   if (u.includes('getportfolioinitdata')) {
     return ok({
@@ -1757,9 +3489,6 @@ function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown
     return ok({ content: [], totalElements: 0 });
   }
 
-  if (u.includes('corporate-announcements/stats')) {
-    return ok({ total: 17, byCategory: { Regulatory: 8, Credit: 4, Other: 5 } });
-  }
   if (u.includes('corporate-announcements/fetch') || u.includes('corporate-announcements/fetchfiltered')) {
     return ok({
       content: demoMyPortfolioAnnouncementsPage().content,
@@ -1773,12 +3502,6 @@ function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown
   }
   if (u.includes('corporate-announcements/subscription/')) {
     return ok({ saved: true });
-  }
-  if (u.includes('corporate-announcements/categories/all')) {
-    return ok([{ id: 1, name: 'Regulatory' }, { id: 2, name: 'Credit' }]);
-  }
-  if (u.includes('corporate-announcements/categories/subcategories')) {
-    return ok([{ id: 10, name: 'RBI' }, { id: 11, name: 'SEBI' }]);
   }
 
   if (u.includes('filter/top-bar/getcitylocationpincode')) {
@@ -1835,11 +3558,21 @@ function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown
     return ok(demoUploadHistoryShort());
   }
 
+  const bsAnalysisDemo = demoRmBankStatementAnalysisStaticMocks(u, method, reqBody);
+  if (bsAnalysisDemo !== undefined) {
+    return bsAnalysisDemo;
+  }
+
   if (u.includes('bsanalysis/')) {
     return ok(demoUploadHistoryShort());
   }
   if (u.includes('prescreen/')) {
     return ok(demoUploadHistoryShort());
+  }
+
+  const eximAnalysisMock = demoEximAnalysisStaticMocks(u, method, reqBody);
+  if (eximAnalysisMock !== undefined) {
+    return eximAnalysisMock;
   }
 
   if (u.includes('/exim/') || u.includes('eximdashboard/') || u.includes('exim-internal-data/')) {
@@ -1848,6 +3581,12 @@ function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown
 
   if (u.includes('commercial/cibil') || u.includes('consumer/cibil')) {
     return ok(demoUploadHistoryShort());
+  }
+  if (u.includes('crif-commercial-pr/history')) {
+    return ok(demoCrifCommercialPrHistoryPage());
+  }
+  if (u.includes('crif-commercial-pr/input-master-ids')) {
+    return ok(demoCrifCommercialPrInputMasterIds());
   }
   if (u.includes('commercial/crif') || u.includes('crif-commercial-pr')) {
     return ok(demoUploadHistoryShort());
@@ -1963,9 +3702,16 @@ function extraStaticDemoMocks(u: string, method: string, reqBody?: any): unknown
   }
 
   if (u.includes('insta/finance/getdirectorcontact')) {
-    return ok([{ name: 'Director One', phone: '+91-9000000001' }]);
+    // Component assigns `directorDetails.contactNo = response.data` (full number for `maskContactNo`).
+    return ok('+919876543210');
   }
 
+  if (u.includes('income-dashboard/filter-options')) {
+    return ok({ years: ['2026', '2025', '2024', '2023'] });
+  }
+  if (u.includes('income-dashboard/visualization')) {
+    return ok(demoIncomeVisualizationPayload(reqBody));
+  }
   if (u.includes('income-dashboard/')) {
     return ok(demoGenericTableRows(6));
   }

@@ -132,7 +132,7 @@
                           'lightred_badge': file?.stage_id === 3
                       }">{{getStatus(file?.stage_id)}}</span>
                       <span *ngIf="file?.stage_id === 3 && file?.file_upload_failure_reason"> 
-                        <i class="fas fa-info-circle red_text ml-1" 
+                        <i class="fas fa-info-circle blue_text ml-1" 
                            matTooltip="{{file.file_upload_failure_reason}}"></i>
                       </span>
                     </td>
@@ -144,7 +144,7 @@
                     </td>
                     <td>{{ file.fail_entries ?? '-' }} 
                       <i *ngIf="file.fail_entries" (click)="getData(2,CibilDownloadUrls.DOWNLOAD_INPUTFILE_DATA,file?.id,'Error-Count-Entries-File-Data')" 
-                         class="fas fa-download red_text cursor_pointer ml-1"></i>
+                         class="fas fa-download blue_text cursor_pointer ml-1"></i>
                     </td>
                     <td>{{ file.total_entries ?? '-' }} 
                       <i *ngIf="file.total_entries" (click)="getData(3,CibilDownloadUrls.DOWNLOAD_INPUTFILE_DATA,file?.id,generateFileName(file?.id),'xlsx')" 
@@ -180,7 +180,7 @@
                                   'lightred_badge': sub?.stage_id === 3
                                 }">{{getStatus(sub?.stage_id)}}</span>
                                 <span *ngIf="sub?.stage_id === 3 && sub?.file_upload_failure_reason"> 
-                                  <i class="fas fa-info-circle red_text ml-1" 
+                                  <i class="fas fa-info-circle blue_text ml-1" 
                                      matTooltip="{{sub.file_upload_failure_reason}}"></i>
                                 </span>
                               </td>
@@ -190,7 +190,7 @@
                               </td>
                               <td data-label="Failed Entries">{{ sub.fail_entries }} 
                                 <i (click)="getData(2,CibilDownloadUrls.DOWNLOAD_INPUTFILE_DATA,sub?.file_id,'Fail-Entries-File-Data')" 
-                                   class="fas fa-download red_text"></i>
+                                   class="fas fa-download blue_text"></i>
                               </td>
                               <td data-label="Total Entries">{{ sub.total_entries }}
                                 <i (click)="getData(3,CibilDownloadUrls.DOWNLOAD_INPUTFILE_DATA,sub?.file_id,'Total-Entries-File-Data')" 

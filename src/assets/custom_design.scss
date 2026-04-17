@@ -18,10 +18,10 @@ mat-icon {
 .max-h-150{
     max-height: 150px !important;
 }
-.red_text {
+.blue_text {
     color: #32327F !important;
 }
-.lightred_text {
+.lightblue_text {
     color: rgba(219, 0, 17, .5) !important;
 }
 .text-secondary {
@@ -488,7 +488,7 @@ button.matIcon {
         font-size: 12px;
         padding: 0 10px;
         min-width: 130px;
-        line-height: 30px;
+        line-height: 35px;
         font-weight: 500;
         @media(max-width: 1300px){
             font-size: 12px;   
@@ -2047,8 +2047,8 @@ button.matIcon {
                 font-weight: 600;
                 color: #ffffff;
                 position: absolute;
-                background: #00847F !important;
-                border: 1px solid #00847F;
+                background: #32327F !important;
+                border: 1px solid #32327F;
                 text-align: left;
                 display: flex;
                 align-items: center;
@@ -2135,7 +2135,7 @@ button.matIcon {
     }
     &.mat-mdc-slide-toggle-checked{
         .mdc-label{
-        color: #00847F;
+        color: #32327F;
         }
     }
     &.mat-mdc-slide-toggle {
@@ -2152,8 +2152,8 @@ button.matIcon {
                 font-weight: 600;
                 color: #ffffff;
                 position: absolute;
-                background: #00847F !important;
-                border: 1px solid #00847F;
+                background: #32327F !important;
+                border: 1px solid #32327F;
                 text-align: left;
                 display: flex;
                 align-items: center;
@@ -4802,11 +4802,7 @@ transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
     font-size: 14px;
     font-weight: 500;
     font-style: italic;
-    .btn_design{
-        min-width: 80px;
-        font-size: 14px;
-        font-weight: 400;
-    }
+  
   }
 //   Risk Dashbord tab css E
 .custom_date_select{

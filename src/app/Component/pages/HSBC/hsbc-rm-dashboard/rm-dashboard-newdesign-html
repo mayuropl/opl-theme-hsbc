@@ -13,8 +13,8 @@
                     [matMenuTriggerFor]="menu">Add New Customer<mat-icon>expand_more</mat-icon></button>
                 <mat-menu #menu="matMenu" xPosition="before">
                     <!-- <button mat-menu-item color="primary" (click)="AddBusinessPANPopup()">Add single User</button> -->
-                    <button mat-menu-item color="primary" [routerLink]="'/hsbc/Bulk-Upload'">Bulk Upload</button>
-                    <button mat-menu-item color="primary" (click)="redirectToBorrowerModule()">Individual
+                    <button mat-menu-item color="primary">Bulk Upload</button>
+                    <button mat-menu-item color="primary">Individual
                         Entry</button>
                 </mat-menu>
             </div>

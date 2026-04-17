@@ -163,7 +163,7 @@
                       <td class="text-right">{{audit.successCount+audit?.uploadFailedCount+audit?.validationFailedCount || '-'}}</td>
                       <td class="text-right pr-3">
                         <button mat-icon-button class="matIcon red_icn" [disabled]="audit.uploadFailedCount == null || audit.uploadFailedCount == 0" color="primary" (click)="retryUpload(audit.uuid)">
-                          <i class="fas fa-redo red_text"></i>
+                          <i class="fas fa-redo blue_text"></i>
                         </button>
                     </tr>
                   }

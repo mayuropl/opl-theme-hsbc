@@ -128,7 +128,7 @@
                     <ng-container *ngIf="bulkUploadHistory">
                       <tr *ngFor="let historyData of bulkUploadHistory; let i=index">
                         <td data-label="Sr. No."> {{ startIndex + i + 1 }}</td>
-                        <td data-label="File Name">{{historyData?.file_name}} <span> <i class="fas fa-info-circle red_text mr-1" matTooltip="{{historyData?.failure_reason}}" *ngIf="historyData?.stage_id == 5"></i>
+                        <td data-label="File Name">{{historyData?.file_name}} <span> <i class="fas fa-info-circle blue_text mr-1" matTooltip="{{historyData?.failure_reason}}" *ngIf="historyData?.stage_id == 5"></i>
                        </span> </td>
                         <td data-label="Uploaded On">{{historyData?.created_date |
                           date:'dd MMM yyyy hh:mm:ss'}}</td>
@@ -154,7 +154,7 @@
                           {{ historyData?.fail_entries }}
                           <i *ngIf="historyData?.fail_entries > 0 && !isDownloading(historyData?.file_id, 1)"
                              (click)="getData('isFailed', historyData?.file_id, historyData?.file_name)"
-                             class="fas fa-download red_text cursor_pointer ml-1"
+                             class="fas fa-download blue_text cursor_pointer ml-1"
                              matTooltip="Download Failed Entries">
                           </i>
                           <mat-spinner *ngIf="isDownloading(historyData?.file_id, 1)" 

@@ -73,10 +73,10 @@
               <tbody>
               <ng-container *ngFor="let file of bulkUploadHistory; let i = index">
                 <tr>
-                  <td>{{file?.fileName}} <span><i *ngIf="file?.statusCode === 3" class="fas fa-info-circle red_text mr-1" matTooltip="{{file.fileUploadFailureReason}}"></i></span></td>
+                  <td>{{file?.fileName}} <span><i *ngIf="file?.statusCode === 3" class="fas fa-info-circle blue_text mr-1" matTooltip="{{file.fileUploadFailureReason}}"></i></span></td>
                   <td>{{file.createdDate | date:'dd MMM yyyy HH:mm:ss'}}</td>
                   <td data-label="Successful Entries">{{ file.successEntries ?? '-' }} <i *ngIf="file.successEntries" (click)="getData(2, CrifDownloadUrls.DOWNLOAD_UPLOADEDCUSTOMER_DATA, file?.fileId, 'Success-Entries-File-Data')" class="fas fa-download green_text"></i></td>
-                  <td data-label="Failed Entries">{{ file.failEntries ?? '-'}} <i *ngIf="file.failEntries" (click)="getData(3, CrifDownloadUrls.DOWNLOAD_UPLOADEDCUSTOMER_DATA, file?.fileId, 'Fail-Entries-File-Data')" class="fas fa-download red_text"></i></td>
+                  <td data-label="Failed Entries">{{ file.failEntries ?? '-'}} <i *ngIf="file.failEntries" (click)="getData(3, CrifDownloadUrls.DOWNLOAD_UPLOADEDCUSTOMER_DATA, file?.fileId, 'Fail-Entries-File-Data')" class="fas fa-download blue_text"></i></td>
                   <td data-label="Total Entries">{{ file.totalEntries ?? '-'}}<i *ngIf="file.totalEntries" (click)="getData(1, CrifDownloadUrls.DOWNLOAD_UPLOADEDCUSTOMER_DATA, file?.fileId, 'Total-Entries-File-Data')" class="fas fa-download grey_text"></i></td>
                 </tr>
               </ng-container>

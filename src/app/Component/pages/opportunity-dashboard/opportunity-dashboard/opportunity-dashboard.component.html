@@ -43,7 +43,7 @@
                                         <button type="button" mat-icon-button class="ref_icon" color="primary"
                                             (click)="resetCampaignAndPmNameFilter()"
                                             [disabled]="isApplyAndResetButtonDisabled(selectedMenuCampaigns) && isApplyAndResetButtonDisabled(selectedMenuPmNames)"><i
-                                                class="fi fi-br-refresh red_text"></i></button>
+                                                class="fi fi-br-refresh blue_text"></i></button>
                                     </span>
 
                                     <button mat-icon-button class="ref_icon" type="button"
@@ -237,7 +237,7 @@
                                         </div>
                                     </div>
                                     <div class="right_desc" *ngIf="!isAllCampaignData(campaign.campaignId)">
-                                        <span class="red_text">{{getDaysText(campaign.dueDays)}}</span>
+                                        <span class="blue_text">{{getDaysText(campaign.dueDays)}}</span>
                                     </div>
                                 </div>
                                 <div class="btm-content">
@@ -362,7 +362,7 @@
                                         Search Options
                                         <button type="button" mat-icon-button class="ref_icon" color="primary"
                                             (click)="resetAllFilters()" [disabled]="isResetDisabled()"><i
-                                                class="fi fi-br-refresh red_text"></i></button>
+                                                class="fi fi-br-refresh blue_text"></i></button>
                                     </span>
                                     <button mat-icon-button type="button" (click)="searchByTrigger2.closeMenu()">
                                         <i class="fi fi-br-cross-small"></i>
@@ -618,12 +618,12 @@
                         </mat-menu>
                     </div>
                     <!-- <button mat-stroked-button class="btn_design white_bg" color="primary" (click)="assignTargetPopup()">
-                        <i class="fi fi-sr-file-export mr-1 red_text vr_2"></i> Assign Tareget
+                        <i class="fi fi-sr-file-export mr-1 blue_text vr_2"></i> Assign Tareget
                     </button> -->
                     <button
                         *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.ETB_CAMPAIGN_DASHBOARD,consValue.PageActions.EXPORT)"
                         mat-stroked-button class="btn_design white_bg" color="primary" (click)="opExportPopup()">
-                        <i class="fi fi-sr-file-export mr-1 red_text vr_2"></i> Export
+                        <i class="fi fi-sr-file-export mr-1 blue_text vr_2"></i> Export
                     </button>
                 </div>
             </div>

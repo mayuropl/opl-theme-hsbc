@@ -2,14 +2,14 @@
     <div class="card_box w-100">
         <div class="title_chart">
             <div class="lef_desc">
-                <h2><i class="fi fi-rr-box-open red_text mr-1"></i> Comparison Analysis</h2>
+                <h2><i class="fi fi-rr-box-open blue_text mr-1"></i> Comparison Analysis</h2>
             </div>
             <div class="right_desc">
                 <button *ngIf="selectedViewBy === 'Customer'"  mat-stroked-button class="btn_design white_bg" color="primary" (click)="CreateCampaignPopup()">
                     <i class="fas fa-plus mr-1"></i> Create Campaign 
                 </button>
                 <button *ngIf="commonService.isActionAvailable(pageData,consValue.pageMaster.PR_DASHBOARD,consValue.PageActions.COMPARISON_EXCEL_DOWNLOAD)" mat-stroked-button class="btn_design greay_text ln_40 ml-1" color="grey" (click)="excelDownloadProductLevel()">
-                    <i class="fi fi-sr-file-export mr-1 red_text"></i> Export
+                    <i class="fi fi-sr-file-export mr-1 blue_text"></i> Export
                 </button>
             </div>
         </div>

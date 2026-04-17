@@ -1,6 +1,6 @@
 <div class="box_design">
     <div class="top_filter_toogle">
-        <h3>Customer Type <span [ngClass]="isActive ? 'darkgreen_text' : 'red_text'">{{ isActive ? 'ACTIVE' : 'INACTIVE'
+        <h3>Customer Type <span [ngClass]="isActive ? 'darkgreen_text' : 'blue_text'">{{ isActive ? 'ACTIVE' : 'INACTIVE'
                 }}</span></h3>
         <mat-slide-toggle class="sliderToggle_design2" [(ngModel)]="isActive"
             (change)="onToggle($event)"></mat-slide-toggle>

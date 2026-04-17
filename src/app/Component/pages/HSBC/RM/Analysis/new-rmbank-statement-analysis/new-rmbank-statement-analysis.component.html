@@ -40,7 +40,7 @@
                     }
                 </div>
                 <div class="page_Title_Right">
-                    <button mat-flat-button color="primary" class="" (click)="onRefresh()">
+                    <button mat-flat-button color="primary" class="">
                         <i class="fas fa-sync-alt mr-1"></i> Refresh</button>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                                         {{bankStatementHistory.dateOfReport | date:'d MMM,y'}}</td>
                                     <td data-label="Action">
                                         <button [placement]="['left', 'right','auto']" ngbTooltip="View" mat-icon-button
-                                            class="matIcon skyblue_icn" (click)="navigateToView(bankStatementHistory)">
+                                            class="matIcon skyblue_icn" >
                                             <em class="fa fa-eye"></em>
                                             <!-- <mat-icon [svgIcon]="'visibility_Icon'"></mat-icon> -->
                                         </button>

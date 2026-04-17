@@ -78,7 +78,7 @@
                         <span class="left_side">
                           Search Options
                           <button mat-icon-button color="primary" class="ref_icon" (click)="resetAllSearchByFilters()">
-                            <i class="fi fi-br-refresh red_text"></i>
+                            <i class="fi fi-br-refresh blue_text"></i>
                           </button>
                         </span>
                         <button mat-icon-button type="button" (click)="searchByTrigger.closeMenu()">
@@ -179,7 +179,7 @@
 
               <!-- <button *ngIf="isNewFilter" type="button" mat-stroked-button="" color="grey" class="btn_design greay_text">
                 Customer Type 
-                <span class="ml-1"  [ngClass]="isCustomerTypeActive ? 'darkgreen_text' : 'red_text'">
+                <span class="ml-1"  [ngClass]="isCustomerTypeActive ? 'darkgreen_text' : 'blue_text'">
                   {{ !isCustomerTypeInActiveForSage ? 'ACTIVE' : 'INACTIVE' }}
                 </span>
                 <mat-slide-toggle
@@ -195,7 +195,7 @@
               <button *ngIf="isNewFilter" type="button" mat-stroked-button="" color="grey" class="btn_design greay_text" (click)="saveFilterPopup()">
                 <i class="fas fa-save mr-1 grey_text"></i> Save Filter
               </button>
-              <button mat-stroked-button class="btn_design white_bg" color="primary" [disabled]="isProcessing" *ngIf="isActionAvail(constants.PageActions.EXPORT)" (click)="onExportExcelPopup()"><i class="fi fi-sr-file-export mr-1 vr_2 red_text"></i>Export</button>
+              <button mat-stroked-button class="btn_design white_bg" color="primary" [disabled]="isProcessing" *ngIf="isActionAvail(constants.PageActions.EXPORT)" (click)="onExportExcelPopup()"><i class="fi fi-sr-file-export mr-1 vr_2 blue_text"></i>Export</button>
               <button *ngIf="isNewFilter" mat-flat-button color="primary" class="white_text" (click)="openAdvancedFilter()">
                 <i class="fi fi-rr-settings-sliders mr-1"></i> Filter
               </button>
@@ -1026,7 +1026,7 @@
                         <td data-label="Sr.No" class="text-center">{{ (inCorporationStartIndex)+($index+1) }}</td>
                         <td data-label="PAN"><span class="skyblue_badge">{{corporation?.cin || '-'}}</span></td>
                         <td data-label="Name Of Customer">{{corporation?.company || '-'}}</td>
-                        <td data-label="Persona" class="red_text">{{corporation?.city || '-'}}</td>
+                        <td data-label="Persona" class="blue_text">{{corporation?.city || '-'}}</td>
 
                         <td data-label="Persona">{{corporation?.state || '-'}}</td>
                          <td data-label="Persona" >{{corporation?.dateOfIncorporation || '-'}}</td>
@@ -1106,7 +1106,7 @@
 
               <!-- <button *ngIf="isNewFilter" type="button" mat-stroked-button="" color="grey" class="btn_design greay_text">
                 Customer Type 
-                <span class="ml-1"  [ngClass]="isCustomerTypeActiveNewFdi ? 'darkgreen_text' : 'red_text'">
+                <span class="ml-1"  [ngClass]="isCustomerTypeActiveNewFdi ? 'darkgreen_text' : 'blue_text'">
                   {{ !isCustomerTypeInActiveForNewFdi ? 'ACTIVE' : 'INACTIVE' }}
                 </span>
                 <mat-slide-toggle
@@ -1123,7 +1123,7 @@
                 <i class="fas fa-save mr-1 grey_text"></i> Save Filter
               </button>
               <button mat-stroked-button class="btn_design white_bg" color="primary" [disabled]="isProcessing" (click)="onExportExcelPopupByTotalSize(fdiTotalSize, 'FDI')" *ngIf="isActionAvail(constants.PageActions.EXPORT)" >
-                  <i class="fi fi-sr-file-export mr-1 vr_2 red_text"></i>Export</button>
+                  <i class="fi fi-sr-file-export mr-1 vr_2 blue_text"></i>Export</button>
               <button *ngIf="isNewFilter" mat-flat-button color="primary" class="white_text" (click)="openAdvancedFilter()">
                 <i class="fi fi-rr-settings-sliders mr-1"></i> Filter
               </button>
@@ -1671,7 +1671,7 @@
 
               <!-- <button *ngIf="isNewFilter" type="button" mat-stroked-button="" color="grey" class="btn_design greay_text">
                 Customer Type 
-                <span class="ml-1"  [ngClass]="isCustomerTypeActiveNewOdi ? 'darkgreen_text' : 'red_text'">
+                <span class="ml-1"  [ngClass]="isCustomerTypeActiveNewOdi ? 'darkgreen_text' : 'blue_text'">
                   {{ !isCustomerTypeInActiveForNewOdi ? 'ACTIVE' : 'INACTIVE' }}
                 </span>
                 <mat-slide-toggle
@@ -1688,7 +1688,7 @@
                 <i class="fas fa-save mr-1 grey_text"></i> Save Filter
               </button>
               <button mat-stroked-button class="btn_design white_bg" color="primary" [disabled]="isProcessing" *ngIf="isActionAvail(constants.PageActions.EXPORT)" (click)="onExportExcelPopupByTotalSize(odiTotalSize, 'ODI')"><i
-                  class="fi fi-sr-file-export mr-1 vr_2 red_text"></i>Export</button>
+                  class="fi fi-sr-file-export mr-1 vr_2 blue_text"></i>Export</button>
               <button *ngIf="isNewFilter" mat-flat-button color="primary" class="white_text" (click)="openAdvancedFilter()">
                 <i class="fi fi-rr-settings-sliders mr-1"></i> Filter
               </button>
@@ -2241,7 +2241,7 @@
 
               <!-- <button *ngIf="isNewFilter" type="button" mat-stroked-button="" color="grey" class="btn_design greay_text">
                 Customer Type 
-                <span class="ml-1"  [ngClass]="isCustomerTypeActiveNewEcb ? 'darkgreen_text' : 'red_text'">
+                <span class="ml-1"  [ngClass]="isCustomerTypeActiveNewEcb ? 'darkgreen_text' : 'blue_text'">
                   {{ !isCustomerTypeInActiveForNewEcb ? 'ACTIVE' : 'INACTIVE' }}
                 </span>
                 <mat-slide-toggle
@@ -2258,7 +2258,7 @@
                 <i class="fas fa-save mr-1 grey_text"></i> Save Filter
               </button>
               <button mat-stroked-button class="btn_design white_bg" color="primary" [disabled]="isProcessing" *ngIf="isActionAvail(constants.PageActions.EXPORT)" (click)="onExportExcelPopupByTotalSize(ecbTotalSize, 'ECB')"><i
-                  class="fi fi-sr-file-export mr-1 vr_2 red_text"></i>Export</button>
+                  class="fi fi-sr-file-export mr-1 vr_2 blue_text"></i>Export</button>
               <button *ngIf="isNewFilter" mat-flat-button color="primary" class="white_text" (click)="openAdvancedFilter()">
                 <i class="fi fi-rr-settings-sliders mr-1"></i> Filter
               </button>

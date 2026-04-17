@@ -99,7 +99,7 @@
                               class="fas fa-download green_text cursor_pointer ml-1" alt="Successful Entries"  *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_SUCCESS_ENTRY)"></i></a></td>
                         <td data-label="Failed Entries" class="text-right">{{custMastUploadhistoryData?.failedEntries}} <a
                             href="javscript:void(0)" (click)="getData(2,custMastUploadhistoryData?.mstId)" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)"><i
-                              class="fas fa-download red_text cursor_pointer ml-1" alt="Failed Entries"></i></a></td>
+                              class="fas fa-download blue_text cursor_pointer ml-1" alt="Failed Entries"></i></a></td>
                         <td data-label="Total Entries" class="text-right pr-3">{{custMastUploadhistoryData?.totalEntries}} <a
                             href="javscript:void(0)" (click)="getData(3,custMastUploadhistoryData?.mstId)" *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_TOTAL_ENTRY)"><i
                               class="fas fa-download grey_l_text cursor_pointer ml-1" alt="Total Entries"></i></a></td>

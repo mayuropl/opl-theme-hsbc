@@ -1934,7 +1934,7 @@ protected readonly consValue = Constants;
 
   redirectToExisitingPortfolio() {
     history.state.routerData.selectedTabIndex = 1;
-    this.router.navigate(['hsbc/rmExisitingPortfolioView'], {
+    this.router.navigate(['/hsbc/rmExisitingPortfolioView'], {
       state: { data: history.state.dataFrom, routerData: history.state.routerData },
     });
   }

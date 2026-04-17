@@ -188,7 +188,7 @@
                           }">
                               {{ item?.status || '-' }}
                           </span>
-                          <i *ngIf="item?.status === 'FAILED'" class="fa fa-info-circle mr-1 red_text ml-1" [ngbTooltip]="item?.error_remark"></i>
+                          <i *ngIf="item?.status === 'FAILED'" class="fa fa-info-circle mr-1 blue_text ml-1" [ngbTooltip]="item?.error_remark"></i>
                         </td>
                         <td>
                           <a *ngIf="item?.audit_type === 'Match File' && item?.status === 'COMPLETED' "

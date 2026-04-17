@@ -28,7 +28,7 @@ export class OpAuditLogPopupComponent implements OnInit {
 
   getStatusValue(campaignData: any) {
     if (campaignData?.convertRejectStatus == 'Rejected') {
-      return 'red_text';
+      return 'blue_text';
     } else if (campaignData?.convertRejectStatus == 'Converted') {
       return 'darkgreen_text';
     } else if (campaignData?.convertRejectStatus == 'Work In Progress') {

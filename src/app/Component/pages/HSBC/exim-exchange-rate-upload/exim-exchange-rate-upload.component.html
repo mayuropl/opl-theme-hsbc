@@ -185,7 +185,7 @@
                         <tr *ngFor="let historyData of bulkUploadHistory; let i=index">
                           <td data-label="Sr. No."> {{ startIndex + i + 1 }}</td>
                           <td data-label="File Name">{{historyData?.fileName}}
-                            <span> <i class="fas fa-info-circle red_text mr-1" matTooltip="{{historyData?.fileUploadFailureReason}}" *ngIf="historyData?.status == 0"></i>
+                            <span> <i class="fas fa-info-circle blue_text mr-1" matTooltip="{{historyData?.fileUploadFailureReason}}" *ngIf="historyData?.status == 0"></i>
                             </span>
                           </td>
                           <td><span [ngClass]="{
@@ -241,7 +241,7 @@
                               {{historyData?.fail}}
                               <button type="button" class="btn-link p-0 border-0 bg-transparent" (click)="getExchData(2,historyData?.id)"
                                 *ngIf="isActionAvail(constants.PageActions.DOWNLOAD_FAIL_ENTRY)">
-                                <i class="fas fa-download red_text cursor_pointer ml-1"></i>
+                                <i class="fas fa-download blue_text cursor_pointer ml-1"></i>
                               </button>
                           </td>
 

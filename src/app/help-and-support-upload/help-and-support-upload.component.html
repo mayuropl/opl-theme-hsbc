@@ -120,7 +120,7 @@
 
                   <tr *ngFor="let custMastUploadhistoryData of custMastBulkUploadHistory; let i=index">
                     <td data-label="Sr. No."> {{ startIndex + i + 1 }}</td>
-                    <td data-label="File Name">{{custMastUploadhistoryData?.fileName}}<span> <i *ngIf="custMastUploadhistoryData?.status === 'Failed'" class="fas fa-info-circle red_text mr-1" matTooltip="{{custMastUploadhistoryData?.fileUploadFailureReason}}"></i></span></td>
+                    <td data-label="File Name">{{custMastUploadhistoryData?.fileName}}<span> <i *ngIf="custMastUploadhistoryData?.status === 'Failed'" class="fas fa-info-circle blue_text mr-1" matTooltip="{{custMastUploadhistoryData?.fileUploadFailureReason}}"></i></span></td>
                     <td>
                       <span [ngClass]="{
                         'orange_badge': custMastUploadhistoryData?.status === 'Pending',

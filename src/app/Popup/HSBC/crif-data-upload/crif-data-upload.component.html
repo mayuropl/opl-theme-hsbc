@@ -75,7 +75,7 @@
                             <div class="file_name_list" *ngIf="accountFile">
                                 <span class="selected_file">
                                     {{accountFile.name}}
-                                    <a class="remove-link red_text ml-1" (click)="removeFile('account')">
+                                    <a class="remove-link blue_text ml-1" (click)="removeFile('account')">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </span>
@@ -97,7 +97,7 @@
                             <div class="file_name_list" *ngIf="inquiryFile">
                                 <span class="selected_file">
                                     {{inquiryFile.name}}
-                                    <a class="remove-link red_text ml-1" (click)="removeFile('inquiry')">
+                                    <a class="remove-link blue_text ml-1" (click)="removeFile('inquiry')">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </span>
@@ -119,7 +119,7 @@
                             <div class="file_name_list" *ngIf="summaryFile">
                                 <span class="selected_file">
                                     {{summaryFile.name}}
-                                    <a class="remove-link red_text ml-1" (click)="removeFile('summary')">
+                                    <a class="remove-link blue_text ml-1" (click)="removeFile('summary')">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </span>
@@ -141,7 +141,7 @@
                             <div class="file_name_list" *ngIf="ioiFile">
                                 <span class="selected_file">
                                     {{ioiFile.name}}
-                                    <a class="remove-link red_text ml-1" (click)="removeFile('ioi')">
+                                    <a class="remove-link blue_text ml-1" (click)="removeFile('ioi')">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </span>
@@ -213,7 +213,7 @@
                                     </td>
                                     <!-- <td>
                                         {{item.errorCount || '-'}}
-                                        <i class="fas fa-download red_text cursor_pointer ml-1"
+                                        <i class="fas fa-download blue_text cursor_pointer ml-1"
                                            *ngIf="item.errorCount > 0"
                                            (click)="downloadData(item.fileId, 2, item.fileName + '_error')"></i>
                                     </td>
@@ -273,7 +273,7 @@
                                                             <td>{{detail.createdDate ? (detail.createdDate | date:'dd MMM yyyy HH:mm:ss') : '-'}}</td>
                                                             <td>{{detail.stageId === 2 ? 'Success' : detail.stageId === 3 ? 'Failed' : 'Pending'}}
                                                                  <span *ngIf="detail.stageId === 3 && detail?.fileUploadFailureReason">
-                                                                <i class="fas fa-info-circle red_text ml-1"
+                                                                <i class="fas fa-info-circle blue_text ml-1"
                                                                 matTooltip="{{detail?.fileUploadFailureReason}}">
                                                                 </i>
                                                             </span>
@@ -286,7 +286,7 @@
                                                             </td>
                                                             <td>
                                                                 {{detail.failEntries || 0}}
-                                                                <i class="fas fa-download red_text cursor_pointer ml-1"
+                                                                <i class="fas fa-download blue_text cursor_pointer ml-1"
                                                                    *ngIf="detail.failEntries > 0"
                                                                    (click)="downloadSubListData(detail.id, 0, detail.fileType + '_failed')"></i>
                                                             </td>

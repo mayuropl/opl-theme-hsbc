@@ -91,7 +91,7 @@
                     </div>
                     <div class="left_side">
                         <!-- <h5 class="short_desc"></h5> -->
-                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading, 'red_text': lendingAnalysisC?.change_sanction_wallet_pct < 0}">{{ (lendingAnalysisC?.change_sanction_wallet_pct?? 0 | number:numberFormatForPer:'en-US') }}%</h2>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading, 'blue_text': lendingAnalysisC?.change_sanction_wallet_pct < 0}">{{ (lendingAnalysisC?.change_sanction_wallet_pct?? 0 | number:numberFormatForPer:'en-US') }}%</h2>
                     </div>
                 </div>
             </div>  
@@ -151,7 +151,7 @@
                     </div>
                     <div class="left_side">
                         <h5 class="short_desc"></h5>
-                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading, 'red_text': lendingAnalysisC?.change_utilization_wallet_pct < 0}">{{(lendingAnalysisC?.change_utilization_wallet_pct?? 0 | number:numberFormatForPer:'en-US') }}%</h2>
+                        <h2 class="number_title" [ngClass]="{'skeleton': isLoading, 'blue_text': lendingAnalysisC?.change_utilization_wallet_pct < 0}">{{(lendingAnalysisC?.change_utilization_wallet_pct?? 0 | number:numberFormatForPer:'en-US') }}%</h2>
                     </div>
                 </div>
             </div> 

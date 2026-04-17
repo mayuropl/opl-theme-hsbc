@@ -125,7 +125,7 @@
                                 <td data-label="Sr.No">1</td>
                                 <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
                                 <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
-                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="Persona" class="blue_text">Start-Up</td>
                                 <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
                                 <td data-label="Total Opportunity">₹ 1,50,20,000</td>
                                 <td data-label="Share (%)">10 %</td>
@@ -141,7 +141,7 @@
                                 <td data-label="Sr.No">2</td>
                                 <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
                                 <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
-                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="Persona" class="blue_text">Start-Up</td>
                                 <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
                                 <td data-label="Total Opportunity">₹ 1,50,20,000</td>
                                 <td data-label="Share (%)">10 %</td>
@@ -157,7 +157,7 @@
                                 <td data-label="Sr.No">3</td>
                                 <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
                                 <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
-                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="Persona" class="blue_text">Start-Up</td>
                                 <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
                                 <td data-label="Total Opportunity">₹ 1,50,20,000</td>
                                 <td data-label="Share (%)">10 %</td>
@@ -173,7 +173,7 @@
                                 <td data-label="Sr.No">4</td>
                                 <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
                                 <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
-                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="Persona" class="blue_text">Start-Up</td>
                                 <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
                                 <td data-label="Total Opportunity">₹ 1,50,20,000</td>
                                 <td data-label="Share (%)">10 %</td>
@@ -189,7 +189,7 @@
                                 <td data-label="Sr.No">5</td>
                                 <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
                                 <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
-                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="Persona" class="blue_text">Start-Up</td>
                                 <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
                                 <td data-label="Total Opportunity">₹ 1,50,20,000</td>
                                 <td data-label="Share (%)">10 %</td>
@@ -205,7 +205,7 @@
                                 <td data-label="Sr.No">6</td>
                                 <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
                                 <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
-                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="Persona" class="blue_text">Start-Up</td>
                                 <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
                                 <td data-label="Total Opportunity">₹ 1,50,20,000</td>
                                 <td data-label="Share (%)">10 %</td>
@@ -221,7 +221,7 @@
                                 <td data-label="Sr.No">7</td>
                                 <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
                                 <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
-                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="Persona" class="blue_text">Start-Up</td>
                                 <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
                                 <td data-label="Total Opportunity">₹ 1,50,20,000</td>
                                 <td data-label="Share (%)">10 %</td>
@@ -237,7 +237,7 @@
                                 <td data-label="Sr.No">8</td>
                                 <td data-label="Customer Id"><span class="skyblue_badge"> HSBC-00009547</span></td>
                                 <td data-label="Name Of Customer">OSB Overseas Private Limited</td>
-                                <td data-label="Persona" class="red_text">Start-Up</td>
+                                <td data-label="Persona" class="blue_text">Start-Up</td>
                                 <td data-label="HSBC Wallet">₹ 1,00,00,000</td>
                                 <td data-label="Total Opportunity">₹ 1,50,20,000</td>
                                 <td data-label="Share (%)">10 %</td>

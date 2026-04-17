@@ -756,14 +756,14 @@ onDropdownOpened() {
 
   getIcon(filterName: string): string {
   switch (filterName) {
-    case 'product_type': return 'fi fi-rr-cube red_text mr-1';
-    case 'utilization_wallet_pct': return 'fi fi-rr-wallet red_text mr-1';
-    case 'wallet': return 'fi fi-rr-wallet red_text mr-1';
-    case 'calculation_on': return 'fi fi-sr-stats mr-1 red_text';
-    case 'date_of_report': return 'fi fi-rr-calendar-day red_text mr-1';
-    case 'cmr': return 'fi fi-rr-analytics red_text mr-1';
-    case 'psl_status': return 'fi fi-rr-chart-line-up red_text mr-1';
-    default: return 'fi fi-rr-filter red_text mr-1';
+    case 'product_type': return 'fi fi-rr-cube blue_text mr-1';
+    case 'utilization_wallet_pct': return 'fi fi-rr-wallet blue_text mr-1';
+    case 'wallet': return 'fi fi-rr-wallet blue_text mr-1';
+    case 'calculation_on': return 'fi fi-sr-stats mr-1 blue_text';
+    case 'date_of_report': return 'fi fi-rr-calendar-day blue_text mr-1';
+    case 'cmr': return 'fi fi-rr-analytics blue_text mr-1';
+    case 'psl_status': return 'fi fi-rr-chart-line-up blue_text mr-1';
+    default: return 'fi fi-rr-filter blue_text mr-1';
   }
 }
 

@@ -143,7 +143,7 @@
                                             {{selectedSectorIds.includes('ALL') ? 'All' : (sectorSelect.triggerValue || 'Sector')}}
                                         </mat-select-trigger>
                                         <mat-option #allSectors [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
-                                        <mat-option *ngFor="let sector of sectors" [value]="sector.id">{{sector.name}} <span class="red_text">({{sector.count || 0}})</span></mat-option>
+                                        <mat-option *ngFor="let sector of sectors" [value]="sector.id">{{sector.name}} <span class="blue_text">({{sector.count || 0}})</span></mat-option>
                                         <mat-divider></mat-divider>
 
                                         <mat-option  class="reset-option">
@@ -161,7 +161,7 @@
                                             {{selectedSubSectorIds.includes('ALL') ? 'All' : (subSectorSelect.triggerValue || 'Sub-Sectors')}}
                                         </mat-select-trigger>
                                         <mat-option [value]="'ALL'" [class.select-all-option]="true">All</mat-option>
-                                        <mat-option *ngFor="let ss of subSectors" [value]="ss.id">{{ss.name}} <span class="red_text">({{ss.count || 0}})</span></mat-option>
+                                        <mat-option *ngFor="let ss of subSectors" [value]="ss.id">{{ss.name}} <span class="blue_text">({{ss.count || 0}})</span></mat-option>
                                         <mat-divider></mat-divider>
 
                                         <mat-option  class="reset-option">
@@ -239,7 +239,7 @@
                                        href="javascript:void(0)"
                                        (click)="selectParentCategory(cat)">
                                         <span>{{ cat }}
-                                            <span class="red_text">({{ getCategoryCount(cat) }})</span>
+                                            <span class="blue_text">({{ getCategoryCount(cat) }})</span>
                                         </span>
                                     </a>
                                 </li>
@@ -357,7 +357,7 @@
                                             <tr>
                                                 <td class="no_wrap table_check_box">
                                                     <mat-checkbox [checked]="isRowSelected(item.id)" (change)="toggleSelectRow(item.id)"></mat-checkbox>
-                                                    <a href="javascript:void(0)" class="red_text ml-1"
+                                                    <a href="javascript:void(0)" class="blue_text ml-1"
                                                        (click)="toggleRowExpand(item.id)"
                                                        [ngClass]="{'rotate_icon': isRowExpanded(item.id)}">
                                                         <i class="fas fa-chevron-down"></i>
@@ -464,12 +464,12 @@
                                 <li><a class="corporate-action-category-link" href="javascript:void(0)"
                                     [ngClass]="{'active': selectedIndustry === null}"
                                     (click)="onIndustrySelect(null)"><span>All
-                                            <span class="red_text">({{totalCount}})</span></span> <span
+                                            <span class="blue_text">({{totalCount}})</span></span> <span
                                             class="darkgreen_text no_wrap">{{newCount}} New</span></a></li>
                                 <li *ngFor="let stat of industryStats"><a class="corporate-action-category-link" href="javascript:void(0)"
                                     [ngClass]="{'active': selectedIndustry && selectedIndustry.name === stat.name}"
                                     (click)="onIndustrySelect(stat)"><span>{{stat.name}}
-                                            <span class="red_text">({{stat.totalCount}})</span></span> <span
+                                            <span class="blue_text">({{stat.totalCount}})</span></span> <span
                                             class="darkgreen_text no_wrap">{{stat.newCount}} New</span></a></li>
                             </ul>
                         </div>
@@ -551,7 +551,7 @@
       <span class="left_side">
         Search Options
         <button mat-icon-button color="primary" class="ref_icon" (click)="resetAllSearchByFilters()">
-          <i class="fi fi-br-refresh red_text"></i>
+          <i class="fi fi-br-refresh blue_text"></i>
         </button>
       </span>
       <button mat-icon-button type="button" (click)="searchByTrigger.closeMenu()">

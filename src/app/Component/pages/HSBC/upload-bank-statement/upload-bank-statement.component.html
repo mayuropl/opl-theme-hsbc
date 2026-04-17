@@ -11,7 +11,7 @@
         <div class="page_Title_right">
             <div class="date_top_right">
               <!-- <div class="d-flex align-items-center">
-                <span> <i class="fas fa-info-circle red_text mr-1" matTooltip="This bank is not supported"></i>
+                <span> <i class="fas fa-info-circle blue_text mr-1" matTooltip="This bank is not supported"></i>
                        </span>
                     <span class="green_badge suess_text mr-2"><i class="fas fa-check-circle mr-1"></i>Success</span>
                     <span class="orange_badge pending_text mr-2"><i class="fas fa-check-circle mr-1"></i>Pending</span>
@@ -114,7 +114,7 @@
                 <div class="files-list">
                   <h2 class="file_list">{{ uploads.at(i).get('bank')?.value || 'Bank' }} Uploaded File <span class="bedge">{{uploads.at(i).get('files')?.value?.length}}</span></h2>
                   <div class="right_side">
-                    <span> <i class="fas fa-info-circle red_text mr-1" matTooltip="{{uploads.at(i).get('message')?.value}}" *ngIf="uploads.at(i).get('status')?.value === 2"></i>
+                    <span> <i class="fas fa-info-circle blue_text mr-1" matTooltip="{{uploads.at(i).get('message')?.value}}" *ngIf="uploads.at(i).get('status')?.value === 2"></i>
                        </span>
                     <span *ngIf="uploads.at(i).get('status')?.value === 1" class="green_badge suess_text mr-2"><i class="fas fa-check-circle mr-1"></i>Success</span>
                     <span *ngIf="uploads.at(i).get('status')?.value === 0" class="orange_badge pending_text mr-2"><i class="fas fa-check-circle mr-1"></i>Pending</span>

@@ -315,7 +315,14 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
   ];
   pageData: any = {};
   state: any = {};
-  analyticsSubpage: any = [];
+  /** Fixed tiles for Analytics tab (GST, Bank Statement, EXIM, Commercial Bureau, Internal). */
+  readonly analyticsQuickLinks: { subpageName: string; routeLink: string }[] = [
+    { subpageName: 'GST Analysis', routeLink: '/hsbc/rmGSTAnalysis' },
+    { subpageName: 'Bank Statement Analysis', routeLink: '/hsbc/bank-statement-analysis' },
+    { subpageName: 'EXIM Analysis', routeLink: '/hsbc/rmEXIMAnalysis' },
+    { subpageName: 'Commercial Bureau', routeLink: '/hsbc/rmCommercialBureau' },
+    { subpageName: 'Bank Statement - Internal', routeLink: '/hsbc/bank-statement-internal' },
+  ];
   cominsoonSubpage: any;
   constants: any = [];
   psgeGstList: any = [];
@@ -510,6 +517,51 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
   public categorySubcategoryMap: any = {};
   // The categoriesWithCounts property is already declared above, so we don't duplicate it here.
 
+  /** Unwrap `{ status, data }` payloads and coerce to an array (static demo / API variance). */
+  private normalizeCorporateStatsList(res: any): any[] {
+    if (res == null) {
+      return [];
+    }
+    if (Array.isArray(res)) {
+      return res;
+    }
+    if (typeof res === 'object' && Array.isArray(res.data)) {
+      return res.data;
+    }
+    return [];
+  }
+
+  /** Parent category master list may be string[] or `{ name }[]` or wrapped in `data`. */
+  private normalizeCorporateCategoryList(res: any): string[] {
+    const raw = this.normalizeCorporateStatsList(res);
+    if (!raw.length) {
+      return [];
+    }
+    if (typeof raw[0] === 'string') {
+      return raw as string[];
+    }
+    return raw.map((x: any) => (typeof x === 'string' ? x : x?.name ?? String(x))).filter(Boolean);
+  }
+
+  /** Paginated announcements: body may be `{ content, totalElements }` or nested under `data`. */
+  private normalizeFilteredAnnouncementsResponse(res: any): { content: any[]; totalElements: number } {
+    if (res == null) {
+      return { content: [], totalElements: 0 };
+    }
+    const candidates = [res, res.data].filter((c) => c != null && typeof c === 'object');
+    for (const c of candidates) {
+      if (typeof c.content !== 'undefined') {
+        const content = Array.isArray(c.content) ? c.content : [];
+        const total = c.totalElements ?? c.totalCount ?? content.length;
+        return { content, totalElements: Number(total) || 0 };
+      }
+    }
+    if (Array.isArray(res)) {
+      return { content: res, totalElements: res.length };
+    }
+    return { content: [], totalElements: 0 };
+  }
+
   // New Method: Fetch Data
   fetchAnnouncements() {
     if (!this.cin && !this.pan) {
@@ -520,7 +572,7 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
     // First ensure we have the master list of all categories
     if (this.allParentCategories.length === 0) {
       this.msmeService.getAllParentCategories().subscribe(masterList => {
-        this.allParentCategories = masterList || [];
+        this.allParentCategories = this.normalizeCorporateCategoryList(masterList);
         this.fetchStatsData();
       }, error => {
         console.error("Error fetching master category list", error);
@@ -738,7 +790,7 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
 
     this.msmeService.getCorporateAnnouncementsStats(payload).subscribe(data => {
       console.log("Raw announcements stats received:", data);
-      this.allAnnouncements = data || [];
+      this.allAnnouncements = this.normalizeCorporateStatsList(data);
       this.calculateCategoryCounts();
 
       // Ensure 'All' is selected by default to load the full unfiltered view when first clicking the tab
@@ -787,18 +839,19 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
     if (category === 'All') {
       this.corporateInnerTabLabels = [];
       this.allAnnouncements.forEach(groupItem => {
-        if (groupItem.subgroups) {
-          groupItem.subgroups.forEach(sub => {
-            if (!this.corporateInnerTabLabels.includes(sub.subgroup)) {
-              this.corporateInnerTabLabels.push(sub.subgroup);
-            }
-          });
-        }
+        const subs = groupItem?.subgroups;
+        const subList = Array.isArray(subs) ? subs : [];
+        subList.forEach((sub: any) => {
+          if (sub?.subgroup && !this.corporateInnerTabLabels.includes(sub.subgroup)) {
+            this.corporateInnerTabLabels.push(sub.subgroup);
+          }
+        });
       });
     } else {
       const dataForParent = this.allAnnouncements.find(item => item.group === category);
-      if (dataForParent && dataForParent.subgroups) {
-        this.corporateInnerTabLabels = dataForParent.subgroups.map(sub => sub.subgroup);
+      const subs = dataForParent?.subgroups;
+      if (dataForParent && Array.isArray(subs)) {
+        this.corporateInnerTabLabels = subs.map((sub: any) => sub.subgroup).filter(Boolean);
       } else {
         this.corporateInnerTabLabels = [];
       }
@@ -843,18 +896,16 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
     if (this.selectedParentCategory === 'All') {
       // If we are viewing "All" categories, find this subcategory inside all groups and sum it
       this.allAnnouncements.forEach(group => {
-        if (group.subgroups) {
-          const sub = group.subgroups.find((s: any) => s.subgroup === subCategoryName);
-          if (sub) count += (sub.count || 0);
-        }
+        const subList = Array.isArray(group?.subgroups) ? group.subgroups : [];
+        const sub = subList.find((s: any) => s.subgroup === subCategoryName);
+        if (sub) count += (sub.count || 0);
       });
     } else {
       // If we are viewing a specific parent category, look only inside that parent
       const parent = this.allAnnouncements.find(g => g.group === this.selectedParentCategory);
-      if (parent && parent.subgroups) {
-        const sub = parent.subgroups.find((s: any) => s.subgroup === subCategoryName);
-        if (sub) count = sub.count || 0;
-      }
+      const subList = Array.isArray(parent?.subgroups) ? parent.subgroups : [];
+      const sub = subList.find((s: any) => s.subgroup === subCategoryName);
+      if (sub) count = sub.count || 0;
     }
 
     return count;
@@ -885,15 +936,9 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
 
     // Fetch announcements based on filter
     this.msmeService.fetchFilteredAnnouncements(payload).subscribe(data => {
-      // Check for PaginatedResponse structure returned from backend
-      if (data && typeof data.content !== 'undefined') {
-        this.corporateDetails = data.content || [];
-        this.corporateTotalElements = data.totalElements || 0;
-      } else {
-        // Fallback or empty state handling
-        this.corporateDetails = data || [];
-        this.corporateTotalElements = this.corporateDetails.length;
-      }
+      const { content, totalElements } = this.normalizeFilteredAnnouncementsResponse(data);
+      this.corporateDetails = content;
+      this.corporateTotalElements = totalElements;
     }, error => {
       console.error("Error fetching filtered announcements", error);
     });
@@ -1132,8 +1177,16 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
   constructor(public dialog: MatDialog, private msmeService: MsmeService, public commonService: CommonService, private router: Router, private clipboard: Clipboard,
     public commonMethod: CommonMethods, private activatedRoute: ActivatedRoute, private fb: FormBuilder, private datePipe: DatePipe, private loaderService: LoaderService, private decimalPipe: DecimalPipe) {
     this.userId = Number(this.commonService.getStorage(Constants.httpAndCookies.USER_ID, true));
-    const userData = JSON.parse(this.commonService.getStorage(Constants.httpAndCookies.COOKIES_OBJ, true));
-    this.email = atob(userData.ur_cu);
+    let userData: any = {};
+    try {
+      const rawCookies = this.commonService.getStorage(Constants.httpAndCookies.COOKIES_OBJ, true);
+      if (rawCookies) {
+        userData = JSON.parse(rawCookies);
+      }
+    } catch {
+      userData = {};
+    }
+    this.email = this.decodeCookieEmail(userData?.ur_cu);
     this.commonService.removeStorage("previous_company_pan");
     this.roleId = Number(this.commonService.getStorage(Constants.httpAndCookies.ROLEID, true));
     //last days calendar S
@@ -1168,6 +1221,19 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
     this.minDates = moment();
     //last days calendar E
 
+  }
+
+  /** Cookie `ur_cu` may be plain email or Base64; avoid raw atob() which throws on invalid input. */
+  private decodeCookieEmail(ur_cu: string | undefined | null): string {
+    if (ur_cu == null || ur_cu === '') {
+      return '';
+    }
+    const s = String(ur_cu).trim();
+    if (s.includes('@')) {
+      return s;
+    }
+    const decoded = this.commonService.toATOB(s);
+    return decoded ?? s;
   }
 
   @HostListener('window:scroll', [])
@@ -1370,7 +1436,7 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
       this.isNewAgeEconomyAvailable = true;
       this.selectDefaultNewAgeEconomySubTab();
 
-      if (this.routerData.tabName === 'New-age Economy Insights') {
+      if (this.routerData?.tabName === 'New-age Economy Insights') {
         this.getDomainList();
       }
     }
@@ -1527,29 +1593,7 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
   }
 
   setSubsubpage(data: any) {
-    for (let data of this.pageData?.subSubpages) {
-      if (data?.subpageId === Constants.pageMaster.ANALYTICS) {
-        if (this.isFindProspects) {
-          data.subSubpages.forEach(element => {
-            console.log('element::::> ', element);
-            if (element.subpageName == 'Exim Analysis') {
-              this.analyticsSubpage.push(element);
-            };
-          });
-        }
-        else if (this.isFindETB && !this.isFindSameRm) {
-          data.subSubpages.forEach(element => {
-            console.log('element::::> ', element);
-            if (element.subpageName == 'Exim Analysis' || element.subpageName == 'Bank Statement - Internal') {
-              this.analyticsSubpage.push(element);
-            };
-          });
-        }
-
-        else {
-          this.analyticsSubpage = data.subSubpages || []; // Initialize as empty array if undefined
-        }
-      }
+    for (let data of this.pageData?.subSubpages ?? []) {
       if (data?.subpageId === Constants.pageMaster.COMING_SOON) {
         this.cominsoonSubpage = data.subSubpages || []; // Initialize as empty array if undefined
       }
@@ -1561,9 +1605,13 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
   }
 
   isTabVisible(pageId: number): boolean {
-    for (let page of this.pageData.subSubpages) {
+    const subPages = this.pageData?.subSubpages;
+    if (!subPages?.length) {
+      return false;
+    }
+    for (let page of subPages) {
       if (page?.subpageId === pageId) {
-        for (let action of page.actions) {
+        for (let action of page.actions ?? []) {
           if (action.actionId === Constants.PageActions.REFRESH) {
             this.apiRefresh = true;
           }
@@ -1607,7 +1655,7 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
   }
 
   isActionAvail(actionId: string): boolean {
-    for (let page of this.pageData?.actions) {
+    for (let page of this.pageData?.actions ?? []) {
       if (page?.actionId === actionId) {
         return true; // Return true if found
       }
@@ -1626,7 +1674,7 @@ export class RmExisitingPortfolioViewComponent implements OnInit, OnDestroy, Aft
 
   isActionAvailforSubSubpage(subSubPageId: any, subPageId: any, actionId: string): boolean {
     const matchedSubPage = this.pageData?.subSubpages?.find(sub => sub.subpageId === subPageId);
-    const matchedSubSubPage = matchedSubPage?.subSubpages.find(sub => sub.subpageId === subSubPageId);
+    const matchedSubSubPage = matchedSubPage?.subSubpages?.find(sub => sub.subpageId === subSubPageId);
     const matchedSubSubPageAction = matchedSubSubPage?.actions?.find(action => action.actionId === actionId);
     if (matchedSubSubPageAction) {
       return true;
